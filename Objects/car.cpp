@@ -60,6 +60,18 @@ void Car::render()
 }
 
 /*-------------------------------------------------------------------
+ |  Function display
+ |
+ |  Purpose: Displays this object once rendered
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void Car::display()
+{
+    this->_object3D->display();
+}
+
+/*-------------------------------------------------------------------
  |  Function
  |
  |  Purpose:
@@ -154,3 +166,26 @@ Point3D * Car::getBBMax()
 {
     return _p_bbMax;
 }
+
+/*-------------------------------------------------------------------
+ |  Function getRepresentation
+ |
+ |  Purpose: Getter. Gets the representation of the car
+ |  Parameters:
+ |  Returns: Object3DFile = the representation of the car
+ *-------------------------------------------------------------------*/
+Object3DFile* Car::getRepresentation(){
+    return this->_object3D;
+}
+
+/*-------------------------------------------------------------------
+ |  Function setRepresentation
+ |
+ |  Purpose: Setter. Sets the representation of the car
+ |  Parameters: Object3DFile object = the representation of the car
+ |  Returns:
+ *-------------------------------------------------------------------*/
+ void Car::setRepresentation(Object3DFile *object){
+    this->_object3D = object;
+    this->_object3D->render();
+ }

@@ -16,6 +16,7 @@
 
 #include "Utils/util.h"
 #include "Utils/vector3D.h"
+#include "Objects/object3DFile.h"
 
 class Car
 {
@@ -27,6 +28,7 @@ public:
 
     // ============================ Methods ===============================
     void              render();
+    void              display();
     void              setPosition(Point3D * p_position);
     Point3D         * getPosition();
     void              setDirection(Vector3D * p_direction);
@@ -36,8 +38,12 @@ public:
     void              setBBMax(Point3D * p_bbMax);
     Point3D         * getBBMax();
 
+    Object3DFile* getRepresentation();
+    void setRepresentation(Object3DFile *object);
+
 private:
     // ========================== Data Members ============================
+    Object3DFile *_object3D;
     Point3D         * _p_position;
     Vector3D        * _p_direction;
     Point3D         * _p_bbMin;

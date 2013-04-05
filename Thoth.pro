@@ -286,7 +286,40 @@ OTHER_FILES += \
     Media/Models/Circuit/armco_grey_main_a_01_d.dds \
     Media/Models/Circuit/allianz_decal_a.dds \
     Media/Models/Circuit/allianz_brake_a.dds \
-    Media/Models/Circuit/advert_side_a_d.dds
+    Media/Models/Circuit/advert_side_a_d.dds \
+    Media/Models/Cars/Ferrari/tyre_specocc.png \
+    Media/Models/Cars/Ferrari/tyre_nm.png \
+    Media/Models/Cars/Ferrari/tyre.tga \
+    Media/Models/Cars/Ferrari/tyre.png \
+    Media/Models/Cars/Ferrari/tread_slick_specocc.png \
+    Media/Models/Cars/Ferrari/tread_slick_nm.png \
+    Media/Models/Cars/Ferrari/tread_slick.tga \
+    Media/Models/Cars/Ferrari/tread_slick.png \
+    Media/Models/Cars/Ferrari/light_glow.tga \
+    Media/Models/Cars/Ferrari/light_glow.png \
+    Media/Models/Cars/Ferrari/int_led.tga \
+    Media/Models/Cars/Ferrari/int_led.png \
+    Media/Models/Cars/Ferrari/int_info_pod.tga \
+    Media/Models/Cars/Ferrari/int_info_pod.png \
+    Media/Models/Cars/Ferrari/int_indicator.tga \
+    Media/Models/Cars/Ferrari/int_indicator.png \
+    Media/Models/Cars/Ferrari/int_fe0_main.tga \
+    Media/Models/Cars/Ferrari/int_fe0_main.png \
+    Media/Models/Cars/Ferrari/int_digi_tach.tga \
+    Media/Models/Cars/Ferrari/int_digi_tach.png \
+    Media/Models/Cars/Ferrari/int_digi_placeholder.tga \
+    Media/Models/Cars/Ferrari/int_digi_placeholder.png \
+    Media/Models/Cars/Ferrari/glass.tga \
+    Media/Models/Cars/Ferrari/glass.png \
+    Media/Models/Cars/Ferrari/generic_main_specocc.png \
+    Media/Models/Cars/Ferrari/generic_main_nm.png \
+    Media/Models/Cars/Ferrari/generic_main.tga \
+    Media/Models/Cars/Ferrari/generic_main.png \
+    Media/Models/Cars/Ferrari/ferrari.3ds \
+    Media/Models/Cars/Ferrari/fe0_wheel.tga \
+    Media/Models/Cars/Ferrari/fe0_wheel.png \
+    Media/Models/Cars/Ferrari/fe0_main.tga \
+    Media/Models/Cars/Ferrari/fe0_main.png
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += assimp

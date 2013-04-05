@@ -26,6 +26,7 @@ public:
     ~Enviroment();
     // ============================ Methods ===============================
     void render();
+    void display();
     Object3DFile* getRepresentation();
     void setRepresentation(Object3DFile *object);
 private:

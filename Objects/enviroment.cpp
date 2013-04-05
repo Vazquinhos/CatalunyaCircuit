@@ -59,6 +59,18 @@ void Enviroment::render()
 }
 
 /*-------------------------------------------------------------------
+ |  Function display
+ |
+ |  Purpose: Displays this object once rendered
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void Enviroment::display()
+{
+    this->_object3D->display();
+}
+
+/*-------------------------------------------------------------------
  |  Function getRepresentation
  |
  |  Purpose: Getter. Gets the representation of the enviroment

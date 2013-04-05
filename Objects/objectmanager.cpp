@@ -116,9 +116,24 @@ void ObjectManager::renderEnviroment()
 
 void ObjectManager::renderAll()
 {
-    unsigned int i;
     _p_enviroment->render();
 
-    for(i = 0; i < _v_cars.size(); i++)
+    for(unsigned int i = 0; i < _v_cars.size(); i++){
         _v_cars[i]->render();
+    }
+}
+
+/*-------------------------------------------------------------------
+ |  Function displayAll
+ |
+ |  Purpose: Displays all objects
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void ObjectManager::displayAll(){
+    _p_enviroment->display();
+
+    for(unsigned int i = 0; i < _v_cars.size(); i++){
+        _v_cars[i]->display();
+    }
 }

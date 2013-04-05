@@ -38,6 +38,7 @@ public:
     void                      renderCar(int i);
     void                      renderEnviroment();
     void                      renderAll();
+    void                      displayAll();
 
 private:
     // ========================== Data Members ============================

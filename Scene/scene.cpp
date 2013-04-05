@@ -27,7 +27,8 @@ Scene::Scene()
     _objectManager = ObjectManager::getObjectManager();
 
     enviromentObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Circuit/").toAscii().data(), "circuit.3ds", aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
-    enviromentObj->setScale(new Point3D(0.01, 0.01, 0.01));
+    enviromentObj->setScale(new Point3D(1, 1, 1));
+    enviromentObj->setRotation(new Point3D(90,0,0));
     enviroment->setRepresentation(enviromentObj); //Set enviroment representation
 
 

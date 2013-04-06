@@ -167,12 +167,16 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     switch(event->key()) {
     case Qt::Key_W:
+        camera->translate(1, 0, 0);
         break;
     case Qt::Key_S:
+        camera->translate(-1, 0, 0);
         break;
     case Qt::Key_A:
+        camera->translate(0, 1, 0);
         break;
     case Qt::Key_D:
+        camera->translate(0, -1, 0);
         break;
     default:
         update = false;

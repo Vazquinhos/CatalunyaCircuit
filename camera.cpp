@@ -15,6 +15,7 @@ Camera::Camera()
     anglev = 35;
     near   = .1;
     far    = 500;
+    x = y = z = 0.0;
 }
 
 Camera::~Camera()
@@ -55,7 +56,7 @@ void Camera::update(void)
     up[2]=cos(angley);
 
     // Set camera in OpenGL
-    gluLookAt(cam[0],cam[1],cam[2],
+    gluLookAt(cam[0]+x,cam[1]+y,cam[2]+z,
               0.0,0.0,0.0,
               up[0],up[1],up[2]);
 
@@ -71,4 +72,10 @@ void Camera::move(float ah, float av)
     if(angleh>=360)	angleh=angleh-360;
     if(angleh<0)	angleh=angleh+360;
 
+}
+
+void Camera::translate(float x, float y, float z){
+    this->x += x;
+    this->y += y;
+    this->z += z;
 }

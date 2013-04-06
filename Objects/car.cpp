@@ -68,7 +68,12 @@ void Car::render()
  *-------------------------------------------------------------------*/
 void Car::display()
 {
-    this->_object3D->display();
+    this->_chasisObj->display();
+    this->_wheelObj->display();
+    this->_wheelFrontRight->display();
+    this->_wheelFrontLeft->display();
+    this->_wheelRearRight->display();
+    this->_wheelRearLeft->display();
 }
 
 /*-------------------------------------------------------------------
@@ -170,22 +175,137 @@ Point3D * Car::getBBMax()
 /*-------------------------------------------------------------------
  |  Function getRepresentation
  |
- |  Purpose: Getter. Gets the representation of the car
+ |  Purpose: Getter. Gets the chasis of the car
  |  Parameters:
- |  Returns: Object3DFile = the representation of the car
+ |  Returns: Object3DFile = the chasis of the car
  *-------------------------------------------------------------------*/
-Object3DFile* Car::getRepresentation(){
-    return this->_object3D;
+Object3DFile* Car::getChasisObj(){
+    return this->_chasisObj;
 }
 
 /*-------------------------------------------------------------------
- |  Function setRepresentation
+ |  Function setChasisObj
  |
- |  Purpose: Setter. Sets the representation of the car
- |  Parameters: Object3DFile object = the representation of the car
+ |  Purpose: Setter. Sets the chasis of the car
+ |  Parameters: Object3DFile object = the chasis of the car
  |  Returns:
  *-------------------------------------------------------------------*/
- void Car::setRepresentation(Object3DFile *object){
-    this->_object3D = object;
-    this->_object3D->render();
- }
+void Car::setChasisObj(Object3DFile *object){
+    this->_chasisObj = object;
+    this->_chasisObj->render();
+}
+
+/*-------------------------------------------------------------------
+  |  Function getWheelObj
+  |
+  |  Purpose: Getter. Gets the wheel of the car
+  |  Parameters:
+  |  Returns: Object3DFile = the wheel of the car
+  *-------------------------------------------------------------------*/
+Object3DFile* Car::getWheelObj(){
+    return this->_wheelObj;
+}
+
+/*-------------------------------------------------------------------
+  |  Function setWheelObj
+  |
+  |  Purpose: Setter. Sets the wheel of the car
+  |  Parameters: Object3DFile object = the wheel of the car
+  |  Returns:
+  *-------------------------------------------------------------------*/
+void Car::setWheelObj(Object3DFile *object){
+    this->_wheelObj = object;
+    this->_wheelObj->render();
+}
+
+/*-------------------------------------------------------------------
+  |  Function getWheelFrontRightObj
+  |
+  |  Purpose: Getter. Sets the WheelFrontRight of the car
+  |  Parameters:
+  |  Returns:
+  *-------------------------------------------------------------------*/
+Object3DFile* Car::getWheelFrontRightObj(){
+    return this->_wheelFrontRight;
+}
+
+/*-------------------------------------------------------------------
+  |  Function setWheelFrontRightObj
+  |
+  |  Purpose: Setter. Sets the FrontRightObj of the car
+  |  Parameters: Object3DFile object = the FrontRightObj of the car
+  |  Returns:
+  *-------------------------------------------------------------------*/
+void Car::setWheelFrontRightObj(Object3DFile *object){
+    this->_wheelFrontRight = object;
+    this->_wheelFrontRight->render();
+}
+
+/*-------------------------------------------------------------------
+  |  Function getWheelFrontLeftObj
+  |
+  |  Purpose: Getter. Sets the WheelFrontLeft of the car
+  |  Parameters:
+  |  Returns:
+  *-------------------------------------------------------------------*/
+Object3DFile* Car::getWheelFrontLeftObj(){
+    return this->_wheelFrontLeft;
+}
+
+/*-------------------------------------------------------------------
+  |  Function setWheelFrontLeftObj
+  |
+  |  Purpose: Setter. Sets the FrontLeft wheel of the car
+  |  Parameters: Object3DFile object = the FrontLeft of the car
+  |  Returns:
+  *-------------------------------------------------------------------*/
+void Car::setWheelFrontLeftObj(Object3DFile *object){
+    this->_wheelFrontLeft = object;
+    this->_wheelFrontLeft->render();
+}
+
+/*-------------------------------------------------------------------
+  |  Function getWheelRearRightObj
+  |
+  |  Purpose: Getter. Sets the WheelRearRight wheel of the car
+  |  Parameters:
+  |  Returns:
+  *-------------------------------------------------------------------*/
+Object3DFile* Car::getWheelRearRightObj(){
+    return this->_wheelRearRight;
+}
+
+/*-------------------------------------------------------------------
+  |  Function setWheelRearRightObj
+  |
+  |  Purpose: Setter. Sets the WheelRearRight wheel of the car
+  |  Parameters: Object3DFile object = the WheelRearRight wheel of the car
+  |  Returns:
+  *-------------------------------------------------------------------*/
+void Car::setWheelRearRightObj(Object3DFile *object){
+    this->_wheelRearRight = object;
+    this->_wheelRearRight->render();
+}
+
+/*-------------------------------------------------------------------
+  |  Function getWheelRearLeftObj
+  |
+  |  Purpose: Getter. Sets the WheelRearLeft wheel of the car
+  |  Parameters:
+  |  Returns:
+  *-------------------------------------------------------------------*/
+Object3DFile* Car::getWheelRearLeftObj(){
+    return this->_wheelRearLeft;
+}
+
+/*-------------------------------------------------------------------
+  |  Function setWheelRearLeftObj
+  |
+  |  Purpose: Setter. Sets the WheelRearLeft wheel of the car
+  |  Parameters: Object3DFile object = the WheelRearLeft of the car
+  |  Returns:
+  *-------------------------------------------------------------------*/
+void Car::setWheelRearLeftObj(Object3DFile *object){
+    this->_wheelRearLeft = object;
+    this->_wheelRearLeft->render();
+}

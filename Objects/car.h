@@ -38,12 +38,33 @@ public:
     void              setBBMax(Point3D * p_bbMax);
     Point3D         * getBBMax();
 
-    Object3DFile* getRepresentation();
-    void setRepresentation(Object3DFile *object);
+    Object3DFile* getChasisObj();
+    void setChasisObj(Object3DFile *object);
+
+    Object3DFile* getWheelObj();
+    void setWheelObj(Object3DFile *object);
+
+    Object3DFile* getWheelFrontRightObj();
+    void setWheelFrontRightObj(Object3DFile *object);
+
+    Object3DFile* getWheelFrontLeftObj();
+    void setWheelFrontLeftObj(Object3DFile *object);
+
+    Object3DFile* getWheelRearRightObj();
+    void setWheelRearRightObj(Object3DFile *object);
+
+    Object3DFile* getWheelRearLeftObj();
+    void setWheelRearLeftObj(Object3DFile *object);
 
 private:
     // ========================== Data Members ============================
-    Object3DFile *_object3D;
+    Object3DFile *_chasisObj;
+    Object3DFile *_wheelObj;
+    Object3DFile *_wheelFrontRight;
+    Object3DFile *_wheelFrontLeft;
+    Object3DFile *_wheelRearRight;
+    Object3DFile *_wheelRearLeft;
+
     Point3D         * _p_position;
     Vector3D        * _p_direction;
     Point3D         * _p_bbMin;

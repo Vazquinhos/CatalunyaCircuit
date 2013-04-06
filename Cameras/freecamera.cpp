@@ -20,7 +20,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-FreeCamera::FreeCamera()
+FreeCamera::FreeCamera() : CameraAbs()
 {
 }
 

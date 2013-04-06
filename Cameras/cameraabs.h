@@ -26,34 +26,30 @@ public:
 
     // ============================ Methods ===============================
     void              resizeProjection( int w, int h );
-    void              update( void );
+    virtual void      update( void );
     void              render( void );
     void              setModeProjection( mode_projection mode );
     mode_projection   getModeProjection(void);
     void              setPosition( Point3D * p_position );
     Point3D         * getPosition( void );
-    void              setDirection( Vector3D * p_direction );
-    Vector3D        * getDirection( void );
-    void              setUp( Vector3D * p_up );
-    Vector3D        * getUp( void );
     camera_type       getType( void );
-    virtual QString   getTypeInQString( void ){}
+    virtual QString   getTypeInQString( void ){return QString("");}
     QString           getSettingsInfo( void );
     void              setSettingsInfo( QString a_settings );
     void              setName( QString a_name);
     QString           getName( void );
     void              setYawPitch(float yaw, float pitch);
     void              addYawPitch(float yaw, float pitch);
-    void              getYawPitch(float &yae, float &pitch);
+    void              getYawPitch(float &yaw, float &pitch);
     void              setZoom(float zoom);
     float             getZoom();
 
 
+
+protected:
     // =========================== Data Members ===========================
     mode_projection     _mode;
     Point3D           * _p_position;
-    Vector3D          * _p_direction;
-    Vector3D          * _p_up;
     camera_type         _type;
     QString             _name;
     float               _yaw;

@@ -18,7 +18,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-SphericalCamera::SphericalCamera()
+SphericalCamera::SphericalCamera() : CameraAbs()
 {
 }
 
@@ -62,22 +62,24 @@ void SphericalCamera::update()
     float yaw, pitch, zoom;
 
     getYawPitch(yaw, pitch);
-
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
     zoom = getZoom();
 
-    Point3D * position = new Point3D( zoom*cos(yaw)*cos(pitch),
-                                      zoom*sin(yaw)*cos(pitch),
-                                      zoom*sin(pitch) );
+    Point3D * position = new Point3D( zoom*cos(yaw)*cos(pitch) + getPosition()->getX(),
+                                      zoom*sin(yaw)*cos(pitch) + getPosition()->getY(),
+                                      zoom*sin(pitch) + getPosition()->getZ() );
 
     Vector3D * up = new Vector3D(-cos(yaw)*sin(pitch),
                                  -sin(yaw)*sin(pitch),
                                  cos(pitch) );
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(position->getX(), position->getY(), position->getZ(),
-              0, 0, 0,
+    gluLookAt(position->getX(),
+              position->getY(),
+              position->getZ(),
+              getPosition()->getX(), getPosition()->getY(), getPosition()->getZ(),
               up->getX(), up->getY(), up->getZ() );
 }
 

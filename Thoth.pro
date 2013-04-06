@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     Lights/light.cpp \
     openGLwindow.cpp \
     glWidget.cpp \
-    camera.cpp \
     Loaders/settingsexporter.cpp \
     Loaders/lightloader.cpp \
     Loaders/fileParser.cpp \
@@ -65,7 +64,6 @@ HEADERS  += \
     Lights/light.h \
     openGLwindow.h \
     ui_thothwindow.h \
-    camera.h \
     glWidget.h \
     Loaders/settingsexporter.h \
     Loaders/lightloader.h \

@@ -29,7 +29,6 @@ private:
     Scene *_scene;
 
     QGLShaderProgram *shader;
-    Camera *camera;
 
     Point2D posCam;
 

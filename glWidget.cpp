@@ -2,6 +2,10 @@
 #include "glWidget.h"
 #include <QApplication>
 
+#include "Cameras/cameramanager.h"
+#include "Cameras/sphericalcamera.h"
+#include "Cameras/cameraabs.h"
+
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     setMouseTracking(true);
@@ -9,8 +13,6 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 
 GLWidget::~GLWidget()
 {
-    if (camera)
-        delete camera;
     if (_scene)
         delete _scene;
     if (shader)
@@ -65,7 +67,8 @@ void GLWidget::initializeGL()
 
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
-    camera = new Camera();
+    SphericalCamera * spCam = new SphericalCamera();
+    CameraManager::getCameraManager()->setCamera(QString("spherical"), spCam);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -77,10 +80,6 @@ void GLWidget::initializeGL()
 
     _scene = new Scene();
 
-    //SphericalCamera * spCam = new SphericalCamera();
-
-    //CameraManager::getCameraManager()->setCamera("spherical", spCam);
-
 }
 
 /*****************************************************************************
@@ -91,8 +90,8 @@ void GLWidget::resizeGL(int w, int h)
 {
 
     glViewport(0,0,w,h);
-    camera->setProjection(w,h);
-    //CameraManager::getCameraManager()->getCamera("spherical")->resizeProjection(w, h);
+    CameraManager::getCameraManager()->getCamera("spherical")
+            ->resizeProjection(w, h);
 
 }
 
@@ -110,8 +109,7 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
     // Update camera to its current position
-    camera->update();
-   // CameraManager::getCameraManager()->getCamera("spherical")->update();
+    CameraManager::getCameraManager()->getCamera("spherical")->update();
 
     _scene->display();
 
@@ -143,9 +141,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (event->buttons() & Qt::LeftButton)
     {
-        camera->move(	posCam.getX()- event->x(),
-            posCam.getY() - event->y());
-
+        CameraManager::getCameraManager()->getCamera("spherical")
+                ->addYawPitch(posCam.getX()- event->x(),  posCam.getY() - event->y());
         posCam.setCoordinates(event->x(), event->y());
 
         update = true;
@@ -162,21 +159,16 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
  *****************************************************************************/
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
-
     bool update = true;
 
     switch(event->key()) {
     case Qt::Key_W:
-        camera->translate(1, 0, 0);
         break;
     case Qt::Key_S:
-        camera->translate(-1, 0, 0);
         break;
     case Qt::Key_A:
-        camera->translate(0, 1, 0);
         break;
     case Qt::Key_D:
-        camera->translate(0, -1, 0);
         break;
     default:
         update = false;

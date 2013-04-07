@@ -160,6 +160,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
     bool update = true;
+    Point3D *pos;
 
     switch(event->key()) {
     case Qt::Key_W:
@@ -169,6 +170,46 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_A:
         break;
     case Qt::Key_D:
+        break;
+    case Qt::Key_0:
+        pos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_1:
+        pos = ObjectManager::getObjectManager()->getCar(1)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_2:
+        pos = ObjectManager::getObjectManager()->getCar(2)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_3:
+        pos = ObjectManager::getObjectManager()->getCar(3)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_4:
+        pos = ObjectManager::getObjectManager()->getCar(4)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_5:
+        pos = ObjectManager::getObjectManager()->getCar(5)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_6:
+        pos = ObjectManager::getObjectManager()->getCar(6)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_7:
+        pos = ObjectManager::getObjectManager()->getCar(7)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_8:
+        pos = ObjectManager::getObjectManager()->getCar(8)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        break;
+    case Qt::Key_9:
+        pos = ObjectManager::getObjectManager()->getCar(9)->getPosition();
+        CameraManager::getCameraManager()->setCameraOnCar(pos);
         break;
     default:
         update = false;

@@ -31,12 +31,14 @@ public:
     CameraAbs            * getCamera(QString a_camera_name);
     void                   setCamera(QString a_name, CameraAbs * a_camera);
     QString                getCCSCameraInfoToExport( void );
+    void                   setCameraOnCar(Point3D *position);
 
 private:
 
     // =========================== Data Members =================================
     static CameraManager * _cameraManager;
     std::map<QString, CameraAbs*> _cameras;
+    bool _cameraOnCar; //This variable set if camera is focused on cars
 };
 
 #endif // CAMERAMANAGER_H

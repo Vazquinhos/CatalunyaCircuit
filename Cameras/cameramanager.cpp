@@ -22,6 +22,7 @@ CameraManager * CameraManager::_cameraManager = NULL;
  *-------------------------------------------------------------------*/
 CameraManager::CameraManager()
 {
+    _cameraOnCar = false;
 }
 
 // ============================ Methods ===============================
@@ -65,6 +66,17 @@ CameraAbs * CameraManager::getCamera(QString camera_name)
 void CameraManager::setCamera(QString a_name, CameraAbs * a_camera)
 {
     _cameras[a_name] = a_camera;
+}
+/*-------------------------------------------------------------------
+ |  setCameraOnCar(Point3D position)
+ |
+ |  Purpose:Sets a camera on a car
+ |  Parameters:position
+ |  Returns:none
+ *-------------------------------------------------------------------*/
+void CameraManager::setCameraOnCar(Point3D *position)
+{
+
 }
 
 /*-------------------------------------------------------------------

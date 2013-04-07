@@ -1,6 +1,7 @@
 #include <QtGui/QMouseEvent>
 #include "contextgl.h"
 #include <QApplication>
+#include <QTimeLine>
 
 #include "Cameras/cameramanager.h"
 #include "Cameras/sphericalcamera.h"
@@ -154,6 +155,67 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 /*****************************************************************************
+ * wheelEvent()
+ *      Called on mouse wheel move. Controls this input.
+ *****************************************************************************/
+void GLWidget::wheelEvent (QWheelEvent * event)
+{
+    int numDegrees = event->delta() / 8;
+    int numSteps = numDegrees / 15;  // See QWheelEvent documentation
+    _numScheduledScalings += numSteps;
+    if (_numScheduledScalings * numSteps < 0) // If user moved the wheel in another direction, we reset previously scheduled scalings
+        _numScheduledScalings = numSteps;
+
+    if(event->delta() > 0){ //Delta also shows wheel direction. Positive zoom, negative un-zoom
+        _isZoomingIn = true;
+    }else{
+        _isZoomingIn = false;
+    }
+
+    QTimeLine *anim = new QTimeLine(350, this); //Create animation of 350ms of duration, updating every 20ms
+    anim->setUpdateInterval(20); //Update animation every 20 ms
+
+    connect(anim, SIGNAL(valueChanged(qreal)), SLOT(onZoomChanged(qreal))); //Every 20ms zoom will be called
+    connect(anim, SIGNAL(finished()), SLOT(onAnimZoomFinished()));//When zoom finnishes, animZoomFinished is called
+    anim->start();
+}
+
+/*****************************************************************************
+ * onAnimZoomFinished()
+ *      Called when the zoom animation finishes
+ *****************************************************************************/
+void GLWidget::onAnimZoomFinished()
+{
+    if (_numScheduledScalings > 0)
+        _numScheduledScalings--;
+    else
+        _numScheduledScalings++;
+
+    sender()->~QObject();
+}
+
+/*****************************************************************************
+ * zoom()
+ *      Called when a frame of the zoom animation is called.
+ *****************************************************************************/
+
+void GLWidget::onZoomChanged(qreal x)
+{
+    (void)x; //Delete unused warning
+    qreal factor = 1 + qreal(_numScheduledScalings) / 300.0; //Faster zoom if faster wheel movement
+
+    CameraAbs *camera = CameraManager::getCameraManager()->getCamera("spherical");
+
+    if(_isZoomingIn){//Increment or decrease current zoom
+        camera->setZoom(camera->getZoom() + factor);
+    }else{
+        camera->setZoom(camera->getZoom() - factor);
+    }
+
+    updateGL();
+}
+
+/*****************************************************************************
  * resizeGL()
  *      Called on keystrokes. Controls this input.
  *****************************************************************************/
@@ -163,6 +225,24 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     Point3D *pos;
 
     switch(event->key()) {
+
+    case Qt::Key_Right: //Move camera to right
+        break;
+
+    case Qt::Key_Left: //Move camera to left
+        break;
+    case Qt::Key_Up: //Move camera to front
+        break;
+
+    case Qt::Key_Down: //Move camera to back
+        break;
+
+    case Qt::Key_Plus: //Move camera, more altitude
+        break;
+
+    case Qt::Key_Minus: //Move camera, less altitude
+        break;
+
     case Qt::Key_W:
         break;
     case Qt::Key_S:

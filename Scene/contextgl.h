@@ -24,6 +24,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    void wheelEvent (QWheelEvent * event);
 
 private:
     Scene *_scene;
@@ -32,8 +33,19 @@ private:
 
     Point2D posCam;
 
+    //************** MOUSE ZOOM ******************
+    bool _isZoomingIn;
+    int _numScheduledScalings;
+
+
+    void onZoomChanged(qreal x);
+    void onAnimZoomFinished();
+    //********************************************
+
     void initializeShaders(QString filename);
     void releaseAllShaders();
+
+
 
 };
 

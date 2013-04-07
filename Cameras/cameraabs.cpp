@@ -25,6 +25,7 @@ CameraAbs::CameraAbs()
     _yaw = 15;
     _pitch = 30;
     _mode = PERSPECTIVE;
+    _p_position = new Point3D();
     getPosition()->setCoordinates(0.0f, 0.0f, 0.0f);
 }
 

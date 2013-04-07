@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'thothwindow.ui'
 **
-** Created: Fri Apr 5 15:30:14 2013
+** Created: Sun Apr 7 16:28:27 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -21,16 +21,16 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QWidget>
-#include "glWidget.h"
+#include "./Scene/contextgl.h"
 
 QT_BEGIN_NAMESPACE
 
-class Ui_openGLwindow
+class Ui_ThothWindow
 {
 public:
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
-    GLWidget *contextGL;
+    GLWidget *widget;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *mainToolBar;
@@ -47,10 +47,10 @@ public:
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        contextGL = new GLWidget(centralWidget);
-        contextGL->setObjectName(QString::fromUtf8("contextGL"));
+        widget = new GLWidget(centralWidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
 
-        horizontalLayout->addWidget(contextGL);
+        horizontalLayout->addWidget(widget);
 
         ThothWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ThothWindow);
@@ -78,7 +78,7 @@ public:
 };
 
 namespace Ui {
-    class ThothWindow: public Ui_openGLwindow {};
+    class ThothWindow: public Ui_ThothWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -9,6 +9,19 @@ ExportSettingsQt::ExportSettingsQt(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("Settings Exporter");
+
+    QIcon icon;
+    icon.addFile("Media/Images/car.png");
+    ui->_cars->setIcon(icon);
+    QIcon icon2;
+    icon2.addFile("Media/Images/1364340396_photography.png");
+    ui->_cameras->setIcon(icon2);
+    QIcon icon3;
+    icon3.addFile("Media/Images/1364340391_lightbulb.png");
+    ui->_lights->setIcon(icon3);
+    QPixmap pix("Media/Images/1364339878_hire-me.png");
+    ui->label->setPixmap(pix);
+
 }
 
 ExportSettingsQt::~ExportSettingsQt()

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportsettingsqt.ui'
 **
-** Created: Sat Apr 6 20:35:36 2013
+** Created: Sun Apr 7 16:51:19 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -60,25 +60,16 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         _cameras = new QCheckBox(frame);
         _cameras->setObjectName(QString::fromUtf8("_cameras"));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8("../Images/1364340396_photography.png"), QSize(), QIcon::Normal, QIcon::Off);
-        _cameras->setIcon(icon);
 
         horizontalLayout->addWidget(_cameras);
 
         _cars = new QCheckBox(frame);
         _cars->setObjectName(QString::fromUtf8("_cars"));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8("../Images/car.png"), QSize(), QIcon::Normal, QIcon::Off);
-        _cars->setIcon(icon1);
 
         horizontalLayout->addWidget(_cars);
 
         _lights = new QCheckBox(frame);
         _lights->setObjectName(QString::fromUtf8("_lights"));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8("../Images/1364340391_lightbulb.png"), QSize(), QIcon::Normal, QIcon::Off);
-        _lights->setIcon(icon2);
 
         horizontalLayout->addWidget(_lights);
 
@@ -97,7 +88,6 @@ public:
 
         label = new QLabel(frame);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setPixmap(QPixmap(QString::fromUtf8("../Images/1364339878_hire-me.png")));
         label->setAlignment(Qt::AlignCenter);
 
         gridLayout->addWidget(label, 1, 0, 1, 1);

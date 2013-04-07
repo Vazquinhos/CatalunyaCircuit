@@ -6,6 +6,7 @@ LightsWidowQt::LightsWidowQt(QWidget *parent) :
     ui(new Ui::LightsWidowQt)
 {
     ui->setupUi(this);
+    setWindowTitle("Lights Settings");
 }
 
 LightsWidowQt::~LightsWidowQt()

@@ -1,11 +1,11 @@
 #include <QApplication>
-#include "openGLwindow.h"
 #include "Utils/util.h"
+#include "Ui/mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    OpenGLwindow w;
+    MainWindow w;
 
     glutInit(&argc, argv);
 

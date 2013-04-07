@@ -32,8 +32,6 @@ SOURCES += main.cpp\
     Cameras/cameraabs.cpp \
     Lights/lightmanager.cpp \
     Lights/light.cpp \
-    openGLwindow.cpp \
-    glWidget.cpp \
     Loaders/settingsexporter.cpp \
     Loaders/lightloader.cpp \
     Loaders/fileParser.cpp \
@@ -41,7 +39,9 @@ SOURCES += main.cpp\
     Ui/lightswindowqt.cpp \
     Ui/importsettingsqt.cpp \
     Ui/exportsettingsqt.cpp \
-    Ui/errorwindow.cpp
+    Ui/errorwindow.cpp \
+    Scene/contextgl.cpp \
+    Ui/mainwindow.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -62,9 +62,6 @@ HEADERS  += \
     Cameras/cameraabs.h \
     Lights/lightmanager.h \
     Lights/light.h \
-    openGLwindow.h \
-    ui_thothwindow.h \
-    glWidget.h \
     Loaders/settingsexporter.h \
     Loaders/lightloader.h \
     Loaders/fileParser.h \
@@ -72,15 +69,16 @@ HEADERS  += \
     Ui/lightswindowqt.h \
     Ui/importsettingsqt.h \
     Ui/exportsettingsqt.h \
-    Ui/errorwindow.h
+    Ui/errorwindow.h \
+    Scene/contextgl.h \
+    Ui/mainwindow.h
 
 FORMS    += \
-    openGLwindow.ui \
-    Ui/montmelocircuit.ui \
     Ui/lightswindowqt.ui \
     Ui/importsettingsqt.ui \
     Ui/exportsettingsqt.ui \
-    Ui/errorwindow.ui
+    Ui/errorwindow.ui \
+    Ui/mainwindow.ui
 
 OTHER_FILES += \
     simple.vert \

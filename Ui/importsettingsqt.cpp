@@ -9,6 +9,8 @@ ImportSettingsQt::ImportSettingsQt(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("Settings Importer");
+    QPixmap pix("Media/Images/1364339878_hire-me.png");
+    ui->label->setPixmap(pix);
 }
 
 ImportSettingsQt::~ImportSettingsQt()

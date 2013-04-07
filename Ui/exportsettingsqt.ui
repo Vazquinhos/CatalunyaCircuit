@@ -30,10 +30,6 @@
           <property name="text">
            <string>Cameras</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../Images/1364340396_photography.png</normaloff>../Images/1364340396_photography.png</iconset>
-          </property>
          </widget>
         </item>
         <item>
@@ -41,20 +37,12 @@
           <property name="text">
            <string>Cars</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../Images/car.png</normaloff>../Images/car.png</iconset>
-          </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="_lights">
           <property name="text">
            <string>Lights</string>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../Images/1364340391_lightbulb.png</normaloff>../Images/1364340391_lightbulb.png</iconset>
           </property>
          </widget>
         </item>
@@ -74,9 +62,6 @@
        <widget class="QLabel" name="label">
         <property name="text">
          <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>../Images/1364339878_hire-me.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

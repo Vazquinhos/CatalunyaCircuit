@@ -106,3 +106,26 @@ QString CameraManager::getCCSCameraInfoToExport( void )
     }
     return string_to_rtn;
 }
+
+CameraAbs * CameraManager::getActiveCamera()
+{
+    return _p_activeCamera;
+}
+
+void CameraManager::setActiveCamera(CameraAbs * camera)
+{
+    //Comprobamos si es una camara del manager.
+    //Si no lo es, la añadimos.
+    if(_cameras.find(camera->getName()) == _cameras.end())
+    {
+        _cameras[camera->getName()] = camera;
+    }
+
+    //Ponemos la camara como camara activa.
+    _p_activeCamera = camera;
+}
+
+void CameraManager::setActiveCamera(QString name)
+{
+    _p_activeCamera = this->getCamera(name);
+}

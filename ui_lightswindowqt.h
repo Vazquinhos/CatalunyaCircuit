@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lightswindowqt.ui'
 **
-** Created: Sat Apr 6 20:35:36 2013
+** Created: Mon Apr 8 16:32:58 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

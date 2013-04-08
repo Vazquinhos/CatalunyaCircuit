@@ -17,6 +17,10 @@ public:
     GLWidget(QWidget *parent = NULL);
     ~GLWidget();
 
+public slots:
+    void onZoomChanged(qreal x);
+    void onAnimZoomFinished();
+
 protected:
     void initializeGL();
     void resizeGL(int w, int h);
@@ -38,8 +42,8 @@ private:
     int _numScheduledScalings;
 
 
-    void onZoomChanged(qreal x);
-    void onAnimZoomFinished();
+    /*void onZoomChanged(qreal x);
+    void onAnimZoomFinished();*/
     //********************************************
 
     void initializeShaders(QString filename);

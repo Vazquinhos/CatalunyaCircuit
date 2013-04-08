@@ -6,6 +6,7 @@
 #include "Cameras/cameramanager.h"
 #include "Cameras/sphericalcamera.h"
 #include "Cameras/cameraabs.h"
+#include "Cameras/freecamera.h"
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -70,6 +71,8 @@ void GLWidget::initializeGL()
     //----------------------------------------------------------
     SphericalCamera * spCam = new SphericalCamera();
     CameraManager::getCameraManager()->setCamera(QString("spherical"), spCam);
+    FreeCamera * frCam = new FreeCamera();
+    CameraManager::getCameraManager()->setCamera(QString("free"), frCam);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -91,7 +94,7 @@ void GLWidget::resizeGL(int w, int h)
 {
 
     glViewport(0,0,w,h);
-    CameraManager::getCameraManager()->getCamera("spherical")
+    CameraManager::getCameraManager()->getCamera("free")
             ->resizeProjection(w, h);
 
 }
@@ -109,11 +112,12 @@ void GLWidget::paintGL()
     // DEPTH to ensure correct representation of objects given the depht testing used
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+    glPushMatrix();
     // Update camera to its current position
-    CameraManager::getCameraManager()->getCamera("spherical")->update();
+    CameraManager::getCameraManager()->getCamera("free")->update();
 
     _scene->display();
-
+    glPopMatrix();
 }
 
 /*****************************************************************************
@@ -142,7 +146,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (event->buttons() & Qt::LeftButton)
     {
-        CameraManager::getCameraManager()->getCamera("spherical")
+        CameraManager::getCameraManager()->getCamera("free")
                 ->addYawPitch(posCam.getX()- event->x(),  posCam.getY() - event->y());
         posCam.setCoordinates(event->x(), event->y());
 
@@ -204,7 +208,7 @@ void GLWidget::onZoomChanged(qreal x)
     (void)x; //Delete unused warning
     qreal factor = 1 + qreal(_numScheduledScalings) / 300.0; //Faster zoom if faster wheel movement
 
-    CameraAbs *camera = CameraManager::getCameraManager()->getCamera("spherical");
+    CameraAbs *camera = CameraManager::getCameraManager()->getCamera("free");
 
     if(_isZoomingIn){//Increment or decrease current zoom
         camera->setZoom(camera->getZoom() + factor);
@@ -227,14 +231,23 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     switch(event->key()) {
 
     case Qt::Key_Right: //Move camera to right
+        qDebug() << "PULSANDO RIGHT";
+        CameraManager::getCameraManager()->getCamera("free")->move(1, false);
         break;
 
     case Qt::Key_Left: //Move camera to left
+        qDebug() << "PULSANDO LEFT";
+        CameraManager::getCameraManager()->getCamera("free")->move(-1, false);
         break;
     case Qt::Key_Up: //Move camera to front
+        qDebug() << "PULSANDO UP";
+        CameraManager::getCameraManager()->getCamera("free")->move(1, true);
         break;
 
     case Qt::Key_Down: //Move camera to back
+        qDebug() << "PULSANDO DOWN";
+        CameraManager::getCameraManager()->getCamera("free")->move(-1, true);
+        break;
         break;
 
     case Qt::Key_Plus: //Move camera, more altitude
@@ -246,6 +259,13 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_W:
         break;
     case Qt::Key_S:
+        pos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
+        qDebug() << "POSICION CAMERA:";
+        qDebug() << "X " << pos->getX() << " Y " << pos->getY() << " Z " << pos->getZ();
+        break;
+    case Qt::Key_R:
+        CameraManager::getCameraManager()->getCamera("free")->getPosition()->setCoordinates(0,0,0);
+        CameraManager::getCameraManager()->getCamera("free")->setYawPitch(0,0);
         break;
     case Qt::Key_A:
         break;

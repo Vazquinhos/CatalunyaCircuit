@@ -22,7 +22,7 @@ class Car
 {
 public:
     // ================= Constructores/Destructores ======================
-    Car();
+    Car(QString folder, Point3D * position);
     Car(const Car& car);
     ~Car();
 

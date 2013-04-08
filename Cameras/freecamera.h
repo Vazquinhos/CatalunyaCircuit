@@ -28,6 +28,10 @@ public:
 
     // ============================ Methods ===============================
     virtual QString     getTypeInQString( void );
+    virtual void        update();
+    virtual void        move(float velocity, bool front);
+    void                move(float incrementX, float incrementY, float incrementZ);
+    void                render();
 
 private:
     // ========================== Data Members ============================

@@ -21,15 +21,15 @@
 Scene::Scene()
 {
     Object3DFile *enviromentObj;
-    Object3DFile *chasisObj;
-    Object3DFile *wheelObj;
-    Object3DFile *wheelFrontRightObj;
-    Object3DFile *wheelFrontLeftObj;
-    Object3DFile *wheelRearRightObj;
-    Object3DFile *wheelRearLeftObj;
 
     Enviroment *enviroment = new Enviroment();
-    Car *ferrari = new Car();
+
+    Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
+    /*Car *c2 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.5f,-122.0f,-2));
+    Car *c3 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.35f,-114.5f,-2));
+    Car *c4 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.55f,-106.5f,-2));
+    Car *c5 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-99.0f,-2));
+    Car *c6 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.7f,-90.5f,-2));*/
 
     _objectManager = ObjectManager::getObjectManager();
 
@@ -38,44 +38,14 @@ Scene::Scene()
     enviromentObj->setRotation(new Point3D(90,0,0));
     enviroment->setRepresentation(enviromentObj); //Set enviroment representation
 
-    chasisObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Cars/Ferrari/").toAscii().data(), "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    chasisObj->setTranslation(new Point3D(0, 3, -2));
-    chasisObj->setRotation(new Point3D(0,0,90));
-    chasisObj->setScale(new Point3D(1, 1, 1));
-    ferrari->setChasisObj(chasisObj);
-
-    wheelObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Cars/Ferrari/").toAscii().data(), "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelObj->setTranslation(new Point3D(0, 3, -2));
-    wheelObj->setRotation(new Point3D(0,0,90));
-    wheelObj->setScale(new Point3D(1, 1, 1));
-    ferrari->setWheelObj(wheelObj);
-
-    wheelFrontRightObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Cars/Ferrari/").toAscii().data(), "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelFrontRightObj->setTranslation(new Point3D(0, 3, -2));
-    wheelFrontRightObj->setRotation(new Point3D(0,0,90));
-    wheelFrontRightObj->setScale(new Point3D(1, 1, 1));
-    ferrari->setWheelFrontRightObj(wheelFrontRightObj);
-
-    wheelFrontLeftObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Cars/Ferrari/").toAscii().data(), "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelFrontLeftObj->setTranslation(new Point3D(0, 3, -2));
-    wheelFrontLeftObj->setRotation(new Point3D(0,0,90));
-    wheelFrontLeftObj->setScale(new Point3D(1, 1, 1));
-    ferrari->setWheelFrontLeftObj(wheelFrontLeftObj);
-
-    wheelRearRightObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Cars/Ferrari/").toAscii().data(), "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelRearRightObj->setTranslation(new Point3D(0, 3, -2));
-    wheelRearRightObj->setRotation(new Point3D(0,0,90));
-    wheelRearRightObj->setScale(new Point3D(1, 1, 1));
-    ferrari->setWheelRearRightObj(wheelRearRightObj);
-
-    wheelRearLeftObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Cars/Ferrari/").toAscii().data(), "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelRearLeftObj->setTranslation(new Point3D(0, 3, -2));
-    wheelRearLeftObj->setRotation(new Point3D(0,0,90));
-    wheelRearLeftObj->setScale(new Point3D(1, 1, 1));
-    ferrari->setWheelRearLeftObj(wheelRearLeftObj);
 
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
-    _objectManager->addCar(ferrari); //Add ferrari
+    _objectManager->addCar(c1); //Add ferrari
+    /*_objectManager->addCar(c2);
+    _objectManager->addCar(c3);
+    _objectManager->addCar(c4);
+    _objectManager->addCar(c5);
+    _objectManager->addCar(c6);*/
 }
 
 /*-------------------------------------------------------------------

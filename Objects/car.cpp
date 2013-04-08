@@ -9,7 +9,7 @@
  */
 
 #include "car.h"
-
+#include <QDir>
 // ================= Constructores/Destructores ======================
 
 /*-------------------------------------------------------------------
@@ -19,8 +19,50 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Car::Car()
+Car::Car(QString folder, Point3D * position)
 {
+    Object3DFile *chasisObj;
+    Object3DFile *wheelObj;
+    Object3DFile *wheelFrontRightObj;
+    Object3DFile *wheelFrontLeftObj;
+    Object3DFile *wheelRearRightObj;
+    Object3DFile *wheelRearLeftObj;
+
+    chasisObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    chasisObj->setTranslation(position);
+    chasisObj->setRotation(new Point3D(0,0,90));
+    chasisObj->setScale(new Point3D(1, 1, 1));
+    setChasisObj(chasisObj);
+
+    wheelObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    wheelObj->setTranslation(position);
+    wheelObj->setRotation(new Point3D(0,0,90));
+    wheelObj->setScale(new Point3D(1, 1, 1));
+    setWheelObj(wheelObj);
+
+    wheelFrontRightObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    wheelFrontRightObj->setTranslation(position);
+    wheelFrontRightObj->setRotation(new Point3D(0,0,90));
+    wheelFrontRightObj->setScale(new Point3D(1, 1, 1));
+    setWheelFrontRightObj(wheelFrontRightObj);
+
+    wheelFrontLeftObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    wheelFrontLeftObj->setTranslation(position);
+    wheelFrontLeftObj->setRotation(new Point3D(0,0,90));
+    wheelFrontLeftObj->setScale(new Point3D(1, 1, 1));
+    setWheelFrontLeftObj(wheelFrontLeftObj);
+
+    wheelRearRightObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    wheelRearRightObj->setTranslation(position);
+    wheelRearRightObj->setRotation(new Point3D(0,0,90));
+    wheelRearRightObj->setScale(new Point3D(1, 1, 1));
+    setWheelRearRightObj(wheelRearRightObj);
+
+    wheelRearLeftObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    wheelRearLeftObj->setTranslation(position);
+    wheelRearLeftObj->setRotation(new Point3D(0,0,90));
+    wheelRearLeftObj->setScale(new Point3D(1, 1, 1));
+    setWheelRearLeftObj(wheelRearLeftObj);
 }
 
 /*-------------------------------------------------------------------

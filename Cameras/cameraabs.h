@@ -28,6 +28,7 @@ public:
     void              resizeProjection( int w, int h );
     virtual void      update( void );
     void              render( void );
+    virtual void      move(float velocity, bool front){}
     void              setModeProjection( mode_projection mode );
     mode_projection   getModeProjection(void);
     void              setPosition( Point3D * p_position );
@@ -43,7 +44,6 @@ public:
     void              getYawPitch(float &yaw, float &pitch);
     void              setZoom(float zoom);
     float             getZoom();
-
 
 
 protected:

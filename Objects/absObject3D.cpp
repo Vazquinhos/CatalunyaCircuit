@@ -25,7 +25,7 @@ AbsObject3D::AbsObject3D() {
     this->_gi_displayListId = 0;
     _p_translation = new Point3D();
     _p_rotation = new Point3D();
-    _p_scale = new Point3D();
+    _p_scale = new Point3D(1,1,1);
     _p_minVertex = new Point3D();
     _p_maxVertex = new Point3D();
 }

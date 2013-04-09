@@ -20,7 +20,7 @@
  *-------------------------------------------------------------------*/
 Scene::Scene()
 {
-    Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/");
+    Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/", "/Media/Models/Mountains/", "/Media/Models/Sky/");
 
     Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
     /*Car *c2 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.5f,-122.0f,-2));

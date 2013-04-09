@@ -21,17 +21,17 @@ class Enviroment
 {
 public:
     // ================= Constructores/Destructores ======================
-    Enviroment(QString folder);
+    Enviroment(QString circuitFolder, QString mountainsFolder, QString skyFolder);
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
     void render();
     void display();
-    Object3DFile* getRepresentation();
-    void setRepresentation(Object3DFile *object);
+
 private:
     // ========================== Data Members ============================
-    Object3DFile *_object3D;
+    Object3DFile *_circuit3D;
+    Object3DFile *_sky3D;
     // ============================ Methods ===============================
 };
 

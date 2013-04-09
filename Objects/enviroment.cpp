@@ -20,14 +20,15 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Enviroment::Enviroment(QString folder)
+Enviroment::Enviroment(QString circuitFolder, QString mountainsFolder, QString skyFolder)
 {
-    Object3DFile *enviromentObj;
-    enviromentObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "circuit.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+    _circuit3D = new Object3DFile((QDir::currentPath() + circuitFolder).toAscii().data(), "circuit.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+    _circuit3D->setRotation(new Point3D(90,0,0));
+    _circuit3D->render();
 
-    enviromentObj->setScale(new Point3D(1, 1, 1));
-    enviromentObj->setRotation(new Point3D(90,0,0));
-    setRepresentation(enviromentObj); //Set enviroment representation
+    _sky3D = new Object3DFile((QDir::currentPath() + skyFolder).toAscii().data(), "sky.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+    _sky3D->setRotation(new Point3D(90,0,0));
+    _sky3D->render();
 }
 
 /*-------------------------------------------------------------------
@@ -74,29 +75,8 @@ void Enviroment::render()
  *-------------------------------------------------------------------*/
 void Enviroment::display()
 {
-    this->_object3D->display();
+    _circuit3D->display();
+    _sky3D->display();
 }
 
-/*-------------------------------------------------------------------
- |  Function getRepresentation
- |
- |  Purpose: Getter. Gets the representation of the enviroment
- |  Parameters:
- |  Returns: Object3DFile = the representation of the enviroment
- *-------------------------------------------------------------------*/
-Object3DFile* Enviroment::getRepresentation(){
-    return this->_object3D;
-}
-
-/*-------------------------------------------------------------------
- |  Function setRepresentation
- |
- |  Purpose: Setter. Sets the representation of the enviroment
- |  Parameters: Object3DFile object = the representation of the enviroment
- |  Returns:
- *-------------------------------------------------------------------*/
- void Enviroment::setRepresentation(Object3DFile *object){
-    this->_object3D = object;
-    this->_object3D->render();
- }
 

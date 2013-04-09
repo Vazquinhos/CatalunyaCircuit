@@ -568,7 +568,9 @@ OTHER_FILES += \
     Media/Models/Cars/Ferrari/digi1.tga \
     Media/Models/Cars/Ferrari/chasis2.tga \
     Media/Models/Cars/Ferrari/chasis.tga \
-    Media/Models/Cars/Ferrari/chasis.3ds
+    Media/Models/Cars/Ferrari/chasis.3ds \
+    Media/Models/Sky/sky.3ds \
+    Media/Models/Sky/cat_sky_sun_01.dds
 
 LIBS += -lgomp
 

@@ -67,9 +67,9 @@ void CameraAbs::resizeProjection(int w, int h)
    if (_mode == PERSPECTIVE)
    {
        if(w>=h)
-           gluPerspective(60.0, 1.0*w/h, 0.1, 500);
+           gluPerspective(60.0, 1.0*w/h, 0.1, 40000);
        else
-           gluPerspective(60.0*h/w, 1.0*w/h, 0.1, 500);
+           gluPerspective(60.0*h/w, 1.0*w/h, 0.1, 40000);
    }
 }
 

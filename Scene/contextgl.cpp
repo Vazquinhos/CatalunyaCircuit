@@ -112,12 +112,12 @@ void GLWidget::paintGL()
     // DEPTH to ensure correct representation of objects given the depht testing used
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-    glPushMatrix();
+
     // Update camera to its current position
     CameraManager::getCameraManager()->getCamera("free")->update();
 
     _scene->display();
-    glPopMatrix();
+
 }
 
 /*****************************************************************************

@@ -132,9 +132,13 @@ void ObjectManager::renderAll()
  |  Returns:
  *-------------------------------------------------------------------*/
 void ObjectManager::displayAll(){
+    glPushMatrix();
     _p_enviroment->display();
+    glPopMatrix();
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
+        glPushMatrix();
         _v_cars[i]->display();
+        glPopMatrix();
     }
 }

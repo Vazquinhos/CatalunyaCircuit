@@ -15,6 +15,9 @@ public:
     explicit CarsWindowQt(QWidget *parent = 0);
     ~CarsWindowQt();
     
+private slots:
+    void on_pushButton_4_clicked();
+
 private:
     Ui::CarsWindowQt *ui;
 };

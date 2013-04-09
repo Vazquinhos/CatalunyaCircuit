@@ -570,6 +570,15 @@ OTHER_FILES += \
     Media/Models/Cars/Ferrari/chasis.tga \
     Media/Models/Cars/Ferrari/chasis.3ds
 
+LIBS += -lgomp
+
+QMAKE_CXXFLAGS+= -fopenmp
+QMAKE_LFLAGS +=  -fopenmp
+
+QMAKE_CFLAGS_RELEASE += -fopenmp
+QMAKE_CFLAGS_DEBUG += -fopenmp
+
+
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += assimp
 

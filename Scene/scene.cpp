@@ -20,9 +20,7 @@
  *-------------------------------------------------------------------*/
 Scene::Scene()
 {
-    Object3DFile *enviromentObj;
-
-    Enviroment *enviroment = new Enviroment();
+    Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/");
 
     Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
     /*Car *c2 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.5f,-122.0f,-2));
@@ -32,12 +30,6 @@ Scene::Scene()
     Car *c6 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.7f,-90.5f,-2));*/
 
     _objectManager = ObjectManager::getObjectManager();
-
-    enviromentObj = new Object3DFile((QDir::currentPath() + "/Media/Models/Circuit/").toAscii().data(), "circuit.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
-    enviromentObj->setScale(new Point3D(1, 1, 1));
-    enviromentObj->setRotation(new Point3D(90,0,0));
-    enviroment->setRepresentation(enviromentObj); //Set enviroment representation
-
 
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
     _objectManager->addCar(c1); //Add ferrari

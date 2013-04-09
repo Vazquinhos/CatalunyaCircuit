@@ -9,6 +9,7 @@
  */
 
 #include "enviroment.h"
+#include <QDir>
 
 // ================= Constructores/Destructores ======================
 
@@ -19,8 +20,14 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Enviroment::Enviroment()
+Enviroment::Enviroment(QString folder)
 {
+    Object3DFile *enviromentObj;
+    enviromentObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "circuit.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+
+    enviromentObj->setScale(new Point3D(1, 1, 1));
+    enviromentObj->setRotation(new Point3D(90,0,0));
+    setRepresentation(enviromentObj); //Set enviroment representation
 }
 
 /*-------------------------------------------------------------------

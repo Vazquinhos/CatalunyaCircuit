@@ -21,7 +21,7 @@ class Enviroment
 {
 public:
     // ================= Constructores/Destructores ======================
-    Enviroment();
+    Enviroment(QString folder);
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================

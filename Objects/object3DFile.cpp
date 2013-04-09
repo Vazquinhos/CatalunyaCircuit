@@ -19,6 +19,8 @@
 #include <QDir>
 #include <algorithm>
 
+#include <omp.h>
+
 
 /******************************* PUBLIC *****************************************/
 
@@ -211,7 +213,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
  *-------------------------------------------------------------------*/
 bool Object3DFile::loadMaterials(const aiScene* pScene)
 {
-    bool Ret = true;
+    bool ret = true;
     ilInit(); /* Initialization of DevIL */
 
     // Initialize the materials
@@ -269,7 +271,7 @@ bool Object3DFile::loadMaterials(const aiScene* pScene)
 
     }
 
-    return Ret;
+    return ret;
 }
 
 

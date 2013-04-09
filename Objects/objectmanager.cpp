@@ -37,8 +37,9 @@ ObjectManager::ObjectManager()
  *-------------------------------------------------------------------*/
 ObjectManager * ObjectManager::getObjectManager()
 {
-    if( !_p_objectManager )
+    if( !_p_objectManager ) {
         _p_objectManager = new ObjectManager();
+    }
 
     return _p_objectManager;
 }

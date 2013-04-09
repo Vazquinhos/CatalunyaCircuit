@@ -177,6 +177,17 @@ CameraAbs::getSettingsInfo( void )
     // of each concrete camera.
     QString type = getTypeInQString();
 
+    // Getting the yaw value
+    QString yaw;
+    yaw.setNum(_yaw);
+
+    // Getting the pitch value
+    QString pitch;
+    pitch.setNum(_pitch);
+    // Getting the zoom value
+    QString zoom;
+    zoom.setNum(_zoom);
+
     // Getting the name of the camera
     QString name = getName();
 
@@ -186,7 +197,11 @@ CameraAbs::getSettingsInfo( void )
             QString("<x>") + x + QString("</x>\n") +
             QString("<y>") + y + QString("</y>\n") +
             QString("<z>") + z + QString("</z>\n") +
-            QString("</position>\n") + QString("</camera>\n");
+            QString("</position>\n") +
+            QString("<yaw>") + yaw + QString("</yaw>\n") +
+            QString("<pitch>") + pitch + QString("</pitch>\n") +
+            QString("<zoom>") + zoom + QString("</zoom>\n") +
+            QString("</camera>\n");
 
     return settings_to_return;
 }

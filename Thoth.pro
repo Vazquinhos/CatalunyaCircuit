@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     Ui/exportsettingsqt.cpp \
     Ui/errorwindow.cpp \
     Scene/contextgl.cpp \
-    Ui/mainwindow.cpp
+    Ui/mainwindow.cpp \
+    Ui/camerawindowqt.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -71,25 +72,24 @@ HEADERS  += \
     Ui/exportsettingsqt.h \
     Ui/errorwindow.h \
     Scene/contextgl.h \
-    Ui/mainwindow.h
+    Ui/mainwindow.h \
+    Ui/camerawindowqt.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \
     Ui/importsettingsqt.ui \
     Ui/exportsettingsqt.ui \
     Ui/errorwindow.ui \
-    Ui/mainwindow.ui
+    Ui/mainwindow.ui \
+    Ui/camerawindowqt.ui
 
 OTHER_FILES += \
     simple.vert \
     simple.frag \
     Media/Images/car.png \
     Media/Images/1364340396_photography.png \
-    Media/Images/1364340391_lightbulb.png \
     Media/Images/1364339878_hire-me.png \
     Media/Images/1364339322_logout.png \
-    Media/Images/1364339241_sign-out.png \
-    Media/Images/1364338876_sign-in.png \
     Media/Models/Circuit/ubs_decal_a.dds \
     Media/Models/Circuit/ubs_board_a.dds \
     Media/Models/Circuit/track_diff_a_02_d.dds \
@@ -570,7 +570,11 @@ OTHER_FILES += \
     Media/Models/Cars/Ferrari/chasis.tga \
     Media/Models/Cars/Ferrari/chasis.3ds \
     Media/Models/Sky/sky.3ds \
-    Media/Models/Sky/cat_sky_sun_01.dds
+    Media/Models/Sky/cat_sky_sun_01.dds \
+    Media/Images/1365553386_export.png \
+    Media/Images/1365553346_import.png \
+    Media/Images/1365553596_idea.png \
+    Media/Images/1365553750_film_camera_35mm.png
 
 LIBS += -lgomp
 

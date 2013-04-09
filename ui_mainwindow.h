@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Apr 9 20:41:05 2013
+** Created: Tue Apr 9 22:47:54 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -31,6 +31,7 @@ public:
     QAction *actionImport;
     QAction *actionExport;
     QAction *actionLight;
+    QAction *actionCamera;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     GLWidget *widget;
@@ -50,6 +51,8 @@ public:
         actionExport->setObjectName(QString::fromUtf8("actionExport"));
         actionLight = new QAction(MainWindow);
         actionLight->setObjectName(QString::fromUtf8("actionLight"));
+        actionCamera = new QAction(MainWindow);
+        actionCamera->setObjectName(QString::fromUtf8("actionCamera"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -77,6 +80,7 @@ public:
         toolBar->addAction(actionImport);
         toolBar->addAction(actionExport);
         toolBar_2->addAction(actionLight);
+        toolBar_2->addAction(actionCamera);
 
         retranslateUi(MainWindow);
 
@@ -86,9 +90,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        actionImport->setText(QApplication::translate("MainWindow", "import", 0, QApplication::UnicodeUTF8));
-        actionExport->setText(QApplication::translate("MainWindow", "export", 0, QApplication::UnicodeUTF8));
-        actionLight->setText(QApplication::translate("MainWindow", "light", 0, QApplication::UnicodeUTF8));
+        actionImport->setText(QApplication::translate("MainWindow", "Import", 0, QApplication::UnicodeUTF8));
+        actionExport->setText(QApplication::translate("MainWindow", "Export", 0, QApplication::UnicodeUTF8));
+        actionLight->setText(QApplication::translate("MainWindow", "Light", 0, QApplication::UnicodeUTF8));
+        actionCamera->setText(QApplication::translate("MainWindow", "Camera", 0, QApplication::UnicodeUTF8));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0, QApplication::UnicodeUTF8));
         toolBar_2->setWindowTitle(QApplication::translate("MainWindow", "toolBar_2", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

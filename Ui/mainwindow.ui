@@ -55,20 +55,26 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionLight"/>
+   <addaction name="actionCamera"/>
   </widget>
   <action name="actionImport">
    <property name="text">
-    <string>import</string>
+    <string>Import</string>
    </property>
   </action>
   <action name="actionExport">
    <property name="text">
-    <string>export</string>
+    <string>Export</string>
    </property>
   </action>
   <action name="actionLight">
    <property name="text">
-    <string>light</string>
+    <string>Light</string>
+   </property>
+  </action>
+  <action name="actionCamera">
+   <property name="text">
+    <string>Camera</string>
    </property>
   </action>
  </widget>

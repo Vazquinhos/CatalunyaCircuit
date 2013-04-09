@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lightswindowqt.ui'
 **
-** Created: Tue Apr 9 02:04:59 2013
+** Created: Tue Apr 9 22:47:54 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,6 +17,7 @@
 #include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QDoubleSpinBox>
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
@@ -24,8 +25,6 @@
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QSpinBox>
 #include <QtGui/QTableView>
 #include <QtGui/QVBoxLayout>
 
@@ -36,79 +35,80 @@ class Ui_LightsWidowQt
 public:
     QVBoxLayout *verticalLayout;
     QFrame *frame;
-    QVBoxLayout *verticalLayout_7;
+    QVBoxLayout *verticalLayout_6;
     QHBoxLayout *horizontalLayout_6;
-    QTableView *lightview;
-    QVBoxLayout *verticalLayout_8;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QLineEdit *_lineEdit_name;
-    QVBoxLayout *verticalLayout_3;
+    QFrame *line_5;
+    QTableView *lightview;
+    QHBoxLayout *horizontalLayout_5;
     QPushButton *add_pb;
     QPushButton *delete_pb;
     QFrame *line_4;
-    QVBoxLayout *verticalLayout_6;
+    QHBoxLayout *horizontalLayout_7;
     QLabel *label_5;
-    QHBoxLayout *horizontalLayout_2;
     QLabel *label_6;
-    QSpinBox *x_sb;
-    QHBoxLayout *horizontalLayout_3;
+    QDoubleSpinBox *doubleSpinBox;
     QLabel *label_7;
-    QSpinBox *y_sb;
-    QHBoxLayout *horizontalLayout_4;
+    QDoubleSpinBox *doubleSpinBox_2;
     QLabel *label_8;
-    QSpinBox *z_sb;
-    QSpacerItem *verticalSpacer;
+    QDoubleSpinBox *doubleSpinBox_3;
     QFrame *line_3;
-    QHBoxLayout *horizontalLayout_5;
-    QVBoxLayout *verticalLayout_4;
-    QGridLayout *gridLayout_3;
-    QSpinBox *specular_sb3;
-    QCheckBox *specular_cb;
-    QSpinBox *specular_sb4;
-    QSpinBox *specular_sb2;
-    QSpinBox *specular_sb1;
-    QFrame *line;
-    QVBoxLayout *verticalLayout_5;
-    QCheckBox *ambient_cb;
-    QGridLayout *gridLayout_2;
-    QSpinBox *ambient_sb2;
-    QSpinBox *ambient_sb1;
-    QSpinBox *ambient_sb3;
-    QSpinBox *ambient_sb4;
-    QFrame *line_2;
+    QVBoxLayout *verticalLayout_7;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_2;
     QGridLayout *gridLayout;
-    QSpinBox *colors_sb2;
-    QSpinBox *colors_sb1;
-    QSpinBox *colors_sb3;
-    QSpinBox *colors_sb4;
+    QLabel *label_3;
+    QDoubleSpinBox *_color_blue;
+    QDoubleSpinBox *_color_alpha;
+    QDoubleSpinBox *_color_red;
+    QDoubleSpinBox *_color_green;
+    QLabel *label_4;
+    QLabel *label_9;
+    QLabel *label_10;
+    QFrame *line_2;
+    QVBoxLayout *verticalLayout_5;
+    QCheckBox *ambient_cb;
+    QGridLayout *gridLayout_2;
+    QDoubleSpinBox *sb_ambient3;
+    QDoubleSpinBox *sb_ambient4;
+    QDoubleSpinBox *sb_ambient1;
+    QDoubleSpinBox *sb_ambient2;
+    QFrame *line;
+    QVBoxLayout *verticalLayout_4;
+    QGridLayout *gridLayout_3;
+    QCheckBox *specular_cb;
+    QDoubleSpinBox *sb_specular3;
+    QDoubleSpinBox *sb_specular1;
+    QDoubleSpinBox *sb_specular2;
+    QDoubleSpinBox *sb_specular4;
+    QGridLayout *gridLayout_4;
+    QDoubleSpinBox *sb_diffuse1;
+    QDoubleSpinBox *sb_diffuse3;
+    QCheckBox *diffuse_cb;
+    QDoubleSpinBox *sb_diffuse2;
+    QDoubleSpinBox *sb_diffuse4;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *LightsWidowQt)
     {
         if (LightsWidowQt->objectName().isEmpty())
             LightsWidowQt->setObjectName(QString::fromUtf8("LightsWidowQt"));
-        LightsWidowQt->resize(731, 387);
+        LightsWidowQt->resize(531, 472);
         verticalLayout = new QVBoxLayout(LightsWidowQt);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame = new QFrame(LightsWidowQt);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        verticalLayout_7 = new QVBoxLayout(frame);
-        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        verticalLayout_6 = new QVBoxLayout(frame);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        lightview = new QTableView(frame);
-        lightview->setObjectName(QString::fromUtf8("lightview"));
-        lightview->horizontalHeader()->setVisible(true);
-
-        horizontalLayout_6->addWidget(lightview);
-
-        verticalLayout_8 = new QVBoxLayout();
-        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         label = new QLabel(frame);
@@ -121,149 +121,160 @@ public:
 
         horizontalLayout->addWidget(_lineEdit_name);
 
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+
+        verticalLayout_3->addLayout(horizontalLayout);
+
+        line_5 = new QFrame(frame);
+        line_5->setObjectName(QString::fromUtf8("line_5"));
+        line_5->setFrameShape(QFrame::HLine);
+        line_5->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_3->addWidget(line_5);
+
+        lightview = new QTableView(frame);
+        lightview->setObjectName(QString::fromUtf8("lightview"));
+        lightview->horizontalHeader()->setVisible(false);
+
+        verticalLayout_3->addWidget(lightview);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         add_pb = new QPushButton(frame);
         add_pb->setObjectName(QString::fromUtf8("add_pb"));
 
-        verticalLayout_3->addWidget(add_pb);
+        horizontalLayout_5->addWidget(add_pb);
 
         delete_pb = new QPushButton(frame);
         delete_pb->setObjectName(QString::fromUtf8("delete_pb"));
 
-        verticalLayout_3->addWidget(delete_pb);
+        horizontalLayout_5->addWidget(delete_pb);
 
 
-        horizontalLayout->addLayout(verticalLayout_3);
-
-
-        verticalLayout_8->addLayout(horizontalLayout);
+        verticalLayout_3->addLayout(horizontalLayout_5);
 
         line_4 = new QFrame(frame);
         line_4->setObjectName(QString::fromUtf8("line_4"));
         line_4->setFrameShape(QFrame::HLine);
         line_4->setFrameShadow(QFrame::Sunken);
 
-        verticalLayout_8->addWidget(line_4);
+        verticalLayout_3->addWidget(line_4);
 
-        verticalLayout_6 = new QVBoxLayout();
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         label_5 = new QLabel(frame);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
-        verticalLayout_6->addWidget(label_5);
+        horizontalLayout_7->addWidget(label_5);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         label_6 = new QLabel(frame);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_2->addWidget(label_6);
+        horizontalLayout_7->addWidget(label_6);
 
-        x_sb = new QSpinBox(frame);
-        x_sb->setObjectName(QString::fromUtf8("x_sb"));
+        doubleSpinBox = new QDoubleSpinBox(frame);
+        doubleSpinBox->setObjectName(QString::fromUtf8("doubleSpinBox"));
 
-        horizontalLayout_2->addWidget(x_sb);
+        horizontalLayout_7->addWidget(doubleSpinBox);
 
-
-        verticalLayout_6->addLayout(horizontalLayout_2);
-
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         label_7 = new QLabel(frame);
         label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_3->addWidget(label_7);
+        horizontalLayout_7->addWidget(label_7);
 
-        y_sb = new QSpinBox(frame);
-        y_sb->setObjectName(QString::fromUtf8("y_sb"));
+        doubleSpinBox_2 = new QDoubleSpinBox(frame);
+        doubleSpinBox_2->setObjectName(QString::fromUtf8("doubleSpinBox_2"));
 
-        horizontalLayout_3->addWidget(y_sb);
+        horizontalLayout_7->addWidget(doubleSpinBox_2);
 
-
-        verticalLayout_6->addLayout(horizontalLayout_3);
-
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         label_8 = new QLabel(frame);
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_4->addWidget(label_8);
+        horizontalLayout_7->addWidget(label_8);
 
-        z_sb = new QSpinBox(frame);
-        z_sb->setObjectName(QString::fromUtf8("z_sb"));
+        doubleSpinBox_3 = new QDoubleSpinBox(frame);
+        doubleSpinBox_3->setObjectName(QString::fromUtf8("doubleSpinBox_3"));
 
-        horizontalLayout_4->addWidget(z_sb);
-
-
-        verticalLayout_6->addLayout(horizontalLayout_4);
+        horizontalLayout_7->addWidget(doubleSpinBox_3);
 
 
-        verticalLayout_8->addLayout(verticalLayout_6);
+        verticalLayout_3->addLayout(horizontalLayout_7);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout_8->addItem(verticalSpacer);
+        horizontalLayout_6->addLayout(verticalLayout_3);
 
         line_3 = new QFrame(frame);
         line_3->setObjectName(QString::fromUtf8("line_3"));
-        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShape(QFrame::VLine);
         line_3->setFrameShadow(QFrame::Sunken);
 
-        verticalLayout_8->addWidget(line_3);
+        horizontalLayout_6->addWidget(line_3);
+
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        label_2 = new QLabel(frame);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        verticalLayout_2->addWidget(label_2);
+
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        label_3 = new QLabel(frame);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        gridLayout->addWidget(label_3, 0, 0, 1, 1);
+
+        _color_blue = new QDoubleSpinBox(frame);
+        _color_blue->setObjectName(QString::fromUtf8("_color_blue"));
+
+        gridLayout->addWidget(_color_blue, 1, 1, 1, 1);
+
+        _color_alpha = new QDoubleSpinBox(frame);
+        _color_alpha->setObjectName(QString::fromUtf8("_color_alpha"));
+
+        gridLayout->addWidget(_color_alpha, 1, 3, 1, 1);
+
+        _color_red = new QDoubleSpinBox(frame);
+        _color_red->setObjectName(QString::fromUtf8("_color_red"));
+
+        gridLayout->addWidget(_color_red, 0, 1, 1, 1);
+
+        _color_green = new QDoubleSpinBox(frame);
+        _color_green->setObjectName(QString::fromUtf8("_color_green"));
+
+        gridLayout->addWidget(_color_green, 0, 3, 1, 1);
+
+        label_4 = new QLabel(frame);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout->addWidget(label_4, 0, 2, 1, 1);
+
+        label_9 = new QLabel(frame);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+
+        gridLayout->addWidget(label_9, 1, 0, 1, 1);
+
+        label_10 = new QLabel(frame);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+
+        gridLayout->addWidget(label_10, 1, 2, 1, 1);
 
 
-        horizontalLayout_6->addLayout(verticalLayout_8);
+        verticalLayout_2->addLayout(gridLayout);
+
+        line_2 = new QFrame(frame);
+        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_2->addWidget(line_2);
 
 
-        verticalLayout_7->addLayout(horizontalLayout_6);
-
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        gridLayout_3 = new QGridLayout();
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        specular_sb3 = new QSpinBox(frame);
-        specular_sb3->setObjectName(QString::fromUtf8("specular_sb3"));
-
-        gridLayout_3->addWidget(specular_sb3, 2, 0, 1, 1);
-
-        specular_cb = new QCheckBox(frame);
-        specular_cb->setObjectName(QString::fromUtf8("specular_cb"));
-
-        gridLayout_3->addWidget(specular_cb, 0, 0, 1, 1);
-
-        specular_sb4 = new QSpinBox(frame);
-        specular_sb4->setObjectName(QString::fromUtf8("specular_sb4"));
-
-        gridLayout_3->addWidget(specular_sb4, 2, 1, 1, 1);
-
-        specular_sb2 = new QSpinBox(frame);
-        specular_sb2->setObjectName(QString::fromUtf8("specular_sb2"));
-
-        gridLayout_3->addWidget(specular_sb2, 1, 1, 1, 1);
-
-        specular_sb1 = new QSpinBox(frame);
-        specular_sb1->setObjectName(QString::fromUtf8("specular_sb1"));
-
-        gridLayout_3->addWidget(specular_sb1, 1, 0, 1, 1);
-
-
-        verticalLayout_4->addLayout(gridLayout_3);
-
-
-        horizontalLayout_5->addLayout(verticalLayout_4);
-
-        line = new QFrame(frame);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::VLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        horizontalLayout_5->addWidget(line);
+        verticalLayout_7->addLayout(verticalLayout_2);
 
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
@@ -274,76 +285,109 @@ public:
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        ambient_sb2 = new QSpinBox(frame);
-        ambient_sb2->setObjectName(QString::fromUtf8("ambient_sb2"));
+        sb_ambient3 = new QDoubleSpinBox(frame);
+        sb_ambient3->setObjectName(QString::fromUtf8("sb_ambient3"));
 
-        gridLayout_2->addWidget(ambient_sb2, 0, 1, 1, 1);
+        gridLayout_2->addWidget(sb_ambient3, 1, 0, 1, 1);
 
-        ambient_sb1 = new QSpinBox(frame);
-        ambient_sb1->setObjectName(QString::fromUtf8("ambient_sb1"));
+        sb_ambient4 = new QDoubleSpinBox(frame);
+        sb_ambient4->setObjectName(QString::fromUtf8("sb_ambient4"));
 
-        gridLayout_2->addWidget(ambient_sb1, 0, 0, 1, 1);
+        gridLayout_2->addWidget(sb_ambient4, 1, 1, 1, 1);
 
-        ambient_sb3 = new QSpinBox(frame);
-        ambient_sb3->setObjectName(QString::fromUtf8("ambient_sb3"));
+        sb_ambient1 = new QDoubleSpinBox(frame);
+        sb_ambient1->setObjectName(QString::fromUtf8("sb_ambient1"));
 
-        gridLayout_2->addWidget(ambient_sb3, 1, 0, 1, 1);
+        gridLayout_2->addWidget(sb_ambient1, 0, 0, 1, 1);
 
-        ambient_sb4 = new QSpinBox(frame);
-        ambient_sb4->setObjectName(QString::fromUtf8("ambient_sb4"));
+        sb_ambient2 = new QDoubleSpinBox(frame);
+        sb_ambient2->setObjectName(QString::fromUtf8("sb_ambient2"));
 
-        gridLayout_2->addWidget(ambient_sb4, 1, 1, 1, 1);
+        gridLayout_2->addWidget(sb_ambient2, 0, 1, 1, 1);
 
 
         verticalLayout_5->addLayout(gridLayout_2);
 
 
-        horizontalLayout_5->addLayout(verticalLayout_5);
+        verticalLayout_7->addLayout(verticalLayout_5);
 
-        line_2 = new QFrame(frame);
-        line_2->setObjectName(QString::fromUtf8("line_2"));
-        line_2->setFrameShape(QFrame::VLine);
-        line_2->setFrameShadow(QFrame::Sunken);
+        line = new QFrame(frame);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
 
-        horizontalLayout_5->addWidget(line_2);
+        verticalLayout_7->addWidget(line);
 
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        label_2 = new QLabel(frame);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        specular_cb = new QCheckBox(frame);
+        specular_cb->setObjectName(QString::fromUtf8("specular_cb"));
 
-        verticalLayout_2->addWidget(label_2);
+        gridLayout_3->addWidget(specular_cb, 0, 0, 1, 2);
 
-        gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        colors_sb2 = new QSpinBox(frame);
-        colors_sb2->setObjectName(QString::fromUtf8("colors_sb2"));
+        sb_specular3 = new QDoubleSpinBox(frame);
+        sb_specular3->setObjectName(QString::fromUtf8("sb_specular3"));
 
-        gridLayout->addWidget(colors_sb2, 0, 1, 1, 1);
+        gridLayout_3->addWidget(sb_specular3, 2, 0, 1, 1);
 
-        colors_sb1 = new QSpinBox(frame);
-        colors_sb1->setObjectName(QString::fromUtf8("colors_sb1"));
+        sb_specular1 = new QDoubleSpinBox(frame);
+        sb_specular1->setObjectName(QString::fromUtf8("sb_specular1"));
 
-        gridLayout->addWidget(colors_sb1, 0, 0, 1, 1);
+        gridLayout_3->addWidget(sb_specular1, 1, 0, 1, 1);
 
-        colors_sb3 = new QSpinBox(frame);
-        colors_sb3->setObjectName(QString::fromUtf8("colors_sb3"));
+        sb_specular2 = new QDoubleSpinBox(frame);
+        sb_specular2->setObjectName(QString::fromUtf8("sb_specular2"));
 
-        gridLayout->addWidget(colors_sb3, 1, 0, 1, 1);
+        gridLayout_3->addWidget(sb_specular2, 1, 1, 1, 1);
 
-        colors_sb4 = new QSpinBox(frame);
-        colors_sb4->setObjectName(QString::fromUtf8("colors_sb4"));
+        sb_specular4 = new QDoubleSpinBox(frame);
+        sb_specular4->setObjectName(QString::fromUtf8("sb_specular4"));
 
-        gridLayout->addWidget(colors_sb4, 1, 1, 1, 1);
-
-
-        verticalLayout_2->addLayout(gridLayout);
+        gridLayout_3->addWidget(sb_specular4, 2, 1, 1, 1);
 
 
-        horizontalLayout_5->addLayout(verticalLayout_2);
+        verticalLayout_4->addLayout(gridLayout_3);
+
+        gridLayout_4 = new QGridLayout();
+        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
+        sb_diffuse1 = new QDoubleSpinBox(frame);
+        sb_diffuse1->setObjectName(QString::fromUtf8("sb_diffuse1"));
+
+        gridLayout_4->addWidget(sb_diffuse1, 1, 0, 1, 1);
+
+        sb_diffuse3 = new QDoubleSpinBox(frame);
+        sb_diffuse3->setObjectName(QString::fromUtf8("sb_diffuse3"));
+
+        gridLayout_4->addWidget(sb_diffuse3, 2, 0, 1, 1);
+
+        diffuse_cb = new QCheckBox(frame);
+        diffuse_cb->setObjectName(QString::fromUtf8("diffuse_cb"));
+
+        gridLayout_4->addWidget(diffuse_cb, 0, 0, 1, 2);
+
+        sb_diffuse2 = new QDoubleSpinBox(frame);
+        sb_diffuse2->setObjectName(QString::fromUtf8("sb_diffuse2"));
+
+        gridLayout_4->addWidget(sb_diffuse2, 1, 1, 1, 1);
+
+        sb_diffuse4 = new QDoubleSpinBox(frame);
+        sb_diffuse4->setObjectName(QString::fromUtf8("sb_diffuse4"));
+
+        gridLayout_4->addWidget(sb_diffuse4, 2, 1, 1, 1);
 
 
-        verticalLayout_7->addLayout(horizontalLayout_5);
+        verticalLayout_4->addLayout(gridLayout_4);
+
+
+        verticalLayout_7->addLayout(verticalLayout_4);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_7);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_6);
 
 
         verticalLayout->addWidget(frame);
@@ -352,7 +396,7 @@ public:
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        buttonBox->setCenterButtons(true);
+        buttonBox->setCenterButtons(false);
 
         verticalLayout->addWidget(buttonBox);
 
@@ -374,9 +418,14 @@ public:
         label_6->setText(QApplication::translate("LightsWidowQt", "X", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("LightsWidowQt", "Y", 0, QApplication::UnicodeUTF8));
         label_8->setText(QApplication::translate("LightsWidowQt", "Z", 0, QApplication::UnicodeUTF8));
-        specular_cb->setText(QApplication::translate("LightsWidowQt", "Specular", 0, QApplication::UnicodeUTF8));
-        ambient_cb->setText(QApplication::translate("LightsWidowQt", "Ambient", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("LightsWidowQt", "Color", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("LightsWidowQt", "R", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("LightsWidowQt", "G", 0, QApplication::UnicodeUTF8));
+        label_9->setText(QApplication::translate("LightsWidowQt", "B", 0, QApplication::UnicodeUTF8));
+        label_10->setText(QApplication::translate("LightsWidowQt", "A", 0, QApplication::UnicodeUTF8));
+        ambient_cb->setText(QApplication::translate("LightsWidowQt", "Ambient", 0, QApplication::UnicodeUTF8));
+        specular_cb->setText(QApplication::translate("LightsWidowQt", "Specular", 0, QApplication::UnicodeUTF8));
+        diffuse_cb->setText(QApplication::translate("LightsWidowQt", "Diffuse", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

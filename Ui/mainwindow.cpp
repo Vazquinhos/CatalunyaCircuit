@@ -3,6 +3,7 @@
 #include "importsettingsqt.h"
 #include "lightswindowqt.h"
 #include "exportsettingsqt.h"
+#include "camerawindowqt.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,23 +16,30 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Setting the icon
     QIcon icon;
-    icon.addFile("Media/Images/1364338876_sign-in.png");
+    icon.addFile("Media/Images/1365553346_import.png");
     ui->actionImport->setIcon(icon);
     _p_imp_qt = new ImportSettingsQt();
 
     //--------------- Exporter ------------------
     // Setting the icon
     QIcon icon2;
-    icon2.addFile("Media/Images/1364339241_sign-out.png");
+    icon2.addFile("Media/Images/1365553386_export.png");
     ui->actionExport->setIcon(icon2);
     _p_exp_qt = new ExportSettingsQt();
 
     //--------------- Light Settings ------------------
     // Setting the icon
     QIcon icon3;
-    icon3.addFile("Media/Images/1364340391_lightbulb.png");
+    icon3.addFile("Media/Images/1365553596_idea.png");
     ui->actionLight->setIcon(icon3);
     _p_light_qt = new LightsWidowQt();
+
+    //--------------- Camera Settings ------------------
+    // Setting the icon
+    QIcon icon4;
+    icon4.addFile("Media/Images/1365553750_film_camera_35mm.png");
+    ui->actionCamera->setIcon(icon4);
+    _p_camera_qt = new CameraWindowQt();
 }
 
 MainWindow::~MainWindow()
@@ -63,4 +71,10 @@ void MainWindow::on_actionLight_triggered()
 {
     if(_p_light_qt)
         _p_light_qt->show();
+}
+
+void MainWindow::on_actionCamera_triggered()
+{
+    if(_p_camera_qt)
+        _p_camera_qt->show();
 }

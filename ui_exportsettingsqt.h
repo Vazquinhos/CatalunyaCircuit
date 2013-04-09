@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportsettingsqt.ui'
 **
-** Created: Tue Apr 9 02:04:59 2013
+** Created: Tue Apr 9 23:29:53 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -18,7 +18,6 @@
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFrame>
-#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -32,71 +31,113 @@ class Ui_ExportSettingsQt
 public:
     QVBoxLayout *verticalLayout;
     QFrame *frame;
-    QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout;
-    QCheckBox *_cameras;
-    QCheckBox *_cars;
-    QCheckBox *_lights;
-    QLineEdit *lineEdit;
+    QVBoxLayout *verticalLayout_2;
     QLabel *label_2;
-    QLabel *label;
+    QHBoxLayout *horizontalLayout;
+    QLabel *settlab;
+    QLineEdit *lineEdit;
     QLabel *label_3;
+    QHBoxLayout *horizontalLayout_2;
+    QCheckBox *_cameras;
+    QLabel *cameralab;
+    QFrame *line;
+    QCheckBox *_cars;
+    QLabel *carlab;
+    QFrame *line_2;
+    QCheckBox *_lights;
+    QLabel *lightlab;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *ExportSettingsQt)
     {
         if (ExportSettingsQt->objectName().isEmpty())
             ExportSettingsQt->setObjectName(QString::fromUtf8("ExportSettingsQt"));
-        ExportSettingsQt->resize(400, 192);
+        ExportSettingsQt->resize(323, 278);
         verticalLayout = new QVBoxLayout(ExportSettingsQt);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame = new QFrame(ExportSettingsQt);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        gridLayout = new QGridLayout(frame);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        verticalLayout_2 = new QVBoxLayout(frame);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        label_2 = new QLabel(frame);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        verticalLayout_2->addWidget(label_2);
+
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        _cameras = new QCheckBox(frame);
-        _cameras->setObjectName(QString::fromUtf8("_cameras"));
+        settlab = new QLabel(frame);
+        settlab->setObjectName(QString::fromUtf8("settlab"));
 
-        horizontalLayout->addWidget(_cameras);
-
-        _cars = new QCheckBox(frame);
-        _cars->setObjectName(QString::fromUtf8("_cars"));
-
-        horizontalLayout->addWidget(_cars);
-
-        _lights = new QCheckBox(frame);
-        _lights->setObjectName(QString::fromUtf8("_lights"));
-
-        horizontalLayout->addWidget(_lights);
-
-
-        gridLayout->addLayout(horizontalLayout, 3, 0, 1, 3);
+        horizontalLayout->addWidget(settlab);
 
         lineEdit = new QLineEdit(frame);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
-        gridLayout->addWidget(lineEdit, 1, 1, 1, 1);
+        horizontalLayout->addWidget(lineEdit);
 
-        label_2 = new QLabel(frame);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        gridLayout->addWidget(label_2, 0, 0, 1, 3);
-
-        label = new QLabel(frame);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setAlignment(Qt::AlignCenter);
-
-        gridLayout->addWidget(label, 1, 0, 1, 1);
+        verticalLayout_2->addLayout(horizontalLayout);
 
         label_3 = new QLabel(frame);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_3, 2, 0, 1, 3);
+        verticalLayout_2->addWidget(label_3);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        _cameras = new QCheckBox(frame);
+        _cameras->setObjectName(QString::fromUtf8("_cameras"));
+
+        horizontalLayout_2->addWidget(_cameras);
+
+        cameralab = new QLabel(frame);
+        cameralab->setObjectName(QString::fromUtf8("cameralab"));
+        cameralab->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_2->addWidget(cameralab);
+
+        line = new QFrame(frame);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        horizontalLayout_2->addWidget(line);
+
+        _cars = new QCheckBox(frame);
+        _cars->setObjectName(QString::fromUtf8("_cars"));
+
+        horizontalLayout_2->addWidget(_cars);
+
+        carlab = new QLabel(frame);
+        carlab->setObjectName(QString::fromUtf8("carlab"));
+        carlab->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_2->addWidget(carlab);
+
+        line_2 = new QFrame(frame);
+        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setFrameShape(QFrame::VLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        horizontalLayout_2->addWidget(line_2);
+
+        _lights = new QCheckBox(frame);
+        _lights->setObjectName(QString::fromUtf8("_lights"));
+
+        horizontalLayout_2->addWidget(_lights);
+
+        lightlab = new QLabel(frame);
+        lightlab->setObjectName(QString::fromUtf8("lightlab"));
+        lightlab->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_2->addWidget(lightlab);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
 
 
         verticalLayout->addWidget(frame);
@@ -119,12 +160,15 @@ public:
     void retranslateUi(QDialog *ExportSettingsQt)
     {
         ExportSettingsQt->setWindowTitle(QApplication::translate("ExportSettingsQt", "Dialog", 0, QApplication::UnicodeUTF8));
-        _cameras->setText(QApplication::translate("ExportSettingsQt", "Cameras", 0, QApplication::UnicodeUTF8));
-        _cars->setText(QApplication::translate("ExportSettingsQt", "Cars", 0, QApplication::UnicodeUTF8));
-        _lights->setText(QApplication::translate("ExportSettingsQt", "Lights", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("ExportSettingsQt", "Select a filename to export your settings...", 0, QApplication::UnicodeUTF8));
-        label->setText(QString());
+        settlab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("ExportSettingsQt", "Select which setting you want to export...", 0, QApplication::UnicodeUTF8));
+        _cameras->setText(QString());
+        cameralab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
+        _cars->setText(QString());
+        carlab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
+        _lights->setText(QString());
+        lightlab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

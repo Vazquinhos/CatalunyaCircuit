@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     Ui/errorwindow.cpp \
     Scene/contextgl.cpp \
     Ui/mainwindow.cpp \
-    Ui/camerawindowqt.cpp
+    Ui/camerawindowqt.cpp \
+    Ui/carswindowqt.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -73,7 +74,8 @@ HEADERS  += \
     Ui/errorwindow.h \
     Scene/contextgl.h \
     Ui/mainwindow.h \
-    Ui/camerawindowqt.h
+    Ui/camerawindowqt.h \
+    Ui/carswindowqt.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \
@@ -81,15 +83,12 @@ FORMS    += \
     Ui/exportsettingsqt.ui \
     Ui/errorwindow.ui \
     Ui/mainwindow.ui \
-    Ui/camerawindowqt.ui
+    Ui/camerawindowqt.ui \
+    Ui/carswindowqt.ui
 
 OTHER_FILES += \
     simple.vert \
     simple.frag \
-    Media/Images/car.png \
-    Media/Images/1364340396_photography.png \
-    Media/Images/1364339878_hire-me.png \
-    Media/Images/1364339322_logout.png \
     Media/Models/Circuit/ubs_decal_a.dds \
     Media/Models/Circuit/ubs_board_a.dds \
     Media/Models/Circuit/track_diff_a_02_d.dds \
@@ -574,7 +573,10 @@ OTHER_FILES += \
     Media/Images/1365553386_export.png \
     Media/Images/1365553346_import.png \
     Media/Images/1365553596_idea.png \
-    Media/Images/1365553750_film_camera_35mm.png
+    Media/Images/1365553750_film_camera_35mm.png \
+    Media/Images/1365559690_single_seater.png \
+    Media/Images/1365560323_Gear.png \
+    Media/Images/1365559833_tyres.png
 
 LIBS += -lgomp
 

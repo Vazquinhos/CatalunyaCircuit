@@ -4,6 +4,7 @@
 #include "lightswindowqt.h"
 #include "exportsettingsqt.h"
 #include "camerawindowqt.h"
+#include "carswindowqt.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,6 +41,13 @@ MainWindow::MainWindow(QWidget *parent) :
     icon4.addFile("Media/Images/1365553750_film_camera_35mm.png");
     ui->actionCamera->setIcon(icon4);
     _p_camera_qt = new CameraWindowQt();
+
+    //--------------- Cars Settings ------------------
+    // Setting the icon
+    QIcon icon5;
+    icon5.addFile("Media/Images/1365559690_single_seater.png");
+    ui->actionCars->setIcon(icon5);
+    _p_car_qt = new CarsWindowQt();
 }
 
 MainWindow::~MainWindow()
@@ -77,4 +85,10 @@ void MainWindow::on_actionCamera_triggered()
 {
     if(_p_camera_qt)
         _p_camera_qt->show();
+}
+
+void MainWindow::on_actionCars_triggered()
+{
+    if(_p_car_qt)
+        _p_car_qt->show();
 }

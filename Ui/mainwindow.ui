@@ -39,7 +39,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <addaction name="actionImport"/>
    <addaction name="actionExport"/>
@@ -56,6 +56,7 @@
    </attribute>
    <addaction name="actionLight"/>
    <addaction name="actionCamera"/>
+   <addaction name="actionCars"/>
   </widget>
   <action name="actionImport">
    <property name="text">
@@ -75,6 +76,11 @@
   <action name="actionCamera">
    <property name="text">
     <string>Camera</string>
+   </property>
+  </action>
+  <action name="actionCars">
+   <property name="text">
+    <string>Cars</string>
    </property>
   </action>
  </widget>

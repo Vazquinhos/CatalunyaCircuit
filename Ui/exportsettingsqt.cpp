@@ -10,17 +10,14 @@ ExportSettingsQt::ExportSettingsQt(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("Settings Exporter");
 
-    QIcon icon;
-    icon.addFile("Media/Images/car.png");
-    ui->_cars->setIcon(icon);
-    QIcon icon2;
-    icon2.addFile("Media/Images/1364340396_photography.png");
-    ui->_cameras->setIcon(icon2);
-    QIcon icon3;
-    icon3.addFile("Media/Images/1364340391_lightbulb.png");
-    ui->_lights->setIcon(icon3);
-    QPixmap pix("Media/Images/1364339878_hire-me.png");
-    ui->label->setPixmap(pix);
+    QPixmap pix("Media/Images/1365559690_single_seater.png");
+    ui->carlab->setPixmap(pix);
+    QPixmap pix1("Media/Images/1365560323_Gear.png");
+    ui->settlab->setPixmap(pix1);
+    QPixmap pix2("Media/Images/1365553750_film_camera_35mm.png");
+    ui->cameralab->setPixmap(pix2);
+    QPixmap pix3("Media/Images/1365553596_idea.png");
+    ui->lightlab->setPixmap(pix3);
 
 }
 

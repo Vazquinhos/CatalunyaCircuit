@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportsettingsqt.ui'
 **
-** Created: Thu Apr 11 20:06:03 2013
+** Created: Thu Apr 11 22:57:46 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,6 +36,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *settlab;
     QLineEdit *lineEdit;
+    QLabel *label;
     QLabel *label_3;
     QHBoxLayout *horizontalLayout_2;
     QCheckBox *_cameras;
@@ -77,6 +78,11 @@ public:
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
         horizontalLayout->addWidget(lineEdit);
+
+        label = new QLabel(frame);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        horizontalLayout->addWidget(label);
 
 
         verticalLayout_2->addLayout(horizontalLayout);
@@ -162,6 +168,7 @@ public:
         ExportSettingsQt->setWindowTitle(QApplication::translate("ExportSettingsQt", "Dialog", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("ExportSettingsQt", "Select a filename to export your settings...", 0, QApplication::UnicodeUTF8));
         settlab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("ExportSettingsQt", ".css", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("ExportSettingsQt", "Select which setting you want to export...", 0, QApplication::UnicodeUTF8));
         _cameras->setText(QString());
         cameralab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));

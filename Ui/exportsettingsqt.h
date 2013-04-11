@@ -18,15 +18,20 @@ public:
     ~ExportSettingsQt();
     
 private slots:
+    // ============================ Slots ===============================
     void on_buttonBox_accepted();
 
 private:
+    // ========================== Data Members ============================
     Ui::ExportSettingsQt *ui;
     bool CheckFileNameSelected();
 
     SettingsExporter* _p_exporter;
 
     QString _fileName;
+    // ============================ Methods ===============================
+    QString GetFileNameWithExtension( QString a_fileName );
+signals:
 };
 
 #endif // EXPORTSETTINGSQT_H

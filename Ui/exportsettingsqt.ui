@@ -42,6 +42,13 @@
         <item>
          <widget class="QLineEdit" name="lineEdit"/>
         </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>.css</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>

@@ -8,6 +8,8 @@ ErrorWindow::ErrorWindow(QWidget *parent) :
     ui->setupUi(this);
     _p_parent = parent;
     setWindowTitle("ERROR!!!");
+    QPixmap pix("Media/Images/1365728458_Warning.png");
+    ui->icon->setPixmap(pix);
 }
 
 ErrorWindow::~ErrorWindow()
@@ -18,7 +20,7 @@ ErrorWindow::~ErrorWindow()
 void
 ErrorWindow::SetErrorMsg( QString a_error_msg)
 {
-    ui->label->setText(a_error_msg);
+    ui->error_msg->setText(a_error_msg);
 }
 
 void

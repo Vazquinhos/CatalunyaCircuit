@@ -3,14 +3,22 @@
 #include "errorwindow.h"
 #include <QFileDialog>
 
+
 ImportSettingsQt::ImportSettingsQt(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ImportSettingsQt)
 {
     ui->setupUi(this);
     setWindowTitle("Settings Importer");
-    QPixmap pix("Media/Images/1364339878_hire-me.png");
-    ui->label->setPixmap(pix);
+    QPixmap pix("Media/Images/1365559690_single_seater.png");
+    ui->car_icon->setPixmap(pix);
+    QPixmap pix1("Media/Images/1365560323_Gear.png");
+    ui->icon->setPixmap(pix1);
+    QPixmap pix2("Media/Images/1365553750_film_camera_35mm.png");
+    ui->camera_icon->setPixmap(pix2);
+    QPixmap pix3("Media/Images/1365553596_idea.png");
+    ui->light_icon->setPixmap(pix3);
+    ui->lineEdit->setEnabled(false);
 }
 
 ImportSettingsQt::~ImportSettingsQt()

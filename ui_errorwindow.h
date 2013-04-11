@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'errorwindow.ui'
 **
-** Created: Thu Apr 11 20:06:03 2013
+** Created: Thu Apr 11 22:05:34 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -30,9 +30,11 @@ class Ui_ErrorWindow
 public:
     QVBoxLayout *verticalLayout;
     QFrame *frame;
+    QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
+    QLabel *icon;
     QSpacerItem *horizontalSpacer_2;
-    QLabel *label;
+    QLabel *error_msg;
     QSpacerItem *horizontalSpacer;
     QDialogButtonBox *buttonBox;
 
@@ -40,27 +42,38 @@ public:
     {
         if (ErrorWindow->objectName().isEmpty())
             ErrorWindow->setObjectName(QString::fromUtf8("ErrorWindow"));
-        ErrorWindow->resize(424, 127);
+        ErrorWindow->resize(427, 171);
         verticalLayout = new QVBoxLayout(ErrorWindow);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame = new QFrame(ErrorWindow);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        horizontalLayout = new QHBoxLayout(frame);
+        verticalLayout_2 = new QVBoxLayout(frame);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        icon = new QLabel(frame);
+        icon->setObjectName(QString::fromUtf8("icon"));
+        icon->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout->addWidget(icon);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer_2);
 
-        label = new QLabel(frame);
-        label->setObjectName(QString::fromUtf8("label"));
+        error_msg = new QLabel(frame);
+        error_msg->setObjectName(QString::fromUtf8("error_msg"));
 
-        horizontalLayout->addWidget(label);
+        horizontalLayout->addWidget(error_msg);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
+
+
+        verticalLayout_2->addLayout(horizontalLayout);
 
 
         verticalLayout->addWidget(frame);
@@ -84,7 +97,8 @@ public:
     void retranslateUi(QDialog *ErrorWindow)
     {
         ErrorWindow->setWindowTitle(QApplication::translate("ErrorWindow", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("ErrorWindow", "TextLabel", 0, QApplication::UnicodeUTF8));
+        icon->setText(QApplication::translate("ErrorWindow", "TextLabel", 0, QApplication::UnicodeUTF8));
+        error_msg->setText(QApplication::translate("ErrorWindow", "TextLabel", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

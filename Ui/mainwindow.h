@@ -17,10 +17,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
+    // ================= Constructores/Destructores ======================
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
 private slots:
+    // ============================ Slots ===============================
     void on_actionImport_triggered();
 
     void on_actionExport_triggered();
@@ -32,12 +34,14 @@ private slots:
     void on_actionCars_triggered();
 
 private:
+    // ========================== Data Members ============================
     Ui::MainWindow *ui;
     ImportSettingsQt*     _p_imp_qt;
     ExportSettingsQt*     _p_exp_qt;
     LightsWidowQt*        _p_light_qt;
     CameraWindowQt*       _p_camera_qt;
     CarsWindowQt*         _p_car_qt;
+    // ============================ Methods ===============================
 };
 
 #endif // MAINWINDOW_H

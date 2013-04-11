@@ -2,6 +2,7 @@
 #include "Loaders/settingsexporter.h"
 #include <QFileDialog>
 #include <QString>
+#include <QStringList>
 
 ExportSettingsQt::ExportSettingsQt(QWidget *parent) :
     QDialog(parent),
@@ -28,9 +29,20 @@ ExportSettingsQt::~ExportSettingsQt()
 
 void ExportSettingsQt::on_buttonBox_accepted()
 {
-    _p_exporter = new SettingsExporter( ui->lineEdit->text() );
+    _p_exporter = new SettingsExporter( GetFileNameWithExtension(ui->lineEdit->text()) );
     _p_exporter->SetParameters( ui->_cameras->isChecked(),
                                 ui->_cars->isChecked(),
                                 ui->_lights->isChecked());
     _p_exporter->Execute();
+}
+
+QString ExportSettingsQt::GetFileNameWithExtension( QString a_fileName )
+{
+    if(a_fileName.lastIndexOf(".") == -1)
+    {
+        return a_fileName + QString(".ccs");
+    } else {
+        QStringList str_list = a_fileName.split(".");
+        return str_list[0] + QString(".ccs");
+    }
 }

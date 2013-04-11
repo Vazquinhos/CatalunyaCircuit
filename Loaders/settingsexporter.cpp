@@ -41,8 +41,7 @@ SettingsExporter::Execute( void )
         out << "<cameras>" << endl;
 
         QString info_cameras = CameraManager::getCameraManager()->getCCSCameraInfoToExport();
-        out << info_cameras << endl;
-
+        out << info_cameras;
         out << "</cameras>" << endl;
     }
     if( _cars )
@@ -53,10 +52,10 @@ SettingsExporter::Execute( void )
     }
     if( _lights )
     {
-        out << "<cights>" << endl;
+        out << "<lights>" << endl;
         QString info_lights = LightManager::getLightManager()->getCCSCameraInfoToExport();
         out << info_lights << endl;
-        out << "</Lights>" << endl;
+        out << "</lights>" << endl;
     }
     out << "</Catalunya Circuit Settings>" << endl;
 }

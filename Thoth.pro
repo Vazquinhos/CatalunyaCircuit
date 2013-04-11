@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     Ui/mainwindow.cpp \
     Ui/camerawindowqt.cpp \
     Ui/carswindowqt.cpp \
-    Objects/absModels.cpp
+    Objects/absModels.cpp \
+    Loaders/settingsimporter.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -77,7 +78,8 @@ HEADERS  += \
     Ui/mainwindow.h \
     Ui/camerawindowqt.h \
     Ui/carswindowqt.h \
-    Objects/absModels.h
+    Objects/absModels.h \
+    Loaders/settingsimporter.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \
@@ -578,7 +580,8 @@ OTHER_FILES += \
     Media/Images/1365553750_film_camera_35mm.png \
     Media/Images/1365559690_single_seater.png \
     Media/Images/1365560323_Gear.png \
-    Media/Images/1365559833_tyres.png
+    Media/Images/1365559833_tyres.png \
+    Media/Images/1365728458_Warning.png
 
 LIBS += -lgomp
 

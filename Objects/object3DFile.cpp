@@ -75,10 +75,7 @@ bool Object3DFile::loadFromFile(unsigned int assimpFlags){
 
     const aiScene* pScene = _importer.ReadFile(path.toAscii().data(), assimpFlags);
 
-    if (pScene) {
-        loadedSuccesful = generateObjectBuffers(pScene);
-    }
-    else {
+    if (!pScene) {
         qDebug() << "Error before loading: " << _importer.GetErrorString();
     }
 
@@ -86,12 +83,12 @@ bool Object3DFile::loadFromFile(unsigned int assimpFlags){
 }
 
 /*-------------------------------------------------------------------
- |  Function renderizeObject
- |
- |  Purpose: Renderizes the object by calling all buffer arrays of all meshes.
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function renderizeObject
+         |
+         |  Purpose: Renderizes the object by calling all buffer arrays of all meshes.
+         |  Parameters:
+         |  Returns:
+         *-------------------------------------------------------------------*/
 void Object3DFile::renderizeObject() {
     glEnableClientState(GL_VERTEX_ARRAY);           // Enable Vertex Arrays
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
@@ -126,12 +123,12 @@ void Object3DFile::renderizeObject() {
 /******************************* PRIVATE *****************************************/
 
 /*-------------------------------------------------------------------
- |  Function generateObjectBuffers
- |
- |  Purpose: Generates all buffer arrays of all meshes by copying and parsing the needed info from the aiScene provided
- |  Parameters: const aiScene* pScene = The assimp object info of the object
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function generateObjectBuffers
+         |
+         |  Purpose: Generates all buffer arrays of all meshes by copying and parsing the needed info from the aiScene provided
+         |  Parameters: const aiScene* pScene = The assimp object info of the object
+         |  Returns:
+         *-------------------------------------------------------------------*/
 bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 {
     float minX, minY, minZ; //Max cooridnate vertex
@@ -162,7 +159,6 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             const aiVector3D* pPos      = &(mesh->mVertices[k]);
             const aiVector3D* pNormal   = &(mesh->mNormals[k]);
             const aiVector3D* pTexCoord = mesh->HasTextureCoords(0) ? &(mesh->mTextureCoords[0][k]) : &Zero3D;
-
 
             minX = min(minX, pPos->x);
             maxX = max(maxX, pPos->x);
@@ -204,12 +200,12 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 
 
 /*-------------------------------------------------------------------
- |  Function loadMaterials
- |
- |  Purpose: Loads all materials of the given assimp Object by saving the bind id of every texture
- |  Parameters:     const aiScene* pScene = The assimp object info to load its textures
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function loadMaterials
+         |
+         |  Purpose: Loads all materials of the given assimp Object by saving the bind id of every texture
+         |  Parameters:     const aiScene* pScene = The assimp object info to load its textures
+         |  Returns:
+         *-------------------------------------------------------------------*/
 bool Object3DFile::loadMaterials(const aiScene* pScene)
 {
     bool ret = true;
@@ -347,13 +343,13 @@ void Object3DFile::apply_material(const aiMaterial *mtl)
 }
 
 /*-------------------------------------------------------------------
- |  Function set_float4
- |
- |  Purpose: Auxiliar. Puts given floats into the array
- |  Parameters:     float f[4] = Array to put values into
-                    float a, float b, float c, float d = Values to put into the array
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function set_float4
+         |
+         |  Purpose: Auxiliar. Puts given floats into the array
+         |  Parameters:     float f[4] = Array to put values into
+                            float a, float b, float c, float d = Values to put into the array
+         |  Returns:
+         *-------------------------------------------------------------------*/
 void Object3DFile::set_float4(float f[4], float a, float b, float c, float d)
 {
     f[0] = a;
@@ -363,13 +359,13 @@ void Object3DFile::set_float4(float f[4], float a, float b, float c, float d)
 }
 
 /*-------------------------------------------------------------------
- |  Function color4_to_float4
- |
- |  Purpose: Auxiliar. Puts given color info into the specified array
- |  Parameters:     const aiColor4D *c = The color to read its info
-                    float f[4] = The array to put info
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function color4_to_float4
+         |
+         |  Purpose: Auxiliar. Puts given color info into the specified array
+         |  Parameters:     const aiColor4D *c = The color to read its info
+                            float f[4] = The array to put info
+         |  Returns:
+         *-------------------------------------------------------------------*/
 void Object3DFile::color4_to_float4(const aiColor4D *c, float f[4])
 {
     f[0] = c->r;
@@ -379,18 +375,19 @@ void Object3DFile::color4_to_float4(const aiColor4D *c, float f[4])
 }
 
 void Object3DFile::loadTextures(){
-    this->loadMaterials(_importer.GetScene());
+    generateObjectBuffers(_importer.GetScene());
+    loadMaterials(_importer.GetScene());
 }
 
 /******************************* MESH *****************************************/
 
 /*-------------------------------------------------------------------
- |  Function Mesh
- |
- |  Purpose: Creator. Default creator that initializes all values to invalid ones
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function Mesh
+         |
+         |  Purpose: Creator. Default creator that initializes all values to invalid ones
+         |  Parameters:
+         |  Returns:
+         *-------------------------------------------------------------------*/
 Object3DFile::Mesh::Mesh()
 {
     vertexBufferBindId = INVALID_OGL_VALUE; //Initialize values to invalid ones
@@ -400,12 +397,12 @@ Object3DFile::Mesh::Mesh()
 }
 
 /*-------------------------------------------------------------------
- |  Function ~Mesh
- |
- |  Purpose: Destructor. Default destructor that cleans memory and deletes all buffer bindings
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function ~Mesh
+         |
+         |  Purpose: Destructor. Default destructor that cleans memory and deletes all buffer bindings
+         |  Parameters:
+         |  Returns:
+         *-------------------------------------------------------------------*/
 Object3DFile::Mesh::~Mesh()
 {
     if (vertexBufferBindId != INVALID_OGL_VALUE) //Clean buffers
@@ -420,15 +417,15 @@ Object3DFile::Mesh::~Mesh()
 }
 
 /*-------------------------------------------------------------------
- |  Function generateMeshBuffers
- |
- |  Purpose:     Generates all buffers of this mesh
- |  Parameters:  const vector<float> &verticesCoord  = Vector with all vertex info to generate its buffer array buffer id
- |               const vector<float> &texturesCoord  = Vector with all textures info to generate its buffer array buffer id
- |               const vector<float> &normalsCoord   = Vector with all normals info to generate its buffer array buffer id
- |               const vector<unsigned int> &indices = Vector with all face indexes info to generate its buffer array buffer id
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function generateMeshBuffers
+         |
+         |  Purpose:     Generates all buffers of this mesh
+         |  Parameters:  const vector<float> &verticesCoord  = Vector with all vertex info to generate its buffer array buffer id
+         |               const vector<float> &texturesCoord  = Vector with all textures info to generate its buffer array buffer id
+         |               const vector<float> &normalsCoord   = Vector with all normals info to generate its buffer array buffer id
+         |               const vector<unsigned int> &indices = Vector with all face indexes info to generate its buffer array buffer id
+         |  Returns:
+         *-------------------------------------------------------------------*/
 void Object3DFile::Mesh::generateMeshBuffers(const vector<float> &verticesCoord,
                                              const vector<float> &texturesCoord, const vector<float> &normalsCoord, const vector<unsigned int> &indices)
 {

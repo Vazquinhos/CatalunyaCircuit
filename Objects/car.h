@@ -17,8 +17,9 @@
 #include "Utils/util.h"
 #include "Utils/vector3D.h"
 #include "Objects/object3DFile.h"
+#include "Objects/absModels.h"
 
-class Car
+class Car : AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================
@@ -27,8 +28,6 @@ public:
     ~Car();
 
     // ============================ Methods ===============================
-    void              render();
-    void              display();
     void              setPosition(Point3D * p_position);
     Point3D         * getPosition();
     void              setDirection(Vector3D * p_direction);
@@ -38,23 +37,11 @@ public:
     void              setBBMax(Point3D * p_bbMax);
     Point3D         * getBBMax();
 
-    Object3DFile* getChasisObj();
-    void setChasisObj(Object3DFile *object);
-
-    Object3DFile* getWheelObj();
-    void setWheelObj(Object3DFile *object);
-
-    Object3DFile* getWheelFrontRightObj();
-    void setWheelFrontRightObj(Object3DFile *object);
-
-    Object3DFile* getWheelFrontLeftObj();
-    void setWheelFrontLeftObj(Object3DFile *object);
-
-    Object3DFile* getWheelRearRightObj();
-    void setWheelRearRightObj(Object3DFile *object);
-
-    Object3DFile* getWheelRearLeftObj();
-    void setWheelRearLeftObj(Object3DFile *object);
+    // ============================ Inherited Methods ===============================
+    void loadModels();
+    void loadModelsTextures();
+    void renderModels();
+    void displayModels();
 
 private:
     // ========================== Data Members ============================
@@ -64,6 +51,8 @@ private:
     Object3DFile *_wheelFrontLeft;
     Object3DFile *_wheelRearRight;
     Object3DFile *_wheelRearLeft;
+
+    std::string _folder;
 
     Point3D         * _p_position;
     Vector3D        * _p_direction;

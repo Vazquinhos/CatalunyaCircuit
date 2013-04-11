@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     Scene/contextgl.cpp \
     Ui/mainwindow.cpp \
     Ui/camerawindowqt.cpp \
-    Ui/carswindowqt.cpp
+    Ui/carswindowqt.cpp \
+    Objects/absModels.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -75,7 +76,8 @@ HEADERS  += \
     Scene/contextgl.h \
     Ui/mainwindow.h \
     Ui/camerawindowqt.h \
-    Ui/carswindowqt.h
+    Ui/carswindowqt.h \
+    Objects/absModels.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

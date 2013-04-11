@@ -50,12 +50,12 @@ private:
         GLuint _textureBindId; //Texture id bind
     };
 
+    Assimp::Importer _importer;
     vector<Mesh> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
 
-    const aiScene *_scene; //Global Assimp scene object
-    const char *_baseDirectory; //Base directory path of the object
-    const char *_filename; //Filename
+    std::string _baseDirectory; //Base directory path of the object
+    std::string _filename; //Filename
 
     //Object loading methods
     bool loadFromFile(unsigned int assimpFlags);
@@ -69,8 +69,10 @@ private:
 
 public:
     Object3DFile();
-    Object3DFile(const char* directory, const char* filename, unsigned int assimpFlags);
+    Object3DFile(string directory, string filename, unsigned int assimpFlags);
     virtual ~Object3DFile();
+
+    void loadTextures();
 
 protected:
     virtual void renderizeObject(); //Inherited method

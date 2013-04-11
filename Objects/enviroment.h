@@ -16,20 +16,28 @@
 #define ENVIROMENT_H
 
 #include "Objects/object3DFile.h"
+#include "Objects/absModels.h"
 
-class Enviroment
+class Enviroment : AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================
-    Enviroment(QString circuitFolder, QString mountainsFolder, QString skyFolder);
+    Enviroment(std::string circuitFolder, std::string skyFolder);
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
-    void render();
-    void display();
+
+    // ============================ Inherited Methods ===============================
+    virtual void loadModels();
+    virtual void loadModelsTextures();
+    virtual void renderModels();
+    virtual void displayModels();
 
 private:
     // ========================== Data Members ============================
+    std::string _circuitFolder;
+    std::string _skyFolder;
+
     Object3DFile *_circuit3D;
     Object3DFile *_sky3D;
     // ============================ Methods ===============================

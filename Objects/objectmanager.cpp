@@ -107,20 +107,20 @@ Enviroment * ObjectManager::getEnviroment()
 
 void ObjectManager::renderCar(int i)
 {
-    _v_cars[i]->render();
+    _v_cars[i]->renderModels();
 }
 
 void ObjectManager::renderEnviroment()
 {
-    _p_enviroment->render();
+    _p_enviroment->renderModels();
 }
 
 void ObjectManager::renderAll()
 {
-    _p_enviroment->render();
+    _p_enviroment->renderModels();
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
-        _v_cars[i]->render();
+        _v_cars[i]->renderModels();
     }
 }
 
@@ -133,12 +133,12 @@ void ObjectManager::renderAll()
  *-------------------------------------------------------------------*/
 void ObjectManager::displayAll(){
     glPushMatrix();
-    _p_enviroment->display();
+    _p_enviroment->displayModels();
     glPopMatrix();
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
         glPushMatrix();
-        _v_cars[i]->display();
+        _v_cars[i]->displayModels();
         glPopMatrix();
     }
 }

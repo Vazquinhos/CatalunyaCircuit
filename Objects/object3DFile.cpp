@@ -42,7 +42,7 @@ Object3DFile::Object3DFile() {
  |              const char* filename  = Name of the file to load
  |  Returns:
  *-------------------------------------------------------------------*/
-Object3DFile::Object3DFile(const char* directory, const char* filename, unsigned int assimpFlags){
+Object3DFile::Object3DFile(std::string directory, std::string filename, unsigned int assimpFlags){
     this->_baseDirectory = directory;
     this->_filename = filename;
     this->loadFromFile(assimpFlags);
@@ -68,19 +68,18 @@ Object3DFile::~Object3DFile() {
 bool Object3DFile::loadFromFile(unsigned int assimpFlags){
 
     bool loadedSuccesful = false;
-    Assimp::Importer Importer;
 
     QString path; //Current relative project path
-    path.append(_baseDirectory); //Append object directory
-    path.append(_filename); //Append object filename
+    path.append(_baseDirectory.c_str()); //Append object directory
+    path.append(_filename.c_str()); //Append object filename
 
-    const aiScene* pScene = Importer.ReadFile(path.toAscii().data(), assimpFlags);
+    const aiScene* pScene = _importer.ReadFile(path.toAscii().data(), assimpFlags);
 
     if (pScene) {
         loadedSuccesful = generateObjectBuffers(pScene);
     }
     else {
-        qDebug() << "Error before loading: " << Importer.GetErrorString();
+        qDebug() << "Error before loading: " << _importer.GetErrorString();
     }
 
     return loadedSuccesful;
@@ -200,7 +199,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
     this->setMinVertex(new Point3D(minX, minY, minZ));
     this->setMaxVertex(new Point3D(maxX, maxY, maxZ));
 
-    return loadMaterials(pScene);
+    return true;
 }
 
 
@@ -226,7 +225,7 @@ bool Object3DFile::loadMaterials(const aiScene* pScene)
             aiString Path;
 
             if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-                std::string FullPath = string(this->_baseDirectory) + Path.data;
+                std::string FullPath = string(_baseDirectory) + Path.data;
                 _vTextures[i] = new Texture();
 
                 //Load textures with DevIL
@@ -270,6 +269,9 @@ bool Object3DFile::loadMaterials(const aiScene* pScene)
         }
 
     }
+
+
+    _importer.FreeScene();
 
     return ret;
 }
@@ -374,6 +376,10 @@ void Object3DFile::color4_to_float4(const aiColor4D *c, float f[4])
     f[1] = c->g;
     f[2] = c->b;
     f[3] = c->a;
+}
+
+void Object3DFile::loadTextures(){
+    this->loadMaterials(_importer.GetScene());
 }
 
 /******************************* MESH *****************************************/

@@ -21,42 +21,8 @@
  *-------------------------------------------------------------------*/
 Car::Car(QString folder, Point3D * position)
 {
-    Object3DFile *chasisObj;
-    Object3DFile *wheelObj;
-    Object3DFile *wheelFrontRightObj;
-    Object3DFile *wheelFrontLeftObj;
-    Object3DFile *wheelRearRightObj;
-    Object3DFile *wheelRearLeftObj;
-
-    chasisObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    chasisObj->setTranslation(position);
-    chasisObj->setRotation(new Point3D(0,0,90));
-    setChasisObj(chasisObj);
-
-    wheelObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelObj->setTranslation(position);
-    wheelObj->setRotation(new Point3D(0,0,90));
-    setWheelObj(wheelObj);
-
-    wheelFrontRightObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelFrontRightObj->setTranslation(position);
-    wheelFrontRightObj->setRotation(new Point3D(0,0,90));
-    setWheelFrontRightObj(wheelFrontRightObj);
-
-    wheelFrontLeftObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelFrontLeftObj->setTranslation(position);
-    wheelFrontLeftObj->setRotation(new Point3D(0,0,90));
-    setWheelFrontLeftObj(wheelFrontLeftObj);
-
-    wheelRearRightObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelRearRightObj->setTranslation(position);
-    wheelRearRightObj->setRotation(new Point3D(0,0,90));
-    setWheelRearRightObj(wheelRearRightObj);
-
-    wheelRearLeftObj = new Object3DFile((QDir::currentPath() + folder).toAscii().data(), "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    wheelRearLeftObj->setTranslation(position);
-    wheelRearLeftObj->setRotation(new Point3D(0,0,90));
-    setWheelRearLeftObj(wheelRearLeftObj);
+    _folder = (QDir::currentPath() + folder).toStdString();
+    this->_p_position = position;
 }
 
 /*-------------------------------------------------------------------
@@ -83,34 +49,6 @@ Car::~Car()
 
 // ============================ Methods ===============================
 
-/*-------------------------------------------------------------------
- |  Function
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-void Car::render()
-{
-
-}
-
-/*-------------------------------------------------------------------
- |  Function display
- |
- |  Purpose: Displays this object once rendered
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-void Car::display()
-{
-    this->_chasisObj->display();
-    this->_wheelObj->display();
-    this->_wheelFrontRight->display();
-    this->_wheelFrontLeft->display();
-    this->_wheelRearRight->display();
-    this->_wheelRearLeft->display();
-}
 
 /*-------------------------------------------------------------------
  |  Function
@@ -208,140 +146,77 @@ Point3D * Car::getBBMax()
     return _p_bbMax;
 }
 
+
+// ============================ Inherited Methods ===============================
 /*-------------------------------------------------------------------
- |  Function getRepresentation
+ |  Function loadModels
  |
- |  Purpose: Getter. Gets the chasis of the car
- |  Parameters:
- |  Returns: Object3DFile = the chasis of the car
+ |  Purpose: Loads all models without textures
  *-------------------------------------------------------------------*/
-Object3DFile* Car::getChasisObj(){
-    return this->_chasisObj;
+void Car::loadModels(){
+    _chasisObj = new Object3DFile(_folder, "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    _chasisObj->setTranslation(_p_position);
+    _chasisObj->setRotation(new Point3D(0,0,90));
+
+    _wheelObj = new Object3DFile(_folder, "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    _wheelObj->setTranslation(_p_position);
+    _wheelObj->setRotation(new Point3D(0,0,90));
+
+    _wheelFrontRight = new Object3DFile(_folder, "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    _wheelFrontRight->setTranslation(_p_position);
+    _wheelFrontRight->setRotation(new Point3D(0,0,90));
+
+    _wheelFrontLeft = new Object3DFile(_folder, "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    _wheelFrontLeft->setTranslation(_p_position);
+    _wheelFrontLeft->setRotation(new Point3D(0,0,90));
+
+    _wheelRearRight = new Object3DFile(_folder, "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    _wheelRearRight->setTranslation(_p_position);
+    _wheelRearRight->setRotation(new Point3D(0,0,90));
+
+    _wheelRearLeft = new Object3DFile(_folder, "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+    _wheelRearLeft->setTranslation(_p_position);
+    _wheelRearLeft->setRotation(new Point3D(0,0,90));
 }
 
 /*-------------------------------------------------------------------
- |  Function setChasisObj
+ |  Function loadModelsTextures
  |
- |  Purpose: Setter. Sets the chasis of the car
- |  Parameters: Object3DFile object = the chasis of the car
- |  Returns:
+ |  Purpose: Loads textures of all models
  *-------------------------------------------------------------------*/
-void Car::setChasisObj(Object3DFile *object){
-    this->_chasisObj = object;
+void Car::loadModelsTextures(){
+    this->_chasisObj->loadTextures();
+    this->_wheelObj->loadTextures();
+    this->_wheelFrontRight->loadTextures();
+    this->_wheelFrontLeft->loadTextures();
+    this->_wheelRearRight->loadTextures();
+    this->_wheelRearLeft->loadTextures();
+}
+
+/*-------------------------------------------------------------------
+ |  Function renderModels
+ |
+ |  Purpose: Render all models
+ *-------------------------------------------------------------------*/
+void Car::renderModels(){
     this->_chasisObj->render();
-}
-
-/*-------------------------------------------------------------------
-  |  Function getWheelObj
-  |
-  |  Purpose: Getter. Gets the wheel of the car
-  |  Parameters:
-  |  Returns: Object3DFile = the wheel of the car
-  *-------------------------------------------------------------------*/
-Object3DFile* Car::getWheelObj(){
-    return this->_wheelObj;
-}
-
-/*-------------------------------------------------------------------
-  |  Function setWheelObj
-  |
-  |  Purpose: Setter. Sets the wheel of the car
-  |  Parameters: Object3DFile object = the wheel of the car
-  |  Returns:
-  *-------------------------------------------------------------------*/
-void Car::setWheelObj(Object3DFile *object){
-    this->_wheelObj = object;
     this->_wheelObj->render();
-}
-
-/*-------------------------------------------------------------------
-  |  Function getWheelFrontRightObj
-  |
-  |  Purpose: Getter. Sets the WheelFrontRight of the car
-  |  Parameters:
-  |  Returns:
-  *-------------------------------------------------------------------*/
-Object3DFile* Car::getWheelFrontRightObj(){
-    return this->_wheelFrontRight;
-}
-
-/*-------------------------------------------------------------------
-  |  Function setWheelFrontRightObj
-  |
-  |  Purpose: Setter. Sets the FrontRightObj of the car
-  |  Parameters: Object3DFile object = the FrontRightObj of the car
-  |  Returns:
-  *-------------------------------------------------------------------*/
-void Car::setWheelFrontRightObj(Object3DFile *object){
-    this->_wheelFrontRight = object;
     this->_wheelFrontRight->render();
-}
-
-/*-------------------------------------------------------------------
-  |  Function getWheelFrontLeftObj
-  |
-  |  Purpose: Getter. Sets the WheelFrontLeft of the car
-  |  Parameters:
-  |  Returns:
-  *-------------------------------------------------------------------*/
-Object3DFile* Car::getWheelFrontLeftObj(){
-    return this->_wheelFrontLeft;
-}
-
-/*-------------------------------------------------------------------
-  |  Function setWheelFrontLeftObj
-  |
-  |  Purpose: Setter. Sets the FrontLeft wheel of the car
-  |  Parameters: Object3DFile object = the FrontLeft of the car
-  |  Returns:
-  *-------------------------------------------------------------------*/
-void Car::setWheelFrontLeftObj(Object3DFile *object){
-    this->_wheelFrontLeft = object;
     this->_wheelFrontLeft->render();
-}
-
-/*-------------------------------------------------------------------
-  |  Function getWheelRearRightObj
-  |
-  |  Purpose: Getter. Sets the WheelRearRight wheel of the car
-  |  Parameters:
-  |  Returns:
-  *-------------------------------------------------------------------*/
-Object3DFile* Car::getWheelRearRightObj(){
-    return this->_wheelRearRight;
-}
-
-/*-------------------------------------------------------------------
-  |  Function setWheelRearRightObj
-  |
-  |  Purpose: Setter. Sets the WheelRearRight wheel of the car
-  |  Parameters: Object3DFile object = the WheelRearRight wheel of the car
-  |  Returns:
-  *-------------------------------------------------------------------*/
-void Car::setWheelRearRightObj(Object3DFile *object){
-    this->_wheelRearRight = object;
     this->_wheelRearRight->render();
-}
-
-/*-------------------------------------------------------------------
-  |  Function getWheelRearLeftObj
-  |
-  |  Purpose: Getter. Sets the WheelRearLeft wheel of the car
-  |  Parameters:
-  |  Returns:
-  *-------------------------------------------------------------------*/
-Object3DFile* Car::getWheelRearLeftObj(){
-    return this->_wheelRearLeft;
-}
-
-/*-------------------------------------------------------------------
-  |  Function setWheelRearLeftObj
-  |
-  |  Purpose: Setter. Sets the WheelRearLeft wheel of the car
-  |  Parameters: Object3DFile object = the WheelRearLeft of the car
-  |  Returns:
-  *-------------------------------------------------------------------*/
-void Car::setWheelRearLeftObj(Object3DFile *object){
-    this->_wheelRearLeft = object;
     this->_wheelRearLeft->render();
+}
+
+/*-------------------------------------------------------------------
+ |  Function displayModels
+ |
+ |  Purpose: Displays all models
+ *-------------------------------------------------------------------*/
+void Car::displayModels(){
+    this->_chasisObj->display();
+    this->_wheelObj->display();
+    this->_wheelFrontRight->display();
+    this->_wheelFrontLeft->display();
+    this->_wheelRearRight->display();
+    this->_wheelRearLeft->display();
 }

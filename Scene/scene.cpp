@@ -24,7 +24,6 @@ Scene::Scene()
     QTime myTimer;
     myTimer.start();
 
-
     Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/",  "/Media/Models/Sky/");
 
     Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
@@ -35,38 +34,60 @@ Scene::Scene()
     Car *c6 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.7f,-90.5f,-2));
 
 
-    enviroment->loadModels();
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            enviroment->loadModels();
+        }
+#pragma omp section
+        {
+            c1->loadModels();
+        }
+#pragma omp section
+        {
+            c2->loadModels();
+        }
+#pragma omp section
+        {
+            c3->loadModels();
+        }
+#pragma omp section
+        {
+            c4->loadModels();
+        }
+#pragma omp section
+        {
+            c5->loadModels();
+        }
+#pragma omp section
+        {
+            c6->loadModels();
+        }
+    }
+
+
+   int loadModel = myTimer.elapsed();
+
     enviroment->loadModelsTextures();
-    enviroment->renderModels();
-
-    c1->loadModels();
     c1->loadModelsTextures();
-    c1->renderModels();
-
-    c2->loadModels();
     c2->loadModelsTextures();
-    c2->renderModels();
-
-    c3->loadModels();
     c3->loadModelsTextures();
-    c3->renderModels();
-
-    c4->loadModels();
     c4->loadModelsTextures();
-    c4->renderModels();
-
-    c5->loadModels();
     c5->loadModelsTextures();
-    c5->renderModels();
-
-    c6->loadModels();
     c6->loadModelsTextures();
+
+    int loadTextures = myTimer.elapsed() - loadModel ;
+
+    enviroment->renderModels();
+    c1->renderModels();
+    c2->renderModels();
+    c3->renderModels();
+    c4->renderModels();
+    c5->renderModels();
     c6->renderModels();
 
-
-
-
-
+    int render = myTimer.elapsed() - loadModel - loadTextures;
 
     _objectManager = ObjectManager::getObjectManager();
 
@@ -80,8 +101,10 @@ Scene::Scene()
     _objectManager->addCar(c5);
     _objectManager->addCar(c6);
 
-
-    qDebug() << "Ha tardado en cargar: " << myTimer.elapsed();
+    qDebug() << "Ha tardado en cargar modelos: " << loadModel;
+    qDebug() << "Ha tardado en cargar texturas: " << loadTextures;
+    qDebug() << "Ha tardado en renderizados: " << render;
+    qDebug() << "Ha tardado en cargar total: " << myTimer.elapsed();
 }
 
 /*-------------------------------------------------------------------

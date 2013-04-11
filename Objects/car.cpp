@@ -154,29 +154,51 @@ Point3D * Car::getBBMax()
  |  Purpose: Loads all models without textures
  *-------------------------------------------------------------------*/
 void Car::loadModels(){
-    _chasisObj = new Object3DFile(_folder, "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    _chasisObj->setTranslation(_p_position);
-    _chasisObj->setRotation(new Point3D(0,0,90));
 
-    _wheelObj = new Object3DFile(_folder, "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    _wheelObj->setTranslation(_p_position);
-    _wheelObj->setRotation(new Point3D(0,0,90));
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            _chasisObj = new Object3DFile(_folder, "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _chasisObj->setTranslation(_p_position);
+            _chasisObj->setRotation(new Point3D(0,0,90));
+        }
+#pragma omp section
+        {
+            _wheelObj = new Object3DFile(_folder, "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelObj->setTranslation(_p_position);
+            _wheelObj->setRotation(new Point3D(0,0,90));
+        }
+#pragma omp section
+        {
+            _wheelFrontRight = new Object3DFile(_folder, "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelFrontRight->setTranslation(_p_position);
+            _wheelFrontRight->setRotation(new Point3D(0,0,90));
+        }
 
-    _wheelFrontRight = new Object3DFile(_folder, "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    _wheelFrontRight->setTranslation(_p_position);
-    _wheelFrontRight->setRotation(new Point3D(0,0,90));
+#pragma omp section
+        {
 
-    _wheelFrontLeft = new Object3DFile(_folder, "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    _wheelFrontLeft->setTranslation(_p_position);
-    _wheelFrontLeft->setRotation(new Point3D(0,0,90));
+            _wheelFrontLeft = new Object3DFile(_folder, "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelFrontLeft->setTranslation(_p_position);
+            _wheelFrontLeft->setRotation(new Point3D(0,0,90));
+        }
 
-    _wheelRearRight = new Object3DFile(_folder, "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    _wheelRearRight->setTranslation(_p_position);
-    _wheelRearRight->setRotation(new Point3D(0,0,90));
+#pragma omp section
+        {
+            _wheelRearRight = new Object3DFile(_folder, "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelRearRight->setTranslation(_p_position);
+            _wheelRearRight->setRotation(new Point3D(0,0,90));
+        }
 
-    _wheelRearLeft = new Object3DFile(_folder, "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
-    _wheelRearLeft->setTranslation(_p_position);
-    _wheelRearLeft->setRotation(new Point3D(0,0,90));
+#pragma omp section
+        {
+            _wheelRearLeft = new Object3DFile(_folder, "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelRearLeft->setTranslation(_p_position);
+            _wheelRearLeft->setRotation(new Point3D(0,0,90));
+        }
+
+    }
 }
 
 /*-------------------------------------------------------------------

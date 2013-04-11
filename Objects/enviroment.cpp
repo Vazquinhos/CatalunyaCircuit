@@ -58,11 +58,22 @@ Enviroment::~Enviroment()
  |  Purpose: Loads all models without textures
  *-------------------------------------------------------------------*/
 void Enviroment::loadModels(){
-    _circuit3D = new Object3DFile(_circuitFolder, "circuit.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
-    _circuit3D->setRotation(new Point3D(90,0,0));
 
-    _sky3D = new Object3DFile(_skyFolder, "sky.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
-    _sky3D->setRotation(new Point3D(90,0,0));
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            _circuit3D = new Object3DFile(_circuitFolder, "circuit.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _circuit3D->setRotation(new Point3D(90,0,0));
+        }
+#pragma omp section
+        {
+            _sky3D = new Object3DFile(_skyFolder, "sky.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _sky3D->setRotation(new Point3D(90,0,0));
+        }
+
+    }
+
 }
 
 /*-------------------------------------------------------------------

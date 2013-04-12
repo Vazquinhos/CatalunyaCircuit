@@ -69,7 +69,7 @@ private:
 
 public:
     Object3DFile();
-    Object3DFile(string directory, string filename, unsigned int assimpFlags);
+    Object3DFile( std::string directory, std::string filename, unsigned int assimpFlags);
     virtual ~Object3DFile();
 
     void loadTextures();

@@ -40,6 +40,11 @@ private:
 
     Object3DFile *_circuit3D;
     Object3DFile *_sky3D;
+    Object3DFile *_forest13D;
+    Object3DFile *_forest23D;
+    Object3DFile *_forest33D;
+    Object3DFile *_forest43D;
+
     // ============================ Methods ===============================
 };
 

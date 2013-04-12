@@ -160,6 +160,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             const aiVector3D* pNormal   = &(mesh->mNormals[k]);
             const aiVector3D* pTexCoord = mesh->HasTextureCoords(0) ? &(mesh->mTextureCoords[0][k]) : &Zero3D;
 
+
             minX = min(minX, pPos->x);
             maxX = max(maxX, pPos->x);
 
@@ -274,12 +275,12 @@ bool Object3DFile::loadMaterials(const aiScene* pScene)
 
 
 /*-------------------------------------------------------------------
- |  Function apply_material
- |
- |  Purpose: Applies special effects for a given material, for example plastic or light/reflection
- |  Parameters:     const aiMaterial *mtl = The material to apply special effects
- |  Returns:
- *-------------------------------------------------------------------*/
+         |  Function apply_material
+         |
+         |  Purpose: Applies special effects for a given material, for example plastic or light/reflection
+         |  Parameters:     const aiMaterial *mtl = The material to apply special effects
+         |  Returns:
+         *-------------------------------------------------------------------*/
 void Object3DFile::apply_material(const aiMaterial *mtl)
 {
     float c[4];

@@ -581,7 +581,11 @@ OTHER_FILES += \
     Media/Images/1365559690_single_seater.png \
     Media/Images/1365560323_Gear.png \
     Media/Images/1365559833_tyres.png \
-    Media/Images/1365728458_Warning.png
+    Media/Images/1365728458_Warning.png \
+    Media/Models/Circuit/forest4.3ds \
+    Media/Models/Circuit/forest3.3ds \
+    Media/Models/Circuit/forest2.3ds \
+    Media/Models/Circuit/forest1.3ds
 
 LIBS += -lgomp
 

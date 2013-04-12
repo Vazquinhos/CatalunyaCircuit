@@ -129,3 +129,9 @@ void CameraManager::setActiveCamera(QString name)
 {
     _p_activeCamera = this->getCamera(name);
 }
+
+std::map<QString,CameraAbs*>
+CameraManager::getCameras( void )
+{
+    return _cameras;
+}

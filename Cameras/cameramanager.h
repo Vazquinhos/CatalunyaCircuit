@@ -35,6 +35,7 @@ public:
     CameraAbs            * getActiveCamera();
     void                   setActiveCamera(CameraAbs * camera);
     void                   setActiveCamera(QString name);
+    std::map<QString,CameraAbs*> getCameras();
 
 private:
 

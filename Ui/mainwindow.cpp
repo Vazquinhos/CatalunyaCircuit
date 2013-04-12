@@ -84,7 +84,10 @@ void MainWindow::on_actionLight_triggered()
 void MainWindow::on_actionCamera_triggered()
 {
     if(_p_camera_qt)
+    {
+        _p_camera_qt->LoadWindow();
         _p_camera_qt->show();
+    }
 }
 
 void MainWindow::on_actionCars_triggered()

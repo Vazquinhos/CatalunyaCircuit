@@ -6,6 +6,7 @@
 #include "camerawindowqt.h"
 #include "carswindowqt.h"
 #include "Cameras/cameramanager.h"
+#include "Commands/camerascmd.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -84,11 +85,8 @@ void MainWindow::on_actionLight_triggered()
 
 void MainWindow::on_actionCamera_triggered()
 {
-    if(_p_camera_qt)
-    {
-        _p_camera_qt->LoadWindow(CameraManager::getCameraManager()->getCameras());
-        _p_camera_qt->show();
-    }
+    CamerasCmd* p_cmd_cam = new CamerasCmd();
+    p_cmd_cam->process();
 }
 
 void MainWindow::on_actionCars_triggered()

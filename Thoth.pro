@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     Ui/camerawindowqt.cpp \
     Ui/carswindowqt.cpp \
     Objects/absModels.cpp \
-    Loaders/settingsimporter.cpp
+    Loaders/settingsimporter.cpp \
+    Commands/camerascmd.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -79,7 +80,8 @@ HEADERS  += \
     Ui/camerawindowqt.h \
     Ui/carswindowqt.h \
     Objects/absModels.h \
-    Loaders/settingsimporter.h
+    Loaders/settingsimporter.h \
+    Commands/camerascmd.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

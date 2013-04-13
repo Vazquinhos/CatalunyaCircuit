@@ -143,4 +143,14 @@ void Enviroment::displayModels(){
     _forest43D->display();
 }
 
+/*-------------------------------------------------------------------
+ |  Function checkVisibility
+ |
+ |  Purpose: Modify visibility of the objects taking in consideration distance to the camera
+ |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
+ *-------------------------------------------------------------------*/
+void Enviroment::checkVisibility(Point3D *pointCamera, int distance){
+
+}
+
 

@@ -7,7 +7,10 @@
 #include "camera.h"
 
 #include "Scene/scene.h"
-//#include "Cameras/sphericalcamera.h"
+#include "Cameras/cameramanager.h"
+#include "Cameras/sphericalcamera.h"
+#include "Cameras/cameraabs.h"
+#include "Cameras/freecamera.h"
 
 class GLWidget : public QGLWidget {
 
@@ -32,6 +35,8 @@ protected:
 
 private:
     Scene *_scene;
+    ObjectManager *_objectManager;
+    CameraManager *_cameraManager;
 
     QGLShaderProgram *shader;
 

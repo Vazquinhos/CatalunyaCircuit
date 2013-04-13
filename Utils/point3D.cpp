@@ -9,6 +9,7 @@
  */
 
 #include "point3D.h"
+#include "math.h"
 
 // ================= Constructores/Destructores ======================
 
@@ -176,4 +177,15 @@ Point3D::operator ==( const Point3D& a_pnt)
  return ((_x == a_pnt.getX()) &&
          (_y == a_pnt.getY()) &&
          (_z == a_pnt.getZ()));
+}
+
+/*-------------------------------------------------------------------
+ |  Operator |
+ |
+ |  Purpose: Get distance between two points
+ |  Parameters: The point to calculate the distance to
+ |  Returns: The distance to the point
+ *-------------------------------------------------------------------*/
+float Point3D::getDistance( const Point3D *a_pnt1){
+    return sqrt(pow(a_pnt1->getX()-_x, 2) + pow(a_pnt1->getY()-_y, 2) + pow(a_pnt1->getZ()-_z, 2));
 }

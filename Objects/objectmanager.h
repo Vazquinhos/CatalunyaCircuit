@@ -40,6 +40,8 @@ public:
     void                      renderAll();
     void                      displayAll();
 
+    void checkVisibility(Point3D *pointCamera, int distance);
+
 private:
     // ========================== Data Members ============================
     static ObjectManager       * _p_objectManager;

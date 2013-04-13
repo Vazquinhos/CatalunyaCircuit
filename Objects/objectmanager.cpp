@@ -142,3 +142,17 @@ void ObjectManager::displayAll(){
         glPopMatrix();
     }
 }
+
+/*-------------------------------------------------------------------
+ |  Function checkVisibility
+ |
+ |  Purpose: Modify visibility of the objects taking in consideration distance to the camera
+ |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
+ *-------------------------------------------------------------------*/
+void ObjectManager::checkVisibility(Point3D *pointCamera, int distance){
+    _p_enviroment->checkVisibility(pointCamera,  distance);
+
+    for(unsigned int i = 0; i < _v_cars.size(); i++){
+        _v_cars[i]->checkVisibility(pointCamera,  distance);
+    }
+}

@@ -207,12 +207,12 @@ void Car::loadModels(){
  |  Purpose: Loads textures of all models
  *-------------------------------------------------------------------*/
 void Car::loadModelsTextures(){
-    this->_chasisObj->loadTextures();
-    this->_wheelObj->loadTextures();
-    this->_wheelFrontRight->loadTextures();
-    this->_wheelFrontLeft->loadTextures();
-    this->_wheelRearRight->loadTextures();
-    this->_wheelRearLeft->loadTextures();
+    _chasisObj->loadTextures();
+    _wheelObj->loadTextures();
+    _wheelFrontRight->loadTextures();
+    _wheelFrontLeft->loadTextures();
+    _wheelRearRight->loadTextures();
+    _wheelRearLeft->loadTextures();
 }
 
 /*-------------------------------------------------------------------
@@ -221,12 +221,12 @@ void Car::loadModelsTextures(){
  |  Purpose: Render all models
  *-------------------------------------------------------------------*/
 void Car::renderModels(){
-    this->_chasisObj->render();
-    this->_wheelObj->render();
-    this->_wheelFrontRight->render();
-    this->_wheelFrontLeft->render();
-    this->_wheelRearRight->render();
-    this->_wheelRearLeft->render();
+    _chasisObj->render();
+    _wheelObj->render();
+    _wheelFrontRight->render();
+    _wheelFrontLeft->render();
+    _wheelRearRight->render();
+    _wheelRearLeft->render();
 }
 
 /*-------------------------------------------------------------------
@@ -235,10 +235,35 @@ void Car::renderModels(){
  |  Purpose: Displays all models
  *-------------------------------------------------------------------*/
 void Car::displayModels(){
-    this->_chasisObj->display();
-    this->_wheelObj->display();
-    this->_wheelFrontRight->display();
-    this->_wheelFrontLeft->display();
-    this->_wheelRearRight->display();
-    this->_wheelRearLeft->display();
+    _chasisObj->display();
+    _wheelObj->display();
+    _wheelFrontRight->display();
+    _wheelFrontLeft->display();
+    _wheelRearRight->display();
+    _wheelRearLeft->display();
+}
+
+/*-------------------------------------------------------------------
+ |  Function checkVisibility
+ |
+ |  Purpose: Modify visibility of the objects taking in consideration distance to the camera
+ |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
+ *-------------------------------------------------------------------*/
+void Car::checkVisibility(Point3D *pointCamera, int distance){
+    if(this->shouldBeHidden(_p_position, pointCamera, distance)){
+        _chasisObj->setVisibility(false);
+        _wheelObj->setVisibility(false);
+        _wheelFrontRight->setVisibility(false);
+        _wheelFrontLeft->setVisibility(false);
+        _wheelRearRight->setVisibility(false);
+        _wheelRearLeft->setVisibility(false);
+    }
+    else{
+        _chasisObj->setVisibility(true);
+        _wheelObj->setVisibility(true);
+        _wheelFrontRight->setVisibility(true);
+        _wheelFrontLeft->setVisibility(true);
+        _wheelRearRight->setVisibility(true);
+        _wheelRearLeft->setVisibility(true);
+    }
 }

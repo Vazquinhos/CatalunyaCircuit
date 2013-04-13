@@ -33,6 +33,8 @@ public:
     virtual void renderModels();
     virtual void displayModels();
 
+    void checkVisibility(Point3D *pointCamera, int distance);
+
 private:
     // ========================== Data Members ============================
     std::string _circuitFolder;

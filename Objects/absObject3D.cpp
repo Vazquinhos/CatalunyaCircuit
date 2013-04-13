@@ -28,14 +28,13 @@ AbsObject3D::AbsObject3D() {
     _p_scale = new Point3D(1,1,1);
     _p_minVertex = new Point3D();
     _p_maxVertex = new Point3D();
+    _isVisible = true;
 }
 
 /*-------------------------------------------------------------------
  |  Function
  |
- |  Purpose:
- |  Parameters:
- |  Returns:
+ |  Purpose: Destruct and free memory
  *-------------------------------------------------------------------*/
 AbsObject3D::~AbsObject3D()
 {
@@ -48,6 +47,47 @@ AbsObject3D::~AbsObject3D()
 
 // ============================ Methods ==============================
 
+
+/*-------------------------------------------------------------------
+ |  Function setVisibility
+ |
+ |  Purpose: Sets the visibility of the object
+ |  Parameters: bool visibility : The visibility of the object
+ *-------------------------------------------------------------------*/
+void AbsObject3D::setVisibility(bool visibility){
+    _isVisible = visibility;
+}
+
+/*-------------------------------------------------------------------
+ |  Function setVisibility
+ |
+ |  Purpose: Sets the visibility of the object
+ |  Returns: The boolean visibility of the object
+ *-------------------------------------------------------------------*/
+bool AbsObject3D::getVisibility(){
+    return _isVisible;
+}
+
+/*-------------------------------------------------------------------
+ |  Function getCenter
+ |
+ |  Purpose: Getter of the center
+ |  Returns: The the center vertex of the object
+ *-------------------------------------------------------------------*/
+Point3D * AbsObject3D::getCenter(){
+    return _p_center;
+}
+
+/*-------------------------------------------------------------------
+ |  Function setCenter
+ |
+ |  Purpose: Setter of the center
+ |  Parameters: Point3D *center : The the center vertex of the object
+ *-------------------------------------------------------------------*/
+void AbsObject3D::setCenter(Point3D *center){
+    this->_p_center = center;
+}
+
 /*-------------------------------------------------------------------
  |  Function display
  |
@@ -57,18 +97,19 @@ AbsObject3D::~AbsObject3D()
  |  Returns:
  *-------------------------------------------------------------------*/
 void AbsObject3D::display() {
+    if(_isVisible){
+        glPushMatrix();
 
-    glPushMatrix();
+        glRotatef(this->_p_rotation->getX(), 1, 0, 0); //Rotate object
+        glRotatef(this->_p_rotation->getY(), 0, 1, 0); //Rotate object
+        glRotatef(this->_p_rotation->getZ(), 0, 0, 1); //Rotate object
+        glScalef(this->_p_scale->getX(), this->_p_scale->getY(), this->_p_scale->getZ()); //Scale object
+        glTranslatef(this->_p_translation->getX(), this->_p_translation->getY(), this->_p_translation->getZ()); //Translate object to its position
 
-    glRotatef(this->_p_rotation->getX(), 1, 0, 0); //Rotate object
-    glRotatef(this->_p_rotation->getY(), 0, 1, 0); //Rotate object
-    glRotatef(this->_p_rotation->getZ(), 0, 0, 1); //Rotate object
-    glScalef(this->_p_scale->getX(), this->_p_scale->getY(), this->_p_scale->getZ()); //Scale object
-    glTranslatef(this->_p_translation->getX(), this->_p_translation->getY(), this->_p_translation->getZ()); //Translate object to its position
+        glCallList(this->_gi_displayListId); //Call display list for display the object
 
-    glCallList(this->_gi_displayListId); //Call display list for display the object
-
-    glPopMatrix();
+        glPopMatrix();
+    }
 }
 
 /*-------------------------------------------------------------------

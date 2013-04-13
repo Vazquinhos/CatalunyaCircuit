@@ -30,6 +30,7 @@ public:
     float getZ( void ) const;
     void setCoordinates( float a_x, float a_y, float a_z);
     void getCoordinates( float& a_x, float& a_y, float& a_z);
+    float getDistance( const Point3D* a_pnt1);
 
     // ============================ Operators =============================
     bool operator==( const Point3D& a_pnt);

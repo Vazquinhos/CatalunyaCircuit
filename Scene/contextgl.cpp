@@ -3,10 +3,6 @@
 #include <QApplication>
 #include <QTimeLine>
 
-#include "Cameras/cameramanager.h"
-#include "Cameras/sphericalcamera.h"
-#include "Cameras/cameraabs.h"
-#include "Cameras/freecamera.h"
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -67,12 +63,18 @@ void GLWidget::initializeGL()
     glDepthFunc(GL_LEQUAL);
 
 
+    //1) Initialize variables
+    _scene = new Scene();
+    _objectManager = ObjectManager::getObjectManager();
+    _cameraManager = CameraManager::getCameraManager();
+
+
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
     SphericalCamera * spCam = new SphericalCamera();
-    CameraManager::getCameraManager()->setCamera(QString("spherical"), spCam);
+    _cameraManager->setCamera(QString("spherical"), spCam);
     FreeCamera * frCam = new FreeCamera();
-    CameraManager::getCameraManager()->setCamera(QString("free"), frCam);
+    _cameraManager->setCamera(QString("free"), frCam);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -82,7 +84,7 @@ void GLWidget::initializeGL()
     //initializeShaders(QString("simple"));
 
 
-    _scene = new Scene();
+
 
 }
 
@@ -94,7 +96,7 @@ void GLWidget::resizeGL(int w, int h)
 {
 
     glViewport(0,0,w,h);
-    CameraManager::getCameraManager()->getCamera("free")
+    _cameraManager->getCamera("free")
             ->resizeProjection(w, h);
 
 }
@@ -114,7 +116,7 @@ void GLWidget::paintGL()
 
 
     // Update camera to its current position
-    CameraManager::getCameraManager()->getCamera("free")->update();
+    _cameraManager->getCamera("free")->update();
 
     _scene->display();
 
@@ -146,7 +148,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (event->buttons() & Qt::LeftButton)
     {
-        CameraManager::getCameraManager()->getCamera("free")
+        _cameraManager->getCamera("free")
                 ->addYawPitch(posCam.getX()- event->x(),  posCam.getY() - event->y());
         posCam.setCoordinates(event->x(), event->y());
 
@@ -208,7 +210,7 @@ void GLWidget::onZoomChanged(qreal x)
     (void)x; //Delete unused warning
     qreal factor = 1 + qreal(_numScheduledScalings) / 300.0; //Faster zoom if faster wheel movement
 
-    CameraAbs *camera = CameraManager::getCameraManager()->getCamera("free");
+    CameraAbs *camera = _cameraManager->getCamera("free");
 
     if(_isZoomingIn){//Increment or decrease current zoom
         camera->setZoom(camera->getZoom() + factor);
@@ -232,21 +234,26 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     case Qt::Key_Right: //Move camera to right
         qDebug() << "PULSANDO RIGHT";
-        CameraManager::getCameraManager()->getCamera("free")->move(1, false);
+        _cameraManager->getCamera("free")->move(1, false);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), 150);
+
         break;
 
     case Qt::Key_Left: //Move camera to left
         qDebug() << "PULSANDO LEFT";
-        CameraManager::getCameraManager()->getCamera("free")->move(-1, false);
+        _cameraManager->getCamera("free")->move(-1, false);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), 150);
         break;
     case Qt::Key_Up: //Move camera to front
         qDebug() << "PULSANDO UP";
-        CameraManager::getCameraManager()->getCamera("free")->move(1, true);
+        _cameraManager->getCamera("free")->move(1, true);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), 150);
         break;
 
     case Qt::Key_Down: //Move camera to back
         qDebug() << "PULSANDO DOWN";
-        CameraManager::getCameraManager()->getCamera("free")->move(-1, true);
+        _cameraManager->getCamera("free")->move(-1, true);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), 150);
         break;
         break;
 
@@ -259,57 +266,57 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_W:
         break;
     case Qt::Key_S:
-        pos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
+        pos = _cameraManager->getCamera("free")->getPosition();
         qDebug() << "POSICION CAMERA:";
         qDebug() << "X " << pos->getX() << " Y " << pos->getY() << " Z " << pos->getZ();
         break;
     case Qt::Key_R:
-        CameraManager::getCameraManager()->getCamera("free")->getPosition()->setCoordinates(0,0,0);
-        CameraManager::getCameraManager()->getCamera("free")->setYawPitch(0,0);
+        _cameraManager->getCamera("free")->getPosition()->setCoordinates(0,0,0);
+        _cameraManager->getCamera("free")->setYawPitch(0,0);
         break;
     case Qt::Key_A:
         break;
     case Qt::Key_D:
         break;
     case Qt::Key_0:
-        pos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(0)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_1:
-        pos = ObjectManager::getObjectManager()->getCar(1)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(1)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_2:
-        pos = ObjectManager::getObjectManager()->getCar(2)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(2)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_3:
-        pos = ObjectManager::getObjectManager()->getCar(3)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(3)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_4:
-        pos = ObjectManager::getObjectManager()->getCar(4)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(4)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_5:
-        pos = ObjectManager::getObjectManager()->getCar(5)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(5)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_6:
-        pos = ObjectManager::getObjectManager()->getCar(6)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(6)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_7:
-        pos = ObjectManager::getObjectManager()->getCar(7)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(7)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_8:
-        pos = ObjectManager::getObjectManager()->getCar(8)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(8)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     case Qt::Key_9:
-        pos = ObjectManager::getObjectManager()->getCar(9)->getPosition();
-        CameraManager::getCameraManager()->setCameraOnCar(pos);
+        pos = _objectManager->getCar(9)->getPosition();
+        _cameraManager->setCameraOnCar(pos);
         break;
     default:
         update = false;

@@ -39,6 +39,11 @@ public:
     Point3D          * getMinVertex();
     void               setMaxVertex(Point3D * maxVertex);
     Point3D          * getMaxVertex();
+    Point3D          * getCenter();
+    void               setCenter(Point3D *center);
+
+    void setVisibility(bool visibility);
+    bool getVisibility();
 
 protected:
     virtual void renderizeObject() = 0;
@@ -51,6 +56,9 @@ private:
     Point3D     * _p_scale;
     Point3D     * _p_minVertex;
     Point3D     * _p_maxVertex;
+    Point3D     * _p_center;
+
+    bool _isVisible;
 
     // ============================ Methods ==============================
 };

@@ -1,6 +1,8 @@
 #ifndef ABSMODELS_H
 #define ABSMODELS_H
 
+#include "Utils/point3D.h"
+
 class AbsModels
 {
 public:
@@ -10,6 +12,10 @@ public:
     virtual void loadModelsTextures(){}
     virtual void renderModels(){}
     virtual void displayModels(){}
+    virtual void checkVisibility(Point3D *pointCamera, int distance){(void)pointCamera; (void)distance;}
+
+protected:
+    bool shouldBeHidden(Point3D *pointModel, Point3D *pointCamera, int distance);
 };
 
 #endif // ABSMODELS_H

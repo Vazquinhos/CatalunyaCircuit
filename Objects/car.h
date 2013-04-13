@@ -42,6 +42,7 @@ public:
     void loadModelsTextures();
     void renderModels();
     void displayModels();
+    void checkVisibility(Point3D *pointCamera, int distance);
 
 private:
     // ========================== Data Members ============================

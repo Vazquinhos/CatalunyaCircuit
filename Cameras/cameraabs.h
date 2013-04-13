@@ -20,7 +20,8 @@ class CameraAbs
 {
 public:
     // ================= Constructores/Destructores ======================
-    CameraAbs();
+    CameraAbs(void);
+    CameraAbs(QString a_name);
     CameraAbs(const CameraAbs& cameraAbs);
     virtual ~CameraAbs();
 

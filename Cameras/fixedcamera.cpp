@@ -18,9 +18,8 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-FixedCamera::FixedCamera() : CameraAbs()
-{
-}
+FixedCamera::FixedCamera() : CameraAbs(){}
+FixedCamera::FixedCamera( QString a_name ): CameraAbs( a_name ){}
 
 /*-------------------------------------------------------------------
  |  Copy Constructor

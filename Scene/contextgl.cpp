@@ -71,8 +71,9 @@ void GLWidget::initializeGL()
 
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
-    SphericalCamera * spCam = new SphericalCamera();
+    SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
     _cameraManager->setCamera(QString("spherical"), spCam);
+    _cameraManager->setActiveCamera("spherical");
     FreeCamera * frCam = new FreeCamera();
     _cameraManager->setCamera(QString("free"), frCam);
 

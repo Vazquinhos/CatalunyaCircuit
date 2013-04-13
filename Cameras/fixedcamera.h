@@ -23,6 +23,7 @@ class FixedCamera : public CameraAbs
 public:
     // ================= Constructores/Destructores ======================
     FixedCamera();
+    FixedCamera(QString a_name);
     FixedCamera(const FixedCamera& fixedCamera);
     ~FixedCamera();
 

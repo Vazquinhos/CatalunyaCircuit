@@ -20,73 +20,36 @@ CameraWindowQt::~CameraWindowQt()
 }
 
 void
-CameraWindowQt::LoadWindow()
+CameraWindowQt::LoadWindow(std::map<QString,CameraAbs*> a_cameras)
 {
-    std::map<QString,CameraAbs*> map_cam =
-            CameraManager::getCameraManager()->getCameras();
-
     std::map<QString,CameraAbs*>::const_iterator itr;
 
     QListWidgetItem* p_item;
-    for(itr = map_cam.begin(); itr != map_cam.end(); ++itr)
+    for(itr = a_cameras.begin(); itr != a_cameras.end(); ++itr)
     {
         p_item = new QListWidgetItem((*itr).first);
         ui->listWidget->addItem(p_item);
     }
-    // TODO, buscar en que row esta la current camera
-    p_item = ui->listWidget->takeItem(0);
-    QString camera_name = p_item->text();
-    ui->listWidget->insertItem(0,p_item);
 
-    ui->line_name->setText(camera_name);
-
-    CameraAbs* p_camera = CameraManager::getCameraManager()->getCamera(camera_name);
-
-    mode_projection mode = p_camera->getModeProjection();
-
-    if( mode == ORTOGONAL)
-    {
-        ui->cb_mode->setCurrentIndex(1);
-    } else {
-        ui->cb_mode->setCurrentIndex(0);
-    }
-
-    camera_type type = p_camera->getType();
-    switch (type)
-    {
-        case FREE:
-            ui->cb_type->setCurrentIndex(0);
-        break;
-        case SPHERICAL:
-            ui->cb_type->setCurrentIndex(1);
-        break;
-        case FIXED:
-            ui->cb_type->setCurrentIndex(2);
-        break;
-    }
-
-    float yaw, pitch;
-    p_camera->getYawPitch( yaw, pitch );
-    ui->sb_yaw->setValue(yaw);
-    ui->sb_pitch->setValue(pitch);
-
-    Point3D* p_point = p_camera->getPosition();
-
-    ui->x->setValue(p_point->getX());
-    ui->y->setValue(p_point->getY());
-    ui->z->setValue(p_point->getZ());
+    updateWidgetsWithCamera(
+        CameraManager::getCameraManager()->getActiveCamera());
 }
 
 
-void CameraWindowQt::on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+void CameraWindowQt::on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem */*previous*/)
 {
-    QString camera_name = current->text();
+    updateWidgetsWithCamera(
+                CameraManager::getCameraManager()->getCamera(current->text()));
+}
+
+void
+CameraWindowQt::updateWidgetsWithCamera( CameraAbs* ap_camera )
+{
+    QString camera_name = ap_camera->getName();
 
     ui->line_name->setText(camera_name);
 
-    CameraAbs* p_camera = CameraManager::getCameraManager()->getCamera(camera_name);
-
-    mode_projection mode = p_camera->getModeProjection();
+    mode_projection mode = ap_camera->getModeProjection();
 
     if( mode == ORTOGONAL)
     {
@@ -95,7 +58,7 @@ void CameraWindowQt::on_listWidget_currentItemChanged(QListWidgetItem *current, 
         ui->cb_mode->setCurrentIndex(0);
     }
 
-    camera_type type = p_camera->getType();
+    camera_type type = ap_camera->getType();
     switch (type)
     {
         case FREE:
@@ -110,11 +73,11 @@ void CameraWindowQt::on_listWidget_currentItemChanged(QListWidgetItem *current, 
     }
 
     float yaw, pitch;
-    p_camera->getYawPitch( yaw, pitch );
+    ap_camera->getYawPitch( yaw, pitch );
     ui->sb_yaw->setValue(yaw);
     ui->sb_pitch->setValue(pitch);
 
-    Point3D* p_point = p_camera->getPosition();
+    Point3D* p_point = ap_camera->getPosition();
 
     ui->x->setValue(p_point->getX());
     ui->y->setValue(p_point->getY());

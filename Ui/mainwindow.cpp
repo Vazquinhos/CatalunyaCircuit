@@ -5,6 +5,7 @@
 #include "exportsettingsqt.h"
 #include "camerawindowqt.h"
 #include "carswindowqt.h"
+#include "Cameras/cameramanager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -85,7 +86,7 @@ void MainWindow::on_actionCamera_triggered()
 {
     if(_p_camera_qt)
     {
-        _p_camera_qt->LoadWindow();
+        _p_camera_qt->LoadWindow(CameraManager::getCameraManager()->getCameras());
         _p_camera_qt->show();
     }
 }

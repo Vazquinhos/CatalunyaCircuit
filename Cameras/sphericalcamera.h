@@ -23,6 +23,7 @@ public:
 
     // ================= Constructores/Destructores ======================
     SphericalCamera();
+    SphericalCamera( QString a_name );
     SphericalCamera(const SphericalCamera& sphericalCamera);
     ~SphericalCamera();
 

@@ -23,6 +23,7 @@ public:
 
     // ================= Constructores/Destructores ======================
     FreeCamera();
+    FreeCamera(QString a_name);
     FreeCamera(const FreeCamera& freeCamera);
     ~FreeCamera();
 

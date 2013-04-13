@@ -19,12 +19,30 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-CameraAbs::CameraAbs()
+CameraAbs::CameraAbs( void )
 {
     _zoom = 10;
     _yaw = 15;
     _pitch = 30;
     _mode = PERSPECTIVE;
+    _name = QString("Not init");
+    setPosition(new Point3D(144.0f, 0.216f, 3.906f));
+}
+
+/*-------------------------------------------------------------------
+ |  Argument Constructor
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+CameraAbs::CameraAbs(QString a_name)
+{
+    _zoom = 10;
+    _yaw = 15;
+    _pitch = 30;
+    _mode = PERSPECTIVE;
+    _name = a_name;
     setPosition(new Point3D(144.0f, 0.216f, 3.906f));
 }
 

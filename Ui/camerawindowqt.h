@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include "Cameras/cameraabs.h"
 
 namespace Ui {
 class CameraWindowQt;
@@ -16,14 +17,15 @@ public:
     // ================= Constructores/Destructores ======================
     explicit CameraWindowQt(QWidget *parent = 0);
     ~CameraWindowQt();
-    void LoadWindow();
+    void LoadWindow(std::map<QString,CameraAbs*> a_cameras);
 private slots:
-    void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *);
 
 private:
     // ========================== Data Members ============================
     Ui::CameraWindowQt *ui;
     // ============================ Methods ===============================
+    void updateWidgetsWithCamera( CameraAbs* ap_camera );
 };
 
 #endif // CAMERAWINDOWQT_H

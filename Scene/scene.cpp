@@ -27,19 +27,19 @@ Scene::Scene()
     Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/",  "/Media/Models/Sky/");
 
     Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
-    Car *c2 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.5f,-122.0f,-2));
-    Car *c3 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.35f,-114.5f,-2));
-    Car *c4 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.55f,-106.5f,-2));
-    Car *c5 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-99.0f,-2));
-    Car *c6 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.7f,-90.5f,-2));
-    Car *c7 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-99.0f,-2));
-    Car *c8 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-110.0f,-2));
-    Car *c9 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-120.0f,-2));
-    Car *c10 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-130.0f,-2));
-    Car *c11 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-140.0f,-2));
-    Car *c12 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-150.0f,-2));
-    Car *c13 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-160.0f,-2));
-    Car *c14 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-170.0f,-2));
+    //Car *c2 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.5f,-122.0f,-2));
+    //Car *c3 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.35f,-114.5f,-2));
+    //Car *c4 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.55f,-106.5f,-2));
+    //Car *c5 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-99.0f,-2));
+    //Car *c6 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(-2.7f,-90.5f,-2));
+    //Car *c7 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-99.0f,-2));
+    //Car *c8 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-110.0f,-2));
+    //Car *c9 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-120.0f,-2));
+    //Car *c10 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-130.0f,-2));
+    //Car *c11 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-140.0f,-2));
+    //Car *c12 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-150.0f,-2));
+    //Car *c13 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-160.0f,-2));
+    //Car *c14 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.2f,-170.0f,-2));
 
 
 #pragma omp parallel sections
@@ -52,7 +52,7 @@ Scene::Scene()
         {
             c1->loadModels();
         }
-#pragma omp section
+/*#pragma omp section
         {
             c2->loadModels();
         }
@@ -104,6 +104,7 @@ Scene::Scene()
         {
             c14->loadModels();
         }
+        */
     }
 
 
@@ -111,7 +112,7 @@ Scene::Scene()
 
     enviroment->loadModelsTextures();
     c1->loadModelsTextures();
-    c2->loadModelsTextures();
+    /*c2->loadModelsTextures();
     c3->loadModelsTextures();
     c4->loadModelsTextures();
     c5->loadModelsTextures();
@@ -124,12 +125,12 @@ Scene::Scene()
     c12->loadModelsTextures();
     c13->loadModelsTextures();
     c14->loadModelsTextures();
-
+*/
     int loadTextures = myTimer.elapsed() - loadModel ;
 
     enviroment->renderModels();
     c1->renderModels();
-    c2->renderModels();
+   /* c2->renderModels();
     c3->renderModels();
     c4->renderModels();
     c5->renderModels();
@@ -142,7 +143,7 @@ Scene::Scene()
     c12->renderModels();
     c13->renderModels();
     c14->renderModels();
-
+*/
 
     int render = myTimer.elapsed() - loadModel - loadTextures;
 
@@ -152,7 +153,7 @@ Scene::Scene()
 
 
     _objectManager->addCar(c1); //Add ferrari
-    _objectManager->addCar(c2);
+    /*_objectManager->addCar(c2);
     _objectManager->addCar(c3);
     _objectManager->addCar(c4);
     _objectManager->addCar(c5);
@@ -166,7 +167,7 @@ Scene::Scene()
     _objectManager->addCar(c12);
     _objectManager->addCar(c13);
     _objectManager->addCar(c14);
-
+*/
     qDebug() << "Ha tardado en cargar modelos: " << loadModel;
     qDebug() << "Ha tardado en cargar texturas: " << loadTextures;
     qDebug() << "Ha tardado en renderizados: " << render;

@@ -40,7 +40,17 @@ private:
     std::string _circuitFolder;
     std::string _skyFolder;
 
-    Object3DFile *_circuit3D;
+    Object3DFile *_terrain3D;
+    Object3DFile *_vallas3D;
+    Object3DFile *_gradas13D;
+    Object3DFile *_gradas23D;
+    Object3DFile *_gradas33D;
+    Object3DFile *_gradas43D;
+    Object3DFile *_gradas53D;
+    Object3DFile *_gradas63D;
+    Object3DFile *_gradas73D;
+    Object3DFile *_gradas83D;
+    Object3DFile *_objects13D;
     Object3DFile *_sky3D;
     Object3DFile *_forest13D;
     Object3DFile *_forest23D;

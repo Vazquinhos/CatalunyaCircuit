@@ -587,7 +587,18 @@ OTHER_FILES += \
     Media/Models/Circuit/forest4.3ds \
     Media/Models/Circuit/forest3.3ds \
     Media/Models/Circuit/forest2.3ds \
-    Media/Models/Circuit/forest1.3ds
+    Media/Models/Circuit/forest1.3ds \
+    Media/Models/Circuit/terrain.3ds \
+    Media/Models/Circuit/gradas1.3ds \
+    Media/Models/Circuit/gradas2.3ds \
+    Media/Models/Circuit/gradas3.3ds \
+    Media/Models/Circuit/gradas4.3ds \
+    Media/Models/Circuit/gradas5.3ds \
+    Media/Models/Circuit/gradas6.3ds \
+    Media/Models/Circuit/gradas7.3ds \
+    Media/Models/Circuit/gradas8.3ds \
+    Media/Models/Circuit/vallas.3ds \
+    Media/Models/Circuit/objects1.3ds
 
 LIBS += -lgomp
 

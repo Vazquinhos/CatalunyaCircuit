@@ -13,9 +13,6 @@ public:
     virtual void renderModels(){}
     virtual void displayModels(){}
     virtual void checkVisibility(Point3D *pointCamera, int distance){(void)pointCamera; (void)distance;}
-
-protected:
-    bool shouldBeHidden(Point3D *pointModel, Point3D *pointCamera, int distance);
 };
 
 #endif // ABSMODELS_H

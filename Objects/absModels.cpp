@@ -16,10 +16,3 @@
 AbsModels::AbsModels()
 {
 }
-
-
-bool AbsModels::shouldBeHidden(Point3D *pointModel, Point3D *pointCamera, int distance){
-    float d = pointModel->getDistance(pointCamera);
-    qDebug() << "DISTANCIA" << d << " TOTAL " << distance;
-    return d > distance;
-}

@@ -239,7 +239,20 @@ void Enviroment::displayModels(){
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void Enviroment::checkVisibility(Point3D *pointCamera, int distance){
-
+    _forest13D->checkVisibility(pointCamera, distance);
+    _forest23D->checkVisibility(pointCamera, distance);
+    _forest33D->checkVisibility(pointCamera, distance);
+    _forest43D->checkVisibility(pointCamera, distance);
+    _vallas3D->checkVisibility(pointCamera, distance);
+    _gradas13D->checkVisibility(pointCamera, distance);
+    _gradas23D->checkVisibility(pointCamera, distance);
+    _gradas33D->checkVisibility(pointCamera, distance);
+    _gradas43D->checkVisibility(pointCamera, distance);
+    _gradas53D->checkVisibility(pointCamera, distance);
+    _gradas63D->checkVisibility(pointCamera, distance);
+    _gradas73D->checkVisibility(pointCamera, distance);
+    _gradas83D->checkVisibility(pointCamera, distance);
+    _objects13D->checkVisibility(pointCamera, distance);
 }
 
 

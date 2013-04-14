@@ -45,6 +45,8 @@ public:
     void setVisibility(bool visibility);
     bool getVisibility();
 
+    void checkVisibility(Point3D *pointCamera, int distance);
+
 protected:
     virtual void renderizeObject() = 0;
 

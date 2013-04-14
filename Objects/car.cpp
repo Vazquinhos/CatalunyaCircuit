@@ -250,20 +250,10 @@ void Car::displayModels(){
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void Car::checkVisibility(Point3D *pointCamera, int distance){
-    if(this->shouldBeHidden(_p_position, pointCamera, distance)){
-        _chasisObj->setVisibility(false);
-        _wheelObj->setVisibility(false);
-        _wheelFrontRight->setVisibility(false);
-        _wheelFrontLeft->setVisibility(false);
-        _wheelRearRight->setVisibility(false);
-        _wheelRearLeft->setVisibility(false);
-    }
-    else{
-        _chasisObj->setVisibility(true);
-        _wheelObj->setVisibility(true);
-        _wheelFrontRight->setVisibility(true);
-        _wheelFrontLeft->setVisibility(true);
-        _wheelRearRight->setVisibility(true);
-        _wheelRearLeft->setVisibility(true);
-    }
+        _chasisObj->checkVisibility(pointCamera, distance);
+        _wheelObj->checkVisibility(pointCamera, distance);
+        _wheelFrontRight->checkVisibility(pointCamera, distance);
+        _wheelFrontLeft->checkVisibility(pointCamera, distance);
+        _wheelRearRight->checkVisibility(pointCamera, distance);
+        _wheelRearLeft->checkVisibility(pointCamera, distance);
 }

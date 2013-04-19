@@ -228,7 +228,7 @@ void GLWidget::onZoomChanged(qreal x)
  *****************************************************************************/
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
-    int maxDistance = 500;
+    int maxDistance = 100;
     bool update = true;
     Point3D *pos;
 

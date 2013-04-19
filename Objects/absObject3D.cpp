@@ -277,10 +277,10 @@ Point3D * AbsObject3D::getMaxVertex()
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void AbsObject3D::checkVisibility(Point3D *pointCamera, int distance){
-    Point3D *punto = new Point3D(_p_translation->getX() + _p_center->getX(), -(_p_translation->getZ() + _p_center->getZ()), (_p_translation->getY() + _p_center->getY()));
-    float d = punto->getDistance(pointCamera);
-    qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
-
+    Point3D *punto = new Point3D(_p_center->getX(), _p_center->getY(), _p_center->getZ() );
+    int d = punto->getDistance(pointCamera);
+    //qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
+    //qDebug() << "MIN " << _p_minVertex->getX() << " : " << _p_minVertex->getY() << " : " << _p_minVertex->getZ() << " MAX "<< _p_maxVertex->getX() << " : "<< _p_maxVertex->getY() << _p_maxVertex->getZ();
     if(d < distance){
         setVisibility(true);
     }else{

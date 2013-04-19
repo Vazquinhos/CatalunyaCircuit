@@ -133,69 +133,78 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 {
     float minX, minY, minZ; //Max cooridnate vertex
     float maxX, maxY, maxZ; //Min coordinate vertex
+    int numMeshes = pScene->mNumMeshes;
+    const aiMesh* mesh;
+    const aiVector3D* pPos;
+    const aiVector3D* pNormal;
+    const aiVector3D* pTexCoord;
+    if(numMeshes > 0){
+        mesh = pScene->mMeshes[0];
+        pPos      = &(mesh->mVertices[0]);
+        minX = maxX =  pPos->x;
+        minY = maxY =  pPos->y;
+        minZ = maxZ =  pPos->z;
 
-    minX = minY = minZ = 0;
-    maxX = maxY = maxZ = 0;
+        _vMeshes.resize(numMeshes); //Resize meshes vector to copy all assimp imported meshes
+        _vTextures.resize(pScene->mNumMaterials); //Resize textures vector to copy all assimp imported meshes
 
-    _vMeshes.resize(pScene->mNumMeshes); //Resize meshes vector to copy all assimp imported meshes
-    _vTextures.resize(pScene->mNumMaterials); //Resize textures vector to copy all assimp imported meshes
+        // Initialize the meshes in the scene one by one
+        for (unsigned int i = 0 ; i < numMeshes ; i++) {
+            mesh = pScene->mMeshes[i];
+            //Generate buffers for the mesh and copy data of the assimp importer
+            _vMeshes[i].materialIndex = mesh->mMaterialIndex;
 
-    // Initialize the meshes in the scene one by one
-    for (unsigned int i = 0 ; i < _vMeshes.size() ; i++) {
-        const aiMesh* mesh = pScene->mMeshes[i];
-        //Generate buffers for the mesh and copy data of the assimp importer
-        _vMeshes[i].materialIndex = mesh->mMaterialIndex;
+            vector<float> verticesCoord;
+            vector<float> normalsCoord;
+            vector<float> texturesCoord;
 
-        vector<float> verticesCoord;
-        vector<float> normalsCoord;
-        vector<float> texturesCoord;
+            vector<unsigned int> indices;
 
-        vector<unsigned int> indices;
+            const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
-        const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+            //Copy vertex, normals, textures positions data from the importer to be able to generate a buffer
+            for (unsigned int k = 0 ; k < mesh->mNumVertices ; k++) {
+                pPos      = &(mesh->mVertices[k]);
+                pNormal   = &(mesh->mNormals[k]);
+                pTexCoord = mesh->HasTextureCoords(0) ? &(mesh->mTextureCoords[0][k]) : &Zero3D;
 
-        //Copy vertex, normals, textures positions data from the importer to be able to generate a buffer
-        for (unsigned int k = 0 ; k < mesh->mNumVertices ; k++) {
-            const aiVector3D* pPos      = &(mesh->mVertices[k]);
-            const aiVector3D* pNormal   = &(mesh->mNormals[k]);
-            const aiVector3D* pTexCoord = mesh->HasTextureCoords(0) ? &(mesh->mTextureCoords[0][k]) : &Zero3D;
+                minX = min(minX, pPos->x);
+                maxX = max(maxX, pPos->x);
 
+                minY = min(minY, pPos->y);
+                maxY = max(maxY, pPos->y);
 
-            minX = min(minX, pPos->x);
-            maxX = max(maxX, pPos->x);
+                minZ = min(minZ, pPos->z);
+                maxZ = max(maxZ, pPos->z);
 
-            minY = min(minY, pPos->y);
-            maxY = max(maxY, pPos->y);
+                verticesCoord.push_back(pPos->x);
+                verticesCoord.push_back(pPos->y);
+                verticesCoord.push_back(pPos->z);
+                normalsCoord.push_back(pNormal->x);
+                normalsCoord.push_back(pNormal->y);
+                normalsCoord.push_back(pNormal->z);
+                texturesCoord.push_back(pTexCoord->x);
+                texturesCoord.push_back(pTexCoord->y);
+                texturesCoord.push_back(pTexCoord->z);
+            }
 
-            minZ = min(minZ, pPos->z);
-            maxZ = max(maxZ, pPos->z);
+            //Copy face data from the importer to be able to generate a buffer
+            for (unsigned int j = 0 ; j < mesh->mNumFaces ; j++) {
+                const aiFace& Face = mesh->mFaces[j];
+                indices.push_back(Face.mIndices[0]);
+                indices.push_back(Face.mIndices[1]);
+                indices.push_back(Face.mIndices[2]);
+            }
 
-            verticesCoord.push_back(pPos->x);
-            verticesCoord.push_back(pPos->y);
-            verticesCoord.push_back(pPos->z);
-            normalsCoord.push_back(pNormal->x);
-            normalsCoord.push_back(pNormal->y);
-            normalsCoord.push_back(pNormal->z);
-            texturesCoord.push_back(pTexCoord->x);
-            texturesCoord.push_back(pTexCoord->y);
-            texturesCoord.push_back(pTexCoord->z);
+            //Generate and initialize the buffers with the copied data from importer
+            _vMeshes[i].generateMeshBuffers(verticesCoord, texturesCoord, normalsCoord, indices);
         }
 
-        //Copy face data from the importer to be able to generate a buffer
-        for (unsigned int j = 0 ; j < mesh->mNumFaces ; j++) {
-            const aiFace& Face = mesh->mFaces[j];
-            indices.push_back(Face.mIndices[0]);
-            indices.push_back(Face.mIndices[1]);
-            indices.push_back(Face.mIndices[2]);
-        }
+        this->setMinVertex(new Point3D(minX, minY, minZ));
+        this->setMaxVertex(new Point3D(maxX, maxY, maxZ));
+        this->setCenter(new Point3D((minX + maxX)/ 2, (minY + maxY)/2, (minZ + maxZ)/2));
 
-        //Generate and initialize the buffers with the copied data from importer
-        _vMeshes[i].generateMeshBuffers(verticesCoord, texturesCoord, normalsCoord, indices);
     }
-
-    this->setMinVertex(new Point3D(minX, minY, minZ));
-    this->setMaxVertex(new Point3D(maxX, maxY, maxZ));
-    this->setCenter(new Point3D((minX + maxX)/ 2, (minY + maxY)/2, (minZ + maxZ)/2));
 
     return true;
 }
@@ -252,7 +261,7 @@ bool Object3DFile::loadMaterials(const aiScene* pScene)
                                      ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
                                      ilGetData());
 
-                        ilDeleteImage(_vTextures[i]->_textureBindId);
+                        //ilDeleteImage(_vTextures[i]->_textureBindId);
                         qDebug() << "Loaded texture " << FullPath.c_str();
                     }
                     else{

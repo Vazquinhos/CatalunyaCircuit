@@ -34,6 +34,8 @@ protected:
     void wheelEvent (QWheelEvent * event);
 
 private:
+    int _maxVisibleDistance;
+
     Scene *_scene;
     ObjectManager *_objectManager;
     CameraManager *_cameraManager;

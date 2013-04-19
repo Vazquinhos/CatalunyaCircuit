@@ -919,7 +919,47 @@ OTHER_FILES += \
     Media/Models/Circuit/vegetacion_22.3ds \
     Media/Models/Circuit/vegetacion_23.3ds \
     Media/Models/Circuit/vegetacion_24.3ds \
-    Media/Models/Circuit/vegetacion_25.3ds
+    Media/Models/Circuit/vegetacion_25.3ds \
+    Media/Models/Circuit/vallasPlastico_40.3ds \
+    Media/Models/Circuit/vallasPlastico_39.3ds \
+    Media/Models/Circuit/vallasPlastico_38.3ds \
+    Media/Models/Circuit/vallasPlastico_37.3ds \
+    Media/Models/Circuit/vallasPlastico_36.3ds \
+    Media/Models/Circuit/vallasPlastico_35.3ds \
+    Media/Models/Circuit/vallasPlastico_34.3ds \
+    Media/Models/Circuit/vallasPlastico_33.3ds \
+    Media/Models/Circuit/vallasPlastico_32.3ds \
+    Media/Models/Circuit/vallasPlastico_31.3ds \
+    Media/Models/Circuit/vallasPlastico_30.3ds \
+    Media/Models/Circuit/vallasPlastico_29.3ds \
+    Media/Models/Circuit/vallasPlastico_28.3ds \
+    Media/Models/Circuit/vallasPlastico_27.3ds \
+    Media/Models/Circuit/vallasPlastico_26.3ds \
+    Media/Models/Circuit/vallasPlastico_25.3ds \
+    Media/Models/Circuit/vallasPlastico_24.3ds \
+    Media/Models/Circuit/vallasPlastico_23.3ds \
+    Media/Models/Circuit/vallasPlastico_22.3ds \
+    Media/Models/Circuit/vallasPlastico_21.3ds \
+    Media/Models/Circuit/vallasPlastico_20.3ds \
+    Media/Models/Circuit/vallasPlastico_19.3ds \
+    Media/Models/Circuit/vallasPlastico_18.3ds \
+    Media/Models/Circuit/vallasPlastico_17.3ds \
+    Media/Models/Circuit/vallasPlastico_16.3ds \
+    Media/Models/Circuit/vallasPlastico_15.3ds \
+    Media/Models/Circuit/vallasPlastico_14.3ds \
+    Media/Models/Circuit/vallasPlastico_13.3ds \
+    Media/Models/Circuit/vallasPlastico_12.3ds \
+    Media/Models/Circuit/vallasPlastico_11.3ds \
+    Media/Models/Circuit/vallasPlastico_10.3ds \
+    Media/Models/Circuit/vallasPlastico_9.3ds \
+    Media/Models/Circuit/vallasPlastico_8.3ds \
+    Media/Models/Circuit/vallasPlastico_7.3ds \
+    Media/Models/Circuit/vallasPlastico_6.3ds \
+    Media/Models/Circuit/vallasPlastico_5.3ds \
+    Media/Models/Circuit/vallasPlastico_4.3ds \
+    Media/Models/Circuit/vallasPlastico_3.3ds \
+    Media/Models/Circuit/vallasPlastico_2.3ds \
+    Media/Models/Circuit/vallasPlastico_1.3ds
 
 LIBS += -lgomp
 

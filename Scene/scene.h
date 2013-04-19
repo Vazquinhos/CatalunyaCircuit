@@ -20,6 +20,7 @@
 #include "Objects/object3DFile.h"
 #include <QDir>
 #include <Objects/enviroment.h>
+#include <Cameras/cameramanager.h>
 
 class Scene
 {

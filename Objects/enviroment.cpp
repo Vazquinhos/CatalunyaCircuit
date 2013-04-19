@@ -693,6 +693,185 @@ void Enviroment::loadModels(){
 
 
 
+#pragma omp section
+        {
+            _vallasPlastico_13D = new Object3DFile(_circuitFolder, "vallasPlastico_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_23D = new Object3DFile(_circuitFolder, "vallasPlastico_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_33D = new Object3DFile(_circuitFolder, "vallasPlastico_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_43D = new Object3DFile(_circuitFolder, "vallasPlastico_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_53D = new Object3DFile(_circuitFolder, "vallasPlastico_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_63D = new Object3DFile(_circuitFolder, "vallasPlastico_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_73D = new Object3DFile(_circuitFolder, "vallasPlastico_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_83D = new Object3DFile(_circuitFolder, "vallasPlastico_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_93D = new Object3DFile(_circuitFolder, "vallasPlastico_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_103D = new Object3DFile(_circuitFolder, "vallasPlastico_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_113D = new Object3DFile(_circuitFolder, "vallasPlastico_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_123D = new Object3DFile(_circuitFolder, "vallasPlastico_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_133D = new Object3DFile(_circuitFolder, "vallasPlastico_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_143D = new Object3DFile(_circuitFolder, "vallasPlastico_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_153D = new Object3DFile(_circuitFolder, "vallasPlastico_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_163D = new Object3DFile(_circuitFolder, "vallasPlastico_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_173D = new Object3DFile(_circuitFolder, "vallasPlastico_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_183D = new Object3DFile(_circuitFolder, "vallasPlastico_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_193D = new Object3DFile(_circuitFolder, "vallasPlastico_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_203D = new Object3DFile(_circuitFolder, "vallasPlastico_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_213D = new Object3DFile(_circuitFolder, "vallasPlastico_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_223D = new Object3DFile(_circuitFolder, "vallasPlastico_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_233D = new Object3DFile(_circuitFolder, "vallasPlastico_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_243D = new Object3DFile(_circuitFolder, "vallasPlastico_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_253D = new Object3DFile(_circuitFolder, "vallasPlastico_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_263D = new Object3DFile(_circuitFolder, "vallasPlastico_26.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_273D = new Object3DFile(_circuitFolder, "vallasPlastico_27.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_283D = new Object3DFile(_circuitFolder, "vallasPlastico_28.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_293D = new Object3DFile(_circuitFolder, "vallasPlastico_29.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_303D = new Object3DFile(_circuitFolder, "vallasPlastico_30.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+
+#pragma omp section
+        {
+            _vallasPlastico_313D = new Object3DFile(_circuitFolder, "vallasPlastico_31.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_323D = new Object3DFile(_circuitFolder, "vallasPlastico_32.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_333D = new Object3DFile(_circuitFolder, "vallasPlastico_33.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_343D = new Object3DFile(_circuitFolder, "vallasPlastico_34.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_353D = new Object3DFile(_circuitFolder, "vallasPlastico_35.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_363D = new Object3DFile(_circuitFolder, "vallasPlastico_36.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_373D = new Object3DFile(_circuitFolder, "vallasPlastico_37.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_383D = new Object3DFile(_circuitFolder, "vallasPlastico_38.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_393D = new Object3DFile(_circuitFolder, "vallasPlastico_39.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
+#pragma omp section
+        {
+            _vallasPlastico_403D = new Object3DFile(_circuitFolder, "vallasPlastico_40.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+        }
 
     }
 }
@@ -841,6 +1020,47 @@ void Enviroment::loadModelsTextures(){
     _vegetacion_233D->loadTextures();
     _vegetacion_243D->loadTextures();
     _vegetacion_253D->loadTextures();
+
+    _vallasPlastico_13D->loadTextures();
+    _vallasPlastico_23D->loadTextures();
+    _vallasPlastico_33D->loadTextures();
+    _vallasPlastico_43D->loadTextures();
+    _vallasPlastico_53D->loadTextures();
+    _vallasPlastico_63D->loadTextures();
+    _vallasPlastico_73D->loadTextures();
+    _vallasPlastico_83D->loadTextures();
+    _vallasPlastico_93D->loadTextures();
+    _vallasPlastico_103D->loadTextures();
+    _vallasPlastico_113D->loadTextures();
+    _vallasPlastico_123D->loadTextures();
+    _vallasPlastico_133D->loadTextures();
+    _vallasPlastico_143D->loadTextures();
+    _vallasPlastico_153D->loadTextures();
+    _vallasPlastico_163D->loadTextures();
+    _vallasPlastico_173D->loadTextures();
+    _vallasPlastico_183D->loadTextures();
+    _vallasPlastico_193D->loadTextures();
+    _vallasPlastico_203D->loadTextures();
+    _vallasPlastico_223D->loadTextures();
+    _vallasPlastico_213D->loadTextures();
+    _vallasPlastico_233D->loadTextures();
+    _vallasPlastico_243D->loadTextures();
+    _vallasPlastico_253D->loadTextures();
+    _vallasPlastico_263D->loadTextures();
+    _vallasPlastico_273D->loadTextures();
+    _vallasPlastico_283D->loadTextures();
+    _vallasPlastico_293D->loadTextures();
+    _vallasPlastico_303D->loadTextures();
+    _vallasPlastico_313D->loadTextures();
+    _vallasPlastico_323D->loadTextures();
+    _vallasPlastico_333D->loadTextures();
+    _vallasPlastico_343D->loadTextures();
+    _vallasPlastico_353D->loadTextures();
+    _vallasPlastico_363D->loadTextures();
+    _vallasPlastico_373D->loadTextures();
+    _vallasPlastico_383D->loadTextures();
+    _vallasPlastico_393D->loadTextures();
+    _vallasPlastico_403D->loadTextures();
 
 
 }
@@ -994,6 +1214,47 @@ void Enviroment::renderModels(){
     _vegetacion_243D->render();
     _vegetacion_253D->render();
 
+    _vallasPlastico_13D->render();
+    _vallasPlastico_23D->render();
+    _vallasPlastico_33D->render();
+    _vallasPlastico_43D->render();
+    _vallasPlastico_53D->render();
+    _vallasPlastico_63D->render();
+    _vallasPlastico_73D->render();
+    _vallasPlastico_83D->render();
+    _vallasPlastico_93D->render();
+    _vallasPlastico_103D->render();
+    _vallasPlastico_113D->render();
+    _vallasPlastico_123D->render();
+    _vallasPlastico_133D->render();
+    _vallasPlastico_143D->render();
+    _vallasPlastico_153D->render();
+    _vallasPlastico_163D->render();
+    _vallasPlastico_173D->render();
+    _vallasPlastico_183D->render();
+    _vallasPlastico_193D->render();
+    _vallasPlastico_203D->render();
+    _vallasPlastico_223D->render();
+    _vallasPlastico_213D->render();
+    _vallasPlastico_233D->render();
+    _vallasPlastico_243D->render();
+    _vallasPlastico_253D->render();
+    _vallasPlastico_263D->render();
+    _vallasPlastico_273D->render();
+    _vallasPlastico_283D->render();
+    _vallasPlastico_293D->render();
+    _vallasPlastico_303D->render();
+    _vallasPlastico_313D->render();
+    _vallasPlastico_323D->render();
+    _vallasPlastico_333D->render();
+    _vallasPlastico_343D->render();
+    _vallasPlastico_353D->render();
+    _vallasPlastico_363D->render();
+    _vallasPlastico_373D->render();
+    _vallasPlastico_383D->render();
+    _vallasPlastico_393D->render();
+    _vallasPlastico_403D->render();
+
 
 }
 
@@ -1145,6 +1406,47 @@ void Enviroment::displayModels(){
     _vegetacion_243D->display();
     _vegetacion_253D->display();
 
+    _vallasPlastico_13D->display();
+    _vallasPlastico_23D->display();
+    _vallasPlastico_33D->display();
+    _vallasPlastico_43D->display();
+    _vallasPlastico_53D->display();
+    _vallasPlastico_63D->display();
+    _vallasPlastico_73D->display();
+    _vallasPlastico_83D->display();
+    _vallasPlastico_93D->display();
+    _vallasPlastico_103D->display();
+    _vallasPlastico_113D->display();
+    _vallasPlastico_123D->display();
+    _vallasPlastico_133D->display();
+    _vallasPlastico_143D->display();
+    _vallasPlastico_153D->display();
+    _vallasPlastico_163D->display();
+    _vallasPlastico_173D->display();
+    _vallasPlastico_183D->display();
+    _vallasPlastico_193D->display();
+    _vallasPlastico_203D->display();
+    _vallasPlastico_223D->display();
+    _vallasPlastico_213D->display();
+    _vallasPlastico_233D->display();
+    _vallasPlastico_243D->display();
+    _vallasPlastico_253D->display();
+    _vallasPlastico_263D->display();
+    _vallasPlastico_273D->display();
+    _vallasPlastico_283D->display();
+    _vallasPlastico_293D->display();
+    _vallasPlastico_303D->display();
+    _vallasPlastico_313D->display();
+    _vallasPlastico_323D->display();
+    _vallasPlastico_333D->display();
+    _vallasPlastico_343D->display();
+    _vallasPlastico_353D->display();
+    _vallasPlastico_363D->display();
+    _vallasPlastico_373D->display();
+    _vallasPlastico_383D->display();
+    _vallasPlastico_393D->display();
+    _vallasPlastico_403D->display();
+
 }
 
 /*-------------------------------------------------------------------
@@ -1293,6 +1595,48 @@ void Enviroment::checkVisibility(Point3D *pointCamera, int distance){
     _vegetacion_233D->checkVisibility(pointCamera, distance);
     _vegetacion_243D->checkVisibility(pointCamera, distance);
     _vegetacion_253D->checkVisibility(pointCamera, distance);
+
+    _vallasPlastico_13D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_23D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_33D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_43D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_53D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_63D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_73D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_83D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_93D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_103D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_113D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_123D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_133D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_143D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_153D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_163D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_173D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_183D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_193D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_203D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_223D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_213D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_233D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_243D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_253D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_263D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_273D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_283D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_293D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_303D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_313D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_323D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_333D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_343D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_353D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_363D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_373D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_383D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_393D->checkVisibility(pointCamera, distance);
+    _vallasPlastico_403D->checkVisibility(pointCamera, distance);
+
 }
 
 

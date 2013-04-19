@@ -77,6 +77,9 @@ void GLWidget::initializeGL()
     FreeCamera * frCam = new FreeCamera();
     _cameraManager->setCamera(QString("free"), frCam);
 
+    _maxVisibleDistance = 200;
+    _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
+
     glEnable(GL_TEXTURE_2D);
 
     // 3) Init shaders
@@ -228,7 +231,7 @@ void GLWidget::onZoomChanged(qreal x)
  *****************************************************************************/
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
-    int maxDistance = 100;
+
     bool update = true;
     Point3D *pos;
 
@@ -237,25 +240,25 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Right: //Move camera to right
         qDebug() << "PULSANDO RIGHT";
         _cameraManager->getCamera("free")->move(1, false);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), maxDistance);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
 
         break;
 
     case Qt::Key_Left: //Move camera to left
         qDebug() << "PULSANDO LEFT";
         _cameraManager->getCamera("free")->move(-1, false);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), maxDistance);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
         break;
     case Qt::Key_Up: //Move camera to front
         qDebug() << "PULSANDO UP";
         _cameraManager->getCamera("free")->move(1, true);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), maxDistance);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
         break;
 
     case Qt::Key_Down: //Move camera to back
         qDebug() << "PULSANDO DOWN";
         _cameraManager->getCamera("free")->move(-1, true);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), maxDistance);
+        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
         break;
         break;
 

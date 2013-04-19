@@ -180,9 +180,48 @@ private:
     Object3DFile *_vegetacion_243D;
     Object3DFile *_vegetacion_253D;
 
-    // Object3DFile *_objects3D;
-    // Object3DFile *_vallasPlastico3D;
-    //Object3DFile *_vegetacion3D;
+    Object3DFile *_vallasPlastico_13D;
+    Object3DFile *_vallasPlastico_23D;
+    Object3DFile *_vallasPlastico_33D;
+    Object3DFile *_vallasPlastico_43D;
+    Object3DFile *_vallasPlastico_53D;
+    Object3DFile *_vallasPlastico_63D;
+    Object3DFile *_vallasPlastico_73D;
+    Object3DFile *_vallasPlastico_83D;
+    Object3DFile *_vallasPlastico_93D;
+    Object3DFile *_vallasPlastico_103D;
+    Object3DFile *_vallasPlastico_113D;
+    Object3DFile *_vallasPlastico_123D;
+    Object3DFile *_vallasPlastico_133D;
+    Object3DFile *_vallasPlastico_143D;
+    Object3DFile *_vallasPlastico_153D;
+    Object3DFile *_vallasPlastico_163D;
+    Object3DFile *_vallasPlastico_173D;
+    Object3DFile *_vallasPlastico_183D;
+    Object3DFile *_vallasPlastico_193D;
+    Object3DFile *_vallasPlastico_203D;
+    Object3DFile *_vallasPlastico_213D;
+    Object3DFile *_vallasPlastico_223D;
+    Object3DFile *_vallasPlastico_233D;
+    Object3DFile *_vallasPlastico_243D;
+    Object3DFile *_vallasPlastico_253D;
+    Object3DFile *_vallasPlastico_263D;
+    Object3DFile *_vallasPlastico_273D;
+    Object3DFile *_vallasPlastico_283D;
+    Object3DFile *_vallasPlastico_293D;
+    Object3DFile *_vallasPlastico_303D;
+    Object3DFile *_vallasPlastico_313D;
+    Object3DFile *_vallasPlastico_323D;
+    Object3DFile *_vallasPlastico_333D;
+    Object3DFile *_vallasPlastico_343D;
+    Object3DFile *_vallasPlastico_353D;
+    Object3DFile *_vallasPlastico_363D;
+    Object3DFile *_vallasPlastico_373D;
+    Object3DFile *_vallasPlastico_383D;
+    Object3DFile *_vallasPlastico_393D;
+    Object3DFile *_vallasPlastico_403D;
+
+
 
     // ============================ Methods ===============================
 };

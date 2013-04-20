@@ -18,11 +18,16 @@
 #include "Objects/object3DFile.h"
 #include "Objects/absModels.h"
 
+#include <string>
+#include <map>
+#include "Utils/util.h"
+
+
 class Enviroment : AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================
-    Enviroment(std::string circuitFolder, std::string skyFolder);
+    Enviroment(std::string circuitFolder);
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
@@ -37,8 +42,8 @@ public:
 
 private:
     // ========================== Data Members ============================
+    map<string, GLuint> _textureIdMapCircuit;
     std::string _circuitFolder;
-    std::string _skyFolder;
 
     Object3DFile *_terrain3D;
     Object3DFile *_sky3D;

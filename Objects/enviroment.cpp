@@ -20,10 +20,9 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Enviroment::Enviroment(std::string circuitFolder, std::string skyFolder)
+Enviroment::Enviroment(std::string circuitFolder)
 {
     _circuitFolder = (QDir::currentPath() + circuitFolder.c_str()).toStdString();
-    _skyFolder = (QDir::currentPath() + skyFolder.c_str()).toStdString();;
 }
 
 /*-------------------------------------------------------------------
@@ -64,99 +63,98 @@ void Enviroment::loadModels(){
 
 #pragma omp section
         {
-            _terrain3D = new Object3DFile(_circuitFolder, "terrain.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _textureIdMapCircuit = this->loadTextures(_circuitFolder.c_str(), "*.dds");
+            _terrain3D = new Object3DFile(_circuitFolder, "terrain.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _sky3D = new Object3DFile(_skyFolder, "sky.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _sky3D = new Object3DFile(_circuitFolder, "sky.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
-
-
 #pragma omp section
         {
-            _banderas_13D = new Object3DFile(_circuitFolder, "banderas_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_13D = new Object3DFile(_circuitFolder, "banderas_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_23D = new Object3DFile(_circuitFolder, "banderas_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_23D = new Object3DFile(_circuitFolder, "banderas_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
 #pragma omp section
         {
-            _banderas_33D = new Object3DFile(_circuitFolder, "banderas_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_33D = new Object3DFile(_circuitFolder, "banderas_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_43D = new Object3DFile(_circuitFolder, "banderas_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_43D = new Object3DFile(_circuitFolder, "banderas_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_53D = new Object3DFile(_circuitFolder, "banderas_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_53D = new Object3DFile(_circuitFolder, "banderas_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_63D = new Object3DFile(_circuitFolder, "banderas_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_63D = new Object3DFile(_circuitFolder, "banderas_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_73D = new Object3DFile(_circuitFolder, "banderas_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_73D = new Object3DFile(_circuitFolder, "banderas_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_83D = new Object3DFile(_circuitFolder, "banderas_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_83D = new Object3DFile(_circuitFolder, "banderas_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_93D = new Object3DFile(_circuitFolder, "banderas_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_93D = new Object3DFile(_circuitFolder, "banderas_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _banderas_103D = new Object3DFile(_circuitFolder, "banderas_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_103D = new Object3DFile(_circuitFolder, "banderas_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_113D = new Object3DFile(_circuitFolder, "banderas_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_113D = new Object3DFile(_circuitFolder, "banderas_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_123D = new Object3DFile(_circuitFolder, "banderas_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_123D = new Object3DFile(_circuitFolder, "banderas_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_133D = new Object3DFile(_circuitFolder, "banderas_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_133D = new Object3DFile(_circuitFolder, "banderas_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_143D = new Object3DFile(_circuitFolder, "banderas_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_143D = new Object3DFile(_circuitFolder, "banderas_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_153D = new Object3DFile(_circuitFolder, "banderas_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_153D = new Object3DFile(_circuitFolder, "banderas_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_163D = new Object3DFile(_circuitFolder, "banderas_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_163D = new Object3DFile(_circuitFolder, "banderas_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _banderas_173D = new Object3DFile(_circuitFolder, "banderas_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _banderas_173D = new Object3DFile(_circuitFolder, "banderas_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
@@ -166,77 +164,77 @@ void Enviroment::loadModels(){
 
 #pragma omp section
         {
-            _barreras_13D = new Object3DFile(_circuitFolder, "barreras_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_13D = new Object3DFile(_circuitFolder, "barreras_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_23D = new Object3DFile(_circuitFolder, "barreras_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_23D = new Object3DFile(_circuitFolder, "barreras_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
 #pragma omp section
         {
-            _barreras_33D = new Object3DFile(_circuitFolder, "barreras_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_33D = new Object3DFile(_circuitFolder, "barreras_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_43D = new Object3DFile(_circuitFolder, "barreras_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_43D = new Object3DFile(_circuitFolder, "barreras_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_53D = new Object3DFile(_circuitFolder, "barreras_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_53D = new Object3DFile(_circuitFolder, "barreras_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_63D = new Object3DFile(_circuitFolder, "barreras_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_63D = new Object3DFile(_circuitFolder, "barreras_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_73D = new Object3DFile(_circuitFolder, "barreras_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_73D = new Object3DFile(_circuitFolder, "barreras_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_83D = new Object3DFile(_circuitFolder, "barreras_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_83D = new Object3DFile(_circuitFolder, "barreras_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_93D = new Object3DFile(_circuitFolder, "barreras_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_93D = new Object3DFile(_circuitFolder, "barreras_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _barreras_103D = new Object3DFile(_circuitFolder, "barreras_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_103D = new Object3DFile(_circuitFolder, "barreras_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_113D = new Object3DFile(_circuitFolder, "barreras_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_113D = new Object3DFile(_circuitFolder, "barreras_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_123D = new Object3DFile(_circuitFolder, "barreras_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_123D = new Object3DFile(_circuitFolder, "barreras_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_133D = new Object3DFile(_circuitFolder, "barreras_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_133D = new Object3DFile(_circuitFolder, "barreras_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_143D = new Object3DFile(_circuitFolder, "barreras_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_143D = new Object3DFile(_circuitFolder, "barreras_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _barreras_153D = new Object3DFile(_circuitFolder, "barreras_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _barreras_153D = new Object3DFile(_circuitFolder, "barreras_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
@@ -245,107 +243,107 @@ void Enviroment::loadModels(){
 
 #pragma omp section
         {
-            _buildings1_13D = new Object3DFile(_circuitFolder, "buildings1_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_13D = new Object3DFile(_circuitFolder, "buildings1_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings1_23D = new Object3DFile(_circuitFolder, "buildings1_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_23D = new Object3DFile(_circuitFolder, "buildings1_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings1_33D = new Object3DFile(_circuitFolder, "buildings1_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_33D = new Object3DFile(_circuitFolder, "buildings1_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_43D = new Object3DFile(_circuitFolder, "buildings1_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_43D = new Object3DFile(_circuitFolder, "buildings1_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_53D = new Object3DFile(_circuitFolder, "buildings1_5.3ds", aiProcess_Triangulate |  aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_53D = new Object3DFile(_circuitFolder, "buildings1_5.3ds", aiProcess_Triangulate |  aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_63D = new Object3DFile(_circuitFolder, "buildings1_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_63D = new Object3DFile(_circuitFolder, "buildings1_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_73D = new Object3DFile(_circuitFolder, "buildings1_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_73D = new Object3DFile(_circuitFolder, "buildings1_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_83D = new Object3DFile(_circuitFolder, "buildings1_8.3ds", aiProcess_Triangulate |  aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_83D = new Object3DFile(_circuitFolder, "buildings1_8.3ds", aiProcess_Triangulate |  aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_93D = new Object3DFile(_circuitFolder, "buildings1_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_93D = new Object3DFile(_circuitFolder, "buildings1_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings1_103D = new Object3DFile(_circuitFolder, "buildings1_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_103D = new Object3DFile(_circuitFolder, "buildings1_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings1_113D = new Object3DFile(_circuitFolder, "buildings1_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_113D = new Object3DFile(_circuitFolder, "buildings1_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings1_123D = new Object3DFile(_circuitFolder, "buildings1_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings1_123D = new Object3DFile(_circuitFolder, "buildings1_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings2_13D = new Object3DFile(_circuitFolder, "buildings2_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings2_13D = new Object3DFile(_circuitFolder, "buildings2_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings2_23D = new Object3DFile(_circuitFolder, "buildings2_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings2_23D = new Object3DFile(_circuitFolder, "buildings2_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings2_33D = new Object3DFile(_circuitFolder, "buildings2_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings2_33D = new Object3DFile(_circuitFolder, "buildings2_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings2_43D = new Object3DFile(_circuitFolder, "buildings2_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings2_43D = new Object3DFile(_circuitFolder, "buildings2_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
 #pragma omp section
         {
-            _buildings3_13D = new Object3DFile(_circuitFolder, "buildings3_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings3_13D = new Object3DFile(_circuitFolder, "buildings3_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings3_23D = new Object3DFile(_circuitFolder, "buildings3_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings3_23D = new Object3DFile(_circuitFolder, "buildings3_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings3_33D = new Object3DFile(_circuitFolder, "buildings3_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings3_33D = new Object3DFile(_circuitFolder, "buildings3_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings3_53D = new Object3DFile(_circuitFolder, "buildings3_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings3_53D = new Object3DFile(_circuitFolder, "buildings3_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings3_63D = new Object3DFile(_circuitFolder, "buildings3_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings3_63D = new Object3DFile(_circuitFolder, "buildings3_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _buildings4_13D = new Object3DFile(_circuitFolder, "buildings4_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings4_13D = new Object3DFile(_circuitFolder, "buildings4_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _buildings4_23D = new Object3DFile(_circuitFolder, "buildings4_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _buildings4_23D = new Object3DFile(_circuitFolder, "buildings4_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
@@ -355,213 +353,213 @@ void Enviroment::loadModels(){
 
 #pragma omp section
         {
-            _objects_13D = new Object3DFile(_circuitFolder, "objects_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_13D = new Object3DFile(_circuitFolder, "objects_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_23D = new Object3DFile(_circuitFolder, "objects_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_23D = new Object3DFile(_circuitFolder, "objects_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
 #pragma omp section
         {
-            _objects_33D = new Object3DFile(_circuitFolder, "objects_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_33D = new Object3DFile(_circuitFolder, "objects_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_43D = new Object3DFile(_circuitFolder, "objects_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_43D = new Object3DFile(_circuitFolder, "objects_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_53D = new Object3DFile(_circuitFolder, "objects_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_53D = new Object3DFile(_circuitFolder, "objects_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_63D = new Object3DFile(_circuitFolder, "objects_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_63D = new Object3DFile(_circuitFolder, "objects_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_73D = new Object3DFile(_circuitFolder, "objects_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_73D = new Object3DFile(_circuitFolder, "objects_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_83D = new Object3DFile(_circuitFolder, "objects_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_83D = new Object3DFile(_circuitFolder, "objects_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_93D = new Object3DFile(_circuitFolder, "objects_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_93D = new Object3DFile(_circuitFolder, "objects_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _objects_103D = new Object3DFile(_circuitFolder, "objects_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_103D = new Object3DFile(_circuitFolder, "objects_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_113D = new Object3DFile(_circuitFolder, "objects_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_113D = new Object3DFile(_circuitFolder, "objects_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_123D = new Object3DFile(_circuitFolder, "objects_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_123D = new Object3DFile(_circuitFolder, "objects_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_133D = new Object3DFile(_circuitFolder, "objects_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_133D = new Object3DFile(_circuitFolder, "objects_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_143D = new Object3DFile(_circuitFolder, "objects_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_143D = new Object3DFile(_circuitFolder, "objects_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_153D = new Object3DFile(_circuitFolder, "objects_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_153D = new Object3DFile(_circuitFolder, "objects_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _objects_163D = new Object3DFile(_circuitFolder, "objects_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_163D = new Object3DFile(_circuitFolder, "objects_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _objects_173D = new Object3DFile(_circuitFolder, "objects_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_173D = new Object3DFile(_circuitFolder, "objects_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _objects_183D = new Object3DFile(_circuitFolder, "objects_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_183D = new Object3DFile(_circuitFolder, "objects_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _objects_193D = new Object3DFile(_circuitFolder, "objects_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_193D = new Object3DFile(_circuitFolder, "objects_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _objects_203D = new Object3DFile(_circuitFolder, "objects_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _objects_203D = new Object3DFile(_circuitFolder, "objects_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
 
 #pragma omp section
         {
-            _vallas_13D = new Object3DFile(_circuitFolder, "vallas_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_13D = new Object3DFile(_circuitFolder, "vallas_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_23D = new Object3DFile(_circuitFolder, "vallas_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_23D = new Object3DFile(_circuitFolder, "vallas_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_33D = new Object3DFile(_circuitFolder, "vallas_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_33D = new Object3DFile(_circuitFolder, "vallas_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_43D = new Object3DFile(_circuitFolder, "vallas_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_43D = new Object3DFile(_circuitFolder, "vallas_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_53D = new Object3DFile(_circuitFolder, "vallas_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_53D = new Object3DFile(_circuitFolder, "vallas_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_63D = new Object3DFile(_circuitFolder, "vallas_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_63D = new Object3DFile(_circuitFolder, "vallas_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_73D = new Object3DFile(_circuitFolder, "vallas_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_73D = new Object3DFile(_circuitFolder, "vallas_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_83D = new Object3DFile(_circuitFolder, "vallas_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_83D = new Object3DFile(_circuitFolder, "vallas_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_93D = new Object3DFile(_circuitFolder, "vallas_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_93D = new Object3DFile(_circuitFolder, "vallas_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_103D = new Object3DFile(_circuitFolder, "vallas_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_103D = new Object3DFile(_circuitFolder, "vallas_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_113D = new Object3DFile(_circuitFolder, "vallas_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_113D = new Object3DFile(_circuitFolder, "vallas_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_123D = new Object3DFile(_circuitFolder, "vallas_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_123D = new Object3DFile(_circuitFolder, "vallas_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_133D = new Object3DFile(_circuitFolder, "vallas_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_133D = new Object3DFile(_circuitFolder, "vallas_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_143D = new Object3DFile(_circuitFolder, "vallas_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_143D = new Object3DFile(_circuitFolder, "vallas_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_153D = new Object3DFile(_circuitFolder, "vallas_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_153D = new Object3DFile(_circuitFolder, "vallas_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_163D = new Object3DFile(_circuitFolder, "vallas_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_163D = new Object3DFile(_circuitFolder, "vallas_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_173D = new Object3DFile(_circuitFolder, "vallas_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_173D = new Object3DFile(_circuitFolder, "vallas_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_183D = new Object3DFile(_circuitFolder, "vallas_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_183D = new Object3DFile(_circuitFolder, "vallas_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_193D = new Object3DFile(_circuitFolder, "vallas_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_193D = new Object3DFile(_circuitFolder, "vallas_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_203D = new Object3DFile(_circuitFolder, "vallas_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_203D = new Object3DFile(_circuitFolder, "vallas_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_213D = new Object3DFile(_circuitFolder, "vallas_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_213D = new Object3DFile(_circuitFolder, "vallas_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_223D = new Object3DFile(_circuitFolder, "vallas_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_223D = new Object3DFile(_circuitFolder, "vallas_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_233D = new Object3DFile(_circuitFolder, "vallas_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_233D = new Object3DFile(_circuitFolder, "vallas_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_243D = new Object3DFile(_circuitFolder, "vallas_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_243D = new Object3DFile(_circuitFolder, "vallas_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_253D = new Object3DFile(_circuitFolder, "vallas_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_253D = new Object3DFile(_circuitFolder, "vallas_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_263D = new Object3DFile(_circuitFolder, "vallas_26.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_263D = new Object3DFile(_circuitFolder, "vallas_26.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_273D = new Object3DFile(_circuitFolder, "vallas_27.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_273D = new Object3DFile(_circuitFolder, "vallas_27.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallas_283D = new Object3DFile(_circuitFolder, "vallas_28.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallas_283D = new Object3DFile(_circuitFolder, "vallas_28.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
@@ -569,308 +567,308 @@ void Enviroment::loadModels(){
 
 #pragma omp section
         {
-            _vegetacion_13D = new Object3DFile(_circuitFolder, "vegetacion_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_13D = new Object3DFile(_circuitFolder, "vegetacion_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_23D = new Object3DFile(_circuitFolder, "vegetacion_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_23D = new Object3DFile(_circuitFolder, "vegetacion_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_33D = new Object3DFile(_circuitFolder, "vegetacion_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_33D = new Object3DFile(_circuitFolder, "vegetacion_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_43D = new Object3DFile(_circuitFolder, "vegetacion_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_43D = new Object3DFile(_circuitFolder, "vegetacion_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_53D = new Object3DFile(_circuitFolder, "vegetacion_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_53D = new Object3DFile(_circuitFolder, "vegetacion_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_63D = new Object3DFile(_circuitFolder, "vegetacion_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_63D = new Object3DFile(_circuitFolder, "vegetacion_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_73D = new Object3DFile(_circuitFolder, "vegetacion_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_73D = new Object3DFile(_circuitFolder, "vegetacion_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_83D = new Object3DFile(_circuitFolder, "vegetacion_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_83D = new Object3DFile(_circuitFolder, "vegetacion_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_93D = new Object3DFile(_circuitFolder, "vegetacion_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_93D = new Object3DFile(_circuitFolder, "vegetacion_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_103D = new Object3DFile(_circuitFolder, "vegetacion_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_103D = new Object3DFile(_circuitFolder, "vegetacion_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_113D = new Object3DFile(_circuitFolder, "vegetacion_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_113D = new Object3DFile(_circuitFolder, "vegetacion_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_123D = new Object3DFile(_circuitFolder, "vegetacion_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_123D = new Object3DFile(_circuitFolder, "vegetacion_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vegetacion_133D = new Object3DFile(_circuitFolder, "vegetacion_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_133D = new Object3DFile(_circuitFolder, "vegetacion_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_143D = new Object3DFile(_circuitFolder, "vegetacion_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_143D = new Object3DFile(_circuitFolder, "vegetacion_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_153D = new Object3DFile(_circuitFolder, "vegetacion_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_153D = new Object3DFile(_circuitFolder, "vegetacion_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_163D = new Object3DFile(_circuitFolder, "vegetacion_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_163D = new Object3DFile(_circuitFolder, "vegetacion_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_173D = new Object3DFile(_circuitFolder, "vegetacion_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_173D = new Object3DFile(_circuitFolder, "vegetacion_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_183D = new Object3DFile(_circuitFolder, "vegetacion_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_183D = new Object3DFile(_circuitFolder, "vegetacion_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_193D = new Object3DFile(_circuitFolder, "vegetacion_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_193D = new Object3DFile(_circuitFolder, "vegetacion_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_203D = new Object3DFile(_circuitFolder, "vegetacion_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_203D = new Object3DFile(_circuitFolder, "vegetacion_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_213D = new Object3DFile(_circuitFolder, "vegetacion_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_213D = new Object3DFile(_circuitFolder, "vegetacion_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_223D = new Object3DFile(_circuitFolder, "vegetacion_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_223D = new Object3DFile(_circuitFolder, "vegetacion_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_233D = new Object3DFile(_circuitFolder, "vegetacion_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_233D = new Object3DFile(_circuitFolder, "vegetacion_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_243D = new Object3DFile(_circuitFolder, "vegetacion_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_243D = new Object3DFile(_circuitFolder, "vegetacion_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vegetacion_253D = new Object3DFile(_circuitFolder, "vegetacion_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vegetacion_253D = new Object3DFile(_circuitFolder, "vegetacion_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 
 
 #pragma omp section
         {
-            _vallasPlastico_13D = new Object3DFile(_circuitFolder, "vallasPlastico_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_13D = new Object3DFile(_circuitFolder, "vallasPlastico_1.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_23D = new Object3DFile(_circuitFolder, "vallasPlastico_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_23D = new Object3DFile(_circuitFolder, "vallasPlastico_2.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_33D = new Object3DFile(_circuitFolder, "vallasPlastico_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_33D = new Object3DFile(_circuitFolder, "vallasPlastico_3.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_43D = new Object3DFile(_circuitFolder, "vallasPlastico_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_43D = new Object3DFile(_circuitFolder, "vallasPlastico_4.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_53D = new Object3DFile(_circuitFolder, "vallasPlastico_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_53D = new Object3DFile(_circuitFolder, "vallasPlastico_5.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_63D = new Object3DFile(_circuitFolder, "vallasPlastico_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_63D = new Object3DFile(_circuitFolder, "vallasPlastico_6.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_73D = new Object3DFile(_circuitFolder, "vallasPlastico_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_73D = new Object3DFile(_circuitFolder, "vallasPlastico_7.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_83D = new Object3DFile(_circuitFolder, "vallasPlastico_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_83D = new Object3DFile(_circuitFolder, "vallasPlastico_8.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_93D = new Object3DFile(_circuitFolder, "vallasPlastico_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_93D = new Object3DFile(_circuitFolder, "vallasPlastico_9.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_103D = new Object3DFile(_circuitFolder, "vallasPlastico_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_103D = new Object3DFile(_circuitFolder, "vallasPlastico_10.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_113D = new Object3DFile(_circuitFolder, "vallasPlastico_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_113D = new Object3DFile(_circuitFolder, "vallasPlastico_11.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_123D = new Object3DFile(_circuitFolder, "vallasPlastico_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_123D = new Object3DFile(_circuitFolder, "vallasPlastico_12.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_133D = new Object3DFile(_circuitFolder, "vallasPlastico_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_133D = new Object3DFile(_circuitFolder, "vallasPlastico_13.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_143D = new Object3DFile(_circuitFolder, "vallasPlastico_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_143D = new Object3DFile(_circuitFolder, "vallasPlastico_14.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_153D = new Object3DFile(_circuitFolder, "vallasPlastico_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_153D = new Object3DFile(_circuitFolder, "vallasPlastico_15.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_163D = new Object3DFile(_circuitFolder, "vallasPlastico_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_163D = new Object3DFile(_circuitFolder, "vallasPlastico_16.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_173D = new Object3DFile(_circuitFolder, "vallasPlastico_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_173D = new Object3DFile(_circuitFolder, "vallasPlastico_17.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_183D = new Object3DFile(_circuitFolder, "vallasPlastico_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_183D = new Object3DFile(_circuitFolder, "vallasPlastico_18.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_193D = new Object3DFile(_circuitFolder, "vallasPlastico_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_193D = new Object3DFile(_circuitFolder, "vallasPlastico_19.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_203D = new Object3DFile(_circuitFolder, "vallasPlastico_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_203D = new Object3DFile(_circuitFolder, "vallasPlastico_20.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_213D = new Object3DFile(_circuitFolder, "vallasPlastico_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_213D = new Object3DFile(_circuitFolder, "vallasPlastico_21.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_223D = new Object3DFile(_circuitFolder, "vallasPlastico_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_223D = new Object3DFile(_circuitFolder, "vallasPlastico_22.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_233D = new Object3DFile(_circuitFolder, "vallasPlastico_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_233D = new Object3DFile(_circuitFolder, "vallasPlastico_23.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_243D = new Object3DFile(_circuitFolder, "vallasPlastico_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_243D = new Object3DFile(_circuitFolder, "vallasPlastico_24.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_253D = new Object3DFile(_circuitFolder, "vallasPlastico_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_253D = new Object3DFile(_circuitFolder, "vallasPlastico_25.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_263D = new Object3DFile(_circuitFolder, "vallasPlastico_26.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_263D = new Object3DFile(_circuitFolder, "vallasPlastico_26.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_273D = new Object3DFile(_circuitFolder, "vallasPlastico_27.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_273D = new Object3DFile(_circuitFolder, "vallasPlastico_27.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_283D = new Object3DFile(_circuitFolder, "vallasPlastico_28.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_283D = new Object3DFile(_circuitFolder, "vallasPlastico_28.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_293D = new Object3DFile(_circuitFolder, "vallasPlastico_29.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_293D = new Object3DFile(_circuitFolder, "vallasPlastico_29.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_303D = new Object3DFile(_circuitFolder, "vallasPlastico_30.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_303D = new Object3DFile(_circuitFolder, "vallasPlastico_30.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
 #pragma omp section
         {
-            _vallasPlastico_313D = new Object3DFile(_circuitFolder, "vallasPlastico_31.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_313D = new Object3DFile(_circuitFolder, "vallasPlastico_31.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_323D = new Object3DFile(_circuitFolder, "vallasPlastico_32.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_323D = new Object3DFile(_circuitFolder, "vallasPlastico_32.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_333D = new Object3DFile(_circuitFolder, "vallasPlastico_33.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_333D = new Object3DFile(_circuitFolder, "vallasPlastico_33.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_343D = new Object3DFile(_circuitFolder, "vallasPlastico_34.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_343D = new Object3DFile(_circuitFolder, "vallasPlastico_34.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_353D = new Object3DFile(_circuitFolder, "vallasPlastico_35.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_353D = new Object3DFile(_circuitFolder, "vallasPlastico_35.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_363D = new Object3DFile(_circuitFolder, "vallasPlastico_36.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_363D = new Object3DFile(_circuitFolder, "vallasPlastico_36.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_373D = new Object3DFile(_circuitFolder, "vallasPlastico_37.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_373D = new Object3DFile(_circuitFolder, "vallasPlastico_37.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_383D = new Object3DFile(_circuitFolder, "vallasPlastico_38.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_383D = new Object3DFile(_circuitFolder, "vallasPlastico_38.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_393D = new Object3DFile(_circuitFolder, "vallasPlastico_39.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_393D = new Object3DFile(_circuitFolder, "vallasPlastico_39.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 #pragma omp section
         {
-            _vallasPlastico_403D = new Object3DFile(_circuitFolder, "vallasPlastico_40.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load enviroment representation
+            _vallasPlastico_403D = new Object3DFile(_circuitFolder, "vallasPlastico_40.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 
     }
@@ -881,186 +879,186 @@ void Enviroment::loadModels(){
  |  Purpose: Loads textures of all models
  *-------------------------------------------------------------------*/
 void Enviroment::loadModelsTextures(){
-    _terrain3D->loadTextures();
-    _sky3D->loadTextures();
+    _terrain3D->loadTextures(_textureIdMapCircuit);
+    _sky3D->loadTextures(_textureIdMapCircuit);
 
-    _banderas_13D->loadTextures();
-    _banderas_23D->loadTextures();
-    _banderas_33D->loadTextures();
-    _banderas_43D->loadTextures();
-    _banderas_53D->loadTextures();
-    _banderas_63D->loadTextures();
-    _banderas_73D->loadTextures();
-    _banderas_83D->loadTextures();
-    _banderas_93D->loadTextures();
-    _banderas_103D->loadTextures();
-    _banderas_113D->loadTextures();
-    _banderas_123D->loadTextures();
-    _banderas_133D->loadTextures();
-    _banderas_143D->loadTextures();
-    _banderas_153D->loadTextures();
-    _banderas_163D->loadTextures();
-    _banderas_173D->loadTextures();
+    _banderas_13D->loadTextures(_textureIdMapCircuit);
+    _banderas_23D->loadTextures(_textureIdMapCircuit);
+    _banderas_33D->loadTextures(_textureIdMapCircuit);
+    _banderas_43D->loadTextures(_textureIdMapCircuit);
+    _banderas_53D->loadTextures(_textureIdMapCircuit);
+    _banderas_63D->loadTextures(_textureIdMapCircuit);
+    _banderas_73D->loadTextures(_textureIdMapCircuit);
+    _banderas_83D->loadTextures(_textureIdMapCircuit);
+    _banderas_93D->loadTextures(_textureIdMapCircuit);
+    _banderas_103D->loadTextures(_textureIdMapCircuit);
+    _banderas_113D->loadTextures(_textureIdMapCircuit);
+    _banderas_123D->loadTextures(_textureIdMapCircuit);
+    _banderas_133D->loadTextures(_textureIdMapCircuit);
+    _banderas_143D->loadTextures(_textureIdMapCircuit);
+    _banderas_153D->loadTextures(_textureIdMapCircuit);
+    _banderas_163D->loadTextures(_textureIdMapCircuit);
+    _banderas_173D->loadTextures(_textureIdMapCircuit);
 
-    _barreras_13D->loadTextures();
-    _barreras_23D->loadTextures();
-    _barreras_33D->loadTextures();
-    _barreras_43D->loadTextures();
-    _barreras_53D->loadTextures();
-    _barreras_63D->loadTextures();
-    _barreras_73D->loadTextures();
-    _barreras_83D->loadTextures();
-    _barreras_93D->loadTextures();
-    _barreras_103D->loadTextures();
-    _barreras_113D->loadTextures();
-    _barreras_123D->loadTextures();
-    _barreras_133D->loadTextures();
-    _barreras_143D->loadTextures();
-    _barreras_153D->loadTextures();
+    _barreras_13D->loadTextures(_textureIdMapCircuit);
+    _barreras_23D->loadTextures(_textureIdMapCircuit);
+    _barreras_33D->loadTextures(_textureIdMapCircuit);
+    _barreras_43D->loadTextures(_textureIdMapCircuit);
+    _barreras_53D->loadTextures(_textureIdMapCircuit);
+    _barreras_63D->loadTextures(_textureIdMapCircuit);
+    _barreras_73D->loadTextures(_textureIdMapCircuit);
+    _barreras_83D->loadTextures(_textureIdMapCircuit);
+    _barreras_93D->loadTextures(_textureIdMapCircuit);
+    _barreras_103D->loadTextures(_textureIdMapCircuit);
+    _barreras_113D->loadTextures(_textureIdMapCircuit);
+    _barreras_123D->loadTextures(_textureIdMapCircuit);
+    _barreras_133D->loadTextures(_textureIdMapCircuit);
+    _barreras_143D->loadTextures(_textureIdMapCircuit);
+    _barreras_153D->loadTextures(_textureIdMapCircuit);
 
-    _buildings1_13D->loadTextures();
-    _buildings1_23D->loadTextures();
-    _buildings1_33D->loadTextures();
-    _buildings1_43D->loadTextures();
-    _buildings1_53D->loadTextures();
-    _buildings1_63D->loadTextures();
-    _buildings1_73D->loadTextures();
-    _buildings1_83D->loadTextures();
-    _buildings1_93D->loadTextures();
-    _buildings1_103D->loadTextures();
-    _buildings1_113D->loadTextures();
-    _buildings1_123D->loadTextures();
+    _buildings1_13D->loadTextures(_textureIdMapCircuit);
+    _buildings1_23D->loadTextures(_textureIdMapCircuit);
+    _buildings1_33D->loadTextures(_textureIdMapCircuit);
+    _buildings1_43D->loadTextures(_textureIdMapCircuit);
+    _buildings1_53D->loadTextures(_textureIdMapCircuit);
+    _buildings1_63D->loadTextures(_textureIdMapCircuit);
+    _buildings1_73D->loadTextures(_textureIdMapCircuit);
+    _buildings1_83D->loadTextures(_textureIdMapCircuit);
+    _buildings1_93D->loadTextures(_textureIdMapCircuit);
+    _buildings1_103D->loadTextures(_textureIdMapCircuit);
+    _buildings1_113D->loadTextures(_textureIdMapCircuit);
+    _buildings1_123D->loadTextures(_textureIdMapCircuit);
 
-    _buildings2_13D->loadTextures();
-    _buildings2_23D->loadTextures();
-    _buildings2_33D->loadTextures();
-    _buildings2_43D->loadTextures();
+    _buildings2_13D->loadTextures(_textureIdMapCircuit);
+    _buildings2_23D->loadTextures(_textureIdMapCircuit);
+    _buildings2_33D->loadTextures(_textureIdMapCircuit);
+    _buildings2_43D->loadTextures(_textureIdMapCircuit);
 
-    _buildings3_13D->loadTextures();
-    _buildings3_23D->loadTextures();
-    _buildings3_33D->loadTextures();
-    _buildings3_53D->loadTextures();
-    _buildings3_63D->loadTextures();
+    _buildings3_13D->loadTextures(_textureIdMapCircuit);
+    _buildings3_23D->loadTextures(_textureIdMapCircuit);
+    _buildings3_33D->loadTextures(_textureIdMapCircuit);
+    _buildings3_53D->loadTextures(_textureIdMapCircuit);
+    _buildings3_63D->loadTextures(_textureIdMapCircuit);
 
-    _buildings4_13D->loadTextures();
-    _buildings4_23D->loadTextures();
+    _buildings4_13D->loadTextures(_textureIdMapCircuit);
+    _buildings4_23D->loadTextures(_textureIdMapCircuit);
 
-    _objects_13D->loadTextures();
-    _objects_23D->loadTextures();
-    _objects_33D->loadTextures();
-    _objects_43D->loadTextures();
-    _objects_53D->loadTextures();
-    _objects_63D->loadTextures();
-    _objects_73D->loadTextures();
-    _objects_83D->loadTextures();
-    _objects_93D->loadTextures();
-    _objects_103D->loadTextures();
-    _objects_113D->loadTextures();
-    _objects_123D->loadTextures();
-    _objects_133D->loadTextures();
-    _objects_143D->loadTextures();
-    _objects_153D->loadTextures();
-    _objects_163D->loadTextures();
-    _objects_173D->loadTextures();
-    _objects_183D->loadTextures();
-    _objects_193D->loadTextures();
-    _objects_203D->loadTextures();
+    _objects_13D->loadTextures(_textureIdMapCircuit);
+    _objects_23D->loadTextures(_textureIdMapCircuit);
+    _objects_33D->loadTextures(_textureIdMapCircuit);
+    _objects_43D->loadTextures(_textureIdMapCircuit);
+    _objects_53D->loadTextures(_textureIdMapCircuit);
+    _objects_63D->loadTextures(_textureIdMapCircuit);
+    _objects_73D->loadTextures(_textureIdMapCircuit);
+    _objects_83D->loadTextures(_textureIdMapCircuit);
+    _objects_93D->loadTextures(_textureIdMapCircuit);
+    _objects_103D->loadTextures(_textureIdMapCircuit);
+    _objects_113D->loadTextures(_textureIdMapCircuit);
+    _objects_123D->loadTextures(_textureIdMapCircuit);
+    _objects_133D->loadTextures(_textureIdMapCircuit);
+    _objects_143D->loadTextures(_textureIdMapCircuit);
+    _objects_153D->loadTextures(_textureIdMapCircuit);
+    _objects_163D->loadTextures(_textureIdMapCircuit);
+    _objects_173D->loadTextures(_textureIdMapCircuit);
+    _objects_183D->loadTextures(_textureIdMapCircuit);
+    _objects_193D->loadTextures(_textureIdMapCircuit);
+    _objects_203D->loadTextures(_textureIdMapCircuit);
 
-    _vallas_13D->loadTextures();
-    _vallas_23D->loadTextures();
-    _vallas_33D->loadTextures();
-    _vallas_43D->loadTextures();
-    _vallas_53D->loadTextures();
-    _vallas_63D->loadTextures();
-    _vallas_73D->loadTextures();
-    _vallas_83D->loadTextures();
-    _vallas_93D->loadTextures();
-    _vallas_103D->loadTextures();
-    _vallas_113D->loadTextures();
-    _vallas_123D->loadTextures();
-    _vallas_133D->loadTextures();
-    _vallas_143D->loadTextures();
-    _vallas_153D->loadTextures();
-    _vallas_163D->loadTextures();
-    _vallas_173D->loadTextures();
-    _vallas_183D->loadTextures();
-    _vallas_193D->loadTextures();
-    _vallas_203D->loadTextures();
-    _vallas_213D->loadTextures();
-    _vallas_223D->loadTextures();
-    _vallas_233D->loadTextures();
-    _vallas_243D->loadTextures();
-    _vallas_253D->loadTextures();
-    _vallas_263D->loadTextures();
-    _vallas_273D->loadTextures();
-    _vallas_283D->loadTextures();
+    _vallas_13D->loadTextures(_textureIdMapCircuit);
+    _vallas_23D->loadTextures(_textureIdMapCircuit);
+    _vallas_33D->loadTextures(_textureIdMapCircuit);
+    _vallas_43D->loadTextures(_textureIdMapCircuit);
+    _vallas_53D->loadTextures(_textureIdMapCircuit);
+    _vallas_63D->loadTextures(_textureIdMapCircuit);
+    _vallas_73D->loadTextures(_textureIdMapCircuit);
+    _vallas_83D->loadTextures(_textureIdMapCircuit);
+    _vallas_93D->loadTextures(_textureIdMapCircuit);
+    _vallas_103D->loadTextures(_textureIdMapCircuit);
+    _vallas_113D->loadTextures(_textureIdMapCircuit);
+    _vallas_123D->loadTextures(_textureIdMapCircuit);
+    _vallas_133D->loadTextures(_textureIdMapCircuit);
+    _vallas_143D->loadTextures(_textureIdMapCircuit);
+    _vallas_153D->loadTextures(_textureIdMapCircuit);
+    _vallas_163D->loadTextures(_textureIdMapCircuit);
+    _vallas_173D->loadTextures(_textureIdMapCircuit);
+    _vallas_183D->loadTextures(_textureIdMapCircuit);
+    _vallas_193D->loadTextures(_textureIdMapCircuit);
+    _vallas_203D->loadTextures(_textureIdMapCircuit);
+    _vallas_213D->loadTextures(_textureIdMapCircuit);
+    _vallas_223D->loadTextures(_textureIdMapCircuit);
+    _vallas_233D->loadTextures(_textureIdMapCircuit);
+    _vallas_243D->loadTextures(_textureIdMapCircuit);
+    _vallas_253D->loadTextures(_textureIdMapCircuit);
+    _vallas_263D->loadTextures(_textureIdMapCircuit);
+    _vallas_273D->loadTextures(_textureIdMapCircuit);
+    _vallas_283D->loadTextures(_textureIdMapCircuit);
 
-    _vegetacion_13D->loadTextures();
-    _vegetacion_23D->loadTextures();
-    _vegetacion_33D->loadTextures();
-    _vegetacion_43D->loadTextures();
-    _vegetacion_53D->loadTextures();
-    _vegetacion_63D->loadTextures();
-    _vegetacion_73D->loadTextures();
-    _vegetacion_83D->loadTextures();
-    _vegetacion_93D->loadTextures();
-    _vegetacion_103D->loadTextures();
-    _vegetacion_113D->loadTextures();
-    _vegetacion_123D->loadTextures();
-    _vegetacion_133D->loadTextures();
-    _vegetacion_143D->loadTextures();
-    _vegetacion_153D->loadTextures();
-    _vegetacion_163D->loadTextures();
-    _vegetacion_173D->loadTextures();
-    _vegetacion_183D->loadTextures();
-    _vegetacion_193D->loadTextures();
-    _vegetacion_203D->loadTextures();
-    _vegetacion_213D->loadTextures();
-    _vegetacion_223D->loadTextures();
-    _vegetacion_233D->loadTextures();
-    _vegetacion_243D->loadTextures();
-    _vegetacion_253D->loadTextures();
+    _vegetacion_13D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_23D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_33D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_43D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_53D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_63D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_73D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_83D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_93D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_103D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_113D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_123D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_133D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_143D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_153D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_163D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_173D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_183D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_193D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_203D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_213D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_223D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_233D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_243D->loadTextures(_textureIdMapCircuit);
+    _vegetacion_253D->loadTextures(_textureIdMapCircuit);
 
-    _vallasPlastico_13D->loadTextures();
-    _vallasPlastico_23D->loadTextures();
-    _vallasPlastico_33D->loadTextures();
-    _vallasPlastico_43D->loadTextures();
-    _vallasPlastico_53D->loadTextures();
-    _vallasPlastico_63D->loadTextures();
-    _vallasPlastico_73D->loadTextures();
-    _vallasPlastico_83D->loadTextures();
-    _vallasPlastico_93D->loadTextures();
-    _vallasPlastico_103D->loadTextures();
-    _vallasPlastico_113D->loadTextures();
-    _vallasPlastico_123D->loadTextures();
-    _vallasPlastico_133D->loadTextures();
-    _vallasPlastico_143D->loadTextures();
-    _vallasPlastico_153D->loadTextures();
-    _vallasPlastico_163D->loadTextures();
-    _vallasPlastico_173D->loadTextures();
-    _vallasPlastico_183D->loadTextures();
-    _vallasPlastico_193D->loadTextures();
-    _vallasPlastico_203D->loadTextures();
-    _vallasPlastico_223D->loadTextures();
-    _vallasPlastico_213D->loadTextures();
-    _vallasPlastico_233D->loadTextures();
-    _vallasPlastico_243D->loadTextures();
-    _vallasPlastico_253D->loadTextures();
-    _vallasPlastico_263D->loadTextures();
-    _vallasPlastico_273D->loadTextures();
-    _vallasPlastico_283D->loadTextures();
-    _vallasPlastico_293D->loadTextures();
-    _vallasPlastico_303D->loadTextures();
-    _vallasPlastico_313D->loadTextures();
-    _vallasPlastico_323D->loadTextures();
-    _vallasPlastico_333D->loadTextures();
-    _vallasPlastico_343D->loadTextures();
-    _vallasPlastico_353D->loadTextures();
-    _vallasPlastico_363D->loadTextures();
-    _vallasPlastico_373D->loadTextures();
-    _vallasPlastico_383D->loadTextures();
-    _vallasPlastico_393D->loadTextures();
-    _vallasPlastico_403D->loadTextures();
+    _vallasPlastico_13D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_23D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_33D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_43D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_53D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_63D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_73D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_83D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_93D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_103D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_113D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_123D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_133D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_143D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_153D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_163D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_173D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_183D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_193D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_203D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_223D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_213D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_233D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_243D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_253D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_263D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_273D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_283D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_293D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_303D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_313D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_323D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_333D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_343D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_353D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_363D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_373D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_383D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_393D->loadTextures(_textureIdMapCircuit);
+    _vallasPlastico_403D->loadTextures(_textureIdMapCircuit);
 
 
 }

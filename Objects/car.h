@@ -46,6 +46,7 @@ public:
 
 private:
     // ========================== Data Members ============================
+    map<string, GLuint> _textureIdMapCar;
     Object3DFile *_chasisObj;
     Object3DFile *_wheelObj;
     Object3DFile *_wheelFrontRight;

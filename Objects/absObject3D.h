@@ -44,11 +44,14 @@ public:
 
     void setVisibility(bool visibility);
     bool getVisibility();
+    void setMovable(bool isMovable);
+    bool isMovable();
+
 
     void checkVisibility(Point3D *pointCamera, int distance);
 
 protected:
-    virtual void renderizeObject() = 0;
+    virtual void renderizeObject(){}
 
 private:
     // ========================== Data Members ===========================
@@ -61,6 +64,7 @@ private:
     Point3D     * _p_center;
 
     bool _isVisible;
+    bool _isMovable;
 
     // ============================ Methods ==============================
 };

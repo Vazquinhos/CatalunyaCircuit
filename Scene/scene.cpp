@@ -10,6 +10,7 @@
 
 #include "scene.h"
 #include <QTime>
+#include <IL/il.h>                  //Devil image loader for textures
 
 // ================= Constructores/Destructores ======================
 /*-------------------------------------------------------------------
@@ -21,27 +22,22 @@
  *-------------------------------------------------------------------*/
 Scene::Scene()
 {
+
+    ilInit(); /* Initialization of DevIL texture loader */
+
     QTime myTimer;
     myTimer.start();
 
-    Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/",  "/Media/Models/Sky/");
+    Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/");
 
 
     Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
 
 
-#pragma omp parallel sections
-    {
-#pragma omp section
-        {
-            enviroment->loadModels();
-        }
-#pragma omp section
-        {
-            c1->loadModels();
-        }
 
-    }
+    enviroment->loadModels();
+    c1->loadModels();
+
 
 
     int loadModel = myTimer.elapsed();

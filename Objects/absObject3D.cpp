@@ -29,6 +29,7 @@ AbsObject3D::AbsObject3D() {
     _p_minVertex = new Point3D();
     _p_maxVertex = new Point3D();
     _isVisible = true;
+    _isMovable = false;
 }
 
 /*-------------------------------------------------------------------
@@ -89,6 +90,26 @@ void AbsObject3D::setCenter(Point3D *center){
 }
 
 /*-------------------------------------------------------------------
+ |  Function setMovable
+ |
+ |  Purpose: Setter of the movility of the object
+ |  Parameters: bool isMovable: false if object is static, true otherwise
+ *-------------------------------------------------------------------*/
+void AbsObject3D::setMovable(bool isMovable){
+    _isMovable = isMovable;
+}
+
+/*-------------------------------------------------------------------
+ |  Function isMovable
+ |
+ |  Purpose: Getter of the movility of the object
+ |  Returns: bool The movility of the object
+ *-------------------------------------------------------------------*/
+bool AbsObject3D::isMovable(){
+    return _isMovable;
+}
+
+/*-------------------------------------------------------------------
  |  Function display
  |
  |  Purpose: Call display list for display the object. If the object
@@ -98,17 +119,18 @@ void AbsObject3D::setCenter(Point3D *center){
  *-------------------------------------------------------------------*/
 void AbsObject3D::display() {
     if(_isVisible){
-        glPushMatrix();
-
-        glRotatef(this->_p_rotation->getX(), 1, 0, 0); //Rotate object
-        glRotatef(this->_p_rotation->getY(), 0, 1, 0); //Rotate object
-        glRotatef(this->_p_rotation->getZ(), 0, 0, 1); //Rotate object
-        glScalef(this->_p_scale->getX(), this->_p_scale->getY(), this->_p_scale->getZ()); //Scale object
-        glTranslatef(this->_p_translation->getX(), this->_p_translation->getY(), this->_p_translation->getZ()); //Translate object to its position
-
-        glCallList(this->_gi_displayListId); //Call display list for display the object
-
-        glPopMatrix();
+        if(_isMovable){
+            glPushMatrix();
+            glRotatef(this->_p_rotation->getX(), 1, 0, 0); //Rotate object
+            glRotatef(this->_p_rotation->getY(), 0, 1, 0); //Rotate object
+            glRotatef(this->_p_rotation->getZ(), 0, 0, 1); //Rotate object
+            glScalef(this->_p_scale->getX(), this->_p_scale->getY(), this->_p_scale->getZ()); //Scale object
+            glTranslatef(this->_p_translation->getX(), this->_p_translation->getY(), this->_p_translation->getZ()); //Translate object to its position
+            glCallList(this->_gi_displayListId); //Call display list for display the object
+            glPopMatrix();
+        }else{
+             glCallList(this->_gi_displayListId); //Call display list for display the object
+        }
     }
 }
 

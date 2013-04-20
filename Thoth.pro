@@ -959,7 +959,9 @@ OTHER_FILES += \
     Media/Models/Circuit/vallasPlastico_4.3ds \
     Media/Models/Circuit/vallasPlastico_3.3ds \
     Media/Models/Circuit/vallasPlastico_2.3ds \
-    Media/Models/Circuit/vallasPlastico_1.3ds
+    Media/Models/Circuit/vallasPlastico_1.3ds \
+    Media/Models/Circuit/sky.3ds \
+    Media/Models/Circuit/cat_sky_sun_01.dds
 
 LIBS += -lgomp
 

@@ -42,10 +42,11 @@ Object3DFile::Object3DFile() {
  |              const char* filename  = Name of the file to load
  |  Returns:
  *-------------------------------------------------------------------*/
-Object3DFile::Object3DFile(std::string directory, std::string filename, unsigned int assimpFlags){
-    this->_baseDirectory = directory;
-    this->_filename = filename;
-    this->loadFromFile(assimpFlags);
+Object3DFile::Object3DFile(std::string directory, std::string filename, unsigned int assimpFlags, bool isMovable){
+    setMovable(isMovable);
+    _baseDirectory = directory;
+    _filename = filename;
+    loadFromFile(assimpFlags);
 }
 
 /*-------------------------------------------------------------------
@@ -83,12 +84,12 @@ bool Object3DFile::loadFromFile(unsigned int assimpFlags){
 }
 
 /*-------------------------------------------------------------------
-         |  Function renderizeObject
-         |
-         |  Purpose: Renderizes the object by calling all buffer arrays of all meshes.
-         |  Parameters:
-         |  Returns:
-         *-------------------------------------------------------------------*/
+|  Function renderizeObject
+|
+|  Purpose: Renderizes the object by calling all buffer arrays of all meshes.
+|  Parameters:
+|  Returns:
+*-------------------------------------------------------------------*/
 void Object3DFile::renderizeObject() {
     glEnableClientState(GL_VERTEX_ARRAY);           // Enable Vertex Arrays
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
@@ -217,15 +218,15 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 |  Parameters:     const aiScene* pScene = The assimp object info to load its textures
 |  Returns:
 *-------------------------------------------------------------------*/
-bool Object3DFile::loadMaterials(const aiScene* pScene)
+bool Object3DFile::loadMaterials(const aiScene* pScene, map<string, GLuint> textureIdMap)
 {
     bool ret = true;
-    ilInit(); /* Initialization of DevIL */
+
 
     // Initialize the materials
     for (unsigned int i = 0 ; i < pScene->mNumMaterials ; i++) {
         const aiMaterial* pMaterial = pScene->mMaterials[i];
-
+        GLuint id;
         _vTextures[i] = NULL;
 
         if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
@@ -235,48 +236,14 @@ bool Object3DFile::loadMaterials(const aiScene* pScene)
                 std::string FullPath = string(_baseDirectory) + Path.data;
                 _vTextures[i] = new Texture();
 
-                //Load textures with DevIL
-
-                bool success = ilLoadImage(FullPath.c_str());
-
-                if (success) {
-                    success = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
-                    if(success){
-                        glGenTextures(1, &_vTextures[i]->_textureBindId);
-                        glBindTexture(GL_TEXTURE_2D, _vTextures[i]->_textureBindId);
-
-                        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR ); //MIMAP LINEAR IS NOT VALID FOR MAG FILTER!
-                        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-                        GLfloat fLargest;
-                        glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
-                        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest ); //Applies maximum aviable anisotropy for better texture quality on distance when using mipmaps
-
-                        glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);   //Requires GL 1.4. Removed from GL 3.1 and above. //Generate Mipmap for different quality on distance movement
-
-                        apply_material(pMaterial);
-                        glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
-                                     ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
-                                     ilGetData());
-
-                        //ilDeleteImage(_vTextures[i]->_textureBindId);
-                        qDebug() << "Loaded texture " << FullPath.c_str();
-                    }
-                    else{
-                        qDebug() << "Error while converting textureto GL format " << FullPath.c_str();
-                    }
-                }
-                else {
-                    qDebug() << "Loaded texture path ERROR" << FullPath.c_str();
-
-                }
+                id = textureIdMap[FullPath];
+                _vTextures[i]->_textureBindId = id;
+                //apply_material(pMaterial);
+                qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath.c_str();
             }
         }
 
     }
-
 
     _importer.FreeScene();
 
@@ -385,9 +352,9 @@ void Object3DFile::color4_to_float4(const aiColor4D *c, float f[4])
     f[3] = c->a;
 }
 
-void Object3DFile::loadTextures(){
+void Object3DFile::loadTextures(map<string, GLuint> textureIdMap){
     generateObjectBuffers(_importer.GetScene());
-    loadMaterials(_importer.GetScene());
+    loadMaterials(_importer.GetScene(), textureIdMap);
 }
 
 /******************************* MESH *****************************************/

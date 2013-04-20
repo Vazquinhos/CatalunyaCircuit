@@ -159,19 +159,20 @@ void Car::loadModels(){
     {
 #pragma omp section
         {
-            _chasisObj = new Object3DFile(_folder, "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+             _textureIdMapCar = this->loadTextures(_folder.c_str(), "*.tga");
+            _chasisObj = new Object3DFile(_folder, "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _chasisObj->setTranslation(_p_position);
             _chasisObj->setRotation(new Point3D(0,0,90));
         }
 #pragma omp section
         {
-            _wheelObj = new Object3DFile(_folder, "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelObj = new Object3DFile(_folder, "wheel.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _wheelObj->setTranslation(_p_position);
             _wheelObj->setRotation(new Point3D(0,0,90));
         }
 #pragma omp section
         {
-            _wheelFrontRight = new Object3DFile(_folder, "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelFrontRight = new Object3DFile(_folder, "wheelFrontRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _wheelFrontRight->setTranslation(_p_position);
             _wheelFrontRight->setRotation(new Point3D(0,0,90));
         }
@@ -179,21 +180,21 @@ void Car::loadModels(){
 #pragma omp section
         {
 
-            _wheelFrontLeft = new Object3DFile(_folder, "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelFrontLeft = new Object3DFile(_folder, "wheelFrontLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _wheelFrontLeft->setTranslation(_p_position);
             _wheelFrontLeft->setRotation(new Point3D(0,0,90));
         }
 
 #pragma omp section
         {
-            _wheelRearRight = new Object3DFile(_folder, "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelRearRight = new Object3DFile(_folder, "wheelRearRight.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _wheelRearRight->setTranslation(_p_position);
             _wheelRearRight->setRotation(new Point3D(0,0,90));
         }
 
 #pragma omp section
         {
-            _wheelRearLeft = new Object3DFile(_folder, "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph); //Load ferrari representation
+            _wheelRearLeft = new Object3DFile(_folder, "wheelRearLeft.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _wheelRearLeft->setTranslation(_p_position);
             _wheelRearLeft->setRotation(new Point3D(0,0,90));
         }
@@ -207,12 +208,12 @@ void Car::loadModels(){
  |  Purpose: Loads textures of all models
  *-------------------------------------------------------------------*/
 void Car::loadModelsTextures(){
-    _chasisObj->loadTextures();
-    _wheelObj->loadTextures();
-    _wheelFrontRight->loadTextures();
-    _wheelFrontLeft->loadTextures();
-    _wheelRearRight->loadTextures();
-    _wheelRearLeft->loadTextures();
+    _chasisObj->loadTextures(_textureIdMapCar);
+    _wheelObj->loadTextures(_textureIdMapCar);
+    _wheelFrontRight->loadTextures(_textureIdMapCar);
+    _wheelFrontLeft->loadTextures(_textureIdMapCar);
+    _wheelRearRight->loadTextures(_textureIdMapCar);
+    _wheelRearLeft->loadTextures(_textureIdMapCar);
 }
 
 /*-------------------------------------------------------------------

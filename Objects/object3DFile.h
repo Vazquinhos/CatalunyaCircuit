@@ -60,7 +60,7 @@ private:
     //Object loading methods
     bool loadFromFile(unsigned int assimpFlags);
     bool generateObjectBuffers(const aiScene* pScene);
-    bool loadMaterials(const aiScene* pScene);
+    bool loadMaterials(const aiScene* pScene, map<string, GLuint> textureIdMap);
     void apply_material(const aiMaterial *mtl);
 
     //Auxiliary methods
@@ -69,10 +69,10 @@ private:
 
 public:
     Object3DFile();
-    Object3DFile( std::string directory, std::string filename, unsigned int assimpFlags);
+    Object3DFile( std::string directory, std::string filename, unsigned int assimpFlags, bool isMovable);
     virtual ~Object3DFile();
 
-    void loadTextures();
+    void loadTextures(map<string, GLuint> textureIdMap);
 
 protected:
     virtual void renderizeObject(); //Inherited method

@@ -172,7 +172,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
         minY = maxY =  pPos->y;
         minZ = maxZ =  pPos->z;
 
-        _vMeshes.resize(numMeshes); //Resize meshes vector to copy all assimp imported meshes
+        _vMeshes.reserve(numMeshes); //Resize meshes vector to copy all assimp imported meshes
 
 
         // Initialize the meshes in the scene one by one
@@ -257,7 +257,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             //Generate and initialize the buffers with the copied data from importer
             mesh->generateMeshBuffers(verticesCoord, texturesCoord, normalsCoord, indices);
 
-            _vMeshes[i] = mesh;
+            _vMeshes.push_back(mesh);
         }
 
         this->setMinVertex(new Point3D(minX, minY, minZ));
@@ -280,28 +280,27 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 bool Object3DFile::loadMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap)
 {
     bool ret = true;
-
-    _vTextures.resize(pScene->mNumMaterials); //Resize textures vector to copy all assimp imported meshes
+    Texture *texture;
+    _vTextures.reserve(pScene->mNumMaterials); //Resize textures vector to copy all assimp imported meshes
     // Initialize the materials
     for (unsigned int i = 0 ; i < pScene->mNumMaterials ; i++) {
         const aiMaterial* pMaterial = pScene->mMaterials[i];
         GLuint id;
-        _vTextures[i] = NULL;
 
         if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
             aiString Path;
 
             if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
                 QString FullPath = _baseDirectory + Path.data;
-                _vTextures[i] = new Texture();
+                texture = new Texture();
 
                 id = (*textureIdMap)[FullPath];
-                _vTextures[i]->_textureBindId = id;
+                texture->_textureBindId = id;
                 //apply_material(pMaterial);
                 qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath;
             }
         }
-
+        _vTextures.push_back(texture);
     }
     return ret;
 }
@@ -424,6 +423,7 @@ void Object3DFile::release(){
 *-------------------------------------------------------------------*/
 void Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
     Mesh *mesh;
+
     for(int i = 0; i < _vMeshes.size(); i++){
         mesh = _vMeshes[i];
         mesh->checkVisibility(pointCamera, distance);
@@ -453,7 +453,7 @@ void Object3DFile::display() {
                 glCallList(mesh->_gi_displayListId); //Call display list for display the object
                 glPopMatrix();
             }else{
-                 glCallList(mesh->_gi_displayListId); //Call display list for display the object
+                glCallList(mesh->_gi_displayListId); //Call display list for display the object
             }
         }
     }

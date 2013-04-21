@@ -31,7 +31,6 @@ private:
 
     struct Mesh {
         Mesh();
-
         ~Mesh();
 
         void generateMeshBuffers(const std::vector<float>& verticesCoord, const std::vector<float>& texturesCoord, const std::vector<float>& normalsCoord,
@@ -42,6 +41,13 @@ private:
         GLuint faceIndexBufferBindId;   //Face index buffer array ID bind
         unsigned int numIndices;        //Number of face indexes
         unsigned int materialIndex;     //Material index of the mesh
+
+        Point3D     * _p_minVertex; //Min vertex of the mesh
+        Point3D     * _p_maxVertex; //Max vertex of the mesh
+        Point3D     * _p_center; //Center of the mesh
+        GLuint        _gi_displayListId; //Display list of the mesh
+        bool _isVisible; //Visibility of the mesh
+        void checkVisibility(Point3D *pointCamera, int distance);
     };
 
     struct Texture{
@@ -72,9 +78,9 @@ public:
     virtual ~Object3DFile();
 
     void release();
-
-protected:
-    virtual void renderizeObject(); //Inherited method
+    void checkVisibility(Point3D *pointCamera, int distance);
+    void display();
+    void render(); //Inherited method
 };
 
 #endif /* Object3DAssimp_H_ */

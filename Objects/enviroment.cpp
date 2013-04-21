@@ -434,6 +434,7 @@ void Enviroment::displayModels(){
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void Enviroment::checkVisibility(Point3D *pointCamera, int distance){
+     _terrain3D->checkVisibility(pointCamera, distance);
 
     _banderas_13D->checkVisibility(pointCamera, distance);
     _banderas_23D->checkVisibility(pointCamera, distance);

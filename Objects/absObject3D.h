@@ -28,10 +28,6 @@ public:
 
 
     // ============================ Methods ==============================
-    void               display();
-    void               render();
-    void               setDisplayListId(GLuint displayListId);
-    GLuint             getDisplayListId();
     void               setTranslation(Point3D * translation);
     Point3D          * getTranslation();
     void               setRotation(Point3D * rotation);
@@ -53,16 +49,12 @@ public:
     void setMovable(bool isMovable);
     bool isMovable();
 
-
-    void checkVisibility(Point3D *pointCamera, int distance);
-
 protected:
-    virtual void renderizeObject(){}
+    virtual void render(){}
 
 private:
     // ========================== Data Members ===========================
     QString        _name;
-    GLuint        _gi_displayListId;
     Point3D     * _p_translation;
     Point3D     * _p_rotation;
     Point3D     * _p_scale;

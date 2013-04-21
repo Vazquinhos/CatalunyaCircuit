@@ -22,7 +22,6 @@
  |  Returns:
  *-------------------------------------------------------------------*/
 AbsObject3D::AbsObject3D() {
-    this->_gi_displayListId = 0;
     _p_translation = new Point3D();
     _p_rotation = new Point3D();
     _p_scale = new Point3D(1,1,1);
@@ -129,75 +128,6 @@ void AbsObject3D::setMovable(bool isMovable){
  *-------------------------------------------------------------------*/
 bool AbsObject3D::isMovable(){
     return _isMovable;
-}
-
-/*-------------------------------------------------------------------
- |  Function display
- |
- |  Purpose: Call display list for display the object. If the object
- |   has been updated, render must be called
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-void AbsObject3D::display() {
-    if(_isVisible){
-        if(_isMovable){
-            glPushMatrix();
-            glRotatef(this->_p_rotation->getX(), 1, 0, 0); //Rotate object
-            glRotatef(this->_p_rotation->getY(), 0, 1, 0); //Rotate object
-            glRotatef(this->_p_rotation->getZ(), 0, 0, 1); //Rotate object
-            glScalef(this->_p_scale->getX(), this->_p_scale->getY(), this->_p_scale->getZ()); //Scale object
-            glTranslatef(this->_p_translation->getX(), this->_p_translation->getY(), this->_p_translation->getZ()); //Translate object to its position
-            glCallList(this->_gi_displayListId); //Call display list for display the object
-            glPopMatrix();
-        }else{
-             glCallList(this->_gi_displayListId); //Call display list for display the object
-        }
-    }
-}
-
-/*-------------------------------------------------------------------
- |  Function render
- |
- |  Purpose: Update,re-render and create new display list for the object.
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-void AbsObject3D::render() {
-    if (glIsList(this->_gi_displayListId)) { //If we already have a display list, we delete it
-        glDeleteLists(this->_gi_displayListId, 1);
-    }
-    this->_gi_displayListId = glGenLists(1); //Generate new display list identifier
-
-    glNewList(this->_gi_displayListId, GL_COMPILE); //Starting rendering in memory
-
-    renderizeObject();
-
-    glEndList(); //Finish rendering in memory
-}
-
-/*-------------------------------------------------------------------
- |  Function setDisplayListId
- |
- |  Purpose: Setter. Sets the display list of the object
- |  Parameters[in]: GLuint displayListId = Display list to set
- |  Returns:
- *-------------------------------------------------------------------*/
-void AbsObject3D::setDisplayListId(GLuint displayListId)
-{
-    _gi_displayListId = displayListId;
-}
-
-/*-------------------------------------------------------------------
- |  Function getDisplayListId
- |
- |  Purpose: Getter. Gets the display list of the object
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-GLuint AbsObject3D::getDisplayListId()
-{
-    return _gi_displayListId;
 }
 
 /*-------------------------------------------------------------------
@@ -314,20 +244,3 @@ Point3D * AbsObject3D::getMaxVertex()
     return _p_maxVertex;
 }
 
-/*-------------------------------------------------------------------
- |  Function checkVisibility
- |
- |  Purpose: Modify visibility of the objects taking in consideration distance to the camera
- |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
- *-------------------------------------------------------------------*/
-void AbsObject3D::checkVisibility(Point3D *pointCamera, int distance){
-    Point3D *punto = new Point3D(_p_center->getX(), _p_center->getY(), _p_center->getZ() );
-    int d = punto->getDistance(pointCamera);
-    //qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
-    //qDebug() << "MIN " << _p_minVertex->getX() << " : " << _p_minVertex->getY() << " : " << _p_minVertex->getZ() << " MAX "<< _p_maxVertex->getX() << " : "<< _p_maxVertex->getY() << _p_maxVertex->getZ();
-    if(d < distance){
-        setVisibility(true);
-    }else{
-        setVisibility(false);
-    }
-}

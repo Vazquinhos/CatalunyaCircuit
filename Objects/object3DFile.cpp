@@ -91,7 +91,7 @@ bool Object3DFile::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int
 |  Parameters:
 |  Returns:
 *-------------------------------------------------------------------*/
-void Object3DFile::renderizeObject() {
+void Object3DFile::render() {
     Mesh *mesh;
 
     generateObjectBuffers(_importer.GetScene());
@@ -100,8 +100,23 @@ void Object3DFile::renderizeObject() {
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
     glEnableClientState(GL_NORMAL_ARRAY);           // Enable Normal Arrays
 
+    qDebug() << "RENDERIZANDO TANTAS MESHES " << _vMeshes.size();
+
     for (unsigned int i = 0 ; i < _vMeshes.size() ; i++) {
         mesh = _vMeshes[i];
+
+
+        if (glIsList(mesh->_gi_displayListId)) { //If we already have a display list, we delete it
+            glDeleteLists(mesh->_gi_displayListId, 1);
+        }
+        mesh->_gi_displayListId = glGenLists(1); //Generate new display list identifier
+        glNewList(mesh->_gi_displayListId, GL_COMPILE); //Starting rendering in memory
+
+
+
+
+
+
         glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBufferBindId); //Bind vertex array of the mesh
         glVertexPointer( 3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To Vertex Data
 
@@ -118,8 +133,10 @@ void Object3DFile::renderizeObject() {
         if (MaterialIndex < _vTextures.size() && _vTextures[MaterialIndex]) {
             glBindTexture(GL_TEXTURE_2D, _vTextures[MaterialIndex]->_textureBindId);
         }
-        //glDrawElements(GL_TRIANGLES, mesh->numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces
+        //glDrawElements(GL_TRIANGLES, mesh->numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces (IS SLOWER THAN glDrawArrays!!)
         glDrawArrays(GL_TRIANGLES, 0, mesh->numIndices);
+
+        glEndList(); //Finish rendering in memory
     }
 
     glDisableClientState(GL_VERTEX_ARRAY);          // Disable Vertex Arrays
@@ -138,8 +155,8 @@ void Object3DFile::renderizeObject() {
 *-------------------------------------------------------------------*/
 bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 {
-    float minX, minY, minZ; //Max cooridnate vertex
-    float maxX, maxY, maxZ; //Min coordinate vertex
+    float minX, minY, minZ; //Max cooridnate vertex of all model
+    float maxX, maxY, maxZ; //Min coordinate vertex of all model
     int numMeshes = pScene->mNumMeshes;
     const aiMesh* aiMesh;
     const aiVector3D* pPos;
@@ -181,20 +198,29 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
             //Copy vertex, normals, textures positions data from the importer to be able to generate a buffer
+
+            float minXmesh, minYmesh, minZmesh; //Max cooridnate vertex of the mesh
+            float maxXmesh, maxYmesh, maxZmesh; //Min coordinate vertex of the mesh
+
+            pPos      = &(aiMesh->mVertices[0]);
+            minXmesh = maxXmesh =  pPos->x;
+            minYmesh = maxYmesh =  pPos->y;
+            minZmesh = maxZmesh =  pPos->z;
+
             unsigned int k;
             for (k = 0 ; k < aiMesh->mNumVertices ; k++) {
                 pPos      = &(aiMesh->mVertices[k]);
                 pNormal   = &(aiMesh->mNormals[k]);
                 pTexCoord = aiMesh->HasTextureCoords(0) ? &(aiMesh->mTextureCoords[0][k]) : &Zero3D;
 
-                minX = min(minX, pPos->x);
-                maxX = max(maxX, pPos->x);
+                minX = min(minXmesh, pPos->x);
+                maxX = max(maxXmesh, pPos->x);
 
-                minY = min(minY, pPos->y);
-                maxY = max(maxY, pPos->y);
+                minY = min(minYmesh, pPos->y);
+                maxY = max(maxYmesh, pPos->y);
 
-                minZ = min(minZ, pPos->z);
-                maxZ = max(maxZ, pPos->z);
+                minZ = min(minZmesh, pPos->z);
+                maxZ = max(maxZmesh, pPos->z);
 
                 verticesCoord.push_back(pPos->x);
                 verticesCoord.push_back(pPos->y);
@@ -206,6 +232,18 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
                 texturesCoord.push_back(pTexCoord->y);
                 texturesCoord.push_back(pTexCoord->z);
             }
+            mesh->_p_minVertex = new Point3D(minXmesh, minYmesh, minZmesh);
+            mesh->_p_maxVertex = new Point3D(maxXmesh, maxYmesh, maxZmesh);
+            mesh->_p_center = new Point3D((minXmesh + maxXmesh) / 2 , (minYmesh + maxYmesh) / 2, (minZmesh + maxZmesh) / 2);
+
+            minX = min(minX, minXmesh);
+            maxX = max(maxX, maxXmesh);
+
+            minY = min(minY, minYmesh);
+            maxY = max(maxY, maxYmesh);
+
+            minZ = min(minZ, minZmesh);
+            maxZ = max(maxZ, maxZmesh);
 
             //Copy face data from the importer to be able to generate a buffer
             int j;
@@ -379,6 +417,50 @@ void Object3DFile::release(){
     _importer.FreeScene();
 }
 
+/*-------------------------------------------------------------------
+|  Function checkVisibility
+|
+|  Purpose: Check de visibility of every mesh of the object
+*-------------------------------------------------------------------*/
+void Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
+    Mesh *mesh;
+    for(int i = 0; i < _vMeshes.size(); i++){
+        mesh = _vMeshes[i];
+        mesh->checkVisibility(pointCamera, distance);
+    }
+}
+
+/*-------------------------------------------------------------------
+ |  Function display
+ |
+ |  Purpose: Call display list for display the object. If the object
+ |   has been updated, render must be called
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void Object3DFile::display() {
+    Mesh *mesh;
+    for(int i = 0; i < _vMeshes.size(); i++){
+        mesh = _vMeshes[i];
+        if(mesh->_isVisible){
+            if(isMovable()){
+                glPushMatrix();
+                glRotatef(getRotation()->getX(), 1, 0, 0); //Rotate object
+                glRotatef(getRotation()->getY(), 0, 1, 0); //Rotate object
+                glRotatef(getRotation()->getZ(), 0, 0, 1); //Rotate object
+                glScalef(getScale()->getX(), getScale()->getY(), getScale()->getZ()); //Scale object
+                glTranslatef(getTranslation()->getX(), getTranslation()->getY(), getTranslation()->getZ()); //Translate object to its position
+                glCallList(mesh->_gi_displayListId); //Call display list for display the object
+                glPopMatrix();
+            }else{
+                 glCallList(mesh->_gi_displayListId); //Call display list for display the object
+            }
+        }
+    }
+
+
+}
+
 /******************************* MESH *****************************************/
 
 /*-------------------------------------------------------------------
@@ -394,6 +476,25 @@ Object3DFile::Mesh::Mesh()
     faceIndexBufferBindId = INVALID_OGL_VALUE;
     numIndices  = 0;
     materialIndex = INVALID_MATERIAL;
+    _gi_displayListId = 0;
+    _isVisible = true;
+}
+
+/*-------------------------------------------------------------------
+|  Function checkVisibility
+|
+|  Purpose: Check de visibility of the mesh
+*-------------------------------------------------------------------*/
+void Object3DFile::Mesh::checkVisibility(Point3D *pointCamera, int distance){
+    Point3D *punto = new Point3D(_p_center->getX(), _p_center->getY(), _p_center->getZ() );
+    int d = punto->getDistance(pointCamera);
+    //qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
+    //qDebug() << "MIN " << _p_minVertex->getX() << " : " << _p_minVertex->getY() << " : " << _p_minVertex->getZ() << " MAX "<< _p_maxVertex->getX() << " : "<< _p_maxVertex->getY() << _p_maxVertex->getZ();
+    if(d < distance){
+        _isVisible = true;
+    }else{
+        _isVisible = false;
+    }
 }
 
 /*-------------------------------------------------------------------

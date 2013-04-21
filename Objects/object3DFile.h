@@ -36,7 +36,6 @@ private:
 
         void generateMeshBuffers(const std::vector<float>& verticesCoord, const std::vector<float>& texturesCoord, const std::vector<float>& normalsCoord,
                                  const std::vector<unsigned int>& Indices);
-
         GLuint vertexBufferBindId;      //Vertex buffer array ID bind
         GLuint texturesBufferBindId;    //Textures buffer array ID bind
         GLuint normalsBufferBindId;     //Normals buffer array ID bind
@@ -51,7 +50,7 @@ private:
     };
 
     Assimp::Importer _importer;
-    vector<Mesh> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
+    vector<Mesh*> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
 
     QString _baseDirectory; //Base directory path of the object
@@ -60,7 +59,7 @@ private:
     //Object loading methods
     bool loadFromFile(unsigned int assimpFlags);
     bool generateObjectBuffers(const aiScene* pScene);
-    bool loadMaterials(const aiScene* pScene, map<QString, GLuint> textureIdMap);
+    bool loadMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void apply_material(const aiMaterial *mtl);
 
     //Auxiliary methods
@@ -72,7 +71,7 @@ public:
     Object3DFile(QString directory, QString filename, unsigned int assimpFlags, bool isMovable);
     virtual ~Object3DFile();
 
-    void loadTextures(map<QString, GLuint> textureIdMap);
+    void loadTextures(map<QString, GLuint> *textureIdMap);
     void release();
 
 protected:

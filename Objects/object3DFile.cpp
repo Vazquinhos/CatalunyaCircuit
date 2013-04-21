@@ -90,29 +90,32 @@ bool Object3DFile::loadFromFile(unsigned int assimpFlags){
 |  Returns:
 *-------------------------------------------------------------------*/
 void Object3DFile::renderizeObject() {
+    Mesh *mesh;
+
     glEnableClientState(GL_VERTEX_ARRAY);           // Enable Vertex Arrays
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
     glEnableClientState(GL_NORMAL_ARRAY);           // Enable Normal Arrays
 
     for (unsigned int i = 0 ; i < _vMeshes.size() ; i++) {
-        glBindBuffer(GL_ARRAY_BUFFER, _vMeshes[i].vertexBufferBindId); //Bind vertex array of the mesh
+        mesh = _vMeshes[i];
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBufferBindId); //Bind vertex array of the mesh
         glVertexPointer( 3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To Vertex Data
 
-        glBindBuffer(GL_ARRAY_BUFFER, _vMeshes[i].texturesBufferBindId); //Bind texture array of the mesh
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->texturesBufferBindId); //Bind texture array of the mesh
         glTexCoordPointer(3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To TexCoord Data
 
-        glBindBuffer(GL_ARRAY_BUFFER, _vMeshes[i].normalsBufferBindId); //Bind normal array of the mesh
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->normalsBufferBindId); //Bind normal array of the mesh
         glNormalPointer(GL_FLOAT, sizeof(float)*3, 0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vMeshes[i].faceIndexBufferBindId); //Bind integer array of the mesh with face indexes info
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->faceIndexBufferBindId); //Bind integer array of the mesh with face indexes info
 
-        const unsigned int MaterialIndex = _vMeshes[i].materialIndex; //Bind texture of the mesh
+        const unsigned int MaterialIndex = mesh->materialIndex; //Bind texture of the mesh
 
         if (MaterialIndex < _vTextures.size() && _vTextures[MaterialIndex]) {
             glBindTexture(GL_TEXTURE_2D, _vTextures[MaterialIndex]->_textureBindId);
         }
 
-        glDrawElements(GL_TRIANGLES, _vMeshes[i].numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces
+        glDrawElements(GL_TRIANGLES, mesh->numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces
     }
 
     glDisableClientState(GL_VERTEX_ARRAY);          // Disable Vertex Arrays
@@ -134,39 +137,41 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
     float minX, minY, minZ; //Max cooridnate vertex
     float maxX, maxY, maxZ; //Min coordinate vertex
     int numMeshes = pScene->mNumMeshes;
-    const aiMesh* mesh;
+    const aiMesh* aiMesh;
     const aiVector3D* pPos;
     const aiVector3D* pNormal;
     const aiVector3D* pTexCoord;
+
+    Mesh *mesh;
+
     if(numMeshes > 0){
-        mesh = pScene->mMeshes[0];
-        pPos      = &(mesh->mVertices[0]);
+        aiMesh = pScene->mMeshes[0];
+        pPos      = &(aiMesh->mVertices[0]);
         minX = maxX =  pPos->x;
         minY = maxY =  pPos->y;
         minZ = maxZ =  pPos->z;
 
         _vMeshes.resize(numMeshes); //Resize meshes vector to copy all assimp imported meshes
-        _vTextures.resize(pScene->mNumMaterials); //Resize textures vector to copy all assimp imported meshes
 
         // Initialize the meshes in the scene one by one
         for (unsigned int i = 0 ; i < numMeshes ; i++) {
-            mesh = pScene->mMeshes[i];
+            aiMesh = pScene->mMeshes[i];
+            mesh = new Mesh();
             //Generate buffers for the mesh and copy data of the assimp importer
-            _vMeshes[i].materialIndex = mesh->mMaterialIndex;
+            mesh->materialIndex = aiMesh->mMaterialIndex;
 
             vector<float> verticesCoord;
             vector<float> normalsCoord;
             vector<float> texturesCoord;
-
             vector<unsigned int> indices;
 
             const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
             //Copy vertex, normals, textures positions data from the importer to be able to generate a buffer
-            for (unsigned int k = 0 ; k < mesh->mNumVertices ; k++) {
-                pPos      = &(mesh->mVertices[k]);
-                pNormal   = &(mesh->mNormals[k]);
-                pTexCoord = mesh->HasTextureCoords(0) ? &(mesh->mTextureCoords[0][k]) : &Zero3D;
+            for (unsigned int k = 0 ; k < aiMesh->mNumVertices ; k++) {
+                pPos      = &(aiMesh->mVertices[k]);
+                pNormal   = &(aiMesh->mNormals[k]);
+                pTexCoord = aiMesh->HasTextureCoords(0) ? &(aiMesh->mTextureCoords[0][k]) : &Zero3D;
 
                 minX = min(minX, pPos->x);
                 maxX = max(maxX, pPos->x);
@@ -189,15 +194,17 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             }
 
             //Copy face data from the importer to be able to generate a buffer
-            for (unsigned int j = 0 ; j < mesh->mNumFaces ; j++) {
-                const aiFace& Face = mesh->mFaces[j];
+            for (unsigned int j = 0 ; j < aiMesh->mNumFaces ; j++) {
+                const aiFace& Face = aiMesh->mFaces[j];
                 indices.push_back(Face.mIndices[0]);
                 indices.push_back(Face.mIndices[1]);
                 indices.push_back(Face.mIndices[2]);
             }
 
             //Generate and initialize the buffers with the copied data from importer
-            _vMeshes[i].generateMeshBuffers(verticesCoord, texturesCoord, normalsCoord, indices);
+            mesh->generateMeshBuffers(verticesCoord, texturesCoord, normalsCoord, indices);
+
+            _vMeshes[i] = mesh;
         }
 
         this->setMinVertex(new Point3D(minX, minY, minZ));
@@ -217,26 +224,28 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 |  Parameters:     const aiScene* pScene = The assimp object info to load its textures
 |  Returns:
 *-------------------------------------------------------------------*/
-bool Object3DFile::loadMaterials(const aiScene* pScene, map<QString, GLuint> textureIdMap)
+bool Object3DFile::loadMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap)
 {
     bool ret = true;
+    Texture *texture;
 
+    _vTextures.reserve(pScene->mNumMaterials); //Resize textures vector to copy all assimp imported meshes
 
     // Initialize the materials
     for (unsigned int i = 0 ; i < pScene->mNumMaterials ; i++) {
         const aiMaterial* pMaterial = pScene->mMaterials[i];
         GLuint id;
-        _vTextures[i] = NULL;
 
         if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
             aiString Path;
 
             if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
                 QString FullPath = _baseDirectory + Path.data;
-                _vTextures[i] = new Texture();
 
-                id = textureIdMap[FullPath];
-                _vTextures[i]->_textureBindId = id;
+                id = (*textureIdMap)[FullPath];
+                texture = new Texture();
+                texture->_textureBindId = id;
+                _vTextures.push_back(texture);
                 //apply_material(pMaterial);
                 qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath;
             }
@@ -351,7 +360,7 @@ void Object3DFile::color4_to_float4(const aiColor4D *c, float f[4])
     f[3] = c->a;
 }
 
-void Object3DFile::loadTextures(map<QString, GLuint> textureIdMap){
+void Object3DFile::loadTextures(map<QString, GLuint> *textureIdMap){
     generateObjectBuffers(_importer.GetScene());
     loadMaterials(_importer.GetScene(), textureIdMap);
 }

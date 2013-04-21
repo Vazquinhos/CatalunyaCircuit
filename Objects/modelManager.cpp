@@ -45,7 +45,7 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
 
 
     unsigned int i;
-#pragma omp parallel for private(i) firstprivate(fullFolderPath)
+#pragma omp parallel for private(i) firstprivate(fullFolderPath) shared(modelsList) default(none)
     for(i=0; i < modelsList.size(); i++){ //Load all models
         QString modelName = modelsList[i];
         qDebug() << "CARGANDO MODELO" << modelName;
@@ -59,7 +59,7 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
     //Bind all textures and render models
     for(std::map<QString,Object3DFile*>::iterator i = _models.begin(); i != _models.end(); i++){
         Object3DFile *object3D = i->second;
-        object3D->loadTextures(textureMap);
+        object3D->loadTextures(&textureMap);
         object3D->render();
         object3D->release();
         qDebug() << "RENDER " << object3D->getName();
@@ -120,7 +120,7 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
                 glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
                              ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
                              ilGetData()); //Load texture to OPEN GL memory
-
+                ilBindImage(imageId);
                 ilDeleteImage(imageId);
                 qDebug() << "CORRECTO " << textureName;
             }

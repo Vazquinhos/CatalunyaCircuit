@@ -105,24 +105,6 @@ Enviroment * ObjectManager::getEnviroment()
     return _p_enviroment;
 }
 
-void ObjectManager::renderCar(int i)
-{
-    _v_cars[i]->renderModels();
-}
-
-void ObjectManager::renderEnviroment()
-{
-    _p_enviroment->renderModels();
-}
-
-void ObjectManager::renderAll()
-{
-    _p_enviroment->renderModels();
-
-    for(unsigned int i = 0; i < _v_cars.size(); i++){
-        _v_cars[i]->renderModels();
-    }
-}
 
 /*-------------------------------------------------------------------
  |  Function displayAll
@@ -149,6 +131,6 @@ void ObjectManager::checkVisibility(Point3D *pointCamera, int distance){
     _p_enviroment->checkVisibility(pointCamera,  distance);
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
-        _v_cars[i]->checkVisibility(pointCamera,  distance);
+       _v_cars[i]->checkVisibility(pointCamera,  distance);
     }
 }

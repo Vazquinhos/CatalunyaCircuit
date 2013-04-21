@@ -1,7 +1,9 @@
 #include <QtGui/QMouseEvent>
 #include "contextgl.h"
+#include "Objects/modelManager.h"
 #include <QApplication>
 #include <QTimeLine>
+#include <QStringList>
 
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
@@ -64,6 +66,18 @@ void GLWidget::initializeGL()
 
 
     //1) Initialize variables
+
+    // *********** LOAD MODELS **************/
+    QStringList modelFilters;
+    QStringList textureFilters;
+    modelFilters << "*.3ds";
+    textureFilters <<"*.dds" << "*.tga";
+    ModelManager *modelManager = ModelManager::getModelManager();
+    modelManager->loadModels("/Media/Models/", modelFilters, textureFilters);
+    //**********************************************************
+
+
+
     _scene = new Scene();
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();

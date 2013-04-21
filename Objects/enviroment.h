@@ -27,24 +27,17 @@ class Enviroment : AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================
-    Enviroment(std::string circuitFolder);
+    Enviroment();
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
 
     // ============================ Inherited Methods ===============================
-    virtual void loadModels();
-    virtual void loadModelsTextures();
-    virtual void renderModels();
     virtual void displayModels();
-
     void checkVisibility(Point3D *pointCamera, int distance);
 
 private:
     // ========================== Data Members ============================
-    map<string, GLuint> _textureIdMapCircuit;
-    std::string _circuitFolder;
-
     Object3DFile *_terrain3D;
     Object3DFile *_sky3D;
 

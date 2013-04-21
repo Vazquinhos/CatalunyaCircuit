@@ -15,6 +15,9 @@
 #define ABSOBJECT3D_H_
 
 #include "Utils/util.h"
+#include <string>
+
+using namespace std;
 
 class AbsObject3D {
 
@@ -42,6 +45,9 @@ public:
     Point3D          * getCenter();
     void               setCenter(Point3D *center);
 
+
+    void setName(QString name);
+    QString getName();
     void setVisibility(bool visibility);
     bool getVisibility();
     void setMovable(bool isMovable);
@@ -55,6 +61,7 @@ protected:
 
 private:
     // ========================== Data Members ===========================
+    QString        _name;
     GLuint        _gi_displayListId;
     Point3D     * _p_translation;
     Point3D     * _p_rotation;

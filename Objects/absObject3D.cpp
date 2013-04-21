@@ -44,6 +44,7 @@ AbsObject3D::~AbsObject3D()
     this->_p_scale->~Point3D();
     this->_p_minVertex->~Point3D();
     this->_p_maxVertex->~Point3D();
+    this->_p_center->~Point3D();
 }
 
 // ============================ Methods ==============================
@@ -60,14 +61,35 @@ void AbsObject3D::setVisibility(bool visibility){
 }
 
 /*-------------------------------------------------------------------
- |  Function setVisibility
+ |  Function getVisibility
  |
- |  Purpose: Sets the visibility of the object
+ |  Purpose: gets the visibility of the object
  |  Returns: The boolean visibility of the object
  *-------------------------------------------------------------------*/
 bool AbsObject3D::getVisibility(){
     return _isVisible;
 }
+
+/*-------------------------------------------------------------------
+ |  Function setName
+ |
+ |  Purpose: Sets the name of the object
+ |  Parameters: string name : The name of the object
+ *-------------------------------------------------------------------*/
+void AbsObject3D::setName(QString name){
+    _name = name;
+}
+
+/*-------------------------------------------------------------------
+ |  Function getName
+ |
+ |  Purpose: gets the name of the object
+ |  Returns: The string name of the object
+ *-------------------------------------------------------------------*/
+QString AbsObject3D::getName(){
+    return _name;
+}
+
 
 /*-------------------------------------------------------------------
  |  Function getCenter

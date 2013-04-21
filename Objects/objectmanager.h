@@ -35,11 +35,8 @@ public:
     void			          rmvCar(int i);
     void			          setEnviroment(Enviroment * enviroment);
     Enviroment              * getEnviroment();
-    void                      renderCar(int i);
-    void                      renderEnviroment();
-    void                      renderAll();
-    void                      displayAll();
 
+    void                      displayAll();
     void checkVisibility(Point3D *pointCamera, int distance);
 
 private:

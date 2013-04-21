@@ -23,7 +23,7 @@ class Car : AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================
-    Car(QString folder, Point3D * position);
+    Car(Point3D * position);
     Car(const Car& car);
     ~Car();
 
@@ -38,15 +38,11 @@ public:
     Point3D         * getBBMax();
 
     // ============================ Inherited Methods ===============================
-    void loadModels();
-    void loadModelsTextures();
-    void renderModels();
     void displayModels();
     void checkVisibility(Point3D *pointCamera, int distance);
 
 private:
     // ========================== Data Members ============================
-    map<string, GLuint> _textureIdMapCar;
     Object3DFile *_chasisObj;
     Object3DFile *_wheelObj;
     Object3DFile *_wheelFrontRight;
@@ -58,8 +54,6 @@ private:
 
     Point3D         * _p_position;
     Vector3D        * _p_direction;
-    Point3D         * _p_bbMin;
-    Point3D         * _p_bbMax;
     // ============================ Methods ===============================
 
 };

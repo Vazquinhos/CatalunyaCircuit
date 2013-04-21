@@ -42,7 +42,8 @@ Object3DFile::Object3DFile() {
  |              const char* filename  = Name of the file to load
  |  Returns:
  *-------------------------------------------------------------------*/
-Object3DFile::Object3DFile(std::string directory, std::string filename, unsigned int assimpFlags, bool isMovable){
+Object3DFile::Object3DFile(QString directory, QString filename, unsigned int assimpFlags, bool isMovable){
+    setName(filename);
     setMovable(isMovable);
     _baseDirectory = directory;
     _filename = filename;
@@ -70,11 +71,9 @@ bool Object3DFile::loadFromFile(unsigned int assimpFlags){
 
     bool loadedSuccesful = false;
 
-    QString path; //Current relative project path
-    path.append(_baseDirectory.c_str()); //Append object directory
-    path.append(_filename.c_str()); //Append object filename
+    QString path = _baseDirectory + _filename; //Current relative project path
 
-    const aiScene* pScene = _importer.ReadFile(path.toAscii().data(), assimpFlags);
+    const aiScene* pScene = _importer.ReadFile(path.toStdString(), assimpFlags);
 
     if (!pScene) {
         qDebug() << "Error before loading: " << _importer.GetErrorString();
@@ -218,7 +217,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 |  Parameters:     const aiScene* pScene = The assimp object info to load its textures
 |  Returns:
 *-------------------------------------------------------------------*/
-bool Object3DFile::loadMaterials(const aiScene* pScene, map<string, GLuint> textureIdMap)
+bool Object3DFile::loadMaterials(const aiScene* pScene, map<QString, GLuint> textureIdMap)
 {
     bool ret = true;
 
@@ -233,13 +232,13 @@ bool Object3DFile::loadMaterials(const aiScene* pScene, map<string, GLuint> text
             aiString Path;
 
             if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-                std::string FullPath = string(_baseDirectory) + Path.data;
+                QString FullPath = _baseDirectory + Path.data;
                 _vTextures[i] = new Texture();
 
                 id = textureIdMap[FullPath];
                 _vTextures[i]->_textureBindId = id;
                 //apply_material(pMaterial);
-                qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath.c_str();
+                qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath;
             }
         }
 
@@ -352,9 +351,18 @@ void Object3DFile::color4_to_float4(const aiColor4D *c, float f[4])
     f[3] = c->a;
 }
 
-void Object3DFile::loadTextures(map<string, GLuint> textureIdMap){
+void Object3DFile::loadTextures(map<QString, GLuint> textureIdMap){
     generateObjectBuffers(_importer.GetScene());
     loadMaterials(_importer.GetScene(), textureIdMap);
+}
+
+/*-------------------------------------------------------------------
+|  Function release
+|
+|  Purpose: Clean memory allocated by assim importer
+*-------------------------------------------------------------------*/
+void Object3DFile::release(){
+    _importer.FreeScene();
 }
 
 /******************************* MESH *****************************************/

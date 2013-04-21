@@ -54,13 +54,13 @@ private:
     vector<Mesh> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
 
-    std::string _baseDirectory; //Base directory path of the object
-    std::string _filename; //Filename
+    QString _baseDirectory; //Base directory path of the object
+    QString _filename; //Filename
 
     //Object loading methods
     bool loadFromFile(unsigned int assimpFlags);
     bool generateObjectBuffers(const aiScene* pScene);
-    bool loadMaterials(const aiScene* pScene, map<string, GLuint> textureIdMap);
+    bool loadMaterials(const aiScene* pScene, map<QString, GLuint> textureIdMap);
     void apply_material(const aiMaterial *mtl);
 
     //Auxiliary methods
@@ -69,10 +69,11 @@ private:
 
 public:
     Object3DFile();
-    Object3DFile( std::string directory, std::string filename, unsigned int assimpFlags, bool isMovable);
+    Object3DFile(QString directory, QString filename, unsigned int assimpFlags, bool isMovable);
     virtual ~Object3DFile();
 
-    void loadTextures(map<string, GLuint> textureIdMap);
+    void loadTextures(map<QString, GLuint> textureIdMap);
+    void release();
 
 protected:
     virtual void renderizeObject(); //Inherited method

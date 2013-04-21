@@ -22,44 +22,13 @@
  *-------------------------------------------------------------------*/
 Scene::Scene()
 {
+    Enviroment *enviroment = new Enviroment();
 
-    ilInit(); /* Initialization of DevIL texture loader */
-
-    QTime myTimer;
-    myTimer.start();
-
-    Enviroment *enviroment = new Enviroment("/Media/Models/Circuit/");
-
-
-    Car *c1 = new Car("/Media/Models/Cars/Ferrari/", new Point3D(2.5f,-130.5f,-2));
-
-
-
-    enviroment->loadModels();
-    c1->loadModels();
-
-
-
-    int loadModel = myTimer.elapsed();
-
-    enviroment->loadModelsTextures();
-    c1->loadModelsTextures();
-
-    int loadTextures = myTimer.elapsed() - loadModel ;
-
-    enviroment->renderModels();
-    c1->renderModels();
-
-    int render = myTimer.elapsed() - loadModel - loadTextures;
+    Car *c1 = new Car(new Point3D(2.5f,-130.5f,-2));
 
     _objectManager = ObjectManager::getObjectManager();
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
-    _objectManager->addCar(c1); //Add ferrari
-
-    qDebug() << "Ha tardado en cargar modelos: " << loadModel;
-    qDebug() << "Ha tardado en cargar texturas: " << loadTextures;
-    qDebug() << "Ha tardado en renderizados: " << render;
-    qDebug() << "Ha tardado en cargar total: " << myTimer.elapsed();
+    _objectManager->addCar(c1);
 }
 
 /*-------------------------------------------------------------------

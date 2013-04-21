@@ -16,13 +16,9 @@ class AbsModels
 public:
     AbsModels();
 
-    virtual void loadModels(){}
-    virtual void loadModelsTextures(){}
-    virtual void renderModels(){}
     virtual void displayModels(){}
     virtual void checkVisibility(Point3D *pointCamera, int distance){(void)pointCamera; (void)distance;}
-
-    map<string, GLuint> loadTextures(QString folderName, QString filter);
 };
 
 #endif // ABSMODELS_H
+

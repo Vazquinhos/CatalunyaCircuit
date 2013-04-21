@@ -154,12 +154,12 @@ Point3D * Car::getBBMax()
  |  Purpose: Loads all models without textures
  *-------------------------------------------------------------------*/
 void Car::loadModels(){
+    _textureIdMapCar = this->loadTextures(_folder.c_str(), "*.tga");
 
 #pragma omp parallel sections
     {
 #pragma omp section
         {
-             _textureIdMapCar = this->loadTextures(_folder.c_str(), "*.tga");
             _chasisObj = new Object3DFile(_folder, "chasis.3ds", aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, true); //Load ferrari representation
             _chasisObj->setTranslation(_p_position);
             _chasisObj->setRotation(new Point3D(0,0,90));

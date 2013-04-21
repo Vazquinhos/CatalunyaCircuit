@@ -57,13 +57,13 @@ Enviroment::~Enviroment()
  |  Purpose: Loads all models without textures
  *-------------------------------------------------------------------*/
 void Enviroment::loadModels(){
+     _textureIdMapCircuit = this->loadTextures(_circuitFolder.c_str(), "*.dds");
 
 #pragma omp parallel sections
     {
 
 #pragma omp section
         {
-            _textureIdMapCircuit = this->loadTextures(_circuitFolder.c_str(), "*.dds");
             _terrain3D = new Object3DFile(_circuitFolder, "terrain.3ds", aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false); //Load enviroment representation
         }
 

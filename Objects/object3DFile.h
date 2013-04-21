@@ -57,7 +57,7 @@ private:
     QString _filename; //Filename
 
     //Object loading methods
-    bool loadFromFile(unsigned int assimpFlags);
+    bool loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
     bool generateObjectBuffers(const aiScene* pScene);
     bool loadMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void apply_material(const aiMaterial *mtl);
@@ -68,10 +68,9 @@ private:
 
 public:
     Object3DFile();
-    Object3DFile(QString directory, QString filename, unsigned int assimpFlags, bool isMovable);
+    Object3DFile(QString directory, QString filename, map<QString, GLuint> *textureIdMap, unsigned int assimpFlags, bool isMovable);
     virtual ~Object3DFile();
 
-    void loadTextures(map<QString, GLuint> *textureIdMap);
     void release();
 
 protected:

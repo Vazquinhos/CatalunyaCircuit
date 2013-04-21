@@ -28,38 +28,37 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
     QStringList modelsList; //List of model filenames
     map<QString, GLuint> textureMap; //Texture map (TextureName -> TextureBindId)
     int loadTexturesTime;
+    int loadModelsTime;
 
     ilInit(); /* Initialization of DevIL texture loader */
 
     QTime myTimer;
     myTimer.start();
 
+
     //*********************** TEXTURE PRELOADING **************************
     textureMap = loadTextures(fullFolderPath, textureFilters); //Preload all textures of all models
-
     loadTexturesTime = myTimer.elapsed();
+
 
     //*********************** MODEL LOADING **************************
     modelsList = modelsDir.entryList(modelFilters, QDir::Files); //List all models of the directory
 
 
-
     unsigned int i;
-#pragma omp parallel for private(i) firstprivate(fullFolderPath) shared(modelsList) default(none)
+#pragma omp parallel for private(i) firstprivate(fullFolderPath) shared(modelsList, textureMap) default(none)
     for(i=0; i < modelsList.size(); i++){ //Load all models
         QString modelName = modelsList[i];
         qDebug() << "CARGANDO MODELO" << modelName;
-        Object3DFile *object3D = new Object3DFile(fullFolderPath, modelName, aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false);
-
+        Object3DFile *object3D = new Object3DFile(fullFolderPath, modelName, &textureMap, aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph, false);
         _models[modelName] = object3D;
     }
+    loadModelsTime = myTimer.elapsed() - loadTexturesTime;
 
-    int loadModelsTime = myTimer.elapsed() - loadTexturesTime;
 
     //Bind all textures and render models
     for(std::map<QString,Object3DFile*>::iterator i = _models.begin(); i != _models.end(); i++){
         Object3DFile *object3D = i->second;
-        object3D->loadTextures(&textureMap);
         object3D->render();
         object3D->release();
         qDebug() << "RENDER " << object3D->getName();

@@ -31,11 +31,7 @@ QFrame {
       <string notr="true">QFrame {
      background-color: #333333;
 	 color:white;
- }
-
-QLabel{
-	color:white;
-}</string>
+ }</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -71,6 +67,35 @@ QLabel{
                 <width>16777215</width>
                 <height>200</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QListView {
+     show-decoration-selected: 1; /* make the selection span the entire width of the view */
+ }
+
+ QListView::item:alternate {
+     background: #FFFFFF;
+ }
+
+ QListView::item:selected {
+     border: 1px solid #6a6ea9;
+ }
+
+ QListView::item:selected:!active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #ABAFE5, stop: 1 #8588B2);
+ }
+
+ QListView::item:selected:active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #6a6ea9, stop: 1 #888dd9);
+ }
+
+ QListView::item:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #FAFBFE, stop: 1 #DCDEF1);
+	 color:black;
+ }</string>
               </property>
              </widget>
             </item>
@@ -193,10 +218,18 @@ QPushButton:pressed {
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="sb_pitch"/>
+           <widget class="QDoubleSpinBox" name="sb_pitch">
+            <property name="maximum">
+             <double>1000.000000000000000</double>
+            </property>
+           </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QDoubleSpinBox" name="cb_zoom"/>
+           <widget class="QDoubleSpinBox" name="cb_zoom">
+            <property name="maximum">
+             <double>1000.000000000000000</double>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="line_name"/>
@@ -237,7 +270,11 @@ QPushButton:pressed {
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="sb_yaw"/>
+           <widget class="QDoubleSpinBox" name="sb_yaw">
+            <property name="maximum">
+             <double>1000.000000000000000</double>
+            </property>
+           </widget>
           </item>
           <item row="6" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -249,7 +286,11 @@ QPushButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="x"/>
+             <widget class="QDoubleSpinBox" name="x">
+              <property name="maximum">
+               <double>1000.000000000000000</double>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_4">
@@ -259,7 +300,11 @@ QPushButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="y"/>
+             <widget class="QDoubleSpinBox" name="y">
+              <property name="maximum">
+               <double>1000.000000000000000</double>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_5">
@@ -269,7 +314,11 @@ QPushButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="z"/>
+             <widget class="QDoubleSpinBox" name="z">
+              <property name="maximum">
+               <double>1000.000000000000000</double>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

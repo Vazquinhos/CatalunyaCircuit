@@ -331,3 +331,16 @@ CameraAbs* CameraWindowQt::getCameraFromQt( void )
 
     return p_camera_to_rtn;
 }
+
+void CameraWindowQt::on_cb_zoom_editingFinished()
+{
+    QListWidgetItem* p_item = ui->listWidget->currentItem();
+
+    if( !p_item )
+        return;
+
+    QString current_camera = p_item->text();
+
+    // Le pedimos al camera manager que nos elimine la camara seleccionada
+    CameraManager::getCameraManager()->getCamera(current_camera)->setZoom(ui->cb_zoom->value());
+}

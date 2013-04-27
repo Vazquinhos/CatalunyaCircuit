@@ -44,6 +44,8 @@ private slots:
 
     void on_cb_type_currentIndexChanged(int index);
 
+    void on_cb_zoom_editingFinished();
+
 private:
     // ========================== Data Members ============================
     Ui::CameraWindowQt *ui;

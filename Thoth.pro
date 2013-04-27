@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     Loaders/settingsimporter.cpp \
     Commands/camerascmd.cpp \
     Objects/modelManager.cpp \
-    Ui/newcameraqt.cpp
+    Ui/newcameraqt.cpp \
+    Operators/trajectories.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -85,7 +86,9 @@ HEADERS  += \
     Loaders/settingsimporter.h \
     Commands/camerascmd.h \
     Objects/modelManager.h \
-    Ui/newcameraqt.h
+    Ui/newcameraqt.h \
+    Utils/StdAfx.h \
+    Operators/trajectories.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

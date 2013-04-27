@@ -44,6 +44,9 @@
 #include "point3D.h"
 #include "vector3D.h"
 
+// Other classes
+#include "StdAfx.h"
+
 // ============================= Typedef ==================================
 typedef enum e_ProjectionType {
     ORTOGONAL,
@@ -55,6 +58,10 @@ typedef enum e_CameraType {
     FIXED,
     SPHERICAL
 }camera_type;
+
+#ifndef PI
+#define PI 3.141592653589
+#endif
 
 typedef std::vector<float> sfvector;
 

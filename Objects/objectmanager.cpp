@@ -114,11 +114,17 @@ Enviroment * ObjectManager::getEnviroment()
  |  Returns:
  *-------------------------------------------------------------------*/
 void ObjectManager::displayAll(){
+
+    //glCallLists(_displayLists.size(), GL_UNSIGNED_INT, &_displayLists[0]);
+
+
     _p_enviroment->displayModels();
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
         _v_cars[i]->displayModels();
     }
+
+
 }
 
 /*-------------------------------------------------------------------
@@ -128,9 +134,15 @@ void ObjectManager::displayAll(){
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void ObjectManager::checkVisibility(Point3D *pointCamera, int distance){
-    _p_enviroment->checkVisibility(pointCamera,  distance);
+    vector<GLuint> displayLists;
+    vector<GLuint> enviromentLists = _p_enviroment->checkVisibility(pointCamera,  distance);
+
+    displayLists.insert(displayLists.end(), enviromentLists.begin(), enviromentLists.end());
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
-       _v_cars[i]->checkVisibility(pointCamera,  distance);
+        vector<GLuint> carLists =  _v_cars[i]->checkVisibility(pointCamera,  distance);
+        displayLists.insert(displayLists.end(), carLists.begin(), carLists.end());
     }
+
+    this->_displayLists = displayLists;
 }

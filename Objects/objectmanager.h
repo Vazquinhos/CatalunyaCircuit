@@ -44,6 +44,7 @@ private:
     static ObjectManager       * _p_objectManager;
     std::vector<Car*>            _v_cars;
     Enviroment                 * _p_enviroment;
+    vector<GLuint>             _displayLists;
     // ============================ Methods ===============================
 };
 

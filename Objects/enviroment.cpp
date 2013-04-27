@@ -74,6 +74,7 @@ Enviroment::~Enviroment()
  |  Purpose: Displays all models
  *-------------------------------------------------------------------*/
 void Enviroment::displayModels(){
+
     _sky->display();
     _terrain->display();
     _advertisement->display();
@@ -98,21 +99,42 @@ void Enviroment::displayModels(){
  |  Purpose: Modify visibility of the objects taking in consideration distance to the camera
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
-void Enviroment::checkVisibility(Point3D *pointCamera, int distance){
-    _terrain->checkVisibility(pointCamera, distance);
-    _advertisement->checkVisibility(pointCamera, distance);
-    _flags->checkVisibility(pointCamera, distance);
-    _objects->checkVisibility(pointCamera, distance);
-    _fences->checkVisibility(pointCamera, distance);
-    _pneumatic_fences->checkVisibility(pointCamera, distance);
-    _walls->checkVisibility(pointCamera, distance);
-    _forest->checkVisibility(pointCamera, distance);
-    _buildings1->checkVisibility(pointCamera, distance);
-    _buildings2->checkVisibility(pointCamera, distance);
-    _buildings3->checkVisibility(pointCamera, distance);
-    _buildings4->checkVisibility(pointCamera, distance);
-    _buildings5->checkVisibility(pointCamera, distance);
-    _buildings6->checkVisibility(pointCamera, distance);
+vector<GLuint> Enviroment::checkVisibility(Point3D *pointCamera, int distance){
+    vector<GLuint> displayLists;
+
+    vector<GLuint> displayListsSky = _sky->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsTerrain = _terrain->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsAdvertisement = _advertisement->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsFlags = _flags->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsObjects = _objects->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsFences = _fences->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsPneumatics = _pneumatic_fences->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsWalls = _walls->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsForest = _forest->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsBuildings1 =  _buildings1->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsBuildings2 = _buildings2->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsBuildings3 =  _buildings3->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsBuildings4 = _buildings4->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsBuildings5 = _buildings5->checkVisibility(pointCamera, distance);
+    vector<GLuint> displayListsBuildings6 = _buildings6->checkVisibility(pointCamera, distance);
+
+    displayLists.insert( displayLists.end(), displayListsSky.begin(), displayListsSky.end() );
+    displayLists.insert( displayLists.end(), displayListsTerrain.begin(), displayListsTerrain.end() );
+    displayLists.insert( displayLists.end(), displayListsAdvertisement.begin(), displayListsAdvertisement.end() );
+    displayLists.insert( displayLists.end(), displayListsFlags.begin(), displayListsFlags.end() );
+    displayLists.insert( displayLists.end(), displayListsObjects.begin(), displayListsObjects.end() );
+    displayLists.insert( displayLists.end(), displayListsFences.begin(), displayListsFences.end() );
+    displayLists.insert( displayLists.end(), displayListsPneumatics.begin(), displayListsPneumatics.end() );
+    displayLists.insert( displayLists.end(), displayListsWalls.begin(), displayListsWalls.end() );
+    displayLists.insert( displayLists.end(), displayListsForest.begin(), displayListsForest.end() );
+    displayLists.insert( displayLists.end(), displayListsBuildings1.begin(), displayListsBuildings1.end() );
+    displayLists.insert( displayLists.end(), displayListsBuildings2.begin(), displayListsBuildings2.end() );
+    displayLists.insert( displayLists.end(), displayListsBuildings3.begin(), displayListsBuildings3.end() );
+    displayLists.insert( displayLists.end(), displayListsBuildings4.begin(), displayListsBuildings4.end() );
+    displayLists.insert( displayLists.end(), displayListsBuildings5.begin(), displayListsBuildings5.end() );
+    displayLists.insert( displayLists.end(), displayListsBuildings6.begin(), displayListsBuildings6.end() );
+
+    return displayLists;
 }
 
 

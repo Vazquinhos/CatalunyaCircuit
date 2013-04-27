@@ -29,12 +29,24 @@ private:
     #define INVALID_OGL_VALUE 0xFFFFFFFF //Default invalid initial values
     #define INVALID_MATERIAL 0xFFFFFFFF
 
+
+    struct Instance{
+        GLuint _displayListId; //Texture id bind
+    };
+
+
+    struct Texture{
+        GLenum _textureTarget; //Texture tarjet ex: TEXTURE_2D
+        GLuint _textureBindId; //Texture id bind
+    };
+
+
     struct Mesh {
         Mesh();
         ~Mesh();
 
-        void generateMeshBuffers(const std::vector<float>& verticesCoord, const std::vector<float>& texturesCoord, const std::vector<float>& normalsCoord,
-                                 const std::vector<unsigned int>& Indices);
+        void render(const std::vector<float>& verticesCoord, const std::vector<float>& texturesCoord, const std::vector<float>& normalsCoord,
+                                 const std::vector<unsigned int>& Indices, const vector<Texture*> &_vTextures);
         GLuint vertexBufferBindId;      //Vertex buffer array ID bind
         GLuint texturesBufferBindId;    //Textures buffer array ID bind
         GLuint normalsBufferBindId;     //Normals buffer array ID bind
@@ -47,17 +59,14 @@ private:
         Point3D     * _p_center; //Center of the mesh
         GLuint        _gi_displayListId; //Display list of the mesh
         bool _isVisible; //Visibility of the mesh
-        void checkVisibility(Point3D *pointCamera, int distance);
+        //void checkVisibility(Point3D *pointCamera, int distance);
     };
 
-    struct Texture{
-        GLenum _textureTarget; //Texture tarjet ex: TEXTURE_2D
-        GLuint _textureBindId; //Texture id bind
-    };
 
     Assimp::Importer _importer;
     vector<Mesh*> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
+    vector<Instance*> _vInstances;
 
     QString _baseDirectory; //Base directory path of the object
     QString _filename; //Filename
@@ -72,13 +81,15 @@ private:
     void set_float4(float f[4], float a, float b, float c, float d);
     void color4_to_float4(const aiColor4D *c, float f[4]);
 
+    void renderInstances(const aiScene* scene, const aiNode* node, aiMatrix4x4 transformation);
+
 public:
     Object3DFile();
     Object3DFile(QString directory, QString filename, map<QString, GLuint> *textureIdMap, unsigned int assimpFlags, bool isMovable);
     virtual ~Object3DFile();
 
     void release();
-    void checkVisibility(Point3D *pointCamera, int distance);
+    vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
     void display();
     void render(); //Inherited method
 };

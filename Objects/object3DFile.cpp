@@ -92,56 +92,10 @@ bool Object3DFile::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int
 |  Returns:
 *-------------------------------------------------------------------*/
 void Object3DFile::render() {
-    Mesh *mesh;
-
-    generateObjectBuffers(_importer.GetScene());
-
-    glEnableClientState(GL_VERTEX_ARRAY);           // Enable Vertex Arrays
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
-    glEnableClientState(GL_NORMAL_ARRAY);           // Enable Normal Arrays
-
-    qDebug() << "RENDERIZANDO TANTAS MESHES " << _vMeshes.size();
-
-    for (unsigned int i = 0 ; i < _vMeshes.size() ; i++) {
-        mesh = _vMeshes[i];
-
-
-        if (glIsList(mesh->_gi_displayListId)) { //If we already have a display list, we delete it
-            glDeleteLists(mesh->_gi_displayListId, 1);
-        }
-        mesh->_gi_displayListId = glGenLists(1); //Generate new display list identifier
-        glNewList(mesh->_gi_displayListId, GL_COMPILE); //Starting rendering in memory
-
-
-
-
-
-
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBufferBindId); //Bind vertex array of the mesh
-        glVertexPointer( 3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To Vertex Data
-
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->texturesBufferBindId); //Bind texture array of the mesh
-        glTexCoordPointer(3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To TexCoord Data
-
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->normalsBufferBindId); //Bind normal array of the mesh
-        glNormalPointer(GL_FLOAT, sizeof(float)*3, 0);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->faceIndexBufferBindId); //Bind integer array of the mesh with face indexes info
-
-        const unsigned int MaterialIndex = mesh->materialIndex; //Bind texture of the mesh
-
-        if (MaterialIndex < _vTextures.size() && _vTextures[MaterialIndex]) {
-            glBindTexture(GL_TEXTURE_2D, _vTextures[MaterialIndex]->_textureBindId);
-        }
-        //glDrawElements(GL_TRIANGLES, mesh->numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces (IS SLOWER THAN glDrawArrays!!)
-        glDrawArrays(GL_TRIANGLES, 0, mesh->numIndices);
-
-        glEndList(); //Finish rendering in memory
-    }
-
-    glDisableClientState(GL_VERTEX_ARRAY);          // Disable Vertex Arrays
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);	// Disable Texture Coord Arrays
-    glDisableClientState(GL_NORMAL_ARRAY);          // Disable Normal Arrays
+    const aiScene *scene = _importer.GetScene();
+    const aiNode *node = scene->mRootNode;
+    generateObjectBuffers(scene);
+    renderInstances(scene, node, node->mTransformation);
 }
 
 /******************************* PRIVATE *****************************************/
@@ -255,7 +209,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             }
 
             //Generate and initialize the buffers with the copied data from importer
-            mesh->generateMeshBuffers(verticesCoord, texturesCoord, normalsCoord, indices);
+            mesh->render(verticesCoord, texturesCoord, normalsCoord, indices, _vTextures);
 
             _vMeshes.push_back(mesh);
         }
@@ -421,13 +375,16 @@ void Object3DFile::release(){
 |
 |  Purpose: Check de visibility of every mesh of the object
 *-------------------------------------------------------------------*/
-void Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
-    Mesh *mesh;
+vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
+    vector<GLuint> displayLists;
+    Instance *instance;
 
-    for(int i = 0; i < _vMeshes.size(); i++){
-        mesh = _vMeshes[i];
-        mesh->checkVisibility(pointCamera, distance);
+    for(int i = 0; i < _vInstances.size(); i++){
+        instance = _vInstances[i];
+        displayLists.push_back(instance->_displayListId);
     }
+
+    return displayLists;
 }
 
 /*-------------------------------------------------------------------
@@ -439,26 +396,13 @@ void Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
  |  Returns:
  *-------------------------------------------------------------------*/
 void Object3DFile::display() {
-    Mesh *mesh;
-    for(int i = 0; i < _vMeshes.size(); i++){
-        mesh = _vMeshes[i];
-        if(mesh->_isVisible){
-            if(isMovable()){
-                glPushMatrix();
-                glRotatef(getRotation()->getX(), 1, 0, 0); //Rotate object
-                glRotatef(getRotation()->getY(), 0, 1, 0); //Rotate object
-                glRotatef(getRotation()->getZ(), 0, 0, 1); //Rotate object
-                glScalef(getScale()->getX(), getScale()->getY(), getScale()->getZ()); //Scale object
-                glTranslatef(getTranslation()->getX(), getTranslation()->getY(), getTranslation()->getZ()); //Translate object to its position
-                glCallList(mesh->_gi_displayListId); //Call display list for display the object
-                glPopMatrix();
-            }else{
-                glCallList(mesh->_gi_displayListId); //Call display list for display the object
-            }
-        }
+    Instance *instance;
+    for(int i = 0; i < _vInstances.size(); i++){
+        instance = _vInstances[i];
+        glPushMatrix();
+        glCallList(instance->_displayListId); //Call display list for display the object
+        glPopMatrix();
     }
-
-
 }
 
 /******************************* MESH *****************************************/
@@ -480,11 +424,13 @@ Object3DFile::Mesh::Mesh()
     _isVisible = true;
 }
 
+
 /*-------------------------------------------------------------------
 |  Function checkVisibility
 |
 |  Purpose: Check de visibility of the mesh
 *-------------------------------------------------------------------*/
+/*
 void Object3DFile::Mesh::checkVisibility(Point3D *pointCamera, int distance){
     Point3D *punto = new Point3D(_p_center->getX(), _p_center->getY(), _p_center->getZ() );
     int d = punto->getDistance(pointCamera);
@@ -496,6 +442,7 @@ void Object3DFile::Mesh::checkVisibility(Point3D *pointCamera, int distance){
         _isVisible = false;
     }
 }
+*/
 
 /*-------------------------------------------------------------------
 |  Function ~Mesh
@@ -527,9 +474,10 @@ Object3DFile::Mesh::~Mesh()
 |               const vector<unsigned int> &indices = Vector with all face indexes info to generate its buffer array buffer id
 |  Returns:
 *-------------------------------------------------------------------*/
-void Object3DFile::Mesh::generateMeshBuffers(const vector<float> &verticesCoord,
-                                             const vector<float> &texturesCoord, const vector<float> &normalsCoord, const vector<unsigned int> &indices)
+void Object3DFile::Mesh::render(const vector<float> &verticesCoord,
+                                const vector<float> &texturesCoord, const vector<float> &normalsCoord, const vector<unsigned int> &indices, const vector<Texture *> &_vTextures)
 {
+
     numIndices = indices.size();
 
     glGenBuffers(1, &vertexBufferBindId); //Generate buffer id for vertex
@@ -548,6 +496,110 @@ void Object3DFile::Mesh::generateMeshBuffers(const vector<float> &verticesCoord,
     glGenBuffers(1, &faceIndexBufferBindId); //Generate buffer for face indexes
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceIndexBufferBindId); //Bind index buffer
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numIndices, &indices[0], GL_STATIC_DRAW); //Put mesh face indexes
+
+
+
+
+
+
+
+
+    glEnableClientState(GL_VERTEX_ARRAY);           // Enable Vertex Arrays
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
+    glEnableClientState(GL_NORMAL_ARRAY);           // Enable Normal Arrays
+
+
+    if (glIsList(_gi_displayListId)) { //If we already have a display list, we delete it
+        glDeleteLists(_gi_displayListId, 1);
+    }
+    _gi_displayListId = glGenLists(1); //Generate new display list identifier
+    glNewList(_gi_displayListId, GL_COMPILE); //Starting rendering in memory
+
+
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferBindId); //Bind vertex array of the mesh
+    glVertexPointer( 3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To Vertex Data
+
+    glBindBuffer(GL_ARRAY_BUFFER, texturesBufferBindId); //Bind texture array of the mesh
+    glTexCoordPointer(3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To TexCoord Data
+
+    glBindBuffer(GL_ARRAY_BUFFER, normalsBufferBindId); //Bind normal array of the mesh
+    glNormalPointer(GL_FLOAT, sizeof(float)*3, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceIndexBufferBindId); //Bind integer array of the mesh with face indexes info
+
+    const unsigned int MaterialIndex = materialIndex; //Bind texture of the mesh
+
+    if (MaterialIndex < _vTextures.size() && _vTextures[materialIndex]) {
+        glBindTexture(GL_TEXTURE_2D, _vTextures[MaterialIndex]->_textureBindId);
+    }
+    //glDrawElements(GL_TRIANGLES, mesh->numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces (IS SLOWER THAN glDrawArrays!!)
+    glDrawArrays(GL_TRIANGLES, 0, numIndices);
+
+    glEndList(); //Finish rendering in memory
+
+    glDisableClientState(GL_VERTEX_ARRAY);          // Disable Vertex Arrays
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);	// Disable Texture Coord Arrays
+    glDisableClientState(GL_NORMAL_ARRAY);          // Disable Normal Arrays
+}
+
+
+
+void Object3DFile::renderInstances(const aiScene* scene, const aiNode* node, aiMatrix4x4 transformation){
+
+    Mesh *mesh;
+
+
+    aiMatrix4x4 transform;
+
+
+    transformation.Transpose();
+
+    glPushMatrix();
+
+
+
+
+    if(node->mNumMeshes > 0){
+        Instance *instance = new Instance();
+        instance->_displayListId = glGenLists(1); //Generate new display list identifier
+        glNewList(instance->_displayListId, GL_COMPILE); //Starting rendering in memory
+
+
+        glMultMatrixf((float*)&transformation);
+
+        for(int i = 0; i < node->mNumMeshes ; i++){
+            mesh = _vMeshes[node->mMeshes[i]];
+            glCallList(mesh->_gi_displayListId);
+        }
+
+         glEndList(); //Finish rendering in memory
+          _vInstances.push_back(instance);
+
+    }else{
+        transform = node->mTransformation * transformation;
+    }
+
+
+
+
+
+
+
+    for (int i = 0; i < node->mNumChildren; ++i)
+    {
+        qDebug() << "INSTANCIA" << node->mChildren[i]->mName.C_Str();
+        renderInstances(scene, node->mChildren[i], transform);
+    }
+
+
+
+
+
+     glPopMatrix();
+
+
+
 }
 
 #endif /* OBJECT3DASSIMP_H_ */

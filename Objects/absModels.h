@@ -17,7 +17,7 @@ public:
     AbsModels();
 
     virtual void displayModels(){}
-    virtual void checkVisibility(Point3D *pointCamera, int distance){(void)pointCamera; (void)distance;}
+    virtual vector<GLuint> checkVisibility(Point3D *pointCamera, int distance){(void)pointCamera; (void)distance;}
 };
 
 #endif // ABSMODELS_H

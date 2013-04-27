@@ -11,9 +11,10 @@
 #define TRAJECT_H
 
 #include "Utils/util.h"
+#include <vector>
 
-Point3D spline(float t, Point3D * ctr);
-Vector3D Dspline(float t, Point3D * ctr);
+Point3D spline(float t, std::vector<Point3D> ctr);
+Vector3D Dspline(float t, std::vector<Point3D> ctr);
 
 // ComputeAngleZ:	Càlcul de l'angle de rotació Z entre els vectors
 //					eix i tangent projectats sobre el pla X-Y,

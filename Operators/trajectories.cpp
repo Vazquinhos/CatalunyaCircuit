@@ -11,12 +11,12 @@
 // spline: Calcul del punt (x,y,z) de l'spline (tangent) en coordenades 3D (CPunt3D)
 // Paràmetres:	t: Paràmetre de la corba (t=[0,1])
 //				ctr: Punts de control de la corba
-Point3D spline(float t, Point3D * ctr)
+Point3D spline(float t, std::vector<Point3D> ctr)
 {
 	float coef[4];
 	int i,j;
   
-//Polinomis que multipliquen els punts de control del patch
+    //Polinomis que multipliquen els punts de control del patch
 	for(i=0;i<4;i++)
 	{
 		coef[i]=0;
@@ -39,7 +39,7 @@ Point3D spline(float t, Point3D * ctr)
 // Dspline: Calcul de la derivada de l'spline (tangent) en coordenades 3D (CPunt3D)
 // Paràmetres:	t: Paràmetre de la corba (t=[0,1])
 //				ctr: Punts de control de la corba
-Vector3D Dspline(float t, Point3D * ctr)
+Vector3D Dspline(float t, std::vector<Point3D> ctr)
 {
 
 	float coef[4];

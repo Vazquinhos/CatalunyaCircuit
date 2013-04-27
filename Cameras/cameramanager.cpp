@@ -57,15 +57,28 @@ CameraAbs * CameraManager::getCamera(QString camera_name)
 }
 
 /*-------------------------------------------------------------------
- |  setCamera(std::string name, CameraAbs * camera)
+ |  addCamera(QString a_name, CameraAbs * a_camera)
  |
- |  Purpose:Sets a new camera
+ |  Purpose:Adds a new camera
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-void CameraManager::setCamera(QString a_name, CameraAbs * a_camera)
+void CameraManager::addCamera(QString a_name, CameraAbs * a_camera)
 {
     _cameras[a_name] = a_camera;
+}
+
+/*-------------------------------------------------------------------
+ |  deleteCamera( QString a_name )
+ |
+ |  Purpose:Deletes the camera
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void CameraManager::deleteCamera( QString a_name )
+{
+     if(!(_cameras.find(a_name) == _cameras.end()))
+        _cameras.erase(a_name);
 }
 /*-------------------------------------------------------------------
  |  setCameraOnCar(Point3D position)

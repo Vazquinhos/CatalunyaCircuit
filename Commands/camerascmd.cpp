@@ -24,12 +24,7 @@ CamerasCmd::~CamerasCmd(){}
 
 void
 CamerasCmd::updateCamerasSettings( void )
-{
-    int i = 0;
-
-    // TODO:
-
-    // Pedirle a la ventana  las camaras modificadas y decirle al cameramanager que ha sido modificado
+{    
 }
 
 void

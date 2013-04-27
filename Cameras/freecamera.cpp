@@ -20,8 +20,14 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-FreeCamera::FreeCamera() : CameraAbs(){}
-FreeCamera::FreeCamera( QString a_name ): CameraAbs( a_name ){}
+FreeCamera::FreeCamera() : CameraAbs()
+{
+    _type = FREE;
+}
+FreeCamera::FreeCamera( QString a_name ): CameraAbs( a_name )
+{
+    _type = FREE;
+}
 
 /*-------------------------------------------------------------------
  |  Copy Constructor

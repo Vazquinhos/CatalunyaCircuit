@@ -279,3 +279,13 @@ float CameraAbs::getZoom()
 {
     return _zoom;
 }
+
+void CameraAbs::setYaw( float yaw )
+{
+    _yaw = yaw;
+}
+
+void CameraAbs::setPitch( float pitch )
+{
+    _pitch = pitch;
+}

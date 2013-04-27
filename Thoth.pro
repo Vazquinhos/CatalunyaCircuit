@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     Objects/absModels.cpp \
     Loaders/settingsimporter.cpp \
     Commands/camerascmd.cpp \
-    Objects/modelManager.cpp
+    Objects/modelManager.cpp \
+    Ui/newcameraqt.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -83,7 +84,8 @@ HEADERS  += \
     Objects/absModels.h \
     Loaders/settingsimporter.h \
     Commands/camerascmd.h \
-    Objects/modelManager.h
+    Objects/modelManager.h \
+    Ui/newcameraqt.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \
@@ -92,7 +94,8 @@ FORMS    += \
     Ui/errorwindow.ui \
     Ui/mainwindow.ui \
     Ui/camerawindowqt.ui \
-    Ui/carswindowqt.ui
+    Ui/carswindowqt.ui \
+    Ui/newcameraqt.ui
 
 OTHER_FILES += \
     simple.vert \

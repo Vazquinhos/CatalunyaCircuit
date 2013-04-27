@@ -18,8 +18,14 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-SphericalCamera::SphericalCamera() : CameraAbs(){}
-SphericalCamera::SphericalCamera( QString a_name ): CameraAbs( a_name ){}
+SphericalCamera::SphericalCamera() : CameraAbs()
+{
+    _type = SPHERICAL;
+}
+SphericalCamera::SphericalCamera( QString a_name ): CameraAbs( a_name )
+{
+    _type = SPHERICAL;
+}
 
 /*-------------------------------------------------------------------
  |  Copy Constructor

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun Apr 21 20:02:17 2013
+** Created: Sat Apr 27 22:07:41 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -46,6 +46,14 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(800, 600);
+        MainWindow->setStyleSheet(QString::fromUtf8(" QToolBar {\n"
+"     background: white;\n"
+"     spacing: 3px; /* spacing between items in the tool bar */\n"
+" }\n"
+"\n"
+"QMainWindow{\n"
+"	background:black;\n"
+"}"));
         actionImport = new QAction(MainWindow);
         actionImport->setObjectName(QString::fromUtf8("actionImport"));
         actionExport = new QAction(MainWindow);
@@ -76,7 +84,6 @@ public:
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QString::fromUtf8("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
-        MainWindow->insertToolBarBreak(toolBar);
         toolBar_2 = new QToolBar(MainWindow);
         toolBar_2->setObjectName(QString::fromUtf8("toolBar_2"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar_2);

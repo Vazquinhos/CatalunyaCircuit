@@ -6,7 +6,6 @@ ErrorWindow::ErrorWindow(QWidget *parent) :
     ui(new Ui::ErrorWindow)
 {
     ui->setupUi(this);
-    _p_parent = parent;
     setWindowTitle("ERROR!!!");
     QPixmap pix("Media/Images/1365728458_Warning.png");
     ui->icon->setPixmap(pix);
@@ -31,5 +30,5 @@ ErrorWindow::ShowWindow( void )
 
 void ErrorWindow::on_buttonBox_accepted()
 {
-    _p_parent->show();
+    emit ErrorAcepted();
 }

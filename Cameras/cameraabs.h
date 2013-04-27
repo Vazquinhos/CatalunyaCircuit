@@ -43,6 +43,8 @@ public:
     void              setYawPitch(float yaw, float pitch);
     void              addYawPitch(float yaw, float pitch);
     void              getYawPitch(float &yaw, float &pitch);
+    void              setYaw(float yaw);
+    void              setPitch(float pitch);
     void              setZoom(float zoom);
     float             getZoom();
 

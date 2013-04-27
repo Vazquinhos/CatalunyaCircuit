@@ -29,7 +29,8 @@ public:
     // ============================ Methods ===============================
     static CameraManager * getCameraManager();
     CameraAbs            * getCamera(QString a_camera_name);
-    void                   setCamera(QString a_name, CameraAbs * a_camera);
+    void                   addCamera(QString a_name, CameraAbs * a_camera);
+    void                   deleteCamera( QString a_name );
     QString                getCCSCameraInfoToExport( void );
     void                   setCameraOnCar(Point3D *position);
     CameraAbs            * getActiveCamera();

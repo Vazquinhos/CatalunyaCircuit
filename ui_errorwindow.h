@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'errorwindow.ui'
 **
-** Created: Sun Apr 21 17:05:07 2013
+** Created: Sat Apr 27 22:41:57 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -43,6 +43,17 @@ public:
         if (ErrorWindow->objectName().isEmpty())
             ErrorWindow->setObjectName(QString::fromUtf8("ErrorWindow"));
         ErrorWindow->resize(427, 171);
+        ErrorWindow->setStyleSheet(QString::fromUtf8("QDialog {\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QFrame {\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+""));
         verticalLayout = new QVBoxLayout(ErrorWindow);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame = new QFrame(ErrorWindow);
@@ -80,9 +91,20 @@ public:
 
         buttonBox = new QDialogButtonBox(ErrorWindow);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"     background-color: #333333;\n"
+"	 border: 1px solid white;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QPushButton:pressed {\n"
+"     background-color: #FFFFFF\n"
+"     border-style: inset;\n"
+"	 color:black;\n"
+" }"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        buttonBox->setCenterButtons(true);
+        buttonBox->setCenterButtons(false);
 
         verticalLayout->addWidget(buttonBox);
 

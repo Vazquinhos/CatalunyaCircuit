@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 #include "Cameras/cameraabs.h"
 #include <vector>
+#include "newcameraqt.h"
 
 namespace Ui {
 class CameraWindowQt;
@@ -25,17 +26,32 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    void on_pushButton_clicked();
+
+    void on_pb_delete_clicked();
+
+    void on_pb_add_clicked();
+
+    void NewCameraAdded( CameraAbs *ap_camera );
+
+    void on_line_name_editingFinished();
+
+    void on_cb_mode_currentIndexChanged(int index);
+
+    void on_sb_yaw_editingFinished();
+
+    void on_sb_pitch_editingFinished();
+
+    void on_cb_type_currentIndexChanged(int index);
+
 private:
     // ========================== Data Members ============================
     Ui::CameraWindowQt *ui;
+    NewCameraQt* _p_new_cam ;
 
-    // Vector with the edited cameras
-    // The vector contais a pairs with:
-    // A pair of CameraAbs with the camera with out editions, and the same camera edited with the new values
-    // boolean to know if the camera has been updated
-    std::vector< std::pair<std::pair<CameraAbs*,CameraAbs*>, bool> > _edition_cameras;
     // ============================ Methods ===============================
     void updateWidgetsWithCamera( CameraAbs* ap_camera );
+    CameraAbs* getCameraFromQt( void );
 signals:
     void EditionFinished( void );
 };

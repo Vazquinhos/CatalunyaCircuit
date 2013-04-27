@@ -25,7 +25,9 @@ private slots:
 private:
     // ========================== Data Members ============================
     Ui::ErrorWindow *ui;
-    QWidget* _p_parent;
+
+signals:
+    void ErrorAcepted( void );
 };
 
 #endif // ERRORWINDOW_H

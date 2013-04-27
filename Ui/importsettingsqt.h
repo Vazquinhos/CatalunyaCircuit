@@ -22,6 +22,8 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    void errorAcepted( void );
+
 private:
     // ========================== Data Members ============================
     Ui::ImportSettingsQt *ui;

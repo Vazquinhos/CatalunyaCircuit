@@ -42,6 +42,15 @@ void ImportSettingsQt::on_buttonBox_accepted()
         ErrorWindow* p_error_window = new ErrorWindow(this);
         p_error_window->SetErrorMsg("You have not specified a file to load\n"
                                  " the settings, please select one.");
+        QObject::connect(p_error_window, SIGNAL(ErrorAcepted()), this, SLOT(errorAcepted()));
         p_error_window->show();
+        // Hide the current window
+        hide();
     }
+}
+
+void ImportSettingsQt::errorAcepted( void )
+{
+    // The error has been confirmed show again the window
+    show();
 }

@@ -24,11 +24,11 @@ Scene::Scene()
 {
     Enviroment *enviroment = new Enviroment();
 
-    //Car *c1 = new Car(new Point3D(2.5f,-130.5f,-2));
+    Car *c1 = new Car(new Point3D(148,20,4));
 
     _objectManager = ObjectManager::getObjectManager();
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
-    //_objectManager->addCar(c1);
+    _objectManager->addCar(c1);
 }
 
 /*-------------------------------------------------------------------

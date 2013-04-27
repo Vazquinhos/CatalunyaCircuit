@@ -11,6 +11,7 @@
 #include "Cameras/sphericalcamera.h"
 #include "Cameras/cameraabs.h"
 #include "Cameras/freecamera.h"
+#include <QTime>
 
 class GLWidget : public QGLWidget {
 

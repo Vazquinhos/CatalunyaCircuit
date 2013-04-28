@@ -49,7 +49,8 @@ SOURCES += main.cpp\
     Commands/camerascmd.cpp \
     Objects/modelManager.cpp \
     Ui/newcameraqt.cpp \
-    Operators/trajectories.cpp
+    Operators/trajectories.cpp \
+    Ui/loaderqt.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -88,7 +89,8 @@ HEADERS  += \
     Objects/modelManager.h \
     Ui/newcameraqt.h \
     Utils/StdAfx.h \
-    Operators/trajectories.h
+    Operators/trajectories.h \
+    Ui/loaderqt.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \
@@ -98,7 +100,8 @@ FORMS    += \
     Ui/mainwindow.ui \
     Ui/camerawindowqt.ui \
     Ui/carswindowqt.ui \
-    Ui/newcameraqt.ui
+    Ui/newcameraqt.ui \
+    Ui/loaderqt.ui
 
 OTHER_FILES += \
     simple.vert \
@@ -956,7 +959,17 @@ OTHER_FILES += \
     Media/Models/advert_side_a_s.dds \
     Media/Models/advert_side_a_d.dds \
     Media/Models/advert_side_a_a.dds \
-    Media/Models/adver004.dds
+    Media/Models/adver004.dds \
+    Media/Images/montmelo.jpg \
+    Media/Images/circuit-de-catalunya.jpg \
+    Media/Images/1365728458_Warning.png \
+    Media/Images/1365560323_Gear.png \
+    Media/Images/1365559833_tyres.png \
+    Media/Images/1365559690_single_seater.png \
+    Media/Images/1365553750_film_camera_35mm.png \
+    Media/Images/1365553596_idea.png \
+    Media/Images/1365553386_export.png \
+    Media/Images/1365553346_import.png
 
 
 

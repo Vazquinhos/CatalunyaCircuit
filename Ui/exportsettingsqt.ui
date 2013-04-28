@@ -13,6 +13,17 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+     background-color: #333333;
+	 color:white;
+ }
+
+QFrame {
+     background-color: #333333;
+	 color:white;
+ }</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QFrame" name="frame">
@@ -135,6 +146,19 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+     background-color: #333333;
+	 border: 1px solid white;
+	 color:white;
+ }
+
+QPushButton:pressed {
+     background-color: #FFFFFF
+     border-style: inset;
+	 color:black;
+ }</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

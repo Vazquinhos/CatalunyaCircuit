@@ -974,3 +974,5 @@ unix: PKGCONFIG += assimp
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += IL
+
+unix: PKGCONFIG += bullet

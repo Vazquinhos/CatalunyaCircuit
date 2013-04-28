@@ -45,9 +45,13 @@ Car::Car(Point3D * position, btDiscreteDynamicsWorld *dynamicsWorld)
 
 
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,this,_chassisCollisionShape,fallInertia);
+
+    int randX = qrand() % ((9 + 1) - 1) + 1;
+    int randY = qrand() % ((9 + 1) - 1) + 1;
+
     _fallRigidBody = new btRigidBody(fallRigidBodyCI);
-    _fallRigidBody->setLinearVelocity(btVector3(5,6,0));
-    _fallRigidBody->setAngularVelocity(btVector3(5,6,0));
+    _fallRigidBody->setLinearVelocity(btVector3(randX,randY,0));
+    _fallRigidBody->setAngularVelocity(btVector3(randX,randY,0));
     _fallRigidBody->setFriction(20);
     dynamicsWorld->addRigidBody(_fallRigidBody);
 }

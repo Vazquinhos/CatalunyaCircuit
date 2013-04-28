@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("Catalunya Circuit");
     ui->widget->setFocusPolicy(Qt::StrongFocus);
+
+    this->showMaximized(); //Show maximized main window
     //--------------- Importer------------------
 
     // Setting the icon

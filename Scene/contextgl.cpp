@@ -5,7 +5,6 @@
 #include <QTimeLine>
 #include <QStringList>
 
-
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     setMouseTracking(true);
@@ -26,7 +25,7 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
 
-#ifndef __APPLE__
+//#ifndef __APPLE__
 
     // 0) OpenGL 2.0 support test
     //    (needed for shading)
@@ -44,9 +43,9 @@ void GLWidget::initializeGL()
         QApplication::exit(-1);
     }
 
-#endif
 
 
+//#endif
     // 1) Go for a well known initialization state.
     //    (essential stuff only)
     //----------------------------------------------------------
@@ -144,6 +143,7 @@ void GLWidget::paintGL()
     // Update camera to its current position
     _cameraManager->getCamera("free")->update();
     _scene->display();
+
 }
 
 /*****************************************************************************

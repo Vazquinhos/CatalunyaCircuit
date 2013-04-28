@@ -35,10 +35,18 @@ Scene::Scene()
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
 
     Car *c1 = new Car(new Point3D(148,20,4), _dynamicsWorld);
+    Car *c2 = new Car(new Point3D(154,20,4), _dynamicsWorld);
+    Car *c3 = new Car(new Point3D(160,20,4), _dynamicsWorld);
+    Car *c4 = new Car(new Point3D(166,20,4), _dynamicsWorld);
+    Car *c5 = new Car(new Point3D(172,20,4), _dynamicsWorld);
 
     _objectManager = ObjectManager::getObjectManager();
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
     _objectManager->addCar(c1);
+    _objectManager->addCar(c2);
+    _objectManager->addCar(c3);
+    _objectManager->addCar(c4);
+    _objectManager->addCar(c5);
 }
 
 /*-------------------------------------------------------------------
@@ -93,7 +101,7 @@ bool Scene::simulatePhisics(){
 
     _dynamicsWorld->stepSimulation(1/60.f,10);  // Do world simulation every 1/60 s
 
-    activeObjects = _dynamicsWorld->getCollisionWorld()->getCollisionObjectArray(); //Loof for an active object in the world in order to check if update screen is needed
+    activeObjects = _dynamicsWorld->getCollisionWorld()->getCollisionObjectArray(); //Look for an active object in the world in order to check if update screen is needed
 
     while(i < activeObjects.size() && !isSomethingMoving){
         object = activeObjects[i];

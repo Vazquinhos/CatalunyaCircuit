@@ -1,10 +1,11 @@
 #include "camerawindowqt.h"
 #include "ui_camerawindowqt.h"
+#include "newcameraqt.h"
 #include "Cameras/cameramanager.h"
 #include "Cameras/cameraabs.h"
 #include  <QListWidgetItem>
 #include "Utils/util.h"
-#include "newcameraqt.h"
+
 CameraWindowQt::CameraWindowQt(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraWindowQt)
@@ -148,13 +149,13 @@ void CameraWindowQt::on_pb_delete_clicked()
 
 void CameraWindowQt::on_pb_add_clicked()
 {
-    NewCameraQt* _p_new_cam = new NewCameraQt();
+    //NewCameraQt* _p_new_cam= new NewCameraQt();
 
-    QObject::connect(_p_new_cam, SIGNAL(NewCameraCreated(CameraAbs*)), this, SLOT(NewCameraAdded(CameraAbs*)));
+    //QObject::connect((_p_new_cam), SIGNAL(NewCameraCreated(CameraAbs*)), this, SLOT(NewCameraAdded(CameraAbs*)));
 
-    _p_new_cam->show();
+    //_p_new_cam->show();
 
-    hide();
+    //hide();
 }
 
 void

@@ -16,10 +16,11 @@
 
 #include "Utils/util.h"
 #include <string>
+#include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
 using namespace std;
 
-class AbsObject3D {
+class AbsObject3D{
 
 public:
     // ================= Constructores/Destructores ======================
@@ -64,7 +65,6 @@ private:
 
     bool _isVisible;
     bool _isMovable;
-
     // ============================ Methods ==============================
 };
 

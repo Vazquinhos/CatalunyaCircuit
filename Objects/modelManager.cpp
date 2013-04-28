@@ -50,6 +50,10 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
     for(i=0; i < modelsList.size(); i++){ //Load all models
         QString modelName = modelsList[i];
         qDebug() << "CARGANDO MODELO" << modelName;
+        unsigned int assimpFlags = aiProcess_Triangulate | aiProcess_FlipUVs;
+        if(modelName.startsWith("_")){
+            assimpFlags = aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph;
+        }
         Object3DFile *object3D = new Object3DFile(fullFolderPath, modelName, &textureMap, aiProcess_Triangulate | aiProcess_FlipUVs, false);
         _models[modelName] = object3D;
     }

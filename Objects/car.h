@@ -18,12 +18,13 @@
 #include "Utils/vector3D.h"
 #include "Objects/object3DFile.h"
 #include "Objects/absModels.h"
+#include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
-class Car : AbsModels
+class Car : AbsModels,  public btMotionState
 {
 public:
     // ================= Constructores/Destructores ======================
-    Car(Point3D * position);
+    Car(Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
     Car(const Car& car);
     ~Car();
 
@@ -41,6 +42,10 @@ public:
     void displayModels();
     vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
 
+    // ============== Inherited Bullet Physics methods ===============================
+    virtual void getWorldTransform(btTransform &worldTrans) const;
+    virtual void setWorldTransform(const btTransform &worldTrans);
+
 private:
     // ========================== Data Members ============================
     Object3DFile *_chasisObj;
@@ -54,6 +59,11 @@ private:
 
     Point3D         * _p_position;
     Vector3D        * _p_direction;
+
+    // ========================== Bullet Phisics Members ==================
+    btTransform _worldTrans;
+    btRigidBody* _fallRigidBody;
+    btCollisionShape* _chassisCollisionShape;
     // ============================ Methods ===============================
 
 };

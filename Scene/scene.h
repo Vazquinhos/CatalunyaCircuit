@@ -21,6 +21,9 @@
 #include <QDir>
 #include <Objects/enviroment.h>
 #include <Cameras/cameramanager.h>
+#include <QTime>
+
+#include <bullet/btBulletDynamicsCommon.h>
 
 class Scene
 {
@@ -31,10 +34,20 @@ public:
     ~Scene();
     // ============================ Methods ===============================
     void display();
+    bool simulatePhisics();
 
 private:
     // ========================== Data Members ============================
     ObjectManager *_objectManager;
+
+    // ========================== Physics / Bullet ========================
+    QTime _stepTimer;
+    btBroadphaseInterface* _broadphase;
+    btDefaultCollisionConfiguration* _collisionConfiguration;
+    btCollisionDispatcher* _dispatcher;
+    btSequentialImpulseConstraintSolver* _solver;
+    btDiscreteDynamicsWorld* _dynamicsWorld;
+
     // ============================ Methods ===============================
 };
 

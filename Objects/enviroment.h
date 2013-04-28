@@ -21,14 +21,15 @@
 #include <string>
 #include <map>
 #include "Utils/util.h"
+#include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
 
 class Enviroment : AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================
-    Enviroment();
-    Enviroment(const Enviroment& enviroment);
+    Enviroment(btDiscreteDynamicsWorld *dynamicsWorld);
+    Enviroment(const Enviroment& enviroment, btDiscreteDynamicsWorld *_dynamicsWorld);
     ~Enviroment();
     // ============================ Methods ===============================
 
@@ -53,6 +54,13 @@ private:
     Object3DFile *_buildings4;
     Object3DFile *_buildings5;
     Object3DFile *_buildings6;
+
+
+    // ========================== Phisics Bullet Members =================
+    btCollisionShape* _groundShape;
+    btDefaultMotionState* _groundMotionState;
+    btRigidBody* _groundRigidBody;
+
     // ============================ Methods ===============================
 };
 

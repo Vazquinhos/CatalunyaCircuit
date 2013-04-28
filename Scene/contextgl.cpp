@@ -100,9 +100,21 @@ void GLWidget::initializeGL()
     //initializeShaders(QString("simple"));
 
 
-
-
+    //4) Init physics simulation
+    physicsTimer = new QTimer(this);
+    connect(physicsTimer, SIGNAL(timeout()), this, SLOT(simulatePhysics()));
+    physicsTimer->start(17);
 }
+
+
+void GLWidget::simulatePhysics()
+{
+    if(_scene->simulatePhisics()){
+        updateGL();
+    }
+}
+
+
 
 /*****************************************************************************
  * resizeGL()

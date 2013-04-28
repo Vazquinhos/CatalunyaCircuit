@@ -11,7 +11,7 @@
 #include "Cameras/sphericalcamera.h"
 #include "Cameras/cameraabs.h"
 #include "Cameras/freecamera.h"
-#include <QTime>
+#include <QTimer>
 
 class GLWidget : public QGLWidget {
 
@@ -24,6 +24,7 @@ public:
 public slots:
     void onZoomChanged(qreal x);
     void onAnimZoomFinished();
+    void simulatePhysics();
 
 protected:
     void initializeGL();
@@ -37,6 +38,8 @@ protected:
 private:
     int _maxVisibleDistance;
 
+
+    QTimer *physicsTimer;
     Scene *_scene;
     ObjectManager *_objectManager;
     CameraManager *_cameraManager;
@@ -56,9 +59,6 @@ private:
 
     void initializeShaders(QString filename);
     void releaseAllShaders();
-
-
-
 };
 
 #endif  /* _GLWIDGET_H */

@@ -22,7 +22,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Enviroment::Enviroment()
+Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
 {
     ModelManager *manager = ModelManager::getModelManager();
     _sky = manager->getModel("sky.3ds");
@@ -40,6 +40,14 @@ Enviroment::Enviroment()
     _buildings4 = manager->getModel("buildings4.3ds");
     _buildings5 = manager->getModel("buildings5.3ds");
     _buildings6 = manager->getModel("buildings6.3ds");
+
+
+    // ========================== Phisics Bullet =================
+    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-75);
+    _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
+    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,_groundMotionState,_groundShape,btVector3(0,0,0));
+    _groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    dynamicsWorld->addRigidBody(_groundRigidBody); //Add rigid body to the world
 }
 
 /*-------------------------------------------------------------------
@@ -49,7 +57,7 @@ Enviroment::Enviroment()
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Enviroment::Enviroment(const Enviroment &enviroment)
+Enviroment::Enviroment(const Enviroment &enviroment, btDiscreteDynamicsWorld *_dynamicsWorld)
 {
 }
 

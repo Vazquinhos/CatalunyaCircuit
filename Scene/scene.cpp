@@ -11,6 +11,7 @@
 #include "scene.h"
 #include <QTime>
 #include <IL/il.h>                  //Devil image loader for textures
+#include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
 // ================= Constructores/Destructores ======================
 /*-------------------------------------------------------------------
@@ -22,9 +23,18 @@
  *-------------------------------------------------------------------*/
 Scene::Scene()
 {
-    Enviroment *enviroment = new Enviroment();
+    // ========================== Physics / Bullet ========================
+    _broadphase = new btDbvtBroadphase(); //Boradphase checks what pair of objects are colliding. Important if there are many objects on the scene
+    _collisionConfiguration = new btDefaultCollisionConfiguration(); //Collision configuration
+    _dispatcher = new btCollisionDispatcher(_collisionConfiguration); //Dispatcher for dectect collisions and make callbacks
+    _solver = new btSequentialImpulseConstraintSolver(); //Handles object interactions like gravity
+    _dynamicsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration); //World simulator
+    _dynamicsWorld->setGravity(btVector3(0,0,-9.81f));//Sets the gravity (choose -10m/s² on Z axis)
 
-    Car *c1 = new Car(new Point3D(148,20,4));
+
+    Enviroment *enviroment = new Enviroment(_dynamicsWorld);
+
+    Car *c1 = new Car(new Point3D(148,20,4), _dynamicsWorld);
 
     _objectManager = ObjectManager::getObjectManager();
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
@@ -51,10 +61,51 @@ Scene::Scene(const Scene &scene)
  *-------------------------------------------------------------------*/
 Scene::~Scene()
 {
+    delete _dynamicsWorld;
+    delete _solver;
+    delete _dispatcher;
+    delete _collisionConfiguration;
+    delete _broadphase;
 }
 
 // ============================ Methods ===============================
 
+/*-------------------------------------------------------------------
+ |  Function display
+ |
+ |  Purpose: Displays all objects
+ *-------------------------------------------------------------------*/
 void Scene::display(){
     this->_objectManager->displayAll();
+}
+
+/*-------------------------------------------------------------------
+ |  Function simulatePhisics
+ |
+ |  Purpose: Do all physics simulation
+ |  Returns: bool True if screen must be updated, false otherwise
+ *-------------------------------------------------------------------*/
+bool Scene::simulatePhisics(){
+    btCollisionObjectArray activeObjects;
+    btCollisionObject *object;
+    int i = 0;
+    bool isSomethingMoving = false;
+
+    _dynamicsWorld->stepSimulation(1/60.f,10);  // Do world simulation every 1/60 s
+
+    activeObjects = _dynamicsWorld->getCollisionWorld()->getCollisionObjectArray(); //Loof for an active object in the world in order to check if update screen is needed
+
+    while(i < activeObjects.size() && !isSomethingMoving){
+        object = activeObjects[i];
+        if(object->isActive()){
+            isSomethingMoving = true;
+        }
+        i++;
+    }
+
+    if(isSomethingMoving){
+        qDebug() << " ALGO SE MUEVE ";
+    }
+
+    return isSomethingMoving;
 }

@@ -110,8 +110,6 @@ Enviroment * ObjectManager::getEnviroment()
  |  Function displayAll
  |
  |  Purpose: Displays all objects
- |  Parameters:
- |  Returns:
  *-------------------------------------------------------------------*/
 void ObjectManager::displayAll(){
 

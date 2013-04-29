@@ -89,7 +89,7 @@ void Enviroment::displayModels(){
     _terrain->display();
     _flags->display();
     _objects->display();
-    _fences;
+    _fences->display();
     _pneumatic_fences->display();
     _walls->display();
     _forest->display();

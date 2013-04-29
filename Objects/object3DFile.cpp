@@ -379,7 +379,10 @@ vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance)
     vector<GLuint> displayLists;
     Instance *instance;
 
-    for(int i = 0; i < _vInstances.size(); i++){
+    (void) pointCamera;
+    (void) distance;
+
+    for(unsigned int i = 0; i < _vInstances.size(); i++){
         instance = _vInstances[i];
         displayLists.push_back(instance->_displayListId);
     }
@@ -397,7 +400,7 @@ vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance)
  *-------------------------------------------------------------------*/
 void Object3DFile::display() {
     Instance *instance;
-    for(int i = 0; i < _vInstances.size(); i++){
+    for(unsigned int i = 0; i < _vInstances.size(); i++){
         instance = _vInstances[i];
         glPushMatrix();
         glCallList(instance->_displayListId); //Call display list for display the object
@@ -568,7 +571,7 @@ void Object3DFile::renderInstances(const aiScene* scene, const aiNode* node, aiM
 
         glMultMatrixf((float*)&transformation);
 
-        for(int i = 0; i < node->mNumMeshes ; i++){
+        for(unsigned int i = 0; i < node->mNumMeshes ; i++){
             mesh = _vMeshes[node->mMeshes[i]];
             glCallList(mesh->_gi_displayListId);
         }
@@ -586,7 +589,7 @@ void Object3DFile::renderInstances(const aiScene* scene, const aiNode* node, aiM
 
 
 
-    for (int i = 0; i < node->mNumChildren; ++i)
+    for (unsigned int i = 0; i < node->mNumChildren; ++i)
     {
         qDebug() << "INSTANCIA" << node->mChildren[i]->mName.C_Str();
         renderInstances(scene, node->mChildren[i], transform);

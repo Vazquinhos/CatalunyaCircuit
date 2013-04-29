@@ -67,12 +67,11 @@ QString FreeCamera::getTypeInQString( void )
 
 void FreeCamera::update()
 {
-    float yaw, pitch, zoom;
+    float yaw, pitch;
 
     getYawPitch(yaw, pitch);
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
-    zoom = getZoom();
 
     Point3D * pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
                                       sin(yaw)*cos(pitch) + getPosition()->getY(),
@@ -100,7 +99,7 @@ void FreeCamera::render()
 
 void FreeCamera::move(float velocity, bool front)
 {
-    float yaw, pitch, zoom;
+    float yaw, pitch;
 
     getYawPitch(yaw, pitch);
     if(!front)
@@ -114,7 +113,6 @@ void FreeCamera::move(float velocity, bool front)
 
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
-    zoom = getZoom();
 
     Vector3D * direction = new Vector3D( cos(yaw)*cos(pitch),
                                        sin(yaw)*cos(pitch),

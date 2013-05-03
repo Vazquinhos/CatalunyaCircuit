@@ -12,11 +12,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+
     setWindowTitle("Catalunya Circuit");
     ui->widget->setFocusPolicy(Qt::StrongFocus);
 
-    this->showMaximized(); //Show maximized main window
+
+    setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+                       | Qt::WindowMaximized);//Show maximized main window
+
     //--------------- Importer------------------
 
     // Setting the icon
@@ -52,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     icon5.addFile("Media/Images/1365559690_single_seater.png");
     ui->actionCars->setIcon(icon5);
     _p_car_qt = new CarsWindowQt();
+
 }
 
 MainWindow::~MainWindow()

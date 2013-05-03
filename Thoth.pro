@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     Objects/modelManager.cpp \
     Ui/newcameraqt.cpp \
     Operators/trajectories.cpp \
-    Ui/loaderqt.cpp
+    Ui/loaderqt.cpp \
+    Log/assimpLog.cpp
 
 HEADERS  += \
     Objects/objectmanager.h \
@@ -90,7 +91,8 @@ HEADERS  += \
     Ui/newcameraqt.h \
     Utils/StdAfx.h \
     Operators/trajectories.h \
-    Ui/loaderqt.h
+    Ui/loaderqt.h \
+    Log/assimpLog.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

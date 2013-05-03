@@ -20,6 +20,7 @@
 #include <assimp/postprocess.h>     // Post processing flags
 #include <IL/il.h>                  //Devil image loader for textures
 #include <vector>
+#include <bullet/btBulletCollisionCommon.h>
 
 using namespace std;
 
@@ -45,8 +46,8 @@ private:
         Mesh();
         ~Mesh();
 
-        void render(const std::vector<float>& verticesCoord, const std::vector<float>& texturesCoord, const std::vector<float>& normalsCoord,
-                                 const std::vector<unsigned int>& Indices, const vector<Texture*> &_vTextures);
+        void render(vector<btScalar> *verticesCoord, vector<float> *texturesCoord, vector<float> *normalsCoord,
+                                 vector<int> *Indices, vector<Texture *> *_vTextures);
         GLuint vertexBufferBindId;      //Vertex buffer array ID bind
         GLuint texturesBufferBindId;    //Textures buffer array ID bind
         GLuint normalsBufferBindId;     //Normals buffer array ID bind
@@ -58,6 +59,7 @@ private:
         Point3D     * _p_maxVertex; //Max vertex of the mesh
         Point3D     * _p_center; //Center of the mesh
         GLuint        _gi_displayListId; //Display list of the mesh
+        btBvhTriangleMeshShape *collisionShape;
         bool _isVisible; //Visibility of the mesh
         //void checkVisibility(Point3D *pointCamera, int distance);
     };
@@ -67,6 +69,7 @@ private:
     vector<Mesh*> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
     vector<Instance*> _vInstances;
+    GLuint displayList;
 
     QString _baseDirectory; //Base directory path of the object
     QString _filename; //Filename
@@ -74,14 +77,14 @@ private:
     //Object loading methods
     bool loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
     bool generateObjectBuffers(const aiScene* pScene);
-    bool loadMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
+    bool mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void apply_material(const aiMaterial *mtl);
 
     //Auxiliary methods
     void set_float4(float f[4], float a, float b, float c, float d);
     void color4_to_float4(const aiColor4D *c, float f[4]);
 
-    void renderInstances(const aiScene* scene, const aiNode* node, aiMatrix4x4 transformation);
+    void renderInstances(const aiScene* scene, const aiNode* node);
 
 public:
     Object3DFile();
@@ -92,6 +95,10 @@ public:
     vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
     void display();
     void render(); //Inherited method
+
+    void renderNode(const aiNode *node);
+
+    btCompoundShape *getCollisionShape();
 };
 
 #endif /* Object3DAssimp_H_ */

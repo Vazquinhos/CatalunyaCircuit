@@ -33,20 +33,18 @@ Scene::Scene()
 
 
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
-
-    Car *c1 = new Car(new Point3D(148,20,4), _dynamicsWorld);
-    Car *c2 = new Car(new Point3D(154,20,4), _dynamicsWorld);
-    Car *c3 = new Car(new Point3D(160,20,4), _dynamicsWorld);
-    Car *c4 = new Car(new Point3D(166,20,4), _dynamicsWorld);
-    Car *c5 = new Car(new Point3D(172,20,4), _dynamicsWorld);
-
     _objectManager = ObjectManager::getObjectManager();
+
+    unsigned int numCars = 5;
+    int xPos = 148;
+    for(unsigned int i = 0; i < numCars; i++){
+         Car *c1 = new Car(new Point3D(xPos,20,4), _dynamicsWorld);
+         _objectManager->addCar(c1);
+         xPos+=1;
+    }
+
+
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
-    _objectManager->addCar(c1);
-    _objectManager->addCar(c2);
-    _objectManager->addCar(c3);
-    _objectManager->addCar(c4);
-    _objectManager->addCar(c5);
 }
 
 /*-------------------------------------------------------------------
@@ -93,27 +91,6 @@ void Scene::display(){
  |  Purpose: Do all physics simulation
  |  Returns: bool True if screen must be updated, false otherwise
  *-------------------------------------------------------------------*/
-bool Scene::simulatePhisics(){
-    btCollisionObjectArray activeObjects;
-    btCollisionObject *object;
-    int i = 0;
-    bool isSomethingMoving = false;
-
-    _dynamicsWorld->stepSimulation(1/60.f,10);  // Do world simulation every 1/60 s
-
-    activeObjects = _dynamicsWorld->getCollisionWorld()->getCollisionObjectArray(); //Look for an active object in the world in order to check if update screen is needed
-
-    while(i < activeObjects.size() && !isSomethingMoving){
-        object = activeObjects[i];
-        if(object->isActive()){
-            isSomethingMoving = true;
-        }
-        i++;
-    }
-
-    if(isSomethingMoving){
-        qDebug() << " ALGO SE MUEVE ";
-    }
-
-    return isSomethingMoving;
+void Scene::simulatePhisics(btScalar timeStep){
+    _dynamicsWorld->stepSimulation(timeStep,10);  // Do world simulation every 1/60 s
 }

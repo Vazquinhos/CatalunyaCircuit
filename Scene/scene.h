@@ -34,7 +34,7 @@ public:
     ~Scene();
     // ============================ Methods ===============================
     void display();
-    bool simulatePhisics();
+    void simulatePhisics(btScalar timeStep);
 
 private:
     // ========================== Data Members ============================

@@ -28,6 +28,7 @@ public slots:
 
 protected:
     void initializeGL();
+    void initializeWorld();
     void resizeGL(int w, int h);
     void paintGL();
     void mousePressEvent(QMouseEvent *event);
@@ -38,8 +39,15 @@ protected:
 private:
     int _maxVisibleDistance;
 
+    float _fps;
+    float _countFrames;
+    float _maxCountFrames;
 
-    QTimer *physicsTimer;
+    QTimer *_physicsEventTimer;
+    QTimer *_displayEventTimer;
+    QTime  _displayTimer;
+    QTime  _physicsTimer;
+
     Scene *_scene;
     ObjectManager *_objectManager;
     CameraManager *_cameraManager;

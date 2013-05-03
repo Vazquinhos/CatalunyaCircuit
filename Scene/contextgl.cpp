@@ -4,6 +4,9 @@
 #include <QApplication>
 #include <QTimeLine>
 #include <QStringList>
+#include <Ui/loaderqt.h>
+#include <QThread>
+
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -24,8 +27,10 @@ GLWidget::~GLWidget()
  *****************************************************************************/
 void GLWidget::initializeGL()
 {
+    LoaderQt* loader = new LoaderQt();
+    loader->show();
 
-//#ifndef __APPLE__
+    //#ifndef __APPLE__
 
     // 0) OpenGL 2.0 support test
     //    (needed for shading)
@@ -43,9 +48,7 @@ void GLWidget::initializeGL()
         QApplication::exit(-1);
     }
 
-
-
-//#endif
+    //#endif
     // 1) Go for a well known initialization state.
     //    (essential stuff only)
     //----------------------------------------------------------
@@ -63,22 +66,35 @@ void GLWidget::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-
     //1) Initialize variables
 
-    // *********** LOAD MODELS **************/
+    initializeWorld();
+}
+
+
+/*****************************************************************************
+ * initializeWorld()
+ *      Makes all needed inicialization that is not part of openGL config
+ *****************************************************************************/
+void GLWidget::initializeWorld(){
+    ModelManager *modelManager = ModelManager::getModelManager();
     QStringList modelFilters;
     QStringList textureFilters;
+
+    _countFrames = 0; //Current number of frames measured before reset
+    _maxCountFrames = 300; //Max frames before calculating fps
+    _fps = 0;
+
+    // 1) Load Models
     modelFilters << "*.3ds";
     textureFilters <<"*.dds" << "*.tga";
-    ModelManager *modelManager = ModelManager::getModelManager();
-    modelManager->loadModels("/Media/Models/", modelFilters, textureFilters);
-    //**********************************************************
+
+    modelManager->setFolderToLoad("/Media/Models/", modelFilters, textureFilters);
+    modelManager->loadModels();
 
     _scene = new Scene();
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();
-
 
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
@@ -98,19 +114,23 @@ void GLWidget::initializeGL()
     //shader =  new QGLShaderProgram();
     //initializeShaders(QString("simple"));
 
+    //4) Init physics simulation
+    _physicsEventTimer = new QTimer(this);
+    connect(_physicsEventTimer, SIGNAL(timeout()), this, SLOT(simulatePhysics()));
+    _physicsEventTimer->start(18);
 
     //4) Init physics simulation
-    physicsTimer = new QTimer(this);
-    connect(physicsTimer, SIGNAL(timeout()), this, SLOT(simulatePhysics()));
-    physicsTimer->start(17);
-}
+    _displayEventTimer = new QTimer(this);
+    connect(_displayEventTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    _displayEventTimer->start(0);
 
+    _displayTimer.start();
+    _physicsTimer.start();
+}
 
 void GLWidget::simulatePhysics()
 {
-    if(_scene->simulatePhisics()){
-        updateGL();
-    }
+    _scene->simulatePhisics(_physicsTimer.restart()/1000.0f);
 }
 
 
@@ -144,6 +164,13 @@ void GLWidget::paintGL()
     _cameraManager->getCamera("free")->update();
     _scene->display();
 
+    if(_countFrames > _maxCountFrames){
+        _fps = _maxCountFrames /(_displayTimer.elapsed()/1000);
+        _displayTimer.restart();
+        _countFrames = 0;
+        qDebug() << "FPS " << _fps;
+    }
+    _countFrames++;
 }
 
 /*****************************************************************************
@@ -172,8 +199,6 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         _cameraManager->getCamera("free")
                 ->addYawPitch(posCam.getX()- event->x(),  posCam.getY() - event->y());
         posCam.setCoordinates(event->x(), event->y());
-
-        updateGL();
     }
 }
 
@@ -234,8 +259,6 @@ void GLWidget::onZoomChanged(qreal x)
     }else{
         camera->setZoom(camera->getZoom() - factor);
     }
-
-    updateGL();
 }
 
 /*****************************************************************************
@@ -342,8 +365,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     if(update){
         Point3D *pos = _cameraManager->getCamera("free")->getPosition();
-        qDebug() << "CAMERA POSITION " << pos->getX() << " " << pos->getY() << " " << pos->getZ();
-        updateGL();
+        //qDebug() << "CAMERA POSITION " << pos->getX() << " " << pos->getY() << " " << pos->getZ();
     }
 
 }

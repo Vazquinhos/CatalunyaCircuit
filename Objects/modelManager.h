@@ -11,7 +11,7 @@ using namespace std;
 
 #include "Objects/object3DFile.h"
 
-class ModelManager
+class ModelManager : public QObject
 {
 
 private:
@@ -22,13 +22,16 @@ public:
 public:
     static ModelManager	* getModelManager();
 
-    void loadModels(QString folderPath, QStringList modelFilters, QStringList textureFilters);
+    void setFolderToLoad(QString folderPath, QStringList modelFilters, QStringList textureFilters);
+    void loadModels();
     Object3DFile* getModel(QString modelName);
 
 private:
     static ModelManager * _p_modelManager;
+    QString _folderPath;
+    QStringList _modelFilters;
+    QStringList _textureFilters;
     map<QString, Object3DFile*> _models;
-
     map<QString, GLuint> loadTextures(QString folderName, QStringList filter);
 };
 

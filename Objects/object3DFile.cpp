@@ -68,7 +68,6 @@ Object3DFile::~Object3DFile() {
  |  Returns:
  *-------------------------------------------------------------------*/
 bool Object3DFile::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags){
-
     bool loadedSuccesful = false;
 
     QString path = _baseDirectory + _filename; //Current relative project path
@@ -78,9 +77,8 @@ bool Object3DFile::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int
     if (!pScene) {
         qDebug() << "Error before loading: " << _importer.GetErrorString();
     }else{
-        loadMaterials(pScene, textureIdMap);
+        mapMaterials(pScene, textureIdMap);
     }
-
     return loadedSuccesful;
 }
 
@@ -95,7 +93,11 @@ void Object3DFile::render() {
     const aiScene *scene = _importer.GetScene();
     const aiNode *node = scene->mRootNode;
     generateObjectBuffers(scene);
-    renderInstances(scene, node, node->mTransformation);
+
+    displayList = glGenLists(1); //Generate new display list identifier
+    glNewList(displayList, GL_COMPILE); //Starting rendering in memory
+    renderInstances(scene, node);
+    glEndList();
 }
 
 /******************************* PRIVATE *****************************************/
@@ -137,10 +139,10 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             //Generate buffers for the mesh and copy data of the assimp importer
             mesh->materialIndex = aiMesh->mMaterialIndex;
 
-            vector<float> verticesCoord;
+            vector<btScalar> verticesCoord;
             vector<float> normalsCoord;
             vector<float> texturesCoord;
-            vector<unsigned int> indices;
+            vector<int> indices;
             int size = aiMesh->mNumVertices*3;
             int sizeFaces =aiMesh->mNumFaces;
 
@@ -209,7 +211,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
             }
 
             //Generate and initialize the buffers with the copied data from importer
-            mesh->render(verticesCoord, texturesCoord, normalsCoord, indices, _vTextures);
+            mesh->render(&verticesCoord, &texturesCoord, &normalsCoord, &indices, &_vTextures);
 
             _vMeshes.push_back(mesh);
         }
@@ -231,7 +233,7 @@ bool Object3DFile::generateObjectBuffers(const aiScene* pScene)
 |  Parameters:     const aiScene* pScene = The assimp object info to load its textures
 |  Returns:
 *-------------------------------------------------------------------*/
-bool Object3DFile::loadMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap)
+bool Object3DFile::mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap)
 {
     bool ret = true;
     Texture *texture;
@@ -251,7 +253,7 @@ bool Object3DFile::loadMaterials(const aiScene* pScene, map<QString, GLuint> *te
                 id = (*textureIdMap)[FullPath];
                 texture->_textureBindId = id;
                 //apply_material(pMaterial);
-                qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath;
+                //qDebug() << "BIND TEXTURE CORRECT " << id << " " << FullPath;
             }
         }
         _vTextures.push_back(texture);
@@ -399,13 +401,9 @@ vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance)
  |  Returns:
  *-------------------------------------------------------------------*/
 void Object3DFile::display() {
-    Instance *instance;
-    for(unsigned int i = 0; i < _vInstances.size(); i++){
-        instance = _vInstances[i];
-        glPushMatrix();
-        glCallList(instance->_displayListId); //Call display list for display the object
-        glPopMatrix();
-    }
+    glPushMatrix();
+    glCallList(displayList); //Call display list for display the object
+    glPopMatrix();
 }
 
 /******************************* MESH *****************************************/
@@ -477,38 +475,36 @@ Object3DFile::Mesh::~Mesh()
 |               const vector<unsigned int> &indices = Vector with all face indexes info to generate its buffer array buffer id
 |  Returns:
 *-------------------------------------------------------------------*/
-void Object3DFile::Mesh::render(const vector<float> &verticesCoord,
-                                const vector<float> &texturesCoord, const vector<float> &normalsCoord, const vector<unsigned int> &indices, const vector<Texture *> &_vTextures)
+void Object3DFile::Mesh::render(vector<btScalar> *verticesCoord,
+                                vector<float> *texturesCoord, vector<float> *normalsCoord, vector<int> *indices, vector<Texture*> *_vTextures)
 {
-
-    numIndices = indices.size();
+    //*********************** Upload vertex, normals, textures coords to memory ***********************
+    numIndices = indices->size();
 
     glGenBuffers(1, &vertexBufferBindId); //Generate buffer id for vertex
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferBindId); //Bind the buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * verticesCoord.size(), &verticesCoord[0], GL_STATIC_DRAW); //Put position, normals, textures positions to buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(btScalar) * verticesCoord->size(), &(*verticesCoord)[0], GL_STATIC_DRAW); //Put position, normals, textures positions to buffer
 
     glGenBuffers(1, &texturesBufferBindId); //Generate buffer id for vertex
     glBindBuffer(GL_ARRAY_BUFFER, texturesBufferBindId); //Bind the buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texturesCoord.size(), &texturesCoord[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texturesCoord->size(), &(*texturesCoord)[0], GL_STATIC_DRAW);
 
 
     glGenBuffers(1, &normalsBufferBindId); //Generate buffer id for vertex
     glBindBuffer(GL_ARRAY_BUFFER, normalsBufferBindId); //Bind the buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normalsCoord.size(), &normalsCoord[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normalsCoord->size(), &(*normalsCoord)[0], GL_STATIC_DRAW);
 
     glGenBuffers(1, &faceIndexBufferBindId); //Generate buffer for face indexes
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceIndexBufferBindId); //Bind index buffer
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numIndices, &indices[0], GL_STATIC_DRAW); //Put mesh face indexes
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numIndices, &(*indices)[0], GL_STATIC_DRAW); //Put mesh face indexes
 
 
 
 
-
-
-
+    //*********************** Bind all arrays generating a display list for the mesh ***********************
 
     glEnableClientState(GL_VERTEX_ARRAY);           // Enable Vertex Arrays
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);	// Enable Texture Coord Arrays
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);        // Enable Texture Coord Arrays
     glEnableClientState(GL_NORMAL_ARRAY);           // Enable Normal Arrays
 
 
@@ -521,7 +517,7 @@ void Object3DFile::Mesh::render(const vector<float> &verticesCoord,
 
 
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferBindId); //Bind vertex array of the mesh
-    glVertexPointer( 3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To Vertex Data
+    glVertexPointer( 3, GL_DOUBLE, 0, 0); // Set The Vertex Pointer To Vertex Data
 
     glBindBuffer(GL_ARRAY_BUFFER, texturesBufferBindId); //Bind texture array of the mesh
     glTexCoordPointer(3, GL_FLOAT, 0, 0); // Set The Vertex Pointer To TexCoord Data
@@ -533,77 +529,162 @@ void Object3DFile::Mesh::render(const vector<float> &verticesCoord,
 
     const unsigned int MaterialIndex = materialIndex; //Bind texture of the mesh
 
-    if (MaterialIndex < _vTextures.size() && _vTextures[materialIndex]) {
-        glBindTexture(GL_TEXTURE_2D, _vTextures[MaterialIndex]->_textureBindId);
+    if (MaterialIndex < _vTextures->size() && (*_vTextures)[materialIndex]) {
+        glBindTexture(GL_TEXTURE_2D, (*_vTextures)[MaterialIndex]->_textureBindId);
     }
-    //glDrawElements(GL_TRIANGLES, mesh->numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces (IS SLOWER THAN glDrawArrays!!)
+
+    //glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0); //Renders the object deleting shared vertex between faces (IS SLOWER THAN glDrawArrays!!)
     glDrawArrays(GL_TRIANGLES, 0, numIndices);
 
     glEndList(); //Finish rendering in memory
 
     glDisableClientState(GL_VERTEX_ARRAY);          // Disable Vertex Arrays
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);	// Disable Texture Coord Arrays
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);       // Disable Texture Coord Arrays
     glDisableClientState(GL_NORMAL_ARRAY);          // Disable Normal Arrays
+
+    //btTriangleIndexVertexArray *mIndexVertexArray = new btTriangleIndexVertexArray(numIndices/3, &(*indices)[0], sizeof(int)*3, verticesCoord->size(), &(*verticesCoord)[0], sizeof(btScalar)*3);
+    //btVector3 aabbMin(_p_minVertex->getX(),_p_minVertex->getY(),_p_minVertex->getZ()),aabbMax(_p_maxVertex->getX(),_p_maxVertex->getY(),_p_maxVertex->getZ());
+    //bool useQuantizedAabbCompression=true;
+
+
+    //collisionShape = new btBvhTriangleMeshShape(mIndexVertexArray, useQuantizedAabbCompression, aabbMin, aabbMax);
+}
+
+btCompoundShape* Object3DFile::getCollisionShape(){
+    btCompoundShape *shape = new btCompoundShape();
+    btTransform transform;
+    Mesh *mesh;
+
+    for(int i = 0; i < _vMeshes.size(); i++){
+        mesh = _vMeshes[i];
+        shape->addChildShape(transform, mesh->collisionShape);
+    }
+
+    return shape;
 }
 
 
 
-void Object3DFile::renderInstances(const aiScene* scene, const aiNode* node, aiMatrix4x4 transformation){
+void Object3DFile::renderNode(const aiNode* node){
+    Mesh *mesh;
+    const aiNode *child;
+    aiMatrix4x4 transform = node->mTransformation;
+    transform.Transpose();
+
+
+    glPushMatrix();
+    glMultMatrixf((float*)&transform);
+
+
+    for(unsigned int i = 0; i < node->mNumMeshes ; i++){
+        mesh = _vMeshes[node->mMeshes[i]];
+        glCallList(mesh->_gi_displayListId);
+    }
+
+    for(int i = 0; i < node->mNumChildren; i++){
+        child = node->mChildren[i];
+        renderNode(child);
+    }
+
+    glPopMatrix();
+}
+
+/*-------------------------------------------------------------------
+|  Function renderInstances
+|
+|  Purpose:     Render instances of all object
+|  Parameters:  const aiScene* scene: Assimp scene that contains all model info
+|               const aiNode* node: node that will be rendered
+*-------------------------------------------------------------------*/
+void Object3DFile::renderInstances(const aiScene* scene, const aiNode* node){
+    Mesh *mesh;
+    const aiNode *child;
+    int numRealObject = 0;
+
+    const aiNode* lastObject;
+
+    for(int i = 0; i < node->mNumChildren; i++){
+        child = node->mChildren[i];
+
+        if(child->mNumChildren > 0 || child->mNumMeshes  > 0){
+            renderNode(child); //Does not contain any mesh
+            lastObject = child;
+
+        }else {
+
+
+                qDebug() << "PINTANDO INSTANCIA";
+                aiMatrix4x4 transform = child->mTransformation;
+                transform.Transpose();
+
+                glPushMatrix();
+                glMultMatrixf((float*)&transform);
+
+                for(unsigned int i = 0; i < lastObject->mNumMeshes ; i++){
+                    mesh = _vMeshes[lastObject->mMeshes[i]];
+                    glCallList(mesh->_gi_displayListId);
+                }
+
+                for(int i = 0; i < lastObject->mNumChildren; i++){
+                    child = lastObject->mChildren[i];
+                    renderNode(child);
+                }
+
+
+
+                glPopMatrix();
+        }
+
+
+    }
+
+
+
+    /*
 
     Mesh *mesh;
 
+    QString name = QString(node->mName.C_Str());
 
-    aiMatrix4x4 transform;
-
-
-    transformation.Transpose();
 
     glPushMatrix();
 
-
-
-
-    if(node->mNumMeshes > 0){
-        Instance *instance = new Instance();
-        instance->_displayListId = glGenLists(1); //Generate new display list identifier
-        glNewList(instance->_displayListId, GL_COMPILE); //Starting rendering in memory
-
-
-        glMultMatrixf((float*)&transformation);
-
-        for(unsigned int i = 0; i < node->mNumMeshes ; i++){
-            mesh = _vMeshes[node->mMeshes[i]];
-            glCallList(mesh->_gi_displayListId);
-        }
-
-         glEndList(); //Finish rendering in memory
-          _vInstances.push_back(instance);
-
-    }else{
-        transform = node->mTransformation * transformation;
+    if(node->mParent != NULL){
+        aiMatrix4x4 transform = node->mTransformation;
+        transform.Transpose();
+        glMultMatrixf((float*)&transform);
     }
 
+    QString message;
+    message.append(node->mName.C_Str());
 
+    if(node->mNumMeshes > 0){
+        message.append(" CON MESHES ");
+    }else{
+        message.append(" SIN MESHES ");
+    }
 
+    if(node->mParent != NULL){
+        message.append("PADRE ");
+        message.append(node->mParent->mName.C_Str());
+    }
 
+    qDebug() << message;
 
-
+    for(unsigned int i = 0; i < node->mNumMeshes ; i++){
+        mesh = _vMeshes[node->mMeshes[i]];
+        glCallList(mesh->_gi_displayListId);
+    }
 
     for (unsigned int i = 0; i < node->mNumChildren; ++i)
     {
-        qDebug() << "INSTANCIA" << node->mChildren[i]->mName.C_Str();
-        renderInstances(scene, node->mChildren[i], transform);
+        renderInstances(scene, node->mChildren[i]);
     }
 
+    glPopMatrix();
 
-
-
-
-     glPopMatrix();
-
-
+    */
 
 }
 
 #endif /* OBJECT3DASSIMP_H_ */
-

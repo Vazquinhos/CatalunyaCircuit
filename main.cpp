@@ -7,12 +7,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    LoaderQt* loader = new LoaderQt();
-    loader->show();
-
-    glutInit(&argc, argv);
 
     w.show();
-    
+
     return a.exec();
 }

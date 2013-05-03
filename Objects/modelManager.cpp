@@ -2,6 +2,9 @@
 #include "Utils/util.h"
 #include "Objects/object3DFile.h"
 #include "Objects/absObject3D.h"
+#include <assimp/DefaultLogger.hpp>
+#include <assimp/Logger.hpp>
+#include <Log/assimpLog.h>
 
 #include <QDir>
 #include <QDebug>
@@ -12,7 +15,9 @@ ModelManager * ModelManager::_p_modelManager = NULL;
 ModelManager::ModelManager()
 {
 }
-
+ModelManager::~ModelManager()
+{
+}
 
 ModelManager * ModelManager::getModelManager(){
     if( !_p_modelManager ) {
@@ -22,8 +27,24 @@ ModelManager * ModelManager::getModelManager(){
     return _p_modelManager;
 }
 
-void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStringList textureFilters){
-    QString fullFolderPath = (QDir::currentPath() + folderPath); //Full path to the model folder
+/*-------------------------------------------------------------------
+ |  Function setFolderToLoad
+ |
+ |  Purpose: Set the folder and filters to load models
+ |  Parameters: QString folderPath: Path to the folder that contains models, relative to current project
+ |              QStringList modelFilters: Filter extension for loading models
+ |              QStringList textureFilters: Filter exentsion for loading textures
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void ModelManager::setFolderToLoad(QString folderPath, QStringList modelFilters, QStringList textureFilters){
+    _folderPath = folderPath;
+    _modelFilters = modelFilters;
+    _textureFilters = textureFilters;
+}
+
+
+void ModelManager::loadModels(){
+    QString fullFolderPath = (QDir::currentPath() + _folderPath); //Full path to the model folder
     QDir modelsDir(fullFolderPath); //Directory of models
     QStringList modelsList; //List of model filenames
     map<QString, GLuint> textureMap; //Texture map (TextureName -> TextureBindId)
@@ -35,14 +56,24 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
     QTime myTimer;
     myTimer.start();
 
+    // ***********************  ASSIMP LOGGER ***********************
+    // Create a logger instance
+    Assimp::DefaultLogger::create("",Assimp::Logger::VERBOSE);
+    // Now I am ready for logging my stuff
+    Assimp::DefaultLogger::get()->info("this is my info-call");
+
+    const unsigned int severity = Assimp::Logger::Err|Assimp::Logger::Info|Assimp::Logger::Err|Assimp::Logger::Warn | Assimp::Logger::Debugging | Assimp::Logger::Info | Assimp::Logger::VERBOSE;
+    // Attaching it to the default logger
+    Assimp::DefaultLogger::get()->attachStream( new AssimpLog(), severity);
+
 
     //*********************** TEXTURE PRELOADING **************************
-    textureMap = loadTextures(fullFolderPath, textureFilters); //Preload all textures of all models
+    textureMap = loadTextures(fullFolderPath, _textureFilters); //Preload all textures of all models
     loadTexturesTime = myTimer.elapsed();
 
 
     //*********************** MODEL LOADING **************************
-    modelsList = modelsDir.entryList(modelFilters, QDir::Files); //List all models of the directory
+    modelsList = modelsDir.entryList(_modelFilters, QDir::Files); //List all models of the directory
 
 
     unsigned int i;
@@ -50,9 +81,9 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
     for(i=0; i < modelsList.size(); i++){ //Load all models
         QString modelName = modelsList[i];
         qDebug() << "CARGANDO MODELO" << modelName;
-        unsigned int assimpFlags = aiProcess_Triangulate | aiProcess_FlipUVs;
+        unsigned int assimpFlags = aiProcess_ValidateDataStructure| aiProcess_FlipUVs;
         if(modelName.startsWith("_")){
-            assimpFlags = aiProcess_Triangulate | aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_TransformUVCoords | aiProcess_FindInstances | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph;
+            assimpFlags = aiProcess_OptimizeMeshes |aiProcess_ValidateDataStructure| aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_TransformUVCoords | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph;
         }
         Object3DFile *object3D = new Object3DFile(fullFolderPath, modelName, &textureMap, assimpFlags, false);
         _models[modelName] = object3D;
@@ -63,9 +94,9 @@ void ModelManager::loadModels(QString folderPath, QStringList modelFilters, QStr
     //Bind all textures and render models
     for(std::map<QString,Object3DFile*>::iterator i = _models.begin(); i != _models.end(); i++){
         Object3DFile *object3D = i->second;
+        qDebug() << "************************************RENDER******************************************* " << object3D->getName();
         object3D->render();
         object3D->release();
-        qDebug() << "RENDER " << object3D->getName();
     }
 
     qDebug() << "Total en cargar texturas " << loadTexturesTime;
@@ -125,7 +156,7 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
                              ilGetData()); //Load texture to OPEN GL memory
                 ilBindImage(imageId);
                 ilDeleteImage(imageId);
-                qDebug() << "CORRECTO " << textureName;
+                //qDebug() << "CORRECTO " << textureName;
             }
             else{
                 qDebug() << "ERROR WHILE TRANSFORMING TEXTURE TO OPENGL "  << textureName;

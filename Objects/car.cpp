@@ -199,5 +199,5 @@ void Car::getWorldTransform(btTransform &worldTrans) const{
  *-------------------------------------------------------------------*/
 void Car::setWorldTransform(const btTransform &worldTrans){
     _worldTrans = worldTrans;
-    qDebug() <<"COCHE MOVIENDOSE " << worldTrans.getOrigin().getX() << " " << worldTrans.getOrigin().getY() << " " << worldTrans.getOrigin().getZ();
+    //qDebug() <<"COCHE MOVIENDOSE " << worldTrans.getOrigin().getX() << " " << worldTrans.getOrigin().getY() << " " << worldTrans.getOrigin().getZ();
 }

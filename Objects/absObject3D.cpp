@@ -28,7 +28,6 @@ AbsObject3D::AbsObject3D() {
     _p_minVertex = new Point3D();
     _p_maxVertex = new Point3D();
     _isVisible = true;
-    _isMovable = false;
 }
 
 /*-------------------------------------------------------------------
@@ -108,26 +107,6 @@ Point3D * AbsObject3D::getCenter(){
  *-------------------------------------------------------------------*/
 void AbsObject3D::setCenter(Point3D *center){
     this->_p_center = center;
-}
-
-/*-------------------------------------------------------------------
- |  Function setMovable
- |
- |  Purpose: Setter of the movility of the object
- |  Parameters: bool isMovable: false if object is static, true otherwise
- *-------------------------------------------------------------------*/
-void AbsObject3D::setMovable(bool isMovable){
-    _isMovable = isMovable;
-}
-
-/*-------------------------------------------------------------------
- |  Function isMovable
- |
- |  Purpose: Getter of the movility of the object
- |  Returns: bool The movility of the object
- *-------------------------------------------------------------------*/
-bool AbsObject3D::isMovable(){
-    return _isMovable;
 }
 
 /*-------------------------------------------------------------------

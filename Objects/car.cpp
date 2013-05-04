@@ -20,24 +20,22 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Car::Car(Point3D * position, btDiscreteDynamicsWorld *dynamicsWorld)
+Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
 {
     ModelManager *manager = ModelManager::getModelManager();
+    QString wheelsFolder = QString("_Cars/Wheels/");
     this->_p_position = position;
 
-    _chasisObj= manager->getModel("_chasis.3ds");
-    _wheelObj= manager->getModel("_wheel.3ds");
-    _wheelFrontRight= manager->getModel("_wheelFrontRight.3ds");
-    _wheelFrontLeft= manager->getModel("_wheelFrontLeft.3ds");
-    _wheelRearRight= manager->getModel("_wheelRearRight.3ds");
-    _wheelRearLeft= manager->getModel("_wheelRearLeft.3ds");
-
+    _chasisObj= manager->getModel(folderPath + "chasis.3ds");
+    _wheelObj= manager->getModel(folderPath + "wheel.3ds");
+    _wheelFrontRight= manager->getModel(wheelsFolder + "wheelFrontRight.3ds");
+    _wheelFrontLeft= manager->getModel(wheelsFolder + "wheelFrontLeft.3ds");
+    _wheelRearRight= manager->getModel(wheelsFolder + "wheelRearRight.3ds");
+    _wheelRearLeft= manager->getModel(wheelsFolder + "wheelRearLeft.3ds");
 
     _worldTrans = btTransform(btQuaternion(0,0,0,700),btVector3(position->getX(),position->getY(),position->getZ()));
 
-
     _chassisCollisionShape = new btBoxShape(btVector3(1,0.4,3));
-
 
     btScalar mass = 1;
     btVector3 fallInertia(0,0,0);

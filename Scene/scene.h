@@ -15,7 +15,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "Objects/objectmanager.h"
+#include "Objects/objectManager.h"
 #include "Objects/absObject3D.h"
 #include "Objects/object3DFile.h"
 #include <QDir>

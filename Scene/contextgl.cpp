@@ -57,17 +57,11 @@ void GLWidget::initializeGL()
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClearDepth(1.0f); // This is the default OpenGL value, but I'm making it explicit for you
 
-    // 1b) Backface culling enabled
-    //     (this will speedup rendering)
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-
     // 1c) Enable depth testing
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
     //1) Initialize variables
-
     initializeWorld();
 }
 
@@ -87,7 +81,7 @@ void GLWidget::initializeWorld(){
 
     // 1) Load Models
     modelFilters << "*.3ds";
-    textureFilters <<"*.dds" << "*.tga";
+    textureFilters << "*";
 
     modelManager->setFolderToLoad("/Media/Models/", modelFilters, textureFilters);
     modelManager->loadModels();
@@ -141,11 +135,8 @@ void GLWidget::simulatePhysics()
  *****************************************************************************/
 void GLWidget::resizeGL(int w, int h)
 {
-
     glViewport(0,0,w,h);
-    _cameraManager->getCamera("free")
-            ->resizeProjection(w, h);
-
+    _cameraManager->getCamera("free")->resizeProjection(w, h);
 }
 
 /*****************************************************************************

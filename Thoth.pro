@@ -15,7 +15,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    Objects/objectmanager.cpp \
     Objects/object3DFile.cpp \
     Objects/enviroment.cpp \
     Objects/car.cpp \
@@ -51,10 +50,12 @@ SOURCES += main.cpp\
     Ui/newcameraqt.cpp \
     Operators/trajectories.cpp \
     Ui/loaderqt.cpp \
-    Log/assimpLog.cpp
+    Log/assimpLog.cpp \
+    Objects/mesh.cpp \
+    Objects/texture.cpp \
+    Objects/objectManager.cpp
 
 HEADERS  += \
-    Objects/objectmanager.h \
     Objects/object3DFile.h \
     Objects/enviroment.h \
     Objects/car.h \
@@ -92,7 +93,10 @@ HEADERS  += \
     Utils/StdAfx.h \
     Operators/trajectories.h \
     Ui/loaderqt.h \
-    Log/assimpLog.h
+    Log/assimpLog.h \
+    Objects/mesh.h \
+    Objects/texture.h \
+    Objects/objectManager.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

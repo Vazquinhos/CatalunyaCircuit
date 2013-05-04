@@ -21,84 +21,39 @@
 #include <IL/il.h>                  //Devil image loader for textures
 #include <vector>
 #include <bullet/btBulletCollisionCommon.h>
+#include <Objects/mesh.h>
+#include <Objects/texture.h>
 
 using namespace std;
 
 class Object3DFile : public AbsObject3D{
 
 private:
-    #define INVALID_OGL_VALUE 0xFFFFFFFF //Default invalid initial values
-    #define INVALID_MATERIAL 0xFFFFFFFF
-
-
-    struct Instance{
-        GLuint _displayListId; //Texture id bind
-    };
-
-
-    struct Texture{
-        GLenum _textureTarget; //Texture tarjet ex: TEXTURE_2D
-        GLuint _textureBindId; //Texture id bind
-    };
-
-
-    struct Mesh {
-        Mesh();
-        ~Mesh();
-
-        void render(vector<btScalar> *verticesCoord, vector<float> *texturesCoord, vector<float> *normalsCoord,
-                                 vector<int> *Indices, vector<Texture *> *_vTextures);
-        GLuint vertexBufferBindId;      //Vertex buffer array ID bind
-        GLuint texturesBufferBindId;    //Textures buffer array ID bind
-        GLuint normalsBufferBindId;     //Normals buffer array ID bind
-        GLuint faceIndexBufferBindId;   //Face index buffer array ID bind
-        unsigned int numIndices;        //Number of face indexes
-        unsigned int materialIndex;     //Material index of the mesh
-
-        Point3D     * _p_minVertex; //Min vertex of the mesh
-        Point3D     * _p_maxVertex; //Max vertex of the mesh
-        Point3D     * _p_center; //Center of the mesh
-        GLuint        _gi_displayListId; //Display list of the mesh
-        btBvhTriangleMeshShape *collisionShape;
-        bool _isVisible; //Visibility of the mesh
-        //void checkVisibility(Point3D *pointCamera, int distance);
-    };
-
+    QString _baseDirectory; //Base directory path of the object
+    QString _filename; //Filename
 
     Assimp::Importer _importer;
     vector<Mesh*> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
-    vector<Instance*> _vInstances;
     GLuint displayList;
-
-    QString _baseDirectory; //Base directory path of the object
-    QString _filename; //Filename
 
     //Object loading methods
     bool loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
-    bool generateObjectBuffers(const aiScene* pScene);
-    bool mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
-    void apply_material(const aiMaterial *mtl);
-
-    //Auxiliary methods
-    void set_float4(float f[4], float a, float b, float c, float d);
-    void color4_to_float4(const aiColor4D *c, float f[4]);
-
-    void renderInstances(const aiScene* scene, const aiNode* node);
+    void generateObjectBuffers(const aiScene* pScene);
+    void mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
+    void renderInstances(const aiNode *node);
+    void renderNode(const aiNode *node);
 
 public:
     Object3DFile();
-    Object3DFile(QString directory, QString filename, map<QString, GLuint> *textureIdMap, unsigned int assimpFlags, bool isMovable);
+    Object3DFile(QString directory, QString filename, map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
     virtual ~Object3DFile();
-
     void release();
+
+    btCompoundShape *getCollisionShape();
     vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
     void display();
     void render(); //Inherited method
-
-    void renderNode(const aiNode *node);
-
-    btCompoundShape *getCollisionShape();
 };
 
 #endif /* Object3DAssimp_H_ */

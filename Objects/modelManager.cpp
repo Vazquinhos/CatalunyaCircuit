@@ -12,13 +12,29 @@
 
 ModelManager * ModelManager::_p_modelManager = NULL;
 
+/**************************************************** PUBLIC ***************************************************************/
+
+/*-------------------------------------------------------------------
+ |  Function ModelManager()
+ |  Purpose: Creator.
+ *-------------------------------------------------------------------*/
 ModelManager::ModelManager()
 {
 }
+
+/*-------------------------------------------------------------------
+ |  Function ModelManager()
+ |  Purpose: Destructor.
+ *-------------------------------------------------------------------*/
 ModelManager::~ModelManager()
 {
 }
 
+/*-------------------------------------------------------------------
+ |  Function getModelManager()
+ |  Purpose: Gets singleton instance of the object.
+ |  Returns: ModelManager manager :The singleton instance.
+ *-------------------------------------------------------------------*/
 ModelManager * ModelManager::getModelManager(){
     if( !_p_modelManager ) {
         _p_modelManager = new ModelManager();
@@ -29,12 +45,10 @@ ModelManager * ModelManager::getModelManager(){
 
 /*-------------------------------------------------------------------
  |  Function setFolderToLoad
- |
  |  Purpose: Set the folder and filters to load models
  |  Parameters: QString folderPath: Path to the folder that contains models, relative to current project
  |              QStringList modelFilters: Filter extension for loading models
  |              QStringList textureFilters: Filter exentsion for loading textures
- |  Returns:
  *-------------------------------------------------------------------*/
 void ModelManager::setFolderToLoad(QString folderPath, QStringList modelFilters, QStringList textureFilters){
     _folderPath = folderPath;
@@ -42,21 +56,30 @@ void ModelManager::setFolderToLoad(QString folderPath, QStringList modelFilters,
     _textureFilters = textureFilters;
 }
 
+/*-------------------------------------------------------------------
+ |  Function getModel
+ |
+ |  Purpose: Getter. Gets the model with the specified filename
+ |  Parameters: string modelName : The name of the file of the model
+ *-------------------------------------------------------------------*/
+Object3DFile * ModelManager::getModel(QString modelName){
+    return _models[modelName];
+}
 
+/*-------------------------------------------------------------------
+ |  Function loadModels()
+ |  Purpose: Load all models. All folder information must be set properly before calling this method
+ *-------------------------------------------------------------------*/
 void ModelManager::loadModels(){
     QString fullFolderPath = (QDir::currentPath() + _folderPath); //Full path to the model folder
-    QDir modelsDir(fullFolderPath); //Directory of models
     QStringList modelsList; //List of model filenames
     map<QString, GLuint> textureMap; //Texture map (TextureName -> TextureBindId)
-    int loadTexturesTime;
-    int loadModelsTime;
 
     ilInit(); /* Initialization of DevIL texture loader */
 
-    QTime myTimer;
-    myTimer.start();
+    //Assimp logger
 
-    // ***********************  ASSIMP LOGGER ***********************
+    /*
     // Create a logger instance
     Assimp::DefaultLogger::create("",Assimp::Logger::VERBOSE);
     // Now I am ready for logging my stuff
@@ -65,45 +88,64 @@ void ModelManager::loadModels(){
     const unsigned int severity = Assimp::Logger::Err|Assimp::Logger::Info|Assimp::Logger::Err|Assimp::Logger::Warn | Assimp::Logger::Debugging | Assimp::Logger::Info | Assimp::Logger::VERBOSE;
     // Attaching it to the default logger
     Assimp::DefaultLogger::get()->attachStream( new AssimpLog(), severity);
+    */
 
-
-    //*********************** TEXTURE PRELOADING **************************
+    //Texture preoloading
     textureMap = loadTextures(fullFolderPath, _textureFilters); //Preload all textures of all models
-    loadTexturesTime = myTimer.elapsed();
 
+    //Model loading
+    modelsList = listFilesInFolder(fullFolderPath, _modelFilters); //List all models of the directory
 
-    //*********************** MODEL LOADING **************************
-    modelsList = modelsDir.entryList(_modelFilters, QDir::Files); //List all models of the directory
-
-
-    unsigned int i;
+    int i;
 #pragma omp parallel for private(i) firstprivate(fullFolderPath) shared(modelsList, textureMap) default(none)
     for(i=0; i < modelsList.size(); i++){ //Load all models
         QString modelName = modelsList[i];
-        qDebug() << "CARGANDO MODELO" << modelName;
-        unsigned int assimpFlags = aiProcess_ValidateDataStructure| aiProcess_FlipUVs;
-        if(modelName.startsWith("_")){
-            assimpFlags = aiProcess_OptimizeMeshes |aiProcess_ValidateDataStructure| aiProcess_PreTransformVertices | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_TransformUVCoords | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph;
+        unsigned int assimpFlags = aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality| aiProcess_FlipUVs;
+        if(modelName.contains("Ferrari") || modelName.contains("Hrt")){
+        qDebug() << "Loading model: " << modelName;
+            assimpFlags = aiProcess_TransformUVCoords | aiProcess_JoinIdenticalVertices |aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality;
         }
-        Object3DFile *object3D = new Object3DFile(fullFolderPath, modelName, &textureMap, assimpFlags, false);
+        Object3DFile *object3D = new Object3DFile(fullFolderPath + modelName.left(modelName.lastIndexOf("/")+1), modelName.right(modelName.size() - modelName.lastIndexOf("/")), &textureMap, assimpFlags);
         _models[modelName] = object3D;
     }
-    loadModelsTime = myTimer.elapsed() - loadTexturesTime;
-
-
     //Bind all textures and render models
     for(std::map<QString,Object3DFile*>::iterator i = _models.begin(); i != _models.end(); i++){
         Object3DFile *object3D = i->second;
-        qDebug() << "************************************RENDER******************************************* " << object3D->getName();
         object3D->render();
         object3D->release();
     }
-
-    qDebug() << "Total en cargar texturas " << loadTexturesTime;
-    qDebug() << "Total en cargar modelos " << loadModelsTime;
-
-    qDebug() << "Ha tardado en cargar total: " << myTimer.elapsed();
 }
+
+/**************************************************** PRIVATE ***************************************************************/
+
+/*-------------------------------------------------------------------
+ |  Function listFilesInFolder
+ |  Purpose: Get all files of a folder and its subfolders recursively
+ |  Parameters: QString fullFolderPath: Full path to the initial folder to scan
+ |              QStringList fileFilters: File filters ex ".3ds"
+ |  Returns: A list containing a path to the files without including fullFolderPath
+ *-------------------------------------------------------------------*/
+QStringList ModelManager::listFilesInFolder(QString fullFolderPath, QStringList fileFilters){
+    QDir modelsDir(fullFolderPath);
+    QStringList folderFilter;
+    folderFilter <<"*";
+    QStringList fileList = modelsDir.entryList(fileFilters, QDir::Files); //List all models of the directory;
+    QStringList folderList = modelsDir.entryList(folderFilter, QDir::Dirs); //List all models of the directory
+    QStringList fileListFolder;
+    QString path;
+
+    for(int i = 2; i < folderList.size(); i++){ //Starting at 2 avoiding back folders /. and /..
+        path = (fullFolderPath + folderList[i] + "/");
+        fileListFolder = listFilesInFolder(path, fileFilters);
+
+        for(int j = 0; j < fileListFolder.size(); j++){
+            fileList.push_back(folderList[i] + "/" + fileListFolder[j]);
+        }
+    }
+    return fileList;
+}
+
+
 
 /*-------------------------------------------------------------------
  |  Function loadTextures
@@ -113,7 +155,6 @@ void ModelManager::loadModels(){
  |  Returns:
  *-------------------------------------------------------------------*/
 map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList filters){
-    QDir myDir(folderName);
     QStringList list;
     QString textureName;
     QString fullTexturePath;
@@ -122,13 +163,12 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
     GLuint textureId;
     bool success;
 
-    list = myDir.entryList(filters, QDir::Files); //List files in directory
-
-
+    list = listFilesInFolder(folderName, filters);
 
     for(int i = 0; i < list.size(); i++){
         textureName = list[i];
         fullTexturePath = folderName + textureName;
+        qDebug() << "Loading texture: " << fullTexturePath;
         ilGenImages(1, &imageId); // Grab a new image name.(DEVIL)
         success = ilLoadImage(fullTexturePath.toAscii());
 
@@ -156,24 +196,13 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
                              ilGetData()); //Load texture to OPEN GL memory
                 ilBindImage(imageId);
                 ilDeleteImage(imageId);
-                //qDebug() << "CORRECTO " << textureName;
             }
             else{
-                qDebug() << "ERROR WHILE TRANSFORMING TEXTURE TO OPENGL "  << textureName;
+                qDebug() << "ERROR WHILE TRANSFORMING TEXTURE TO OPENGL "  << fullTexturePath;
             }
         }else{
-            qDebug() << "ERROR AL CARGAR LA TEXTURA" << textureName;
+            qDebug() << "ERROR AL CARGAR LA TEXTURA" << fullTexturePath;
         }
     }
     return textureIdMap;
-}
-
-/*-------------------------------------------------------------------
- |  Function getModel
- |
- |  Purpose: Getter. Gets the model with the specified filename
- |  Parameters: string modelName : The name of the file of the model
- *-------------------------------------------------------------------*/
-Object3DFile * ModelManager::getModel(QString modelName){
-    return _models[modelName];
 }

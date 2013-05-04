@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportsettingsqt.ui'
 **
-** Created: Sun Apr 21 17:05:07 2013
+** Created: Sat May 4 12:49:26 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -54,6 +54,15 @@ public:
         if (ExportSettingsQt->objectName().isEmpty())
             ExportSettingsQt->setObjectName(QString::fromUtf8("ExportSettingsQt"));
         ExportSettingsQt->resize(323, 278);
+        ExportSettingsQt->setStyleSheet(QString::fromUtf8("QDialog {\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QFrame {\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
+" }"));
         verticalLayout = new QVBoxLayout(ExportSettingsQt);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame = new QFrame(ExportSettingsQt);
@@ -150,6 +159,17 @@ public:
 
         buttonBox = new QDialogButtonBox(ExportSettingsQt);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"     background-color: #333333;\n"
+"	 border: 1px solid white;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QPushButton:pressed {\n"
+"     background-color: #FFFFFF\n"
+"     border-style: inset;\n"
+"	 color:black;\n"
+" }"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 

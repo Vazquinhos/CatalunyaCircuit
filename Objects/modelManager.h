@@ -22,9 +22,10 @@ public:
 public:
     static ModelManager	* getModelManager();
 
+    Object3DFile* getModel(QString modelName);
+
     void setFolderToLoad(QString folderPath, QStringList modelFilters, QStringList textureFilters);
     void loadModels();
-    Object3DFile* getModel(QString modelName);
 
 private:
     static ModelManager * _p_modelManager;
@@ -32,7 +33,9 @@ private:
     QStringList _modelFilters;
     QStringList _textureFilters;
     map<QString, Object3DFile*> _models;
+
     map<QString, GLuint> loadTextures(QString folderName, QStringList filter);
+    QStringList listFilesInFolder(QString fullFolderPath, QStringList fileFilters);
 };
 
 #endif // MODELMANAGER_H

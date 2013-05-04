@@ -24,7 +24,7 @@ class Car : AbsModels,  public btMotionState
 {
 public:
     // ================= Constructores/Destructores ======================
-    Car(Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
+    Car(QString folderPath, Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
     Car(const Car& car);
     ~Car();
 

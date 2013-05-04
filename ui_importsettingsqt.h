@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'importsettingsqt.ui'
 **
-** Created: Sun Apr 21 17:05:07 2013
+** Created: Sat May 4 12:49:26 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -56,6 +56,15 @@ public:
         if (ImportSettingsQt->objectName().isEmpty())
             ImportSettingsQt->setObjectName(QString::fromUtf8("ImportSettingsQt"));
         ImportSettingsQt->resize(355, 278);
+        ImportSettingsQt->setStyleSheet(QString::fromUtf8("QDialog {\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QFrame {\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
+" }"));
         verticalLayout = new QVBoxLayout(ImportSettingsQt);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame = new QFrame(ImportSettingsQt);
@@ -73,6 +82,17 @@ public:
 
         pushButton = new QPushButton(frame);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"     background-color: #333333;\n"
+"	 border: 1px solid white;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QPushButton:pressed {\n"
+"     background-color: #FFFFFF\n"
+"     border-style: inset;\n"
+"	 color:black;\n"
+" }"));
 
         gridLayout->addWidget(pushButton, 2, 0, 1, 1);
 
@@ -150,6 +170,17 @@ public:
 
         buttonBox = new QDialogButtonBox(ImportSettingsQt);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"     background-color: #333333;\n"
+"	 border: 1px solid white;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QPushButton:pressed {\n"
+"     background-color: #FFFFFF\n"
+"     border-style: inset;\n"
+"	 color:black;\n"
+" }"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 

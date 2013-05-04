@@ -23,6 +23,8 @@
  *-------------------------------------------------------------------*/
 Scene::Scene()
 {
+    QStringList carFolders;
+    carFolders<< "Ferrari/"<<"Hrt/"<<"India/"<<"Lotus/"<<"Mclaren/"<<"Mercedes/"<<"RedBull/"<<"Renault/"<<"Sauber/"<<"Virgin/"<<"Williams/";
     // ========================== Physics / Bullet ========================
     _broadphase = new btDbvtBroadphase(); //Boradphase checks what pair of objects are colliding. Important if there are many objects on the scene
     _collisionConfiguration = new btDefaultCollisionConfiguration(); //Collision configuration
@@ -35,15 +37,13 @@ Scene::Scene()
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
 
-    unsigned int numCars = 5;
+    unsigned int numCars = 10;
     int xPos = 148;
     for(unsigned int i = 0; i < numCars; i++){
-         Car *c1 = new Car(new Point3D(xPos,20,4), _dynamicsWorld);
+        Car *c1 = new Car("_Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(xPos,20,4), _dynamicsWorld);
          _objectManager->addCar(c1);
          xPos+=1;
     }
-
-
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
 }
 

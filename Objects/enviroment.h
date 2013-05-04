@@ -29,7 +29,7 @@ class Enviroment : AbsModels
 public:
     // ================= Constructores/Destructores ======================
     Enviroment(btDiscreteDynamicsWorld *dynamicsWorld);
-    Enviroment(const Enviroment& enviroment, btDiscreteDynamicsWorld *_dynamicsWorld);
+    Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
 

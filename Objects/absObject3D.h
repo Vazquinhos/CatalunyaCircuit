@@ -47,8 +47,7 @@ public:
     QString getName();
     void setVisibility(bool visibility);
     bool getVisibility();
-    void setMovable(bool isMovable);
-    bool isMovable();
+
 
 protected:
     virtual void render(){}
@@ -64,7 +63,6 @@ private:
     Point3D     * _p_center;
 
     bool _isVisible;
-    bool _isMovable;
     // ============================ Methods ==============================
 };
 

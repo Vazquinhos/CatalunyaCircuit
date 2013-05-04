@@ -25,22 +25,21 @@
 Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
 {
     ModelManager *manager = ModelManager::getModelManager();
-    _sky = manager->getModel("sky.3ds");
-    _terrain = manager->getModel("terrain.3ds");
-    _advertisement = manager->getModel("advertisement.3ds");
-    _flags = manager->getModel("flags.3ds");
-    _objects = manager->getModel("objects.3ds");
-    _fences = manager->getModel("fences.3ds");
-    _pneumatic_fences = manager->getModel("pneumatic_fences.3ds");
-    _walls = manager->getModel("walls.3ds");
-    _forest = manager->getModel("forest.3ds");
-    _buildings1 = manager->getModel("buildings1.3ds");
-    _buildings2 = manager->getModel("buildings2.3ds");
-    _buildings3 = manager->getModel("buildings3.3ds");
-    _buildings4 = manager->getModel("buildings4.3ds");
-    _buildings5 = manager->getModel("buildings5.3ds");
-    _buildings6 = manager->getModel("buildings6.3ds");
-
+    _sky = manager->getModel("Circuit/sky.3ds");
+    _terrain = manager->getModel("Circuit/terrain.3ds");
+    _advertisement = manager->getModel("Circuit/advertisement.3ds");
+    _flags = manager->getModel("Circuit/flags.3ds");
+    _objects = manager->getModel("Circuit/objects.3ds");
+    _fences = manager->getModel("Circuit/fences.3ds");
+    _pneumatic_fences = manager->getModel("Circuit/pneumatic_fences.3ds");
+    _walls = manager->getModel("Circuit/walls.3ds");
+    _forest = manager->getModel("Circuit/forest.3ds");
+    _buildings1 = manager->getModel("Circuit/buildings1.3ds");
+    _buildings2 = manager->getModel("Circuit/buildings2.3ds");
+    _buildings3 = manager->getModel("Circuit/buildings3.3ds");
+    _buildings4 = manager->getModel("Circuit/buildings4.3ds");
+    _buildings5 = manager->getModel("Circuit/buildings5.3ds");
+    _buildings6 = manager->getModel("Circuit/buildings6.3ds");
 
     // ========================== Phisics Bullet =================
     _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-75);
@@ -57,7 +56,7 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Enviroment::Enviroment(const Enviroment &enviroment, btDiscreteDynamicsWorld *_dynamicsWorld)
+Enviroment::Enviroment(const Enviroment &enviroment)
 {
 }
 

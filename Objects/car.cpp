@@ -23,7 +23,7 @@
 Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
 {
     ModelManager *manager = ModelManager::getModelManager();
-    QString wheelsFolder = QString("_Cars/Wheels/");
+    QString wheelsFolder = QString("Cars/Wheels/");
     this->_p_position = position;
 
     _chasisObj= manager->getModel(folderPath + "chasis.3ds");

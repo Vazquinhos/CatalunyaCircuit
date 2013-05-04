@@ -40,7 +40,7 @@ Scene::Scene()
     unsigned int numCars = 10;
     int xPos = 148;
     for(unsigned int i = 0; i < numCars; i++){
-        Car *c1 = new Car("_Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(xPos,20,4), _dynamicsWorld);
+        Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(xPos,20,4), _dynamicsWorld);
          _objectManager->addCar(c1);
          xPos+=1;
     }

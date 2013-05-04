@@ -1,5 +1,5 @@
 #ifndef SETTINGSIMPORTER_H
-#define SETTINGSEXPORTER_H
+#define SETTINGSIMPORTER_H
 
 #include <QString>
 #include <QTextStream>

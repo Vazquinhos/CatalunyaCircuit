@@ -2,6 +2,7 @@
 #define IMPORTSETTINGSQT_H
 
 #include <QDialog>
+#include "Loaders/settingsimporter.h"
 
 namespace Ui {
 class ImportSettingsQt;
@@ -27,6 +28,7 @@ private slots:
 private:
     // ========================== Data Members ============================
     Ui::ImportSettingsQt *ui;
+    SettingsImporter * _p_settingsImporter;
     // ============================ Methods ===============================
 
 signals:

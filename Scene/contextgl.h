@@ -42,6 +42,7 @@ private:
     float _fps;
     float _countFrames;
     float _maxCountFrames;
+    unsigned int _indexCamera;
 
     QTimer *_physicsEventTimer;
     QTimer *_displayEventTimer;
@@ -55,6 +56,7 @@ private:
     QGLShaderProgram *shader;
 
     Point2D posCam;
+
 
     //************** MOUSE ZOOM ******************
     bool _isZoomingIn;

@@ -47,6 +47,14 @@ void ImportSettingsQt::on_buttonBox_accepted()
         // Hide the current window
         hide();
     }
+    else
+    {
+        _p_settingsImporter = new SettingsImporter(fileName);
+        _p_settingsImporter->SetParameters(ui->camera_chk->isChecked(),
+                                           ui->car_chk->isChecked(),
+                                           ui->light_chk->isChecked());
+        _p_settingsImporter->Execute();
+    }
 }
 
 void ImportSettingsQt::errorAcepted( void )

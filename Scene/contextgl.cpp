@@ -6,6 +6,8 @@
 #include <QStringList>
 #include <Ui/loaderqt.h>
 #include <QThread>
+#include "Cameras/cameramanager.h"
+#include "Cameras/fixedcamera.h"
 
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
@@ -94,12 +96,13 @@ void GLWidget::initializeWorld(){
     //----------------------------------------------------------
     SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
     _cameraManager->addCamera(QString("spherical"), spCam);
-    _cameraManager->setActiveCamera("spherical");
     FreeCamera * frCam = new FreeCamera();
     _cameraManager->addCamera(QString("free"), frCam);
 
+    _cameraManager->setActiveCamera("free");
+
     _maxVisibleDistance = 200;
-    _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
+    _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -136,7 +139,7 @@ void GLWidget::simulatePhysics()
 void GLWidget::resizeGL(int w, int h)
 {
     glViewport(0,0,w,h);
-    _cameraManager->getCamera("free")->resizeProjection(w, h);
+    _cameraManager->getActiveCamera()->resizeProjection(w, h);
 }
 
 /*****************************************************************************
@@ -152,7 +155,7 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
     // Update camera to its current position
-    _cameraManager->getCamera("free")->update();
+    _cameraManager->getActiveCamera()->update();
     _scene->display();
 
     if(_countFrames > _maxCountFrames){
@@ -187,7 +190,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton)
     {
-        _cameraManager->getCamera("free")
+        _cameraManager->getActiveCamera()
                 ->addYawPitch(posCam.getX()- event->x(),  posCam.getY() - event->y());
         posCam.setCoordinates(event->x(), event->y());
     }
@@ -243,7 +246,7 @@ void GLWidget::onZoomChanged(qreal x)
     (void)x; //Delete unused warning
     qreal factor = 1 + qreal(_numScheduledScalings) / 300.0; //Faster zoom if faster wheel movement
 
-    CameraAbs *camera = _cameraManager->getCamera("free");
+    CameraAbs *camera = _cameraManager->getActiveCamera();
 
     if(_isZoomingIn){//Increment or decrease current zoom
         camera->setZoom(camera->getZoom() + factor);
@@ -266,25 +269,25 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     case Qt::Key_Right: //Move camera to right
         //qDebug() << "PULSANDO RIGHT";
-        _cameraManager->getCamera("free")->move(1, false);
+        _cameraManager->getActiveCamera()->move(1, false);
         _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
 
         break;
 
     case Qt::Key_Left: //Move camera to left
         //qDebug() << "PULSANDO LEFT";
-        _cameraManager->getCamera("free")->move(-1, false);
+        _cameraManager->getActiveCamera()->move(-1, false);
         _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
         break;
     case Qt::Key_Up: //Move camera to front
         //qDebug() << "PULSANDO UP";
-        _cameraManager->getCamera("free")->move(1, true);
+        _cameraManager->getActiveCamera()->move(1, true);
         _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
         break;
 
     case Qt::Key_Down: //Move camera to back
         //qDebug() << "PULSANDO DOWN";
-        _cameraManager->getCamera("free")->move(-1, true);
+        _cameraManager->getActiveCamera()->move(-1, true);
         _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
         break;
         break;
@@ -298,13 +301,26 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_W:
         break;
     case Qt::Key_S:
-        pos = _cameraManager->getCamera("free")->getPosition();
-        qDebug() << "POSICION CAMERA:";
-        qDebug() << "X " << pos->getX() << " Y " << pos->getY() << " Z " << pos->getZ();
+        {
+            pos = _cameraManager->getCamera("free")->getPosition();
+
+            float yaw, pitch;
+            _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
+
+            float zoom = _cameraManager->getCamera("free")->getZoom();
+            char name[25] = "fixedCamera";
+            QString qStr = QString::number(_indexCamera);
+            QString Qname = QString(name);
+            Qname.append(qStr);
+            FixedCamera * newcam = new FixedCamera(Qname);
+            newcam->setPosition(new Point3D(*pos));
+            newcam->setYawPitch(yaw, pitch);
+            newcam->setZoom(zoom);
+            _cameraManager->addCamera(Qname, newcam);
+            ++_indexCamera;
+        }
         break;
     case Qt::Key_R:
-        _cameraManager->getCamera("free")->getPosition()->setCoordinates(0,0,0);
-        _cameraManager->getCamera("free")->setYawPitch(0,0);
         break;
     case Qt::Key_A:
         break;

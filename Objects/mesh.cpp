@@ -33,24 +33,6 @@ Mesh::~Mesh()
 }
 
 /*-------------------------------------------------------------------
-|  Function checkVisibility
-|  Purpose: Check de visibility of the mesh
-*-------------------------------------------------------------------*/
-/*
-void Object3DFile::Mesh::checkVisibility(Point3D *pointCamera, int distance){
-    Point3D *punto = new Point3D(_p_center->getX(), _p_center->getY(), _p_center->getZ() );
-    int d = punto->getDistance(pointCamera);
-    //qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
-    //qDebug() << "MIN " << _p_minVertex->getX() << " : " << _p_minVertex->getY() << " : " << _p_minVertex->getZ() << " MAX "<< _p_maxVertex->getX() << " : "<< _p_maxVertex->getY() << _p_maxVertex->getZ();
-    if(d < distance){
-        _isVisible = true;
-    }else{
-        _isVisible = false;
-    }
-}
-*/
-
-/*-------------------------------------------------------------------
 |  Function generateMeshBuffers
 |  Purpose:     Generates all buffers of this mesh
 |  Parameters:  const vector<float> &verticesCoord  = Vector with all vertex info to generate its buffer array buffer id

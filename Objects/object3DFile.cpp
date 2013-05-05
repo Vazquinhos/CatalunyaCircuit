@@ -49,9 +49,13 @@ Object3DFile::Object3DFile(QString fullFolderPath, QString filename, map<QString
     setName(filename);
     _baseDirectory = fullFolderPath;
     _filename = filename;
+    _isVisible = true;
     loadFromFile(textureIdMap, assimpFlags);
 }
 
+bool Object3DFile::isVisible(){
+    return _isVisible;
+}
 /*-------------------------------------------------------------------
  |  Function loadFromFile
  |  Purpose: Loads object 3D from the specified path in constructor
@@ -81,10 +85,7 @@ void Object3DFile::render() {
     const aiNode *node = scene->mRootNode;
     generateObjectBuffers(scene);
 
-    displayList = glGenLists(1); //Generate new display list identifier
-    glNewList(displayList, GL_COMPILE); //Starting rendering in memory
     renderInstances(node);
-    glEndList();
 }
 
 /*-------------------------------------------------------------------
@@ -130,10 +131,23 @@ void Object3DFile::release(){
 *-------------------------------------------------------------------*/
 vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
     vector<GLuint> displayLists;
+    Point3D *punto;
+    Instance *instance;
+    int d;
 
-    (void) pointCamera;
-    (void) distance;
-
+    for(unsigned int i=0; i < _vInstances.size(); i++){
+        instance = _vInstances[i];
+        punto = instance->getCenter();
+        d = punto->getDistance(pointCamera);
+        //if(d < distance){
+            displayLists.push_back(instance->getDisplayList());
+            _isVisible = true;
+        //}else{
+          //  _isVisible = false;
+        //}
+        //qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
+        //qDebug() << "MIN " << _p_minVertex->getX() << " : " << _p_minVertex->getY() << " : " << _p_minVertex->getZ() << " MAX "<< _p_maxVertex->getX() << " : "<< _p_maxVertex->getY() << _p_maxVertex->getZ();
+    }
     return displayLists;
 }
 
@@ -143,9 +157,9 @@ vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance)
  |           has been updated, render must be called
  *-------------------------------------------------------------------*/
 void Object3DFile::display() {
-    glPushMatrix();
-    glCallList(displayList); //Call display list for display the object
-    glPopMatrix();
+    for(unsigned int i=0; i < _vInstances.size(); i++){
+        glCallList(_vInstances[i]->getDisplayList());
+    }
 }
 
 /******************************* PRIVATE *****************************************/
@@ -266,22 +280,49 @@ void Object3DFile::generateObjectBuffers(const aiScene* pScene)
 void Object3DFile::renderNode(const aiNode* node){
     Mesh *mesh;
     const aiNode *child;
+    GLuint displayList;
     aiMatrix4x4 transform = node->mTransformation;
     transform.Transpose();
 
-    glPushMatrix();
-    glMultMatrixf((float*)&transform); //Apply transformation for the node
+
 
     for(unsigned int i = 0; i < node->mNumMeshes ; i++){
         mesh = _vMeshes[node->mMeshes[i]];
+        displayList = glGenLists(1); //Generate new display list identifier
+        glNewList(displayList, GL_COMPILE); //Starting rendering in memory
+
+        glPushMatrix();
+        glMultMatrixf((float*)&transform); //Apply transformation for the node
         glCallList(mesh->_gi_displayListId); //Node rendering
-    }
-    for(unsigned int i = 0; i < node->mNumChildren; i++){ //Recursively render its childs
-        child = node->mChildren[i];
-        renderNode(child);
+        glPopMatrix();
+        glEndList();
+
+        _vInstances.push_back(new Instance(mesh->_p_minVertex, mesh->_p_maxVertex, mesh->_p_center, displayList));
     }
 
-    glPopMatrix();
+
+    for(unsigned int i = 0; i < node->mNumChildren; i++){ //Recursively render its childs
+        child = node->mChildren[i];
+
+
+        for(unsigned int i = 0; i < child->mNumMeshes ; i++){
+            mesh = _vMeshes[child->mMeshes[i]];
+
+            displayList = glGenLists(1); //Generate new display list identifier
+            glNewList(displayList, GL_COMPILE); //Starting rendering in memory
+            glPushMatrix();
+            glMultMatrixf((float*)&transform); //Apply transformation for the node
+            glCallList(mesh->_gi_displayListId); //Node rendering
+            glPopMatrix();
+            glEndList();
+
+            _vInstances.push_back(new Instance(mesh->_p_minVertex, mesh->_p_maxVertex, mesh->_p_center, displayList));
+        }
+
+
+    }
+
+
 }
 
 /*-------------------------------------------------------------------
@@ -295,6 +336,7 @@ void Object3DFile::renderInstances(const aiNode* node){
     const aiNode *child;
     const aiNode* lastObject;
     Mesh *mesh;
+    GLuint displayList;
     //Here we are in the root node that does not contain any mesh, and its transformation is not applied
 
     for(unsigned int i = 0; i < node->mNumChildren; i++){
@@ -309,17 +351,27 @@ void Object3DFile::renderInstances(const aiNode* node){
             aiMatrix4x4 transform = child->mTransformation;
             transform.Transpose(); //Apply transformation
 
-            glPushMatrix();         //Render the childs of last succesfully rendered object
-            glMultMatrixf((float*)&transform);
 
-            for(unsigned int i = 0; i < lastObject->mNumChildren; i++){
-                child = lastObject->mChildren[i];
-                for(unsigned int i = 0; i < child->mNumMeshes ; i++){
-                    mesh = _vMeshes[child->mMeshes[i]];
+
+            for(unsigned int j = 0; j < lastObject->mNumChildren; j++){
+                child = lastObject->mChildren[j];
+                for(unsigned int k = 0; k < child->mNumMeshes ; k++){
+                    mesh = _vMeshes[child->mMeshes[k]];
+                    displayList = glGenLists(1); //Generate new display list identifier
+                    glNewList(displayList, GL_COMPILE); //Starting rendering in memory
+
+                    glPushMatrix();         //Render the childs of last succesfully rendered object
+                    glMultMatrixf((float*)&transform);
                     glCallList(mesh->_gi_displayListId);
+                    glPopMatrix();
+
+                    glEndList();
+
+
+                    _vInstances.push_back(new Instance(mesh->_p_minVertex, mesh->_p_maxVertex, mesh->_p_center, displayList));
                 }
             }
-            glPopMatrix();
+
         }
     }
 }

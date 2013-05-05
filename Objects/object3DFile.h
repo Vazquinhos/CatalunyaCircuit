@@ -23,6 +23,7 @@
 #include <bullet/btBulletCollisionCommon.h>
 #include <Objects/mesh.h>
 #include <Objects/texture.h>
+#include <Objects/instance.h>
 
 using namespace std;
 
@@ -35,7 +36,8 @@ private:
     Assimp::Importer _importer;
     vector<Mesh*> _vMeshes; //Meshes of the object with normals, vertex and texture coordinates
     vector<Texture*> _vTextures; //Texture info
-    GLuint displayList;
+    vector<Instance*> _vInstances;
+    bool _isVisible;
 
     //Object loading methods
     bool loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
@@ -52,6 +54,7 @@ public:
 
     btCompoundShape *getCollisionShape();
     vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
+    bool isVisible();
     void display();
     void render(); //Inherited method
 };

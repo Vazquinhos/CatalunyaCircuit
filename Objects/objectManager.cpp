@@ -113,15 +113,12 @@ Enviroment * ObjectManager::getEnviroment()
  *-------------------------------------------------------------------*/
 void ObjectManager::displayAll(){
 
-    //glCallLists(_displayLists.size(), GL_UNSIGNED_INT, &_displayLists[0]);
+    glCallLists(_displayLists.size(), GL_UNSIGNED_INT, &_displayLists[0]);
 
-
-    _p_enviroment->displayModels();
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
         _v_cars[i]->displayModels();
     }
-
 
 }
 

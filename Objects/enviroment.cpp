@@ -42,7 +42,7 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
     _buildings6 = manager->getModel("Circuit/buildings6.3ds");
 
     // ========================== Phisics Bullet =================
-    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-75);
+    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-76);
     _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,_groundMotionState,_groundShape,btVector3(0,0,0));
     _groundRigidBody = new btRigidBody(groundRigidBodyCI);
@@ -73,32 +73,6 @@ Enviroment::~Enviroment()
 
 // ============================ Methods ===============================
 
-
-// ============================ Inherited Methods ===============================
-/*-------------------------------------------------------------------
- |  Function displayModels
- |
- |  Purpose: Displays all models
- *-------------------------------------------------------------------*/
-void Enviroment::displayModels(){
-
-    _sky->display();
-    _terrain->display();
-    _advertisement->display();
-    _terrain->display();
-    _flags->display();
-    _objects->display();
-    _fences->display();
-    _pneumatic_fences->display();
-    _walls->display();
-    _forest->display();
-    _buildings1->display();
-    _buildings2->display();
-    _buildings3->display();
-    _buildings4->display();
-    _buildings5->display();
-    _buildings6->display();
-}
 
 /*-------------------------------------------------------------------
  |  Function checkVisibility

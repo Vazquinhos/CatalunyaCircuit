@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     Log/assimpLog.cpp \
     Objects/mesh.cpp \
     Objects/texture.cpp \
-    Objects/objectManager.cpp
+    Objects/objectManager.cpp \
+    Objects/instance.cpp
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -96,7 +97,8 @@ HEADERS  += \
     Log/assimpLog.h \
     Objects/mesh.h \
     Objects/texture.h \
-    Objects/objectManager.h
+    Objects/objectManager.h \
+    Objects/instance.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

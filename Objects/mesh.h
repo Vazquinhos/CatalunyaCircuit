@@ -34,8 +34,6 @@ public:
 
     void apply_material(const aiMaterial *mtl);
 
-    //void checkVisibility(Point3D *pointCamera, int distance);
-
 private:
     #define INVALID_OGL_VALUE 0xFFFFFFFF //Default invalid initial values
     #define INVALID_MATERIAL 0xFFFFFFFF

@@ -32,9 +32,6 @@ public:
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
-
-    // ============================ Inherited Methods ===============================
-    virtual void displayModels();
     vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
 
 private:

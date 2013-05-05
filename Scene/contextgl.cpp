@@ -103,7 +103,7 @@ void GLWidget::initializeWorld(){
     _cameraManager->setActiveCamera("free");
 
     _indexCamera = 0;
-    _maxVisibleDistance = 200;
+    _maxVisibleDistance = 150;
     _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
 
     glEnable(GL_TEXTURE_2D);
@@ -159,11 +159,12 @@ void GLWidget::paintGL()
 
     _totalTime += d_elapsedTime;
     float elapsedTime = (float)d_elapsedTime/1000.f;
-
+/*
     qDebug() << "FPS: " << _fps;
     qDebug() << "Elap: " << elapsedTime;
     qDebug() << "Total: " << _totalTime;
     qDebug() << _cameraManager->getActiveCamera()->getName();
+*/
 
     // Clean buffers:
     // COLOR to ensure final representation has no waste from previous renders

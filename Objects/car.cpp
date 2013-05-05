@@ -142,12 +142,25 @@ void Car::displayModels(){
 
     glMultMatrixd(transformation);
 
-    _chasisObj->display();
-    _wheelObj->display();
-    _wheelFrontRight->display();
-    _wheelFrontLeft->display();
-    _wheelRearRight->display();
-    _wheelRearLeft->display();
+    if(_chasisObj->isVisible()){
+        _chasisObj->display();
+    }
+    if(_wheelObj->isVisible()){
+        _wheelObj->display();
+    }
+    if(_wheelFrontRight->isVisible()){
+        _wheelFrontRight->display();
+    }
+    if(_wheelFrontLeft->isVisible()){
+        _wheelFrontLeft->display();
+    }
+    if(_wheelRearRight->isVisible()){
+        _wheelRearRight->display();
+    }
+    if(_wheelRearLeft->isVisible()){
+        _wheelRearLeft->display();
+    }
+
     glPopMatrix();
 }
 
@@ -160,22 +173,14 @@ void Car::displayModels(){
 vector<GLuint> Car::checkVisibility(Point3D *pointCamera, int distance){
     vector<GLuint> displayLists;
 
-    vector<GLuint> displayListsChassis = _chasisObj->checkVisibility(pointCamera, distance);
-    vector<GLuint> displayListsWheel = _wheelObj->checkVisibility(pointCamera, distance);
-    vector<GLuint> displayListsWFR = _wheelFrontRight->checkVisibility(pointCamera, distance);
-    vector<GLuint> displayListsWFL = _wheelFrontLeft->checkVisibility(pointCamera, distance);
-    vector<GLuint> displayListsWRR = _wheelRearRight->checkVisibility(pointCamera, distance);
-    vector<GLuint> displayListsWRL =  _wheelRearLeft->checkVisibility(pointCamera, distance);
-
-    displayLists.insert( displayLists.end(), displayListsChassis.begin(), displayListsChassis.end() );
-    displayLists.insert( displayLists.end(), displayListsWheel.begin(), displayListsWheel.end() );
-    displayLists.insert( displayLists.end(), displayListsWFR.begin(), displayListsWFR.end() );
-    displayLists.insert( displayLists.end(), displayListsWFL.begin(), displayListsWFL.end() );
-    displayLists.insert( displayLists.end(), displayListsWRR.begin(), displayListsWRR.end() );
-    displayLists.insert( displayLists.end(), displayListsWRL.begin(), displayListsWRL.end() );
+    _chasisObj->checkVisibility(pointCamera, distance);
+    _wheelObj->checkVisibility(pointCamera, distance);
+    _wheelFrontRight->checkVisibility(pointCamera, distance);
+    _wheelFrontLeft->checkVisibility(pointCamera, distance);
+    _wheelRearRight->checkVisibility(pointCamera, distance);
+    _wheelRearLeft->checkVisibility(pointCamera, distance);
 
     return displayLists;
-
 }
 
 /*-------------------------------------------------------------------

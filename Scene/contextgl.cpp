@@ -8,6 +8,7 @@
 #include <QThread>
 #include "Cameras/cameramanager.h"
 #include "Cameras/fixedcamera.h"
+#include "GL/glut.h"
 
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
@@ -77,8 +78,8 @@ void GLWidget::initializeWorld(){
     QStringList modelFilters;
     QStringList textureFilters;
 
-    _countFrames = 0; //Current number of frames measured before reset
-    _maxCountFrames = 300; //Max frames before calculating fps
+    /*_countFrames = 0; //Current number of frames measured before reset
+    _maxCountFrames = 300; //Max frames before calculating fps*/
     _fps = 0;
 
     // 1) Load Models
@@ -101,6 +102,7 @@ void GLWidget::initializeWorld(){
 
     _cameraManager->setActiveCamera("free");
 
+    _indexCamera = 0;
     _maxVisibleDistance = 200;
     _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
 
@@ -149,22 +151,32 @@ void GLWidget::resizeGL(int w, int h)
  *****************************************************************************/
 void GLWidget::paintGL()
 {
+
+    //OBTENER EL ELAPSED TIME COMO LA RESTA ENTRE EL TIEMPO DE AHORA I EL ANTERIOR.
+    double d_elapsedTime = _displayTimer.elapsed();
+    double _fps = 1000.0f/_displayTimer.elapsed();
+    _displayTimer.restart();
+
+    _totalTime += d_elapsedTime;
+    float elapsedTime = (float)d_elapsedTime/1000.f;
+
+    qDebug() << "FPS: " << _fps;
+    qDebug() << "Elap: " << elapsedTime;
+    qDebug() << "Total: " << _totalTime;
+    qDebug() << _cameraManager->getActiveCamera()->getName();
+
     // Clean buffers:
     // COLOR to ensure final representation has no waste from previous renders
     // DEPTH to ensure correct representation of objects given the depht testing used
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+
     // Update camera to its current position
     _cameraManager->getActiveCamera()->update();
+
+    // Update the scene (all the objects)
     _scene->display();
 
-    if(_countFrames > _maxCountFrames){
-        _fps = _maxCountFrames /(_displayTimer.elapsed()/1000);
-        _displayTimer.restart();
-        _countFrames = 0;
-        qDebug() << "FPS " << _fps;
-    }
-    _countFrames++;
 }
 
 /*****************************************************************************
@@ -270,26 +282,35 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Right: //Move camera to right
         //qDebug() << "PULSANDO RIGHT";
         _cameraManager->getActiveCamera()->move(1, false);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
 
         break;
 
     case Qt::Key_Left: //Move camera to left
         //qDebug() << "PULSANDO LEFT";
         _cameraManager->getActiveCamera()->move(-1, false);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
         break;
     case Qt::Key_Up: //Move camera to front
         //qDebug() << "PULSANDO UP";
         _cameraManager->getActiveCamera()->move(1, true);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
         break;
 
     case Qt::Key_Down: //Move camera to back
         //qDebug() << "PULSANDO DOWN";
         _cameraManager->getActiveCamera()->move(-1, true);
-        _objectManager->checkVisibility(_cameraManager->getCamera("free")->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
         break;
+
+    //DEBUG
+    case Qt::Key_U:
+        _cameraManager->getActiveCamera()->move(10, true);
+        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        break;
+    case Qt::Key_J:
+        _cameraManager->getActiveCamera()->move(-10, true);
+        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
         break;
 
     case Qt::Key_Plus: //Move camera, more altitude
@@ -302,18 +323,19 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_S:
         {
-            pos = _cameraManager->getCamera("free")->getPosition();
+            Point3D * position = _cameraManager->getCamera("free")->getPosition();
 
             float yaw, pitch;
             _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
 
             float zoom = _cameraManager->getCamera("free")->getZoom();
-            char name[25] = "fixedCamera";
             QString qStr = QString::number(_indexCamera);
-            QString Qname = QString(name);
+            QString Qname = QString("fixedCamera");
             Qname.append(qStr);
             FixedCamera * newcam = new FixedCamera(Qname);
-            newcam->setPosition(new Point3D(*pos));
+            newcam->getPosition()->setCoordinates(position->getX(),
+                                                  position->getY(),
+                                                  position->getZ());
             newcam->setYawPitch(yaw, pitch);
             newcam->setZoom(zoom);
             _cameraManager->addCamera(Qname, newcam);

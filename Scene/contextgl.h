@@ -40,9 +40,10 @@ private:
     int _maxVisibleDistance;
 
     float _fps;
-    float _countFrames;
-    float _maxCountFrames;
+    /*float _countFrames;
+    float _maxCountFrames;*/
     unsigned int _indexCamera;
+    double _totalTime;
 
     QTimer *_physicsEventTimer;
     QTimer *_displayEventTimer;

@@ -26,7 +26,7 @@ CameraAbs::CameraAbs( void )
     _pitch = 30;
     _mode = PERSPECTIVE;
     _name = QString("Not init");
-    setPosition(new Point3D(144.0f, 0.216f, 3.906f));
+    setPosition(new Point3D(0.0f, 0.0f, 0.0f));
 }
 
 /*-------------------------------------------------------------------
@@ -43,7 +43,7 @@ CameraAbs::CameraAbs(QString a_name)
     _pitch = 30;
     _mode = PERSPECTIVE;
     _name = a_name;
-    setPosition(new Point3D(144.0f, 0.216f, 3.906f));
+    setPosition(new Point3D(0.0f, 0.0f, 0.0f));
 }
 
 /*-------------------------------------------------------------------

@@ -124,7 +124,7 @@ void CameraWindowQt::on_pushButton_clicked()
     if(p_camera)
     {
         // Le decimos que sera la camara activa
-        CameraManager::getCameraManager()->setActiveCamera( p_camera );
+        CameraManager::getCameraManager()->setActiveCamera( current_camera );
     }
 }
 

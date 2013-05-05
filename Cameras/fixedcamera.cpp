@@ -61,3 +61,31 @@ QString FixedCamera::getTypeInQString( void )
 {
     return "FixedCamera";
 }
+
+void FixedCamera::update()
+{
+    float yaw, pitch;
+
+    getYawPitch(yaw, pitch);
+    yaw = yaw*PI/180;
+    pitch = pitch*PI/180;
+
+    Point3D * pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
+                                      sin(yaw)*cos(pitch) + getPosition()->getY(),
+                                      sin(pitch) + getPosition()->getZ() );
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(getPosition()->getX(),
+              getPosition()->getY(),
+              getPosition()->getZ(),
+              pointToLook->getX(),
+              pointToLook->getY(),
+              pointToLook->getZ(),
+              0, 0, 1 );
+}
+
+void FixedCamera::animate()
+{
+
+}

@@ -12,6 +12,7 @@
 #include <QTime>
 #include <IL/il.h>                  //Devil image loader for textures
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
+#include "GL/glut.h"
 
 // ================= Constructores/Destructores ======================
 /*-------------------------------------------------------------------

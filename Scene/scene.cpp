@@ -13,9 +13,8 @@
 #include <IL/il.h>                  //Devil image loader for textures
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 #include "GL/glut.h"
-char frames[15];
-const int font=(int)GLUT_BITMAP_9_BY_15;
 
+char _frames[15]; //String that shows fps
 // ================= Constructores/Destructores ======================
 /*-------------------------------------------------------------------
  |
@@ -35,7 +34,6 @@ Scene::Scene()
     _solver = new btSequentialImpulseConstraintSolver(); //Handles object interactions like gravity
     _dynamicsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration); //World simulator
     _dynamicsWorld->setGravity(btVector3(0,0,-9.81f));//Sets the gravity (choose -10m/s² on Z axis)
-
 
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
@@ -83,15 +81,13 @@ Scene::~Scene()
  |  Function display
  |
  |  Purpose: Displays all objects
+ |  Parameters: float fps: Actual frames per second screen refresh to show on screen
  *-------------------------------------------------------------------*/
 void Scene::display(float fps)
 {
-
-    sprintf(frames, "FPS = %f", fps);
-    paint2DText(20,20,(void *)font,frames);
+    sprintf(_frames, "FPS = %f", fps);
+    paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();
-
-
 }
 
 /*-------------------------------------------------------------------
@@ -105,6 +101,15 @@ void Scene::simulatePhisics(btScalar timeStep)
     _dynamicsWorld->stepSimulation(timeStep,10);  // Do world simulation every 1/60 s
 }
 
+/*-------------------------------------------------------------------
+ |  Function paint2DText
+ |
+ |  Purpose:     Prints on screen a text
+ |  Parameters:  float x: X Position of the text
+ |               float y: Y Position of the text
+ |               void *font: Font to render the text
+ |               const char *string: String to show
+ *-------------------------------------------------------------------*/
 void Scene::paint2DText(float x, float y, void *font,const char *string)
 {
     const char *c;

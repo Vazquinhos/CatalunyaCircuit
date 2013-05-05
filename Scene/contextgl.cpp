@@ -178,7 +178,6 @@ void GLWidget::paintGL()
 
     // Update the scene (all the objects)
     _scene->display(_fps);
-
 }
 
 /*****************************************************************************

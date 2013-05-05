@@ -22,8 +22,10 @@
 #include <Objects/enviroment.h>
 #include <Cameras/cameramanager.h>
 #include <QTime>
-
+#include <string>
 #include <bullet/btBulletDynamicsCommon.h>
+
+using namespace std;
 
 class Scene
 {
@@ -35,7 +37,7 @@ public:
     // ============================ Methods ===============================
     void display(float fps);
     void simulatePhisics(btScalar timeStep);
-    void paint2DText(float x, float y, void *font,const char *string);
+    void paint2DText(float x, float y, void *font, const char *string);
 
 private:
     // ========================== Data Members ============================

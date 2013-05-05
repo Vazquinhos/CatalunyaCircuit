@@ -1,4 +1,4 @@
-#include "settingsimporter.h".h"
+#include "settingsimporter.h"
 
 #include <QTextStream>
 #include <QFile>

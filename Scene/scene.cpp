@@ -13,6 +13,8 @@
 #include <IL/il.h>                  //Devil image loader for textures
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 #include "GL/glut.h"
+char frames[15];
+const int font=(int)GLUT_BITMAP_9_BY_15;
 
 // ================= Constructores/Destructores ======================
 /*-------------------------------------------------------------------
@@ -82,8 +84,14 @@ Scene::~Scene()
  |
  |  Purpose: Displays all objects
  *-------------------------------------------------------------------*/
-void Scene::display(){
+void Scene::display(float fps)
+{
+
+    sprintf(frames, "FPS = %f", fps);
+    paint2DText(20,20,(void *)font,frames);
     this->_objectManager->displayAll();
+
+
 }
 
 /*-------------------------------------------------------------------
@@ -92,6 +100,33 @@ void Scene::display(){
  |  Purpose: Do all physics simulation
  |  Returns: bool True if screen must be updated, false otherwise
  *-------------------------------------------------------------------*/
-void Scene::simulatePhisics(btScalar timeStep){
+void Scene::simulatePhisics(btScalar timeStep)
+{
     _dynamicsWorld->stepSimulation(timeStep,10);  // Do world simulation every 1/60 s
+}
+
+void Scene::paint2DText(float x, float y, void *font,const char *string)
+{
+    const char *c;
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluOrtho2D(0, 1024, 0, 768);
+    glScalef(1, -1, 1);
+    glTranslatef(0, -768, 0);
+    glMatrixMode(GL_MODELVIEW);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glPushMatrix();
+    glLoadIdentity();
+
+    glRasterPos2f(x, y);
+    for (c=string; *c != '\0'; c++) {
+        glutBitmapCharacter(font, *c);
+    }
+
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
 }

@@ -33,8 +33,9 @@ public:
     Scene(const Scene& scene);
     ~Scene();
     // ============================ Methods ===============================
-    void display();
+    void display(float fps);
     void simulatePhisics(btScalar timeStep);
+    void paint2DText(float x, float y, void *font,const char *string);
 
 private:
     // ========================== Data Members ============================

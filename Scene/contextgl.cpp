@@ -11,6 +11,7 @@
 #include "GL/glut.h"
 
 
+
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     setMouseTracking(true);
@@ -176,7 +177,7 @@ void GLWidget::paintGL()
     _cameraManager->getActiveCamera()->update();
 
     // Update the scene (all the objects)
-    _scene->display();
+    _scene->display(_fps);
 
 }
 

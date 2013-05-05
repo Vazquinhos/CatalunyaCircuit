@@ -104,7 +104,7 @@ void GLWidget::initializeWorld(){
     _cameraManager->setActiveCamera("free");
 
     _indexCamera = 0;
-    _maxVisibleDistance = 150;
+    _maxVisibleDistance = 200;
     _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
 
     glEnable(GL_TEXTURE_2D);

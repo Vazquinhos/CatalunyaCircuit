@@ -128,6 +128,7 @@ void Object3DFile::release(){
 /*-------------------------------------------------------------------
 |  Function checkVisibility
 |  Purpose: Check de visibility of every mesh of the object
+|  Returns: A vector with display lists of all visible objects
 *-------------------------------------------------------------------*/
 vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance){
     vector<GLuint> displayLists;
@@ -139,14 +140,12 @@ vector<GLuint> Object3DFile::checkVisibility(Point3D *pointCamera, int distance)
         instance = _vInstances[i];
         punto = instance->getCenter();
         d = punto->getDistance(pointCamera);
-        //if(d < distance){
+        if(d < distance){
             displayLists.push_back(instance->getDisplayList());
             _isVisible = true;
-        //}else{
-          //  _isVisible = false;
-        //}
-        //qDebug() << "PUNTO MODELO " << punto->getX() << ":" << punto->getY() << ":" << punto->getZ() << " PUNTO CAMARA " << pointCamera->getX() << ":" << pointCamera->getY() << ":" << pointCamera->getZ() << "DISTANCIA" << d << " TOTAL " << distance;
-        //qDebug() << "MIN " << _p_minVertex->getX() << " : " << _p_minVertex->getY() << " : " << _p_minVertex->getZ() << " MAX "<< _p_maxVertex->getX() << " : "<< _p_maxVertex->getY() << _p_maxVertex->getZ();
+        }else{
+            _isVisible = false;
+        }
     }
     return displayLists;
 }
@@ -297,7 +296,16 @@ void Object3DFile::renderNode(const aiNode* node){
         glPopMatrix();
         glEndList();
 
-        _vInstances.push_back(new Instance(mesh->_p_minVertex, mesh->_p_maxVertex, mesh->_p_center, displayList));
+        aiVector3D center = aiVector3D(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
+        center = node->mTransformation*center;
+
+        aiVector3D min = aiVector3D(mesh->_p_minVertex->getX(), mesh->_p_minVertex->getY(), mesh->_p_minVertex->getZ());
+        min = node->mTransformation*center;
+
+        aiVector3D max = aiVector3D(mesh->_p_maxVertex->getX(), mesh->_p_maxVertex->getY(), mesh->_p_maxVertex->getZ());
+        max = node->mTransformation*center;
+
+        _vInstances.push_back(new Instance(new Point3D(min.x, min.y, min.z), new Point3D(max.x, max.y, max.z), new Point3D(center.x, center.y, center.z), displayList));
     }
 
 
@@ -316,7 +324,17 @@ void Object3DFile::renderNode(const aiNode* node){
             glPopMatrix();
             glEndList();
 
-            _vInstances.push_back(new Instance(mesh->_p_minVertex, mesh->_p_maxVertex, mesh->_p_center, displayList));
+
+            aiVector3D center = aiVector3D(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
+            center = node->mTransformation*center;
+
+            aiVector3D min = aiVector3D(mesh->_p_minVertex->getX(), mesh->_p_minVertex->getY(), mesh->_p_minVertex->getZ());
+            min = node->mTransformation*center;
+
+            aiVector3D max = aiVector3D(mesh->_p_maxVertex->getX(), mesh->_p_maxVertex->getY(), mesh->_p_maxVertex->getZ());
+            max = node->mTransformation*center;
+
+            _vInstances.push_back(new Instance(new Point3D(min.x, min.y, min.z), new Point3D(max.x, max.y, max.z), new Point3D(center.x, center.y, center.z), displayList));
         }
 
 
@@ -367,8 +385,16 @@ void Object3DFile::renderInstances(const aiNode* node){
 
                     glEndList();
 
+                    aiVector3D center = aiVector3D(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
+                    center = node->mChildren[i]->mTransformation*center;
 
-                    _vInstances.push_back(new Instance(mesh->_p_minVertex, mesh->_p_maxVertex, mesh->_p_center, displayList));
+                    aiVector3D min = aiVector3D(mesh->_p_minVertex->getX(), mesh->_p_minVertex->getY(), mesh->_p_minVertex->getZ());
+                    min = node->mChildren[i]->mTransformation*center;
+
+                    aiVector3D max = aiVector3D(mesh->_p_maxVertex->getX(), mesh->_p_maxVertex->getY(), mesh->_p_maxVertex->getZ());
+                    max = node->mChildren[i]->mTransformation*center;
+
+                    _vInstances.push_back(new Instance(new Point3D(min.x, min.y, min.z), new Point3D(max.x, max.y, max.z), new Point3D(center.x, center.y, center.z), displayList));
                 }
             }
 

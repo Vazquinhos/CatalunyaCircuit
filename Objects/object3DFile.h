@@ -24,6 +24,7 @@
 #include <Objects/mesh.h>
 #include <Objects/texture.h>
 #include <Objects/instance.h>
+#include "math.h"
 
 using namespace std;
 

@@ -38,7 +38,7 @@ Scene::Scene()
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
 
-    unsigned int numCars = 10;
+    unsigned int numCars = 15;
     int xPos = 70;
     for(unsigned int i = 0; i < numCars; i++){
         Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(xPos,50,4), _dynamicsWorld);

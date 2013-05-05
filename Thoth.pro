@@ -43,7 +43,6 @@ SOURCES += main.cpp\
     Ui/mainwindow.cpp \
     Ui/camerawindowqt.cpp \
     Ui/carswindowqt.cpp \
-    Objects/absModels.cpp \
     Loaders/settingsimporter.cpp \
     Commands/camerascmd.cpp \
     Objects/modelManager.cpp \
@@ -54,7 +53,8 @@ SOURCES += main.cpp\
     Objects/mesh.cpp \
     Objects/texture.cpp \
     Objects/objectManager.cpp \
-    Objects/instance.cpp
+    Objects/instance.cpp \
+    Objects/absModel.cpp
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -86,7 +86,6 @@ HEADERS  += \
     Ui/mainwindow.h \
     Ui/camerawindowqt.h \
     Ui/carswindowqt.h \
-    Objects/absModels.h \
     Loaders/settingsimporter.h \
     Commands/camerascmd.h \
     Objects/modelManager.h \
@@ -98,7 +97,8 @@ HEADERS  += \
     Objects/mesh.h \
     Objects/texture.h \
     Objects/objectManager.h \
-    Objects/instance.h
+    Objects/instance.h \
+    Objects/absModel.h
 
 FORMS    += \
     Ui/lightswindowqt.ui \

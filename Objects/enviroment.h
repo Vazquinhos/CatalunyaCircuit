@@ -16,7 +16,7 @@
 #define ENVIROMENT_H
 
 #include "Objects/object3DFile.h"
-#include "Objects/absModels.h"
+#include "Objects/absModel.h"
 
 #include <string>
 #include <map>
@@ -24,7 +24,7 @@
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
 
-class Enviroment : AbsModels
+class Enviroment : public AbsModels
 {
 public:
     // ================= Constructores/Destructores ======================

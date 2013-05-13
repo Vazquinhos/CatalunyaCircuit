@@ -6,6 +6,7 @@
 #include "exportsettingsqt.h"
 #include "camerawindowqt.h"
 #include "carswindowqt.h"
+#include "about.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +33,8 @@ private slots:
 
     void Menu( void );
 
+    void on_about_clicked();
+
 private:
     // ========================== Data Members ============================
     Ui::MainWindow *ui;
@@ -39,6 +42,7 @@ private:
     ExportSettingsQt*     _p_exp_qt;
     CameraWindowQt*       _p_camera_qt;
     CarsWindowQt*         _p_car_qt;
+    About*                _p_about;
 
     bool menuVisible;
     // ============================ Methods ===============================

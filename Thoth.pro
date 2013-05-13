@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     Objects/texture.cpp \
     Objects/objectManager.cpp \
     Objects/instance.cpp \
-    Objects/absModel.cpp
+    Objects/absModel.cpp \
+    Ui/about.cpp
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -96,7 +97,8 @@ HEADERS  += \
     Objects/texture.h \
     Objects/objectManager.h \
     Objects/instance.h \
-    Objects/absModel.h
+    Objects/absModel.h \
+    Ui/about.h
 
 FORMS    += \
     Ui/importsettingsqt.ui \
@@ -106,7 +108,8 @@ FORMS    += \
     Ui/camerawindowqt.ui \
     Ui/carswindowqt.ui \
     Ui/newcameraqt.ui \
-    Ui/loaderqt.ui
+    Ui/loaderqt.ui \
+    Ui/about.ui
 
 OTHER_FILES += \
     simple.vert \

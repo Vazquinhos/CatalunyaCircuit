@@ -6,6 +6,7 @@
 #include "carswindowqt.h"
 #include "Cameras/cameramanager.h"
 #include "Commands/camerascmd.h"
+#include "about.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -62,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QIcon icon10;
     icon10.addFile("Media/Images/about.png");
     ui->about->setIcon(icon10);
+    _p_about = new About();
 
     QObject::connect(ui->widget, SIGNAL(Menu()), this, SLOT(Menu()));
     menuVisible = true;
@@ -109,4 +111,10 @@ void MainWindow::on_cars_clicked()
 {
     if(_p_car_qt)
         _p_car_qt->show();
+}
+
+void MainWindow::on_about_clicked()
+{
+    if(_p_about)
+        _p_about->show();
 }

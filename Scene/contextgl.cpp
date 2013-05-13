@@ -349,6 +349,9 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_D:
         break;
+    case Qt::Key_M:
+        emit Menu();
+        break;
     case Qt::Key_0:
         pos = _objectManager->getCar(0)->getPosition();
         _cameraManager->setCameraOnCar(pos);

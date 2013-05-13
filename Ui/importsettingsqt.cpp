@@ -17,7 +17,6 @@ ImportSettingsQt::ImportSettingsQt(QWidget *parent) :
     QPixmap pix2("Media/Images/1365553750_film_camera_35mm.png");
     ui->camera_icon->setPixmap(pix2);
     QPixmap pix3("Media/Images/1365553596_idea.png");
-    ui->light_icon->setPixmap(pix3);
     ui->lineEdit->setEnabled(false);
 }
 
@@ -52,7 +51,7 @@ void ImportSettingsQt::on_buttonBox_accepted()
         _p_settingsImporter = new SettingsImporter(fileName);
         _p_settingsImporter->SetParameters(ui->camera_chk->isChecked(),
                                            ui->car_chk->isChecked(),
-                                           ui->light_chk->isChecked());
+                                           false);
         _p_settingsImporter->Execute();
     }
 }

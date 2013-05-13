@@ -115,20 +115,6 @@ QPushButton:pressed {
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="light_chk">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="light_icon">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="Line" name="line_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>

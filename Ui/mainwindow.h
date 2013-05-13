@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "importsettingsqt.h"
-#include "lightswindowqt.h"
 #include "exportsettingsqt.h"
 #include "camerawindowqt.h"
 #include "carswindowqt.h"
@@ -22,25 +21,26 @@ public:
     ~MainWindow();
     
 private slots:
-    // ============================ Slots ===============================
-    void on_actionImport_triggered();
+    // ============================ Slots ==============================
+    void on_cameras_clicked();
 
-    void on_actionExport_triggered();
+    void on_import_2_clicked();
 
-    void on_actionLight_triggered();
+    void on_export_2_clicked();
 
-    void on_actionCamera_triggered();
+    void on_cars_clicked();
 
-    void on_actionCars_triggered();
+    void Menu( void );
 
 private:
     // ========================== Data Members ============================
     Ui::MainWindow *ui;
     ImportSettingsQt*     _p_imp_qt;
     ExportSettingsQt*     _p_exp_qt;
-    LightsWidowQt*        _p_light_qt;
     CameraWindowQt*       _p_camera_qt;
     CarsWindowQt*         _p_car_qt;
+
+    bool menuVisible;
     // ============================ Methods ===============================
 };
 

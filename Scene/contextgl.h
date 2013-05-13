@@ -70,6 +70,8 @@ private:
 
     void initializeShaders(QString filename);
     void releaseAllShaders();
+signals:
+    void Menu( void );
 };
 
 #endif  /* _GLWIDGET_H */

@@ -18,7 +18,6 @@ ExportSettingsQt::ExportSettingsQt(QWidget *parent) :
     QPixmap pix2("Media/Images/1365553750_film_camera_35mm.png");
     ui->cameralab->setPixmap(pix2);
     QPixmap pix3("Media/Images/1365553596_idea.png");
-    ui->lightlab->setPixmap(pix3);
 
 }
 
@@ -32,7 +31,7 @@ void ExportSettingsQt::on_buttonBox_accepted()
     _p_exporter = new SettingsExporter( GetFileNameWithExtension(ui->lineEdit->text()) );
     _p_exporter->SetParameters( ui->_cameras->isChecked(),
                                 ui->_cars->isChecked(),
-                                ui->_lights->isChecked());
+                                false);
     _p_exporter->Execute();
 }
 

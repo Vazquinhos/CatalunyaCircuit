@@ -122,23 +122,6 @@ QFrame {
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QCheckBox" name="_lights">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lightlab">
-          <property name="text">
-           <string>ico</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>

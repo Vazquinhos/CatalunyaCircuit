@@ -35,7 +35,6 @@ SOURCES += main.cpp\
     Loaders/lightloader.cpp \
     Loaders/fileParser.cpp \
     Loaders/camerasloader.cpp \
-    Ui/lightswindowqt.cpp \
     Ui/importsettingsqt.cpp \
     Ui/exportsettingsqt.cpp \
     Ui/errorwindow.cpp \
@@ -78,7 +77,6 @@ HEADERS  += \
     Loaders/lightloader.h \
     Loaders/fileParser.h \
     Loaders/camerasloader.h \
-    Ui/lightswindowqt.h \
     Ui/importsettingsqt.h \
     Ui/exportsettingsqt.h \
     Ui/errorwindow.h \
@@ -101,7 +99,6 @@ HEADERS  += \
     Objects/absModel.h
 
 FORMS    += \
-    Ui/lightswindowqt.ui \
     Ui/importsettingsqt.ui \
     Ui/exportsettingsqt.ui \
     Ui/errorwindow.ui \
@@ -977,7 +974,15 @@ OTHER_FILES += \
     Media/Images/1365553750_film_camera_35mm.png \
     Media/Images/1365553596_idea.png \
     Media/Images/1365553386_export.png \
-    Media/Images/1365553346_import.png
+    Media/Images/1365553346_import.png \
+    Media/Images/1368487550_Vroum Vroum.png \
+    Media/Images/flag.png \
+    Media/Images/diagram.png \
+    Media/Images/about.png \
+    Media/Images/camera.png \
+    Media/Images/pause.png \
+    Media/Images/play.png \
+    Media/Images/car.png
 
 
 

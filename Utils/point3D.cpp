@@ -10,7 +10,7 @@
 
 #include "point3D.h"
 #include "math.h"
-
+#include <QDebug>
 // ================= Constructores/Destructores ======================
 
 /*-------------------------------------------------------------------
@@ -180,6 +180,21 @@ Point3D::operator ==( const Point3D& a_pnt)
 }
 
 /*-------------------------------------------------------------------
+ |  Operator ==
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Vector3D
+Point3D::getVector(Point3D *a_pnt)
+{
+    qDebug() << _x << " " << _y  << " " << _z;
+    qDebug() << a_pnt->getX() << " " << a_pnt->getY()  << " " << a_pnt->getZ();
+  return Vector3D(_x - a_pnt->getX() , _y - a_pnt->getY(), _z - a_pnt->getZ());
+}
+
+/*-------------------------------------------------------------------
  |  Operator |
  |
  |  Purpose: Get distance between two points
@@ -189,3 +204,8 @@ Point3D::operator ==( const Point3D& a_pnt)
 float Point3D::getDistance( const Point3D *a_pnt1){
     return sqrt(pow(a_pnt1->getX()-_x, 2) + pow(a_pnt1->getY()-_y, 2) + pow(a_pnt1->getZ()-_z, 2));
 }
+
+
+
+
+

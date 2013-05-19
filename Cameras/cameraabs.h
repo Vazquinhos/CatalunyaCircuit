@@ -34,6 +34,8 @@ public:
     mode_projection   getModeProjection(void);
     void              setPosition( Point3D * p_position );
     Point3D         * getPosition( void );
+    void              setPointToLook(Point3D *point);
+    Point3D         * getPointToLook();
     camera_type       getType( void );
     virtual QString   getTypeInQString( void ){return QString("");}
     QString           getSettingsInfo( void );
@@ -58,6 +60,7 @@ protected:
     float               _yaw;
     float               _pitch;
     float               _zoom;
+    Point3D           * _pointToLook;
 
     // ============================ Methods ===============================
 

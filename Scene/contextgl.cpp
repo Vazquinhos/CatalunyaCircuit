@@ -9,6 +9,7 @@
 #include "Cameras/cameramanager.h"
 #include "Cameras/fixedcamera.h"
 #include "GL/glut.h"
+#include <QThread>
 
 
 
@@ -31,7 +32,7 @@ GLWidget::~GLWidget()
  *****************************************************************************/
 void GLWidget::initializeGL()
 {
-    LoaderQt* loader = new LoaderQt();
+    loader = new LoaderQt();
     loader->show();
 
     //#ifndef __APPLE__
@@ -88,9 +89,10 @@ void GLWidget::initializeWorld(){
     textureFilters << "*";
 
     modelManager->setFolderToLoad("/Media/Models/", modelFilters, textureFilters);
-    modelManager->loadModels();
 
-    _scene = new Scene();
+    //modelManager->loadModels();
+
+
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();
 
@@ -105,7 +107,7 @@ void GLWidget::initializeWorld(){
 
     _indexCamera = 0;
     _maxVisibleDistance = 200;
-    _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+
 
     glEnable(GL_TEXTURE_2D);
 
@@ -114,6 +116,43 @@ void GLWidget::initializeWorld(){
     //shader =  new QGLShaderProgram();
     //initializeShaders(QString("simple"));
 
+
+    QThread *p_thread = new QThread();
+    modelManager->moveToThread( p_thread );
+    //QObject::connect(modelManager, error(QString),this,SLOT(er));
+    QObject::connect(p_thread, SIGNAL(started()),modelManager,SLOT(loadModels()));
+    QObject::connect(modelManager,SIGNAL(finish()),p_thread,SLOT(quit()));
+    QObject::connect(modelManager,SIGNAL(NewModel(QString,int)),this,SLOT(PrintModel(QString,int)));
+    p_thread->start();
+    QObject::connect(modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
+
+
+
+//   modelManager->loadModels();
+  // startTimers();
+
+
+}
+
+void GLWidget::simulatePhysics()
+{
+    _scene->simulatePhisics(_physicsTimer.restart()/1000.0f);
+}
+
+void GLWidget::PrintModel(QString a,int val)
+{
+    loader->PrintModelLoaded(a,val);
+}
+
+void
+GLWidget::startTimers( void )
+{
+    ModelManager *modelManager = ModelManager::getModelManager();
+    modelManager->render();
+    loader->hide();
+    _scene = new Scene();
+    _objectManager->checkVisibility();
+    // This slot will be called when the signal finish of loading models is emited
     //4) Init physics simulation
     _physicsEventTimer = new QTimer(this);
     connect(_physicsEventTimer, SIGNAL(timeout()), this, SLOT(simulatePhysics()));
@@ -126,13 +165,9 @@ void GLWidget::initializeWorld(){
 
     _displayTimer.start();
     _physicsTimer.start();
-}
 
-void GLWidget::simulatePhysics()
-{
-    _scene->simulatePhisics(_physicsTimer.restart()/1000.0f);
+    emit LoadingFinished();
 }
-
 
 
 /*****************************************************************************
@@ -152,7 +187,7 @@ void GLWidget::resizeGL(int w, int h)
  *****************************************************************************/
 void GLWidget::paintGL()
 {
-
+    qDebug() << "Pintando algo";
     //OBTENER EL ELAPSED TIME COMO LA RESTA ENTRE EL TIEMPO DE AHORA I EL ANTERIOR.
     double d_elapsedTime = _displayTimer.elapsed();
     double _fps = 1000.0f/_displayTimer.elapsed();
@@ -280,38 +315,41 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     switch(event->key()) {
 
+    case Qt::Key_M: //Move camera to right
+        emit MPushed();
+        break;
     case Qt::Key_Right: //Move camera to right
         //qDebug() << "PULSANDO RIGHT";
         _cameraManager->getActiveCamera()->move(1, false);
-        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility();
 
         break;
 
     case Qt::Key_Left: //Move camera to left
         //qDebug() << "PULSANDO LEFT";
         _cameraManager->getActiveCamera()->move(-1, false);
-        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility();
         break;
     case Qt::Key_Up: //Move camera to front
         //qDebug() << "PULSANDO UP";
         _cameraManager->getActiveCamera()->move(1, true);
-        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility();
         break;
 
     case Qt::Key_Down: //Move camera to back
         //qDebug() << "PULSANDO DOWN";
         _cameraManager->getActiveCamera()->move(-1, true);
-        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility();
         break;
 
     //DEBUG
     case Qt::Key_U:
         _cameraManager->getActiveCamera()->move(10, true);
-        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility();
         break;
     case Qt::Key_J:
         _cameraManager->getActiveCamera()->move(-10, true);
-        _objectManager->checkVisibility(_cameraManager->getActiveCamera()->getPosition(), _maxVisibleDistance);
+        _objectManager->checkVisibility();
         break;
 
     case Qt::Key_Plus: //Move camera, more altitude
@@ -348,9 +386,6 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_A:
         break;
     case Qt::Key_D:
-        break;
-    case Qt::Key_M:
-        emit Menu();
         break;
     case Qt::Key_0:
         pos = _objectManager->getCar(0)->getPosition();
@@ -397,8 +432,10 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     }
 
     if(update){
+        float yaw, pitch;
         Point3D *pos = _cameraManager->getCamera("free")->getPosition();
-        //qDebug() << "CAMERA POSITION " << pos->getX() << " " << pos->getY() << " " << pos->getZ();
+        _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
+        qDebug() << "CAMERA POSITION " << pos->getX() << " " << pos->getY() << " " << pos->getZ() << " " << yaw << " " << pitch;
     }
 
 }

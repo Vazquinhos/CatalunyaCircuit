@@ -22,11 +22,11 @@
 CameraAbs::CameraAbs( void )
 {
     _zoom = 10;
-    _yaw = 15;
-    _pitch = 30;
+    _yaw = 57;
+    _pitch = 359.5;
     _mode = PERSPECTIVE;
     _name = QString("Not init");
-    setPosition(new Point3D(0.0f, 0.0f, 0.0f));
+    setPosition(new Point3D(211.558f, 43.2373f, -72.7428f));
 }
 
 /*-------------------------------------------------------------------
@@ -39,11 +39,11 @@ CameraAbs::CameraAbs( void )
 CameraAbs::CameraAbs(QString a_name)
 {
     _zoom = 10;
-    _yaw = 15;
-    _pitch = 30;
+    _yaw = 57;
+    _pitch = 359.5;
     _mode = PERSPECTIVE;
     _name = a_name;
-    setPosition(new Point3D(0.0f, 0.0f, 0.0f));
+    setPosition(new Point3D(211.558f, 43.2373f, -72.7428f));
 }
 
 /*-------------------------------------------------------------------
@@ -159,6 +159,25 @@ void CameraAbs::setPosition(Point3D * p_position)
 Point3D * CameraAbs::getPosition()
 {
     return _p_position;
+}
+
+/*-------------------------------------------------------------------
+ |  Function SetPointToLook
+ |
+ |  Purpose: Sets the look point of the camera
+ *-------------------------------------------------------------------*/
+void CameraAbs::setPointToLook(Point3D *point){
+    _pointToLook = point;
+}
+
+/*-------------------------------------------------------------------
+ |  Function GetPointToLook
+ |
+ |  Purpose: Gets the look point of the camera
+ |  Returns: The look point of the camera
+ *-------------------------------------------------------------------*/
+Point3D *CameraAbs::getPointToLook(){
+    return _pointToLook;
 }
 
 /*-------------------------------------------------------------------

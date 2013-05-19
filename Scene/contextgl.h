@@ -12,6 +12,7 @@
 #include "Cameras/cameraabs.h"
 #include "Cameras/freecamera.h"
 #include <QTimer>
+#include "Ui/loaderqt.h"
 
 class GLWidget : public QGLWidget {
 
@@ -25,6 +26,14 @@ public slots:
     void onZoomChanged(qreal x);
     void onAnimZoomFinished();
     void simulatePhysics();
+    void startTimers( void );
+    void PrintModel( QString, int val );
+
+signals:
+    void MPushed( void );
+    void LoadingFinished( void );
+    void NewModelToPrint( QString );
+
 
 protected:
     void initializeGL();
@@ -49,6 +58,7 @@ private:
     QTimer *_displayEventTimer;
     QTime  _displayTimer;
     QTime  _physicsTimer;
+    LoaderQt* loader;
 
     Scene *_scene;
     ObjectManager *_objectManager;
@@ -70,8 +80,6 @@ private:
 
     void initializeShaders(QString filename);
     void releaseAllShaders();
-signals:
-    void Menu( void );
 };
 
 #endif  /* _GLWIDGET_H */

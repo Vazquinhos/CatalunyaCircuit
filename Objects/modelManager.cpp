@@ -1,10 +1,11 @@
 #include "modelManager.h"
 #include "Utils/util.h"
-#include "Objects/object3DFile.h"
-#include "Objects/absObject3D.h"
+#include "Objects/model3D.h"
 #include <assimp/DefaultLogger.hpp>
 #include <assimp/Logger.hpp>
 #include <Log/assimpLog.h>
+#include <QMutex>
+
 
 #include <QDir>
 #include <QDebug>
@@ -20,6 +21,7 @@ ModelManager * ModelManager::_p_modelManager = NULL;
  *-------------------------------------------------------------------*/
 ModelManager::ModelManager()
 {
+    _p_mutex = new QMutex();
 }
 
 /*-------------------------------------------------------------------
@@ -32,8 +34,8 @@ ModelManager::~ModelManager()
 
 /*-------------------------------------------------------------------
  |  Function getModelManager()
- |  Purpose: Gets singleton instance of the object.
- |  Returns: ModelManager manager :The singleton instance.
+ |  Purpose: Gets singleton MeshInstance of the object.
+ |  Returns: ModelManager manager :The singleton MeshInstance.
  *-------------------------------------------------------------------*/
 ModelManager * ModelManager::getModelManager(){
     if( !_p_modelManager ) {
@@ -62,9 +64,22 @@ void ModelManager::setFolderToLoad(QString folderPath, QStringList modelFilters,
  |  Purpose: Getter. Gets the model with the specified filename
  |  Parameters: string modelName : The name of the file of the model
  *-------------------------------------------------------------------*/
-Object3DFile * ModelManager::getModel(QString modelName){
+Model3D*  ModelManager::getModel(QString modelName){
+    //_p_mutex->lock();
     return _models[modelName];
+    // _p_mutex->unlock();
 }
+
+/*-------------------------------------------------------------------
+ |  Function getPyisicsObject
+ |
+ |  Purpose: Getter. Gets the model with the specified filename
+ |  Parameters: string modelName : The name of the file of the model
+ *-------------------------------------------------------------------*/
+PhysicsObject3D * ModelManager::getPyisicsObject(QString modelName, btTransform transform){
+    return new PhysicsObject3D(_models[modelName], transform);
+}
+
 
 /*-------------------------------------------------------------------
  |  Function loadModels()
@@ -80,7 +95,7 @@ void ModelManager::loadModels(){
     //Assimp logger
 
     /*
-    // Create a logger instance
+    // Create a logger MeshInstance
     Assimp::DefaultLogger::create("",Assimp::Logger::VERBOSE);
     // Now I am ready for logging my stuff
     Assimp::DefaultLogger::get()->info("this is my info-call");
@@ -96,26 +111,37 @@ void ModelManager::loadModels(){
     //Model loading
     modelsList = listFilesInFolder(fullFolderPath, _modelFilters); //List all models of the directory
 
+
     int i;
-#pragma omp parallel for private(i) firstprivate(fullFolderPath) shared(modelsList, textureMap) default(none)
-    for(i=0; i < modelsList.size(); i++){ //Load all models
+    int size = modelsList.size();
+    int progress = 47/size;
+#pragma omp parallel for private(i) firstprivate(fullFolderPath, size) shared(modelsList, textureMap, progress) default(none)
+    for(i=0; i < size; i++){ //Load all models
         QString modelName = modelsList[i];
         unsigned int assimpFlags = aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality| aiProcess_FlipUVs;
         if(modelName.contains("Ferrari") || modelName.contains("Hrt")){
-        qDebug() << "Loading model: " << modelName;
             assimpFlags = aiProcess_TransformUVCoords | aiProcess_JoinIdenticalVertices |aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality;
         }
-        Object3DFile *object3D = new Object3DFile(fullFolderPath + modelName.left(modelName.lastIndexOf("/")+1), modelName.right(modelName.size() - modelName.lastIndexOf("/")), &textureMap, assimpFlags);
+        QString model = QString("Loading model: ") + modelName;
+        progress++;
+        emit NewModel( model, progress);
+
+        Model3D *object3D = new Model3D(fullFolderPath + modelName.left(modelName.lastIndexOf("/")+1), modelName.right(modelName.size() - modelName.lastIndexOf("/")), &textureMap, assimpFlags);
         _models[modelName] = object3D;
     }
+
+    emit finish();
+}
+
+
+void ModelManager::render(){
     //Bind all textures and render models
-    for(std::map<QString,Object3DFile*>::iterator i = _models.begin(); i != _models.end(); i++){
-        Object3DFile *object3D = i->second;
+    for(std::map<QString,Model3D*>::iterator i = _models.begin(); i != _models.end(); i++){
+        Model3D *object3D = i->second;
         object3D->render();
         object3D->release();
     }
 }
-
 /**************************************************** PRIVATE ***************************************************************/
 
 /*-------------------------------------------------------------------
@@ -145,8 +171,6 @@ QStringList ModelManager::listFilesInFolder(QString fullFolderPath, QStringList 
     return fileList;
 }
 
-
-
 /*-------------------------------------------------------------------
  |  Function loadTextures
  |
@@ -165,10 +189,14 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
 
     list = listFilesInFolder(folderName, filters);
 
-    for(int i = 0; i < list.size(); i++){
+    int size = list.size();
+    for(int i = 0; i < size; i++){
         textureName = list[i];
         fullTexturePath = folderName + textureName;
-        qDebug() << "Loading texture: " << fullTexturePath;
+
+        QString model = QString("Loading texture: ") + textureName;
+        emit NewModel( model, i*47/size);
+
         ilGenImages(1, &imageId); // Grab a new image name.(DEVIL)
         success = ilLoadImage(fullTexturePath.toAscii());
 
@@ -201,7 +229,7 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
                 qDebug() << "ERROR WHILE TRANSFORMING TEXTURE TO OPENGL "  << fullTexturePath;
             }
         }else{
-            qDebug() << "ERROR AL CARGAR LA TEXTURA" << fullTexturePath;
+            //qDebug() << "ERROR AL CARGAR LA TEXTURA" << fullTexturePath;
         }
     }
     return textureIdMap;

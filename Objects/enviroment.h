@@ -15,8 +15,7 @@
 #ifndef ENVIROMENT_H
 #define ENVIROMENT_H
 
-#include "Objects/object3DFile.h"
-#include "Objects/absModel.h"
+#include "Objects/model3D.h"
 
 #include <string>
 #include <map>
@@ -24,7 +23,7 @@
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
 
-class Enviroment : public AbsModels
+class Enviroment
 {
 public:
     // ================= Constructores/Destructores ======================
@@ -32,25 +31,25 @@ public:
     Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
-    vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
+    void checkVisibility(vector<GLuint> *displayLists);
 
 private:
     // ========================== Data Members ============================
-    Object3DFile *_sky;
-    Object3DFile *_terrain;
-    Object3DFile *_advertisement;
-    Object3DFile *_flags;
-    Object3DFile *_objects;
-    Object3DFile *_fences;
-    Object3DFile *_pneumatic_fences;
-    Object3DFile *_walls;
-    Object3DFile *_forest;
-    Object3DFile *_buildings1;
-    Object3DFile *_buildings2;
-    Object3DFile *_buildings3;
-    Object3DFile *_buildings4;
-    Object3DFile *_buildings5;
-    Object3DFile *_buildings6;
+    Model3D *_sky;
+    Model3D *_terrain;
+    Model3D *_advertisement;
+    Model3D *_flags;
+    Model3D *_objects;
+    Model3D *_fences;
+    Model3D *_pneumatic_fences;
+    Model3D *_walls;
+    Model3D *_forest;
+    Model3D *_buildings1;
+    Model3D *_buildings2;
+    Model3D *_buildings3;
+    Model3D *_buildings4;
+    Model3D *_buildings5;
+    Model3D *_buildings6;
 
 
     // ========================== Phisics Bullet Members =================

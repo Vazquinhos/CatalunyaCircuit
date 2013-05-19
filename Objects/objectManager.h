@@ -37,7 +37,7 @@ public:
     Enviroment              * getEnviroment();
 
     void                      displayAll();
-    void checkVisibility(Point3D *pointCamera, int distance);
+    void checkVisibility();
 
 private:
     // ========================== Data Members ============================

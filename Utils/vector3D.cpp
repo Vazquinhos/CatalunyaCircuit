@@ -14,6 +14,7 @@
 #include "vector3D.h" // Class declaration
 
 #include <math.h>
+#include <QDebug>
 
 // ================= Constructores/Destructores ======================
 /*-------------------------------------------------------------------
@@ -98,7 +99,7 @@ Vector3D::angle( const Vector3D& a_vec )
 double
 Vector3D::module( void ) const
 {
-    return (_x*_x + _y*_y +_z*_z);
+    return sqrt(_x*_x + _y*_y +_z*_z);
 }
 
 /*-------------------------------------------------------------------

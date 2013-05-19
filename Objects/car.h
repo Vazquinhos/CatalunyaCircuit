@@ -1,5 +1,5 @@
 /*
- * Archivo: carinstance.h
+ * Archivo: carmeshInstance.h
  * Fecha: 19/03/2013
  * Autores: David Pérez Castilla
  *          Alejandro Vázquez
@@ -7,19 +7,19 @@
  *          Darío Orgaz Manjón
  *          Gabriel Diaz Arias
  *
- * Clase: CarInstance
+ * Clase: CarMeshInstance
  * Descripcion: Representa cada una de las instancias de los posibles coches en carrera.
  */
 
-#ifndef CARINSTANCE_H
-#define CARINSTANCE_H
+#ifndef CARMeshInstance_H
+#define CARMeshInstance_H
 
 #include "Utils/util.h"
 #include "Utils/vector3D.h"
-#include "Objects/object3DFile.h"
-#include "Objects/absModel.h"
+#include "Objects/physicsObject3D.h"
+#include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 
-class Car : public AbsModels
+class Car
 {
 public:
     // ================= Constructores/Destructores ======================
@@ -27,18 +27,19 @@ public:
     Car(const Car& car);
     ~Car();
 
+    Point3D * getPosition();
     // ============================ Inherited Methods ===============================
     void displayModels();
-    vector<GLuint> checkVisibility(Point3D *pointCamera, int distance);
+    vector<GLuint> checkVisibility();
 
 private:
     // ========================== Data Members ============================
-    Object3DFile *_chasisObj;
-    Object3DFile *_wheelObj;
-    Object3DFile *_wheelFrontRight;
-    Object3DFile *_wheelFrontLeft;
-    Object3DFile *_wheelRearRight;
-    Object3DFile *_wheelRearLeft;
+    PhysicsObject3D *_chasisObj;
+    PhysicsObject3D *_wheelObj;
+    PhysicsObject3D *_wheelFrontRight;
+    PhysicsObject3D *_wheelFrontLeft;
+    PhysicsObject3D *_wheelRearRight;
+    PhysicsObject3D *_wheelRearLeft;
 
     // ========================== Bullet Phisics Members ==================
     btRigidBody* _fallRigidBody;
@@ -48,4 +49,4 @@ private:
 
 };
 
-#endif // CARINSTANCE_H
+#endif // CARMeshInstance_H

@@ -115,11 +115,9 @@ void ObjectManager::displayAll(){
 
     glCallLists(_displayLists.size(), GL_UNSIGNED_INT, &_displayLists[0]);
 
-
     for(unsigned int i = 0; i < _v_cars.size(); i++){
         _v_cars[i]->displayModels();
     }
-
 }
 
 /*-------------------------------------------------------------------
@@ -128,16 +126,11 @@ void ObjectManager::displayAll(){
  |  Purpose: Modify visibility of the objects taking in consideration distance to the camera
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
-void ObjectManager::checkVisibility(Point3D *pointCamera, int distance){
-    vector<GLuint> displayLists;
-    vector<GLuint> enviromentLists = _p_enviroment->checkVisibility(pointCamera,  distance);
-
-    displayLists.insert(displayLists.end(), enviromentLists.begin(), enviromentLists.end());
+void ObjectManager::checkVisibility(){
+    _displayLists.clear();
+    _p_enviroment->checkVisibility(&_displayLists);
 
     for(unsigned int i = 0; i < _v_cars.size(); i++){
-        vector<GLuint> carLists =  _v_cars[i]->checkVisibility(pointCamera,  distance);
-        displayLists.insert(displayLists.end(), carLists.begin(), carLists.end());
+        _v_cars[i]->checkVisibility();
     }
-
-    this->_displayLists = displayLists;
 }

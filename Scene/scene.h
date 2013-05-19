@@ -16,8 +16,7 @@
 #define SCENE_H
 
 #include "Objects/objectManager.h"
-#include "Objects/absObject3D.h"
-#include "Objects/object3DFile.h"
+#include "Objects/model3D.h"
 #include <QDir>
 #include <Objects/enviroment.h>
 #include <Cameras/cameramanager.h>

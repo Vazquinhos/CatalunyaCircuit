@@ -15,6 +15,8 @@
 #ifndef Point3D_H
 #define Point3D_H
 
+#include "Utils/vector3D.h"
+
 class Point3D{
 
 public:
@@ -31,6 +33,7 @@ public:
     void setCoordinates( float a_x, float a_y, float a_z);
     void getCoordinates( float& a_x, float& a_y, float& a_z);
     float getDistance( const Point3D* a_pnt1);
+    Vector3D getVector(Point3D *a_pnt);
 
     // ============================ Operators =============================
     bool operator==( const Point3D& a_pnt);

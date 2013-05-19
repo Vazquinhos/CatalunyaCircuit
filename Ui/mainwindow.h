@@ -33,7 +33,10 @@ private slots:
 
     void Menu( void );
 
+    void showMySelf( void );
+
     void on_about_clicked();
+
 
 private:
     // ========================== Data Members ============================

@@ -29,7 +29,7 @@
      <property name="styleSheet">
       <string notr="true">QProgressBar::chunk {
      border-radius: 2px;
-     background-color: #33CCFF;
+     background-color: #CC0000;
      width: 10px;
      margin: 0.5px;
  }

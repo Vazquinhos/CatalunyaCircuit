@@ -65,8 +65,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->about->setIcon(icon10);
     _p_about = new About();
 
-    QObject::connect(ui->widget, SIGNAL(Menu()), this, SLOT(Menu()));
+    QObject::connect(ui->widget, SIGNAL(MPushed()), this, SLOT(Menu()));
+    QObject::connect(ui->widget, SIGNAL(LoadingFinished()),this, SLOT(showMySelf()));
     menuVisible = true;
+
+    ui->frame->setMinimumHeight(ui->widget->height());
 }
 
 MainWindow::~MainWindow()
@@ -95,6 +98,10 @@ void MainWindow::Menu(){
     }
 }
 
+void MainWindow::showMySelf( void )
+{
+    show();
+}
 void MainWindow::on_import_2_clicked()
 {
     if(_p_imp_qt)

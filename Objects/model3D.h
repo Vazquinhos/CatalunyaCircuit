@@ -52,7 +52,7 @@ private:
     bool _isVisible;
 
     // ========================== Importer Methods ===========================
-    bool loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
+    bool loadFromFile(unsigned int assimpFlags);
     void generateObjectBuffers(const aiScene* pScene);
     void mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void renderMeshInstances(const aiNode *node);
@@ -60,7 +60,7 @@ private:
 
 public:
     Model3D();
-    Model3D(QString directory, QString filename, map<QString, GLuint> *textureIdMap, unsigned int assimpFlags);
+    Model3D(QString directory, QString filename, unsigned int assimpFlags);
     virtual ~Model3D();
 
     // ============================ GETTER SETTER ==============================
@@ -83,7 +83,7 @@ public:
     btCompoundShape *getCollisionShape(btTransform transform);
 
     void display();
-    void render();
+    void render(map<QString, GLuint> *textureIdMap);
     void checkVisibility(vector<GLuint> *displayLists);
 
     void release();

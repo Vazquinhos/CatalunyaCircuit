@@ -24,6 +24,7 @@ public:
     static ModelManager	* getModelManager();
 
     Model3D *getModel(QString modelName);
+    void loadMaterials();
     void render();
     PhysicsObject3D * getPyisicsObject(QString modelName, btTransform transform);
 
@@ -38,12 +39,14 @@ public slots:
     void NModels( int );
 
 private:
+    QString _fullFolderPath;
     static ModelManager * _p_modelManager;
     QString _folderPath;
     QStringList _modelFilters;
     QStringList _textureFilters;
     map<QString, Model3D*> _models;
     QMutex* _p_mutex;
+    map<QString, GLuint> textureMap; //Texture map (TextureName -> TextureBindId)
 
     map<QString, GLuint> loadTextures(QString folderName, QStringList filter);
     QStringList listFilesInFolder(QString fullFolderPath, QStringList fileFilters);

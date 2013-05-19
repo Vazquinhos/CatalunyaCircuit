@@ -4,12 +4,11 @@
 #include <assimp/DefaultLogger.hpp>
 #include <assimp/Logger.hpp>
 #include <Log/assimpLog.h>
-#include <QMutex>
-
 
 #include <QDir>
 #include <QDebug>
 #include <QTime>
+#include <QCoreApplication>
 
 ModelManager * ModelManager::_p_modelManager = NULL;
 
@@ -65,9 +64,7 @@ void ModelManager::setFolderToLoad(QString folderPath, QStringList modelFilters,
  |  Parameters: string modelName : The name of the file of the model
  *-------------------------------------------------------------------*/
 Model3D*  ModelManager::getModel(QString modelName){
-    //_p_mutex->lock();
     return _models[modelName];
-    // _p_mutex->unlock();
 }
 
 /*-------------------------------------------------------------------
@@ -86,9 +83,8 @@ PhysicsObject3D * ModelManager::getPyisicsObject(QString modelName, btTransform 
  |  Purpose: Load all models. All folder information must be set properly before calling this method
  *-------------------------------------------------------------------*/
 void ModelManager::loadModels(){
-    QString fullFolderPath = (QDir::currentPath() + _folderPath); //Full path to the model folder
+    _fullFolderPath = (QDir::currentPath() + _folderPath); //Full path to the model folder
     QStringList modelsList; //List of model filenames
-    map<QString, GLuint> textureMap; //Texture map (TextureName -> TextureBindId)
 
     ilInit(); /* Initialization of DevIL texture loader */
 
@@ -105,40 +101,47 @@ void ModelManager::loadModels(){
     Assimp::DefaultLogger::get()->attachStream( new AssimpLog(), severity);
     */
 
-    //Texture preoloading
-    textureMap = loadTextures(fullFolderPath, _textureFilters); //Preload all textures of all models
-
     //Model loading
-    modelsList = listFilesInFolder(fullFolderPath, _modelFilters); //List all models of the directory
+    modelsList = listFilesInFolder(_fullFolderPath, _modelFilters); //List all models of the directory
 
 
     int i;
     int size = modelsList.size();
-    int progress = 47/size;
-#pragma omp parallel for private(i) firstprivate(fullFolderPath, size) shared(modelsList, textureMap, progress) default(none)
+    int progress = 47/size+1;
+#pragma omp parallel for private(i) firstprivate(size) shared(modelsList, progress) default(none)
     for(i=0; i < size; i++){ //Load all models
         QString modelName = modelsList[i];
         unsigned int assimpFlags = aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality| aiProcess_FlipUVs;
         if(modelName.contains("Ferrari") || modelName.contains("Hrt")){
             assimpFlags = aiProcess_TransformUVCoords | aiProcess_JoinIdenticalVertices |aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality;
         }
-        QString model = QString("Loading model: ") + modelName;
+        QString model = QString("1/3 Loading model: ") + modelName;
         progress++;
         emit NewModel( model, progress);
 
-        Model3D *object3D = new Model3D(fullFolderPath + modelName.left(modelName.lastIndexOf("/")+1), modelName.right(modelName.size() - modelName.lastIndexOf("/")), &textureMap, assimpFlags);
+        Model3D *object3D = new Model3D(_fullFolderPath + modelName.left(modelName.lastIndexOf("/")+1), modelName.right(modelName.size() - modelName.lastIndexOf("/")), assimpFlags);
         _models[modelName] = object3D;
     }
 
     emit finish();
 }
 
+void ModelManager::loadMaterials(){
+    //Texture preoloading
+    textureMap = loadTextures(_fullFolderPath, _textureFilters); //Preload all textures of all models
+}
 
 void ModelManager::render(){
     //Bind all textures and render models
+    int size = _models.size();
+    int progress = 47/size+1;
     for(std::map<QString,Model3D*>::iterator i = _models.begin(); i != _models.end(); i++){
         Model3D *object3D = i->second;
-        object3D->render();
+        QString modelName = QString("3/3 Render model: ") +  object3D->getName();
+        emit NewModel( modelName, progress++);
+        QCoreApplication::processEvents();
+
+        object3D->render(&textureMap);
         object3D->release();
     }
 }
@@ -194,8 +197,9 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
         textureName = list[i];
         fullTexturePath = folderName + textureName;
 
-        QString model = QString("Loading texture: ") + textureName;
+        QString model = QString("2/3 Loading texture: ") + textureName;
         emit NewModel( model, i*47/size);
+        QCoreApplication::processEvents();
 
         ilGenImages(1, &imageId); // Grab a new image name.(DEVIL)
         success = ilLoadImage(fullTexturePath.toAscii());

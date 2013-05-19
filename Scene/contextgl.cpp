@@ -126,12 +126,6 @@ void GLWidget::initializeWorld(){
     p_thread->start();
     QObject::connect(modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
 
-
-
-//   modelManager->loadModels();
-  // startTimers();
-
-
 }
 
 void GLWidget::simulatePhysics()
@@ -148,6 +142,7 @@ void
 GLWidget::startTimers( void )
 {
     ModelManager *modelManager = ModelManager::getModelManager();
+    modelManager->loadMaterials();
     modelManager->render();
     loader->hide();
     _scene = new Scene();
@@ -187,7 +182,6 @@ void GLWidget::resizeGL(int w, int h)
  *****************************************************************************/
 void GLWidget::paintGL()
 {
-    qDebug() << "Pintando algo";
     //OBTENER EL ELAPSED TIME COMO LA RESTA ENTRE EL TIEMPO DE AHORA I EL ANTERIOR.
     double d_elapsedTime = _displayTimer.elapsed();
     double _fps = 1000.0f/_displayTimer.elapsed();

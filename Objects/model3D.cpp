@@ -45,12 +45,12 @@ Model3D::~Model3D() {
  |  Parameters: const char* directory = Directory of the file to load
  |              const char* filename  = Name of the file to load
  *-------------------------------------------------------------------*/
-Model3D::Model3D(QString fullFolderPath, QString filename, map<QString, GLuint> *textureIdMap, unsigned int assimpFlags){
+Model3D::Model3D(QString fullFolderPath, QString filename, unsigned int assimpFlags){
     setName(filename);
     _baseDirectory = fullFolderPath;
     _filename = filename;
     _isVisible = true;
-    loadFromFile(textureIdMap, assimpFlags);
+    loadFromFile(assimpFlags);
 }
 
 // ============================ GETTER / SETTER ==============================
@@ -243,7 +243,7 @@ Point3D * Model3D::getMaxVertex()
  |  Parameters: map<QString, GLuint> *textureIdMap: Map of textures <Path, bindId>
  |              unsigned int assimpFlags: Assimp flags for optimization process
  *-------------------------------------------------------------------*/
-bool Model3D::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assimpFlags){
+bool Model3D::loadFromFile(unsigned int assimpFlags){
     bool loadedSuccesful = false;
     QString path = _baseDirectory + _filename; //Current relative project path
     const aiScene* pScene = _importer.ReadFile(path.toStdString(), assimpFlags); //Loads and optmizes object
@@ -252,7 +252,6 @@ bool Model3D::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assi
         qDebug() << "Error before loading: " << _importer.GetErrorString();
     }else{
         loadedSuccesful = true;
-        mapMaterials(pScene, textureIdMap);
     }
     return loadedSuccesful;
 }
@@ -261,9 +260,12 @@ bool Model3D::loadFromFile(map<QString, GLuint> *textureIdMap, unsigned int assi
 |  Function render()
 |  Purpose: Renderizes the object by calling all buffer arrays of all meshes. Generates a display list for every mesh and MeshInstance
 *-------------------------------------------------------------------*/
-void Model3D::render() {
+void Model3D::render(map<QString, GLuint> *textureIdMap) {
     const aiScene *scene = _importer.GetScene();
     const aiNode *node = scene->mRootNode;
+
+     mapMaterials(scene, textureIdMap);
+
     generateObjectBuffers(scene);
 
     renderMeshInstances(node);

@@ -53,7 +53,9 @@ SOURCES += main.cpp\
     Scene/contextgl.cpp \
     Utils/vector3D.cpp \
     Utils/point3D.cpp \
-    Utils/point2D.cpp
+    Utils/point2D.cpp \
+    Sound/SoundManager.cpp \
+    Utils/XMLParser.cpp
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -100,7 +102,10 @@ HEADERS  += \
     Utils/util.h \
     Utils/StdAfx.h \
     Utils/point3D.h \
-    Utils/point2D.h
+    Utils/point2D.h \
+    Sound/SoundManager.h \
+    Utils/XMLParser.h \
+    Utils/expat.h
 
 FORMS    += \
     Ui/importsettingsqt.ui \
@@ -1353,7 +1358,9 @@ OTHER_FILES += \
     Media/Models/Circuit/allia009.dds \
     Media/Models/Circuit/allia006.dds \
     Media/Models/Circuit/advertisement.3ds \
-    Media/Models/Circuit/adver004.dds
+    Media/Models/Circuit/adver004.dds \
+    Media/XML/sounds.xml \
+    Media/Sounds/Coches/f1.wav
 
 
 
@@ -1373,3 +1380,7 @@ unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += IL
 
 unix: PKGCONFIG += bullet
+
+unix: PKGCONFIG += openal
+
+unix: PKGCONFIG += freealut

@@ -9,6 +9,7 @@
 #include "Cameras/cameramanager.h"
 #include "Cameras/fixedcamera.h"
 #include "GL/glut.h"
+#include "Sound/SoundManager.h"
 #include <QThread>
 
 
@@ -76,6 +77,9 @@ void GLWidget::initializeGL()
  *      Makes all needed inicialization that is not part of openGL config
  *****************************************************************************/
 void GLWidget::initializeWorld(){
+    SoundManager::GetInstance()->CleanUP();
+    SoundManager::GetInstance()->LoadSounds( "Media/XML/sounds.xml" );
+    SoundManager::GetInstance()->PlayAction("intro");
     ModelManager *modelManager = ModelManager::getModelManager();
     QStringList modelFilters;
     QStringList textureFilters;

@@ -1,0 +1,5 @@
+<SoundManager>
+
+	<Sound action="intro" path="./Media/Sounds/Coches/f1_24.wav" />
+
+<SoundManager/>

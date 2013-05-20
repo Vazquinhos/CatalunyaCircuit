@@ -13,6 +13,7 @@
 #include <IL/il.h>                  //Devil image loader for textures
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 #include "GL/glut.h"
+#include "Sound/SoundManager.h"
 
 char _frames[15]; //String that shows fps
 // ================= Constructores/Destructores ======================

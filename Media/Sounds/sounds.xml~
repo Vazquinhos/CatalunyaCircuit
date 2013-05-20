@@ -1,0 +1,5 @@
+<Sound>
+
+	<Sound action="prueba" path="./Media/Sounds/Prueba/prueba.wav" />
+	<Sound action="intro" path="./Media/Sounds/Prueba/intro.wav" />
+<Sound/>

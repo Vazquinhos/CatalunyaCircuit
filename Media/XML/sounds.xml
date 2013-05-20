@@ -1,5 +1,8 @@
 <SoundManager>
 
-	<Sound action="intro" path="./Media/Sounds/Coches/f1_24.wav" />
+	<Sound action="intro" path="./Media/Sounds/Coches/f1.wav" />
+	<Sound action="vuelta" path="./Media/Sounds/Coches/vuelta.wav" />
+        <Sound action="tribuna" path="./Media/Sounds/Coches/tribuna.wav" />
+        <Sound action="cochePasada" path="./Media/Sounds/Coches/cochedelejos.wav" />
 
 <SoundManager/>

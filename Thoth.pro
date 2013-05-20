@@ -1360,7 +1360,14 @@ OTHER_FILES += \
     Media/Models/Circuit/advertisement.3ds \
     Media/Models/Circuit/adver004.dds \
     Media/XML/sounds.xml \
-    Media/Sounds/Coches/f1.wav
+    Media/Sounds/Coches/f1.wav \
+    Media/Sounds/Coches/vuelta.wav \
+    Media/Sounds/Coches/coche de lejos.wav \
+    Media/Sounds/Coches/tribuna.wav \
+    Media/Sounds/Coches/coche de lejos.wav \
+    Media/Sounds/Coches/coche de lejos.wav \
+    Media/Sounds/Coches/coche de lejos.wav \
+    Media/Sounds/Coches/cochedelejos.wav
 
 
 

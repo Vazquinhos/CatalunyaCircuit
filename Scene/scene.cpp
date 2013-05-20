@@ -47,6 +47,8 @@ Scene::Scene()
         // xPos+=1;
     //}
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
+    unsigned int vuelta = SoundManager::GetInstance()->CreateSource();
+    SoundManager::GetInstance()->PlayRelativeSource(vuelta, "vuelta", true);
 }
 
 /*-------------------------------------------------------------------

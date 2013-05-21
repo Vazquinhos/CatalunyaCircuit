@@ -5,7 +5,6 @@
 #include "importsettingsqt.h"
 #include "exportsettingsqt.h"
 #include "camerawindowqt.h"
-#include "carswindowqt.h"
 #include "about.h"
 
 namespace Ui {
@@ -44,7 +43,6 @@ private:
     ImportSettingsQt*     _p_imp_qt;
     ExportSettingsQt*     _p_exp_qt;
     CameraWindowQt*       _p_camera_qt;
-    CarsWindowQt*         _p_car_qt;
     About*                _p_about;
 
     bool menuVisible;

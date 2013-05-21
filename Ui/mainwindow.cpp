@@ -2,8 +2,6 @@
 #include "ui_mainwindow.h"
 #include "importsettingsqt.h"
 #include "exportsettingsqt.h"
-#include "camerawindowqt.h"
-#include "carswindowqt.h"
 #include "Cameras/cameramanager.h"
 #include "Commands/camerascmd.h"
 #include "about.h"
@@ -12,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 
     setWindowTitle("Catalunya Circuit");
@@ -116,8 +113,7 @@ void MainWindow::on_export_2_clicked()
 
 void MainWindow::on_cars_clicked()
 {
-    if(_p_car_qt)
-        _p_car_qt->show();
+    ui->widget->changeCarModel();
 }
 
 void MainWindow::on_about_clicked()

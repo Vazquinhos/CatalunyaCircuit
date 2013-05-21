@@ -88,6 +88,37 @@ Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamic
     dynamicsWorld->addRigidBody(_fallRigidBody);
 }
 
+/*-------------------------------------------------------------------
+ |  Default Constructor
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Car::Car(QString folderPath, Point3D *position)
+{
+    ModelManager *manager = ModelManager::getModelManager();
+    QString wheelsFolder = QString("Cars/Wheels/");
+
+    btTransform transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
+    btVector3 axisX(1,0,0);
+    btScalar angleX(-1.570796327);
+    btQuaternion rotationX(axisX,angleX);
+    btVector3 axisY(0,1,0);
+    btScalar angleY(0.78539);
+    btQuaternion rotationY(axisY,angleY);
+
+    transform.setRotation(rotationX);
+    //transform.setRotation(rotationY);
+
+
+    _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transform);
+    _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transform);
+    _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelFrontRight.3ds", transform);
+    _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelFrontLeft.3ds", transform);
+    _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelRearRight.3ds", transform);
+    _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelRearLeft.3ds", transform);
+}
 
 // ============================ Methods ===============================
 

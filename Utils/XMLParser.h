@@ -3,7 +3,6 @@
 #ifndef INC_XMLPARSER_
 #define INC_XMLPARSER_
 
-#pragma warning (disable : 4786 )
 
 #include <string>
 #include <map>

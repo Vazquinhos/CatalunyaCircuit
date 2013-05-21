@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'contextgl.h'
 **
-** Created: Mon May 20 00:38:02 2013
+** Created: Mon May 20 20:57:11 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_GLWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -41,6 +41,7 @@ static const uint qt_meta_data_GLWidget[] = {
      107,    9,    9,    9, 0x0a,
      125,    9,    9,    9, 0x0a,
      144,  139,    9,    9, 0x0a,
+     168,    9,    9,    9, 0x0a,
 
        0        // eod
 };
@@ -50,7 +51,7 @@ static const char qt_meta_stringdata_GLWidget[] = {
     "NewModelToPrint(QString)\0x\0"
     "onZoomChanged(qreal)\0onAnimZoomFinished()\0"
     "simulatePhysics()\0startTimers()\0,val\0"
-    "PrintModel(QString,int)\0"
+    "PrintModel(QString,int)\0changeCarModel()\0"
 };
 
 void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -67,6 +68,7 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 5: _t->simulatePhysics(); break;
         case 6: _t->startTimers(); break;
         case 7: _t->PrintModel((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 8: _t->changeCarModel(); break;
         default: ;
         }
     }
@@ -104,9 +106,9 @@ int GLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 9;
     }
     return _id;
 }

@@ -13,6 +13,7 @@
 #include "Cameras/freecamera.h"
 #include <QTimer>
 #include "Ui/loaderqt.h"
+#include "Objects/carviewer.h"
 
 class GLWidget : public QGLWidget {
 
@@ -28,6 +29,7 @@ public slots:
     void simulatePhysics();
     void startTimers( void );
     void PrintModel( QString, int val );
+    void changeCarModel( void );
 
 signals:
     void MPushed( void );
@@ -36,7 +38,7 @@ signals:
 
 
 protected:
-    void initializeGL();
+    virtual void initializeGL();
     void initializeWorld();
     void resizeGL(int w, int h);
     void paintGL();
@@ -44,6 +46,10 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void wheelEvent (QWheelEvent * event);
+
+    Scene *_scene;
+    ObjectManager *_objectManager;
+    CameraManager *_cameraManager;
 
 private:
     int _maxVisibleDistance;
@@ -54,15 +60,14 @@ private:
     unsigned int _indexCamera;
     double _totalTime;
 
+    CarViewer *viewer;
+    bool changingCar;
+
     QTimer *_physicsEventTimer;
     QTimer *_displayEventTimer;
     QTime  _displayTimer;
     QTime  _physicsTimer;
     LoaderQt* loader;
-
-    Scene *_scene;
-    ObjectManager *_objectManager;
-    CameraManager *_cameraManager;
 
     QGLShaderProgram *shader;
 
@@ -80,6 +85,8 @@ private:
 
     void initializeShaders(QString filename);
     void releaseAllShaders();
+
+    void setCameraCarsValues( CameraAbs *ap_camera );
 };
 
 #endif  /* _GLWIDGET_H */

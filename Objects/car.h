@@ -24,6 +24,7 @@ class Car
 public:
     // ================= Constructores/Destructores ======================
     Car(QString folderPath, Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
+    Car(QString folderPath, Point3D * position);
     Car(const Car& car);
     ~Car();
 

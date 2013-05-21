@@ -103,14 +103,18 @@ void GLWidget::initializeWorld(){
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
     SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
-    _cameraManager->addCamera(QString("spherical"), spCam);
-    FreeCamera * frCam = new FreeCamera();
-    _cameraManager->addCamera(QString("free"), frCam);
-
+    _cameraManager->addCamera(spCam->getName(), spCam);
+    FreeCamera * frCam = new FreeCamera(QString("free"));
+    _cameraManager->addCamera(frCam->getName(), frCam);
     _cameraManager->setActiveCamera("free");
+    FixedCamera* fxCam = new FixedCamera(QString("CarsCamera"));
+    _cameraManager->addCamera(fxCam->getName(),fxCam);
+    setCameraCarsValues(fxCam);
+    changingCar = false;
 
     _indexCamera = 0;
     _maxVisibleDistance = 200;
+
 
 
     glEnable(GL_TEXTURE_2D);
@@ -130,6 +134,20 @@ void GLWidget::initializeWorld(){
     p_thread->start();
     QObject::connect(modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
 
+}
+
+void GLWidget::setCameraCarsValues( CameraAbs* ap_camera )
+{
+    Point3D* point= new Point3D(152.742,157.498,-74.439);
+    ap_camera->setPosition(point);
+
+    ap_camera->setYawPitch(143,325.5);
+}
+
+void GLWidget::changeCarModel( void )
+{
+    _cameraManager->setActiveCamera("CarsCamera");
+    changingCar = true;
 }
 
 void GLWidget::simulatePhysics()
@@ -166,6 +184,8 @@ GLWidget::startTimers( void )
     _physicsTimer.start();
 
     emit LoadingFinished();
+
+    viewer = new CarViewer();
 }
 
 
@@ -316,17 +336,30 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_M: //Move camera to right
         emit MPushed();
         break;
+    case Qt::Key_Escape: //Move camera to right
+        if(changingCar)
+            changingCar = false;
+            _cameraManager->setActiveCamera("free");
+        break;
     case Qt::Key_Right: //Move camera to right
         //qDebug() << "PULSANDO RIGHT";
-        _cameraManager->getActiveCamera()->move(1, false);
-        _objectManager->checkVisibility();
-
+        if(!changingCar)
+        {
+            _cameraManager->getActiveCamera()->move(1, false);
+            _objectManager->checkVisibility();
+        }else{
+            viewer->shiftNextCar();
+        }
         break;
 
     case Qt::Key_Left: //Move camera to left
         //qDebug() << "PULSANDO LEFT";
-        _cameraManager->getActiveCamera()->move(-1, false);
-        _objectManager->checkVisibility();
+        if(!changingCar){
+            _cameraManager->getActiveCamera()->move(-1, false);
+            _objectManager->checkVisibility();
+        } else {
+            viewer->shiftPreviousCar();
+        }
         break;
     case Qt::Key_Up: //Move camera to front
         //qDebug() << "PULSANDO UP";

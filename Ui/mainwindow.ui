@@ -41,8 +41,22 @@ QMainWindow{
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame{
+     background-color: #333333;
+	 color:white;
 	filter:Alpha(opacity=0);
-}</string>
+}
+
+QPushButton {
+     background-color: #333333;
+	 border: 1px solid white;
+	 color:white;
+ }
+
+QPushButton:pressed {
+     background-color: #FFFFFF
+     border-style: inset;
+	 color:black;
+ }</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>

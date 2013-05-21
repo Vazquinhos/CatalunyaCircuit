@@ -129,6 +129,7 @@ void CameraManager::setActiveCamera(CameraAbs * camera)
 {
     //Comprobamos si es una camara del manager.
     //Si no lo es, la añadimos.
+    QString camera_name = camera->getName();
     if(_cameras.find(camera->getName()) == _cameras.end())
     {
         _cameras[camera->getName()] = camera;

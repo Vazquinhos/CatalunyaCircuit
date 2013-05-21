@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon May 20 00:37:22 2013
+** Created: Mon May 20 20:56:30 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -82,8 +82,22 @@ public:
         frame->setMinimumSize(QSize(200, 0));
         frame->setMaximumSize(QSize(200, 16777215));
         frame->setStyleSheet(QString::fromUtf8("QFrame{\n"
+"     background-color: #333333;\n"
+"	 color:white;\n"
 "	filter:Alpha(opacity=0);\n"
-"}"));
+"}\n"
+"\n"
+"QPushButton {\n"
+"     background-color: #333333;\n"
+"	 border: 1px solid white;\n"
+"	 color:white;\n"
+" }\n"
+"\n"
+"QPushButton:pressed {\n"
+"     background-color: #FFFFFF\n"
+"     border-style: inset;\n"
+"	 color:black;\n"
+" }"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         verticalLayout = new QVBoxLayout(frame);

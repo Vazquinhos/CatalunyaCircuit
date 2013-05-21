@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loaderqt.ui'
 **
-** Created: Mon May 20 00:37:22 2013
+** Created: Mon May 20 20:56:30 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,7 +35,8 @@ public:
         if (LoaderQt->objectName().isEmpty())
             LoaderQt->setObjectName(QString::fromUtf8("LoaderQt"));
         LoaderQt->resize(400, 300);
-        LoaderQt->setStyleSheet(QString::fromUtf8(""));
+        LoaderQt->setStyleSheet(QString::fromUtf8("     background-color: #333333;\n"
+"	 color:white;"));
         verticalLayout = new QVBoxLayout(LoaderQt);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         image = new QLabel(LoaderQt);

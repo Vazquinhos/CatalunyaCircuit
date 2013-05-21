@@ -20,7 +20,6 @@ SOURCES += main.cpp\
     Ui/errorwindow.cpp \
     Ui/mainwindow.cpp \
     Ui/camerawindowqt.cpp \
-    Ui/carswindowqt.cpp \
     Ui/newcameraqt.cpp \
     Ui/loaderqt.cpp \
     Ui/about.cpp \
@@ -55,7 +54,8 @@ SOURCES += main.cpp\
     Utils/point3D.cpp \
     Utils/point2D.cpp \
     Sound/SoundManager.cpp \
-    Utils/XMLParser.cpp
+    Utils/XMLParser.cpp \
+    Objects/carviewer.cpp
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -65,7 +65,6 @@ HEADERS  += \
     Ui/errorwindow.h \
     Ui/mainwindow.h \
     Ui/camerawindowqt.h \
-    Ui/carswindowqt.h \
     Ui/newcameraqt.h \
     Ui/loaderqt.h \
     Objects/instance.h \
@@ -105,7 +104,8 @@ HEADERS  += \
     Utils/point2D.h \
     Sound/SoundManager.h \
     Utils/XMLParser.h \
-    Utils/expat.h
+    Utils/expat.h \
+    Objects/carviewer.h
 
 FORMS    += \
     Ui/importsettingsqt.ui \
@@ -113,7 +113,6 @@ FORMS    += \
     Ui/errorwindow.ui \
     Ui/mainwindow.ui \
     Ui/camerawindowqt.ui \
-    Ui/carswindowqt.ui \
     Ui/newcameraqt.ui \
     Ui/loaderqt.ui \
     Ui/about.ui

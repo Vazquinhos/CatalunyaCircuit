@@ -55,7 +55,7 @@ CameraAbs::CameraAbs(QString a_name)
  *-------------------------------------------------------------------*/
 CameraAbs::CameraAbs(const CameraAbs &cameraAbs)
 {
-    this->_mode        = cameraAbs._mode;
+    this->_mode = cameraAbs._mode;
 }
 
 /*-------------------------------------------------------------------

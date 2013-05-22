@@ -98,9 +98,17 @@ void CarViewer::shiftPreviousCar(){
  *-------------------------------------------------------------------*/
 void CarViewer::selectCar(){
     ObjectManager *manager = ObjectManager::getObjectManager();
+    Car *lastCar = manager->getActiveDriveCar();
     Car *c1 = new Car("Cars/" + _carFolders[_carActualIndex]);
-    manager->setActiveDriveCar(c1);
+    int cameraMode = Car::FRONTAL_CAMERA;
 
-    c1->viewFrontCamera();
+    if(lastCar){
+        cameraMode = lastCar->getCameraMode();
+    }
+
+    manager->setActiveDriveCar(c1);
+    c1->setCameraMode(cameraMode);
+    c1->viewCurrentCamera();
+
     _isInCarViewerMode = false;
 }

@@ -42,8 +42,8 @@ Scene::Scene()
     //unsigned int numCars = 1;
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
-        //Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-70.3775), _dynamicsWorld);
-         //_objectManager->addCar(c1);
+        Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-76.3775));
+         _objectManager->addCar(c1);
         // xPos+=1;
     //}
 

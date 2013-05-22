@@ -28,6 +28,11 @@ class Car
 {
 
 public:
+    static const int FRONTAL_CAMERA = 1;
+    static const int REAR_CAMERA    = 2;
+    static const int LEFT_CAMERA    = 3;
+    static const int RIGHT_CAMERA   = 4;
+
     // ================= Constructores/Destructores ======================
     Car(QString folderPath, Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
     Car(QString folderPath, Point3D * position);
@@ -38,13 +43,21 @@ public:
     Point3D * getPosition();
     void      setPosition(Point3D *point);
 
+    // ================= Getter / Setter ==================================
+    int getCameraMode();
+    void setCameraMode(int mode);
+
     // ============================ Methods ===============================
     void turnRight();
     void turnLeft();
     void accelerate();
     void brake();
+    void updateCurrentCameraPos();
+    void viewCurrentCamera();
     void viewFrontCamera();
     void viewRearCamera();
+    void viewLeftCamera();
+    void viewRightCamera();
     // ============================ Inherited Methods ===============================
     void displayModels();
     vector<GLuint> checkVisibility();
@@ -62,6 +75,12 @@ private:
     Point2D *_frontCameraYawPitch;
     Point3D *_rearCameraOffset;
     Point2D *_rearCameraYawPitch;
+    Point3D *_rightCameraOffset;
+    Point2D *_rightCameraYawPitch;
+    Point3D *_leftCameraOffset;
+    Point2D *_leftCameraYawPitch;
+
+    int _cameraMode;
 
     // ========================== Bullet Phisics Members ==================
     btRigidBody* _fallRigidBody;
@@ -69,6 +88,8 @@ private:
 
     // ============================ Methods ===============================
     void setModelsWithPos(QString folderPath, Point3D *position);
+
+    void viewCamera(Point3D* offset, Point2D *yawPitch);
 };
 
 #endif // CARMeshInstance_H

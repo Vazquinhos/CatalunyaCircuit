@@ -90,7 +90,7 @@ void GLWidget::initializeWorld(){
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
     _isInDriveMode = false;
-     _fps = 0;
+    _fps = 0;
     _indexCamera = 0;
     _maxVisibleDistance = 200;
 
@@ -181,7 +181,7 @@ void GLWidget::paintGL()
 
     _totalTime += d_elapsedTime;
     float elapsedTime = (float)d_elapsedTime/1000.f;
-/*
+    /*
     qDebug() << "FPS: " << _fps;
     qDebug() << "Elap: " << elapsedTime;
     qDebug() << "Total: " << _totalTime;
@@ -297,7 +297,6 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 {
 
     bool update = true;
-    Point3D *pos;
 
     switch(event->key()) {
 
@@ -308,6 +307,10 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
         if(_carViewer->isActive()){
             _carViewer->exitViewer();
+        }
+        if(_isInDriveMode){
+            _isInDriveMode = false;
+            _cameraManager->setActiveCamera("free");
         }
         break;
 
@@ -351,7 +354,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         _objectManager->checkVisibility();
         break;
 
-    //DEBUG
+        //DEBUG
     case Qt::Key_U:
         _cameraManager->getActiveCamera()->move(10, true);
         _objectManager->checkVisibility();
@@ -374,9 +377,9 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         break;
 
     case Qt::Key_A:
-         if(_isInDriveMode){
+        if(_isInDriveMode){
             _objectManager->getActiveDriveCar()->turnLeft();
-         }
+        }
         break;
     case Qt::Key_S:
         if(_isInDriveMode){
@@ -392,45 +395,26 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     case Qt::Key_R:
         break;
-    case Qt::Key_0:
-        pos = _objectManager->getCar(0)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
-        break;
+
     case Qt::Key_1:
-        pos = _objectManager->getCar(1)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->viewFrontCamera();
+        }
         break;
     case Qt::Key_2:
-        pos = _objectManager->getCar(2)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->viewRearCamera();
+        }
         break;
     case Qt::Key_3:
-        pos = _objectManager->getCar(3)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->viewLeftCamera();
+        }
         break;
     case Qt::Key_4:
-        pos = _objectManager->getCar(4)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
-        break;
-    case Qt::Key_5:
-        pos = _objectManager->getCar(5)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
-        break;
-    case Qt::Key_6:
-        pos = _objectManager->getCar(6)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
-        break;
-    case Qt::Key_7:
-        pos = _objectManager->getCar(7)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
-        break;
-    case Qt::Key_8:
-        pos = _objectManager->getCar(8)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
-        break;
-    case Qt::Key_9:
-        pos = _objectManager->getCar(9)->getPosition();
-        _cameraManager->setCameraOnCar(pos);
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->viewRightCamera();
+        }
         break;
     default:
         update = false;

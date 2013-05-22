@@ -67,6 +67,25 @@ void GLWidget::initializeGL()
 
     //1) Initialize variables
     initializeWorld();
+
+    glShadeModel(GL_FLAT);
+    //glEnable(GL_LIGHTING);
+    glEnable(GL_COLOR_MATERIAL);
+
+    // default components for global illumination
+    float pos[4] = {146.0f, 161.0f, -64.0f, 1.0f};
+    qDebug() << "LightPosition: " << pos[0] << " " << pos[1] << " "<< pos[2] << " "<< pos[3] << " ";
+    float dif[4] = {0.6, 0.6, 0.6, 1.0};
+    float amb[4] = {0.3f, 0.3f, 0.3f, 1.0f};
+    float spe[4] = {0.5f, 0.5f, 0.5f, 1.0f};
+
+    glDisable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0,GL_POSITION, pos);
+    glLightfv(GL_LIGHT0,GL_DIFFUSE,  dif);
+    glLightfv(GL_LIGHT0,GL_SPECULAR, spe);
+    glLightfv(GL_LIGHT0,GL_AMBIENT,  amb);
+    glEnable(GL_LIGHT0);
+    glDisable(GL_LIGHTING);
 }
 
 
@@ -98,8 +117,8 @@ void GLWidget::initializeWorld(){
 
     // 3) Init shaders
     //----------------------------------------------------------
-    //shader =  new QGLShaderProgram();
-    //initializeShaders(QString("simple"));
+    shader =  new QGLShaderProgram();
+    initializeShaders(QString("./Shader/simple"));
 
 
     QThread *p_thread = new QThread();
@@ -391,6 +410,12 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         break;
 
     case Qt::Key_R:
+        if(_shaders)
+            releaseAllShaders();
+
+        else
+            initializeShaders(QString("./Shader/simple"));
+        _shaders = !_shaders;
         break;
     case Qt::Key_0:
         pos = _objectManager->getCar(0)->getPosition();

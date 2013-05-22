@@ -65,6 +65,8 @@ private:
     unsigned int _indexCamera;
     double _totalTime;
 
+    bool _shaders;
+
     CarViewer *_carViewer;
     bool _isInDriveMode;
 

@@ -1366,7 +1366,9 @@ OTHER_FILES += \
     Media/Sounds/Coches/coche de lejos.wav \
     Media/Sounds/Coches/coche de lejos.wav \
     Media/Sounds/Coches/coche de lejos.wav \
-    Media/Sounds/Coches/cochedelejos.wav
+    Media/Sounds/Coches/cochedelejos.wav \
+    Shader/simple.vert \
+    Shader/simple.frag
 
 
 

@@ -115,7 +115,7 @@ void Mesh::render(const aiScene *scene, vector<btScalar> *verticesCoord, vector<
 *-------------------------------------------------------------------*/
 void Mesh::apply_material(const aiMaterial *mtl)
 {
-    /*
+
     float c[4];
 
     GLenum fill_mode;
@@ -190,7 +190,7 @@ void Mesh::apply_material(const aiMaterial *mtl)
     if((ret1 == AI_SUCCESS) && (ret2 == AI_SUCCESS))
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess * strength);
     else {
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0f);
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 80.0f);
         c[0] = 0.0f;
         c[1] = 0.0f;
         c[2] = 0.0f;
@@ -217,8 +217,6 @@ void Mesh::apply_material(const aiMaterial *mtl)
     else{
             glDisable(GL_CULL_FACE);
         }
-
-        */
 }
 
 

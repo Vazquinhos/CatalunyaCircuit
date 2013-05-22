@@ -109,7 +109,7 @@ Car * ObjectManager::getActiveDriveCar(){
  |              int pos: Position of the grid
  |  Returns:    bool If the car could have been added or max cars has been reached
  *-------------------------------------------------------------------*/
-bool ObjectManager::addCarAtPosition(Car * ap_car, int pos)
+bool ObjectManager::addCarAtPosition(Car * ap_car, unsigned int pos)
 {
     bool added = false;
 

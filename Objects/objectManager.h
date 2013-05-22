@@ -32,7 +32,7 @@ public:
     static ObjectManager	* getObjectManager();
     Car		                * getCar(int index);
     void			          addCar(Car * car);
-    bool                      addCarAtPosition(Car * ap_car, int pos);
+    bool                      addCarAtPosition(Car * ap_car, unsigned int pos);
     void                      setActiveDriveCar(Car *car);
     Car                     * getActiveDriveCar();
     void			          rmvCar(int i);

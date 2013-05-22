@@ -63,7 +63,7 @@ void LightManager::setLight(QString light_name, Light *light)
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-QString LightManager::getCCSCameraInfoToExport( void )
+QString LightManager::getCCSCameraInfoToExport(  )
 {
     QString string_to_rtn;
     // Auxiliar varables to get the information of each camera

@@ -25,6 +25,47 @@ Car::Car(const Car& car)
 }
 
 /*-------------------------------------------------------------------
+ |  Default Constructor
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
+{
+    setModelsWithPos(folderPath, position);
+    _chassisCollisionShape = new btBoxShape(btVector3(1,0.4,3));
+
+    btScalar mass = 700;
+    btVector3 fallInertia(0,0,0);
+    _chassisCollisionShape->calculateLocalInertia(mass,fallInertia);
+
+
+    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,_chasisObj,_chassisCollisionShape,fallInertia);
+
+    //int randX = qrand() % ((9 + 1) - 1) + 1;
+    //int randY = qrand() % ((9 + 1) - 1) + 1;
+
+    _fallRigidBody = new btRigidBody(fallRigidBodyCI);
+    //_fallRigidBody->setLinearVelocity(btVector3(randX,randY,0));
+    //_fallRigidBody->setAngularVelocity(btVector3(randX,randY,0));
+    _fallRigidBody->setFriction(1);
+    dynamicsWorld->addRigidBody(_fallRigidBody);
+}
+
+/*-------------------------------------------------------------------
+ |  Default Constructor
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Car::Car(QString folderPath, Point3D *position)
+{
+    setModelsWithPos(folderPath, position);
+}
+
+/*-------------------------------------------------------------------
  |  Destructor
  |
  |  Purpose:
@@ -64,48 +105,6 @@ void Car::setPosition(Point3D *position){
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
-{
-    setModelsWithPos(folderPath, position);
-
-    _chassisCollisionShape = new btBoxShape(btVector3(1,0.4,3));
-
-    btScalar mass = 700;
-    btVector3 fallInertia(0,0,0);
-    _chassisCollisionShape->calculateLocalInertia(mass,fallInertia);
-
-
-    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,_chasisObj,_chassisCollisionShape,fallInertia);
-
-    //int randX = qrand() % ((9 + 1) - 1) + 1;
-    //int randY = qrand() % ((9 + 1) - 1) + 1;
-
-    _fallRigidBody = new btRigidBody(fallRigidBodyCI);
-    //_fallRigidBody->setLinearVelocity(btVector3(randX,randY,0));
-    //_fallRigidBody->setAngularVelocity(btVector3(randX,randY,0));
-    _fallRigidBody->setFriction(1);
-    dynamicsWorld->addRigidBody(_fallRigidBody);
-}
-
-/*-------------------------------------------------------------------
- |  Default Constructor
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-Car::Car(QString folderPath, Point3D *position)
-{
-    setModelsWithPos(folderPath, position);
-}
-
-/*-------------------------------------------------------------------
- |  Default Constructor
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
 Car::Car(QString folderPath)
 {
     setModelsWithPos(folderPath, new Point3D(0,0,0));
@@ -126,36 +125,89 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
     transform.setRotation(rotationX);
 
-
-
     _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transform);
     _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transform);
     _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelFrontRight.3ds", transform);
     _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelFrontLeft.3ds", transform);
     _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelRearRight.3ds", transform);
     _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelRearLeft.3ds", transform);
+
+    _frontCameraOffset = new Point3D(0,0,2);
+    _frontCameraYawPitch = new Point2D(271.5, 342.5);
+    _rearCameraOffset  = new Point3D(0,0,2);
+    _rearCameraYawPitch = new Point2D(271.5, 342.5);
 }
 
 // ============================ Methods ===============================
+/*-------------------------------------------------------------------
+ |  Default turnRight
+ |
+ |  Purpose:Turn right the car
+ |  Parameters:
+ *-------------------------------------------------------------------*/
 void Car::turnRight(){
     Point3D *position = getPosition();
     position->setX(position->getX()+1);
     setPosition(position);
 }
+/*-------------------------------------------------------------------
+ |  Default turnLeft
+ |
+ |  Purpose:Turn left the car
+ |  Parameters:
+ *-------------------------------------------------------------------*/
 void Car::turnLeft(){
     Point3D *position = getPosition();
     position->setX(position->getX()-1);
     setPosition(position);
 }
+/*-------------------------------------------------------------------
+ |  Default accelerate
+ |
+ |  Purpose:Accelerate the car
+ |  Parameters:
+ *-------------------------------------------------------------------*/
 void Car::accelerate(){
     Point3D *position = getPosition();
     position->setX(position->getY()+1);
     setPosition(position);
 }
+/*-------------------------------------------------------------------
+ |  Default brake
+ |
+ |  Purpose:Brake the car
+ |  Parameters:
+ *-------------------------------------------------------------------*/
 void Car::brake(){
     Point3D *position = getPosition();
     position->setX(position->getY()-1);
     setPosition(position);
+}
+
+/*-------------------------------------------------------------------
+ |  Default brake
+ |
+ |  Purpose:Brake the car
+ |  Parameters:
+ *-------------------------------------------------------------------*/
+void Car::viewFrontCamera(){
+    CameraManager*  manager;
+    FixedCamera*    camera;
+    manager = CameraManager::getCameraManager();
+    camera = dynamic_cast<FixedCamera*>(manager->getCamera("CarCamera"));
+
+    camera->setPosition(*getPosition() + *_frontCameraOffset);
+    camera->setYawPitch(_frontCameraYawPitch->getX(), _frontCameraYawPitch->getY());
+    manager->setActiveCamera("CarCamera");
+}
+
+/*-------------------------------------------------------------------
+ |  Default brake
+ |
+ |  Purpose:Brake the car
+ |  Parameters:
+ *-------------------------------------------------------------------*/
+void Car::viewRearCamera(){
 }
 // ============================ Inherited Methods ===============================
 /*-------------------------------------------------------------------

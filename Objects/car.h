@@ -15,12 +15,18 @@
 #define CARMeshInstance_H
 
 #include "Utils/util.h"
+#include "Utils/point2D.h"
 #include "Utils/vector3D.h"
 #include "Objects/physicsObject3D.h"
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 #include <bullet/btBulletCollisionCommon.h>
+#include "Cameras/cameramanager.h"
+#include "Cameras/fixedcamera.h"
+
+
 class Car
 {
+
 public:
     // ================= Constructores/Destructores ======================
     Car(QString folderPath, Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
@@ -37,6 +43,8 @@ public:
     void turnLeft();
     void accelerate();
     void brake();
+    void viewFrontCamera();
+    void viewRearCamera();
     // ============================ Inherited Methods ===============================
     void displayModels();
     vector<GLuint> checkVisibility();
@@ -49,6 +57,11 @@ private:
     PhysicsObject3D *_wheelFrontLeft;
     PhysicsObject3D *_wheelRearRight;
     PhysicsObject3D *_wheelRearLeft;
+
+    Point3D *_frontCameraOffset;
+    Point2D *_frontCameraYawPitch;
+    Point3D *_rearCameraOffset;
+    Point2D *_rearCameraYawPitch;
 
     // ========================== Bullet Phisics Members ==================
     btRigidBody* _fallRigidBody;

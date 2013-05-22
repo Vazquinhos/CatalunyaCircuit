@@ -11,7 +11,13 @@
 class CarViewer
 {
 public:
+    // ============================ Constructors ==========================
     CarViewer();
+    // ============================ Getter / Setter =======================
+    bool isActive();
+    // ============================ Methods ===============================
+    void changeToViewerMode();
+    void exitViewer();
     void shiftNextCar();
     void shiftPreviousCar();
     void selectCar();
@@ -21,7 +27,8 @@ private:
     QStringList _carFolders;
     int _numCars;
     int _carActualIndex;
-
+    bool _isInCarViewerMode;
+    CameraManager *_cameraManager;
 };
 
 #endif // CARVIEWER_H

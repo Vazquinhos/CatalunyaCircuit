@@ -89,7 +89,6 @@ void GLWidget::initializeWorld(){
 
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
-    _isInCarViewerMode = false;
     _isInDriveMode = false;
      _fps = 0;
     _indexCamera = 0;
@@ -116,8 +115,7 @@ void GLWidget::initializeWorld(){
 
 void GLWidget::changeCarModel( void )
 {
-    _cameraManager->setActiveCamera("CarsCamera");
-    _isInCarViewerMode = true;
+    _carViewer->changeToViewerMode();
 }
 
 void GLWidget::simulatePhysics()
@@ -155,7 +153,7 @@ GLWidget::startTimers( void )
 
     emit LoadingFinished();
 
-    _viewer = new CarViewer();
+    _carViewer = new CarViewer();
 }
 
 
@@ -307,17 +305,15 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         emit MPushed();
         break;
     case Qt::Key_Escape: //Move camera to right
-        if(_isInCarViewerMode){
-            _isInCarViewerMode = false;
-            _cameraManager->setActiveCamera("free");
+
+        if(_carViewer->isActive()){
+            _carViewer->exitViewer();
         }
         break;
 
     case Qt::Key_Return: //Move camera to right
-        if(_isInCarViewerMode){
-            _viewer->selectCar();
-            _cameraManager->setActiveCamera("free");
-            _isInCarViewerMode = false;
+        if(_carViewer->isActive()){
+            _carViewer->selectCar();
             _isInDriveMode = true;
         }
 
@@ -325,22 +321,22 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     case Qt::Key_Right: //Move camera to right
         //qDebug() << "PULSANDO RIGHT";
-        if(!_isInCarViewerMode)
+        if(!_carViewer->isActive())
         {
             _cameraManager->getActiveCamera()->move(1, false);
             _objectManager->checkVisibility();
         }else{
-            _viewer->shiftNextCar();
+            _carViewer->shiftNextCar();
         }
         break;
 
     case Qt::Key_Left: //Move camera to left
         //qDebug() << "PULSANDO LEFT";
-        if(!_isInCarViewerMode){
+        if(!_carViewer->isActive()){
             _cameraManager->getActiveCamera()->move(-1, false);
             _objectManager->checkVisibility();
         } else {
-            _viewer->shiftPreviousCar();
+            _carViewer->shiftPreviousCar();
         }
         break;
     case Qt::Key_Up: //Move camera to front

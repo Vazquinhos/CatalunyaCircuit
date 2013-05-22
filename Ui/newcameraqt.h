@@ -19,11 +19,11 @@ class NewCameraQt : public QDialog, public Ui::NewCameraQt
 public:
     explicit NewCameraQt(QWidget *parent = 0);
     ~NewCameraQt();
-    CameraAbs* getNewCamera( void );
+    CameraAbs* getNewCamera();
     
 private slots:
     void on_buttonBox_accepted();
-    void errorAcepted( void );
+    void errorAcepted();
 
 private:
     Ui::NewCameraQt *ui;

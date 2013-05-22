@@ -161,7 +161,7 @@ void CameraWindowQt::on_pb_add_clicked()
 void
 CameraWindowQt::NewCameraAdded( CameraAbs* ap_camera )
 {
-    CameraManager::getCameraManager()->addCamera( ap_camera->getName(), ap_camera);
+    CameraManager::getCameraManager()->addCamera(ap_camera);
 
     // The icon of the cameras for the list widget
     QIcon icon;
@@ -190,7 +190,7 @@ void CameraWindowQt::on_line_name_editingFinished()
     // Añadimos la nueva camara
     CameraAbs* p_camera = getCameraFromQt();
 
-    CameraManager::getCameraManager()->addCamera(p_camera->getName(), p_camera);
+    CameraManager::getCameraManager()->addCamera(p_camera);
 
     // Update the list widget with the new camera
     // The icon of the cameras for the list widget
@@ -280,7 +280,7 @@ void CameraWindowQt::on_cb_type_currentIndexChanged(int index)
 
         CameraAbs* p_camera = getCameraFromQt();
 
-        CameraManager::getCameraManager()->addCamera(p_camera->getName(), p_camera);
+        CameraManager::getCameraManager()->addCamera(p_camera);
 
         // Update the list widget with the new camera
         // The icon of the cameras for the list widget

@@ -19,16 +19,16 @@ class Vector3D
 {
 public:
   // ================= Constructores/Destructores ======================
-  Vector3D( void );
+  Vector3D();
   Vector3D( float a_x, float a_y, float a_z );
   Vector3D( const Vector3D& a_vec );
-  ~Vector3D( void );
+  ~Vector3D();
 
   // ============================ Methods ===============================
   double angle( const Vector3D& a_vec );
   double module( void ) const;
-  void makeContrary( void );
-  void normalize( void );
+  void makeContrary();
+  void normalize();
   void setCoordinates(float a_x, float a_y, float a_z);
   void getCoordinates(float& a_x, float& a_y, float& a_z);
   float getX( void ) const;

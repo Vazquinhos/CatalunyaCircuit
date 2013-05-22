@@ -19,7 +19,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-CameraAbs::CameraAbs( void )
+CameraAbs::CameraAbs()
 {
     _zoom = 10;
     _yaw = 57;

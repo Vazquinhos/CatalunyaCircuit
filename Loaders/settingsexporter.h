@@ -15,8 +15,7 @@ public:
     void SetParameters( bool a_cameras,
                         bool a_cars,
                         bool a_lights);
-    void Execute( void );
-
+    void Execute();
 private:
     // ========================== Data Members ============================
     bool _cameras;

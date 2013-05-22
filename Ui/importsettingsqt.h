@@ -23,7 +23,7 @@ private slots:
 
     void on_buttonBox_accepted();
 
-    void errorAcepted( void );
+    void errorAcepted();
 
 private:
     // ========================== Data Members ============================

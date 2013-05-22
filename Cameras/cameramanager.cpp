@@ -37,7 +37,7 @@ CameraManager::CameraManager()
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-CameraManager * CameraManager::getCameraManager( void )
+CameraManager * CameraManager::getCameraManager()
 {
     if(!_cameraManager){
         _cameraManager = new CameraManager();
@@ -49,16 +49,19 @@ CameraManager * CameraManager::getCameraManager( void )
 
 void CameraManager::setupCameras() {
     SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
-    _cameraManager->addCamera(spCam->getName(), spCam);
     FreeCamera * frCam = new FreeCamera(QString("free"));
-    _cameraManager->addCamera(frCam->getName(), frCam);
-    _cameraManager->setActiveCamera("free");
-    FixedCamera* fxCam = new FixedCamera(QString("CarsCamera"));
-    _cameraManager->addCamera(fxCam->getName(),fxCam);
+    FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
+    FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
 
     Point3D* point= new Point3D(152.742,157.498,-74.439);
     fxCam->setPosition(point);
     fxCam->setYawPitch(143,325.5);
+
+    _cameraManager->addCamera(spCam);
+    _cameraManager->addCamera(frCam);
+    _cameraManager->addCamera(fxCam);
+    _cameraManager->addCamera(fxCamCar);
+    _cameraManager->setActiveCamera("free");
 }
 
 
@@ -84,9 +87,9 @@ CameraAbs * CameraManager::getCamera(QString camera_name)
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-void CameraManager::addCamera(QString a_name, CameraAbs * a_camera)
+void CameraManager::addCamera(CameraAbs * a_camera)
 {
-    _cameras[a_name] = a_camera;
+    _cameras[a_camera->getName()] = a_camera;
 }
 
 /*-------------------------------------------------------------------
@@ -98,7 +101,7 @@ void CameraManager::addCamera(QString a_name, CameraAbs * a_camera)
  *-------------------------------------------------------------------*/
 void CameraManager::deleteCamera( QString a_name )
 {
-     if(!(_cameras.find(a_name) == _cameras.end()))
+    if(!(_cameras.find(a_name) == _cameras.end()))
         _cameras.erase(a_name);
 }
 /*-------------------------------------------------------------------
@@ -128,7 +131,7 @@ QString CameraManager::getCCSCameraInfoToExport( void )
     CameraAbs* camera;
     QString info_camera;
 
-     // We iterate over all the cameras getting their info and concatenating in one string
+    // We iterate over all the cameras getting their info and concatenating in one string
     for(std::map<QString, CameraAbs*>::iterator iter =  _cameras.begin(); iter !=  _cameras.end(); ++iter)
     {
 

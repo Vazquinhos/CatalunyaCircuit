@@ -31,9 +31,9 @@ private slots:
 
     void on_cars_clicked();
 
-    void Menu( void );
+    void Menu();
 
-    void showMySelf( void );
+    void showMySelf();
 
     void on_about_clicked();
 

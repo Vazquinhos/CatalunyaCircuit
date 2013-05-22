@@ -30,13 +30,13 @@ public slots:
     void onZoomChanged(qreal x);
     void onAnimZoomFinished();
     void simulatePhysics();
-    void startTimers( void );
+    void startTimers();
     void PrintModel( QString, int val );
-    void changeCarModel( void );
+    void changeCarModel();
 
 signals:
-    void MPushed( void );
-    void LoadingFinished( void );
+    void MPushed();
+    void LoadingFinished();
     void NewModelToPrint( QString );
 
 
@@ -65,8 +65,7 @@ private:
     unsigned int _indexCamera;
     double _totalTime;
 
-    CarViewer *_viewer;
-    bool _isInCarViewerMode;
+    CarViewer *_carViewer;
     bool _isInDriveMode;
 
     QTimer *_physicsEventTimer;

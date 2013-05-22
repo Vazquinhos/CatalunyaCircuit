@@ -208,6 +208,17 @@ Point3D::operator ==( const Point3D& a_pnt)
          (_y == a_pnt.getY()) &&
          (_z == a_pnt.getZ()));
 }
+/*-------------------------------------------------------------------
+ |  Operator ==
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Point3D* Point3D::operator+( const Point3D& a_pnt)
+{
+ return (new Point3D(_x + a_pnt.getX(),_y + a_pnt.getY(), _z + a_pnt.getZ()));
+}
 
 /*-------------------------------------------------------------------
  |  Operator ==

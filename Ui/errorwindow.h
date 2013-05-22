@@ -16,7 +16,7 @@ public:
     explicit ErrorWindow(QWidget *parent = 0);
     ~ErrorWindow();
     void SetErrorMsg( QString a_error_msg );
-    void ShowWindow( void );
+    void ShowWindow();
     
 private slots:
     // ============================ Slots ===============================
@@ -27,7 +27,7 @@ private:
     Ui::ErrorWindow *ui;
 
 signals:
-    void ErrorAcepted( void );
+    void ErrorAcepted();
 };
 
 #endif // ERRORWINDOW_H

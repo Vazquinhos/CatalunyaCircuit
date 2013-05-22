@@ -23,17 +23,17 @@ class CamerasCmd : public QObject
 
 public:
     // ================= Constructores/Destructores ======================
-        CamerasCmd();
-        ~CamerasCmd();
-        void process( void );
-
+    CamerasCmd();
+    ~CamerasCmd();
+    void process();
 private:
     // ========================== Data Members ============================
-        CameraWindowQt* _p_camera_qt;
+    CameraWindowQt* _p_camera_qt;
 
     // ============================ Methods ===============================
 private slots:
-        void updateCamerasSettings( void );
+    void updateCamerasSettings();
+
 };
 
 #endif // CAMERASCMD_H

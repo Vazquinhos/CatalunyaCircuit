@@ -87,8 +87,6 @@ void SphericalCamera::update()
               getPosition()->getX(), getPosition()->getY(), getPosition()->getZ(),
               up->getX(), up->getY(), up->getZ() );
 
-    delete position;
-    delete up;
 }
 
 void SphericalCamera::render()

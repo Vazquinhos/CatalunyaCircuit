@@ -16,7 +16,7 @@ SoundManager::SoundManager()
 SoundManager::~SoundManager()
 {}
 
-SoundManager* SoundManager::getSoundManager(void)
+SoundManager* SoundManager::getSoundManager()
 {
 	if (mSoundManager==NULL)
 	{

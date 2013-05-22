@@ -21,10 +21,10 @@ class Point3D{
 
 public:
     // ================= Constructores/Destructores ======================
-    Point3D( void );
+    Point3D();
     Point3D(float a_x, float a_y, float a_z);
     Point3D(const Point3D& a_pnt);
-    ~Point3D( void );
+    ~Point3D();
 
     // ============================ Methods ===============================
     float getX( void ) const;
@@ -41,6 +41,7 @@ public:
     // ============================ Operators =============================
     bool operator==( const Point3D& a_pnt);
     bool operator!=( const Point3D& a_pnt);
+    Point3D* operator+( const Point3D& a_pnt);
 
 private:
     // =========================== Data Members ===========================

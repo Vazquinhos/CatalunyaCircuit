@@ -28,7 +28,7 @@ public:
     ~FixedCamera();
 
     // ============================ Methods ===============================
-    virtual QString     getTypeInQString( void );
+    virtual QString     getTypeInQString();
     virtual void        update();
     void                animate();
     void                render();

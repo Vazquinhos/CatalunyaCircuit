@@ -33,7 +33,7 @@ public slots:
     void loadModels();
 
  signals:
-    void finish( void );
+    void finish();
     void error(QString err);
     void NewModel(QString model, int val);
     void NModels( int );

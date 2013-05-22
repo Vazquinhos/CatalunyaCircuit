@@ -162,7 +162,7 @@ SettingsImporter::Execute( void )
                             zoom = Qnumber.toFloat();
 
                             newCamera->setZoom(zoom);
-                            CameraManager::getCameraManager()->addCamera(name, newCamera);
+                            CameraManager::getCameraManager()->addCamera(newCamera);
                         }
                         exit = file->readLine(buff, 256);
                     }

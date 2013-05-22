@@ -31,8 +31,7 @@ public:
     static LightManager		* getLightManager();
     Light			        * getLight(QString light_name);
     void			          setLight(QString light_name, Light *light);
-    QString                   getCCSCameraInfoToExport( void );
-
+    QString                   getCCSCameraInfoToExport();
 private:
     // ========================== Data Members ============================
     static LightManager           * _lightManager;

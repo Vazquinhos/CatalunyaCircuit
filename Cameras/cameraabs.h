@@ -20,28 +20,28 @@ class CameraAbs
 {
 public:
     // ================= Constructores/Destructores ======================
-    CameraAbs(void);
+    CameraAbs();
     CameraAbs(QString a_name);
     CameraAbs(const CameraAbs& cameraAbs);
     virtual ~CameraAbs();
 
     // ============================ Methods ===============================
     void              resizeProjection( int w, int h );
-    virtual void      update( void );
-    void              render( void );
+    virtual void      update();
+    void              render();
     virtual void      move(float velocity, bool front){(void) velocity; (void) front;}
     void              setModeProjection( mode_projection mode );
-    mode_projection   getModeProjection(void);
+    mode_projection   getModeProjection();
     void              setPosition( Point3D * p_position );
-    Point3D         * getPosition( void );
+    Point3D         * getPosition();
     void              setPointToLook(Point3D *point);
     Point3D         * getPointToLook();
-    camera_type       getType( void );
+    camera_type       getType();
     virtual QString   getTypeInQString( void ){return QString("");}
-    QString           getSettingsInfo( void );
+    QString           getSettingsInfo();
     void              setSettingsInfo( QString a_settings );
     void              setName( QString a_name);
-    QString           getName( void );
+    QString           getName();
     void              setYawPitch(float yaw, float pitch);
     void              addYawPitch(float yaw, float pitch);
     void              getYawPitch(float &yaw, float &pitch);

@@ -28,7 +28,7 @@ public:
     ~FreeCamera();
 
     // ============================ Methods ===============================
-    virtual QString     getTypeInQString( void );
+    virtual QString     getTypeInQString();
     virtual void        update();
     virtual void        move(float velocity, bool front);
     void                move(float incrementX, float incrementY, float incrementZ);

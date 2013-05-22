@@ -28,7 +28,7 @@ CamerasCmd::updateCamerasSettings( void )
 }
 
 void
-CamerasCmd::process( void )
+CamerasCmd::process(  )
 {
     _p_camera_qt = new CameraWindowQt();
     _p_camera_qt->LoadWindow( CameraManager::getCameraManager()->getCameras());

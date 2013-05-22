@@ -28,7 +28,7 @@ public:
     ~SphericalCamera();
 
     // ============================ Methods ===============================
-    virtual QString     getTypeInQString( void );
+    virtual QString     getTypeInQString();
     void update();
     void render();
 private:

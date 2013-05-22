@@ -19,10 +19,10 @@ class Point2D{
 
 public:
     // ================= Constructores/Destructores ======================
-    Point2D( void );
+    Point2D();
     Point2D(float a_x, float a_y);
     Point2D(const Point2D& a_pnt);
-    ~Point2D( void );
+    ~Point2D();
 
     // ============================ Methods ===============================
 

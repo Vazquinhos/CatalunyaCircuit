@@ -37,10 +37,9 @@ public:
     sfvector          getAmbient();
     void              setPosition(Point3D * p_position);
     Point3D         * getPosition();
-    QString           getSettingsInfo( void );
+    QString           getSettingsInfo();
     void              setName( QString a_name);
-    QString           getName( void );
-
+    QString           getName();
 private:
     // ========================== Data Members ============================
     sfvector         _v_color;

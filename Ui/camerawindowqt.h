@@ -20,7 +20,7 @@ public:
     explicit CameraWindowQt(QWidget *parent = 0);
     ~CameraWindowQt();
     void LoadWindow(std::map<QString,CameraAbs*> a_cameras);
-    std::vector< std::pair<CameraAbs*,CameraAbs*> > getEditedCameras( void );
+    std::vector< std::pair<CameraAbs*,CameraAbs*> > getEditedCameras();
 private slots:
     void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *);
 
@@ -53,9 +53,9 @@ private:
 
     // ============================ Methods ===============================
     void updateWidgetsWithCamera( CameraAbs* ap_camera );
-    CameraAbs* getCameraFromQt( void );
+    CameraAbs* getCameraFromQt();
 signals:
-    void EditionFinished( void );
+    void EditionFinished();
 };
 
 #endif // CAMERAWINDOWQT_H

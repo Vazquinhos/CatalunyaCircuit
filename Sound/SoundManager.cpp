@@ -16,7 +16,7 @@ SoundManager::SoundManager()
 SoundManager::~SoundManager()
 {}
 
-SoundManager* SoundManager::GetInstance()
+SoundManager* SoundManager::getSoundManager(void)
 {
 	if (mSoundManager==NULL)
 	{
@@ -122,11 +122,11 @@ void SoundManager::onStartElement( const std::string &elem, MKeyValue &atts )
 		}
 		if (bfile && baction)
 		{
-			//Buscamos si tenemos registrada la acción "action"
+			//Buscamos si tenemos registrada la accin "action"
 			std::map<Action, IdBuffer>::iterator it = mBuffers.find( action );
 			if( it == mBuffers.end() )
 			{
-				//Si aún no la hemos registrado, la añadimos:
+				//Si an no la hemos registrado, la aadimos:
 				std::map<SoundFile,IdBuffer>::iterator it = mFilesLoaded.find( file );
 				if( it != mFilesLoaded.end() )
 				{

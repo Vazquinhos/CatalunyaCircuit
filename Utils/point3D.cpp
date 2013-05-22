@@ -112,6 +112,36 @@ Point3D::getZ( void ) const
 }
 
 /*-------------------------------------------------------------------
+ |  Function setX
+ |
+ |  Purpose: Setter. Sets the X coordinate of the point.
+ |  Parameters: float x: the X coordinate of the point
+ *-------------------------------------------------------------------*/
+void Point3D::setX(float x){
+    this->_x = x;
+}
+
+/*-------------------------------------------------------------------
+ |  Function setX
+ |
+ |  Purpose: Setter. Sets the Y coordinate of the point.
+ |  Parameters: float y: the Y coordinate of the point
+ *-------------------------------------------------------------------*/
+void Point3D::setY(float y){
+    this->_y = y;
+}
+
+/*-------------------------------------------------------------------
+ |  Function setZ
+ |
+ |  Purpose: Setter. Sets the Z coordinate of the point.
+ |  Parameters: float z: the Z coordinate of the point
+ *-------------------------------------------------------------------*/
+void Point3D::setZ(float z){
+    this->_z = z;
+}
+
+/*-------------------------------------------------------------------
  |  Function getCoordinates
  |
  |  Purpose: Getter. Gets the X and Y coordinates of the point.

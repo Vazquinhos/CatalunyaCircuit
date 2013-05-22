@@ -18,17 +18,25 @@
 #include "Utils/vector3D.h"
 #include "Objects/physicsObject3D.h"
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
-
+#include <bullet/btBulletCollisionCommon.h>
 class Car
 {
 public:
     // ================= Constructores/Destructores ======================
     Car(QString folderPath, Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
     Car(QString folderPath, Point3D * position);
+    Car(QString folderPath);
     Car(const Car& car);
     ~Car();
 
     Point3D * getPosition();
+    void      setPosition(Point3D *point);
+
+    // ============================ Methods ===============================
+    void turnRight();
+    void turnLeft();
+    void accelerate();
+    void brake();
     // ============================ Inherited Methods ===============================
     void displayModels();
     vector<GLuint> checkVisibility();
@@ -47,7 +55,7 @@ private:
     btCollisionShape* _chassisCollisionShape;
 
     // ============================ Methods ===============================
-
+    void setModelsWithPos(QString folderPath, Point3D *position);
 };
 
 #endif // CARMeshInstance_H

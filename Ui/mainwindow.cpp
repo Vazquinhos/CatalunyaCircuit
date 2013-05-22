@@ -5,6 +5,7 @@
 #include "Cameras/cameramanager.h"
 #include "Commands/camerascmd.h"
 #include "about.h"
+#include "Sound/SoundManager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -120,4 +121,10 @@ void MainWindow::on_about_clicked()
 {
     if(_p_about)
         _p_about->show();
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    qDebug() << "CERRANDO";
+    SoundManager::getSoundManager()->CleanUP();
 }

@@ -26,19 +26,19 @@ class SoundManager: public CXMLParser
 {
 	public:		
 
-		static SoundManager*	GetInstance		( void );
-		void					CleanUP			( void );
+        static SoundManager*	getSoundManager		();
+        void					CleanUP			();
 
 		//-----------GENERAL FUNCTIONS---------------------
 		//[sp] Cargar
 		bool	LoadSounds	( const std::string& xmlSoundsFile );
-		void	Reset		( void );
-		void	Pause		( void );
-		void	Stop		( void );
-		void	SoundOn		( void ) {mSoundON=true;}
-		void	SoundOff	( void ) {mSoundON=false;}
+        void	Reset		();
+        void	Pause		();
+        void	Stop		();
+        void	SoundOn		() {mSoundON=true;}
+        void	SoundOff	() {mSoundON=false;}
 		void	SetGain		( float gain );
-		float	GetGain		( void );
+        float	GetGain		();
         
 
 		//---------ACTION FUNCTIONS-------------------------------
@@ -47,7 +47,7 @@ class SoundManager: public CXMLParser
 		
 	
 		//-----SOURCE FUNCTIONS----------------------------
-		int		CreateSource		( void );
+        int		CreateSource		();
 		bool	DeleteSource		( int source );
         bool	PlaySource			( int source, const std::string& action, bool loop );
 		bool	PlayRelativeSource	( int source, const std::string& action, bool loop );
@@ -79,8 +79,8 @@ class SoundManager: public CXMLParser
 		std::vector<InfoSource>			mSources;
 		
 
-		static SoundManager * mSoundManager;
-		
+        static SoundManager * mSoundManager;
+
 	private:	
 		///Private constructor.
 		SoundManager();
@@ -92,10 +92,10 @@ class SoundManager: public CXMLParser
 		SoundManager& operator=(const SoundManager&);
 
 		void			onStartElement		( const std::string &elem, MKeyValue &atts );
-		bool			_initAL				( void );
-		void			_finalizeAL			( void );
+        bool			_initAL				();
+        void			_finalizeAL			();
 		bool			_loadSound			( const std::string& file, IdBuffer& buffer );
-		void			_clear				( void );
+        void			_clear				();
 		int				_getSource			( bool reserved=false );
 		std::string		_getALErrorString	(ALenum err);
 };

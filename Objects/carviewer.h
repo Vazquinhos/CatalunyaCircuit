@@ -14,9 +14,11 @@ public:
     CarViewer();
     void shiftNextCar();
     void shiftPreviousCar();
+    void selectCar();
 private:
     FixedCamera *_cam;
     std::vector<Model3D*> _vCars;
+    QStringList _carFolders;
     int _numCars;
     int _carActualIndex;
 

@@ -32,6 +32,9 @@ public:
     static ObjectManager	* getObjectManager();
     Car		                * getCar(int index);
     void			          addCar(Car * car);
+    bool                      addCarAtPosition(Car * ap_car, int pos);
+    void                      setActiveDriveCar(Car *car);
+    Car                     * getActiveDriveCar();
     void			          rmvCar(int i);
     void			          setEnviroment(Enviroment * enviroment);
     Enviroment              * getEnviroment();
@@ -42,9 +45,14 @@ public:
 private:
     // ========================== Data Members ============================
     static ObjectManager       * _p_objectManager;
+
     std::vector<Car*>            _v_cars;
+    std::vector<Point3D*>        _v_gridPositions;
     Enviroment                 * _p_enviroment;
-    vector<GLuint>             _displayLists;
+    vector<GLuint>               _displayLists;
+
+    Car                        * _driveCar;
+
     // ============================ Methods ===============================
 };
 

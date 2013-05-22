@@ -9,6 +9,9 @@
  */
 
 #include "cameramanager.h"
+#include "Cameras/sphericalcamera.h"
+#include "Cameras/fixedcamera.h"
+#include "Cameras/freecamera.h"
 
 CameraManager * CameraManager::_cameraManager = NULL;
 
@@ -36,11 +39,29 @@ CameraManager::CameraManager()
  *-------------------------------------------------------------------*/
 CameraManager * CameraManager::getCameraManager( void )
 {
-    if(!_cameraManager)
-    _cameraManager = new CameraManager();
+    if(!_cameraManager){
+        _cameraManager = new CameraManager();
+        _cameraManager->setupCameras();
+    }
 
     return _cameraManager;
 }
+
+void CameraManager::setupCameras() {
+    SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
+    _cameraManager->addCamera(spCam->getName(), spCam);
+    FreeCamera * frCam = new FreeCamera(QString("free"));
+    _cameraManager->addCamera(frCam->getName(), frCam);
+    _cameraManager->setActiveCamera("free");
+    FixedCamera* fxCam = new FixedCamera(QString("CarsCamera"));
+    _cameraManager->addCamera(fxCam->getName(),fxCam);
+
+    Point3D* point= new Point3D(152.742,157.498,-74.439);
+    fxCam->setPosition(point);
+    fxCam->setYawPitch(143,325.5);
+}
+
+
 
 /*-------------------------------------------------------------------
  |  getCamera(QString camera_name)

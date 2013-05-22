@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loaderqt.ui'
 **
-** Created: Mon May 20 20:56:30 2013
+** Created: Wed May 22 12:41:09 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,8 +55,7 @@ public:
 "\n"
 "QProgressBar {\n"
 "     border: 2px solid grey;\n"
-"	 background-color: #black;\n"
-"     border-radius: 5px;\n"
+"	 border-radius: 5px;\n"
 " }"));
         progressBar->setValue(24);
         progressBar->setTextVisible(false);

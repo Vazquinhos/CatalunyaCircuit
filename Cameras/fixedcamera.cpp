@@ -83,6 +83,7 @@ void FixedCamera::update()
               pointToLook->getY(),
               pointToLook->getZ(),
               0, 0, 1 );
+    delete pointToLook;
 }
 
 void FixedCamera::animate()

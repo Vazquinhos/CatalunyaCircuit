@@ -37,8 +37,7 @@
 
 QProgressBar {
      border: 2px solid grey;
-	 background-color: #black;
-     border-radius: 5px;
+	 border-radius: 5px;
  }</string>
      </property>
      <property name="value">

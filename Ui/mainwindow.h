@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     // ================= Constructores/Destructores ======================
     explicit MainWindow(QWidget *parent = 0);
+    void closeEvent(QCloseEvent *event);
     ~MainWindow();
     
 private slots:

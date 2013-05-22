@@ -14,6 +14,9 @@
 #include <QTimer>
 #include "Ui/loaderqt.h"
 #include "Objects/carviewer.h"
+#include "Sound/SoundManager.h"
+#include "Objects/modelManager.h"
+
 
 class GLWidget : public QGLWidget {
 
@@ -50,6 +53,8 @@ protected:
     Scene *_scene;
     ObjectManager *_objectManager;
     CameraManager *_cameraManager;
+    SoundManager  *_soundManager;
+    ModelManager  *_modelManager;
 
 private:
     int _maxVisibleDistance;
@@ -60,8 +65,9 @@ private:
     unsigned int _indexCamera;
     double _totalTime;
 
-    CarViewer *viewer;
-    bool changingCar;
+    CarViewer *_viewer;
+    bool _isInCarViewerMode;
+    bool _isInDriveMode;
 
     QTimer *_physicsEventTimer;
     QTimer *_displayEventTimer;
@@ -85,8 +91,6 @@ private:
 
     void initializeShaders(QString filename);
     void releaseAllShaders();
-
-    void setCameraCarsValues( CameraAbs *ap_camera );
 };
 
 #endif  /* _GLWIDGET_H */

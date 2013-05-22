@@ -74,6 +74,9 @@ void FreeCamera::update()
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
+    if(_pointToLook){
+        delete _pointToLook;
+    }
     _pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
                                       sin(yaw)*cos(pitch) + getPosition()->getY(),
                                       sin(pitch) + getPosition()->getZ() );

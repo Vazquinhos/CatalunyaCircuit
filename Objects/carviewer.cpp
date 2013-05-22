@@ -6,18 +6,17 @@
  *-------------------------------------------------------------------*/
 CarViewer::CarViewer()
 {
-    QStringList carFolders;
     ObjectManager *manager = ObjectManager::getObjectManager();
     Car *car;
 
     _cam = dynamic_cast<FixedCamera*>(CameraManager::getCameraManager()->getCamera("CarsCamera"));
 
-    carFolders<< "Ferrari/"<<"Hrt/"<<"India/"<<"Lotus/"<<"Mclaren/"<<"Mercedes/"<<"RedBull/"<<"Renault/"<<"Sauber/"<<"Virgin/"<<"Williams/";
-    _numCars = carFolders.size();
+    _carFolders<< "Ferrari/"<<"Hrt/"<<"India/"<<"Lotus/"<<"Mclaren/"<<"Mercedes/"<<"RedBull/"<<"Renault/"<<"Sauber/"<<"Virgin/"<<"Williams/";
+    _numCars = _carFolders.size();
     _carActualIndex = 0;
 
     for(int i = 0; i < _numCars; i++){
-        car = new Car("Cars/" + carFolders[i], new Point3D(150,160+i*10,-76.85));
+        car = new Car("Cars/" + _carFolders[i], new Point3D(150,160+i*10,-76.85));
         manager->addCar(car);
     }
 
@@ -49,4 +48,15 @@ void CarViewer::shiftPreviousCar(){
         point = _cam->getPosition();
         point->setCoordinates(point->getX(), point->getY()  - 10, point->getZ());
     }
+}
+
+
+/*-------------------------------------------------------------------
+ |  Function selectCar
+ |  Purpose: Adds the current selected car
+ *-------------------------------------------------------------------*/
+void CarViewer::selectCar(){
+    ObjectManager *manager = ObjectManager::getObjectManager();
+    Car *c1 = new Car("Cars/" + _carFolders[_carActualIndex]);
+    manager->setActiveDriveCar(c1);
 }

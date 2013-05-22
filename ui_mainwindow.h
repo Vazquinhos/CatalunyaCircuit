@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon May 20 20:56:30 2013
+** Created: Wed May 22 12:41:09 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -84,7 +84,7 @@ public:
         frame->setStyleSheet(QString::fromUtf8("QFrame{\n"
 "     background-color: #333333;\n"
 "	 color:white;\n"
-"	filter:Alpha(opacity=0);\n"
+"	\n"
 "}\n"
 "\n"
 "QPushButton {\n"

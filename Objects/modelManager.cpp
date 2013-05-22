@@ -37,8 +37,14 @@ ModelManager::~ModelManager()
  |  Returns: ModelManager manager :The singleton MeshInstance.
  *-------------------------------------------------------------------*/
 ModelManager * ModelManager::getModelManager(){
+    QStringList modelFilters;
+    QStringList textureFilters;
+
     if( !_p_modelManager ) {
         _p_modelManager = new ModelManager();
+        modelFilters << "*.3ds";
+        textureFilters << "*";
+        _p_modelManager->setFolderToLoad("/Media/Models/", modelFilters, textureFilters);
     }
 
     return _p_modelManager;

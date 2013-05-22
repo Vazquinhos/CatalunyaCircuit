@@ -36,7 +36,7 @@ Car::~Car()
 }
 
 /*-------------------------------------------------------------------
- |  Getter
+ |  getPosition
  |  Purpose: Get the position of the car
  |  Returns: The position of the car
  *-------------------------------------------------------------------*/
@@ -44,6 +44,17 @@ Point3D * Car::getPosition(){
     btTransform transform;
     this->_chasisObj->getWorldTransform(transform);
     return new Point3D(transform.getOrigin().getX(), transform.getOrigin().getY(),transform.getOrigin().getZ());
+}
+
+/*-------------------------------------------------------------------
+ |  setPosition
+ |  Purpose: Set the position of the car
+ *-------------------------------------------------------------------*/
+void Car::setPosition(Point3D *position){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setOrigin(btVector3(position->getX(),position->getY(),position->getZ()));
+    this->_chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -55,19 +66,7 @@ Point3D * Car::getPosition(){
  *-------------------------------------------------------------------*/
 Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
 {
-    ModelManager *manager = ModelManager::getModelManager();
-    QString wheelsFolder = QString("Cars/Wheels/");
-
-    btTransform transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
-
-    _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transform);
-    _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transform);
-    _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelFrontRight.3ds", transform);
-    _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelFrontLeft.3ds", transform);
-    _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelRearRight.3ds", transform);
-    _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelRearLeft.3ds", transform);
-
-
+    setModelsWithPos(folderPath, position);
 
     _chassisCollisionShape = new btBoxShape(btVector3(1,0.4,3));
 
@@ -97,19 +96,36 @@ Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamic
  *-------------------------------------------------------------------*/
 Car::Car(QString folderPath, Point3D *position)
 {
+    setModelsWithPos(folderPath, position);
+}
+
+/*-------------------------------------------------------------------
+ |  Default Constructor
+ |
+ |  Purpose:
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Car::Car(QString folderPath)
+{
+    setModelsWithPos(folderPath, new Point3D(0,0,0));
+}
+
+/*-------------------------------------------------------------------
+ |  Default setModels
+ |
+ |  Purpose:Get all models from model manager
+ |  Parameters: QString folderPath: Folder that contains models of the car
+ *-------------------------------------------------------------------*/
+void Car::setModelsWithPos(QString folderPath, Point3D *position){
     ModelManager *manager = ModelManager::getModelManager();
     QString wheelsFolder = QString("Cars/Wheels/");
+    btTransform transform;
+    btQuaternion rotationX(btVector3(1,0,0), btScalar(-1.570796327));
 
-    btTransform transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
-    btVector3 axisX(1,0,0);
-    btScalar angleX(-1.570796327);
-    btQuaternion rotationX(axisX,angleX);
-    btVector3 axisY(0,1,0);
-    btScalar angleY(0.78539);
-    btQuaternion rotationY(axisY,angleY);
-
+    transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
     transform.setRotation(rotationX);
-    //transform.setRotation(rotationY);
+
 
 
     _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transform);
@@ -121,7 +137,26 @@ Car::Car(QString folderPath, Point3D *position)
 }
 
 // ============================ Methods ===============================
-
+void Car::turnRight(){
+    Point3D *position = getPosition();
+    position->setX(position->getX()+1);
+    setPosition(position);
+}
+void Car::turnLeft(){
+    Point3D *position = getPosition();
+    position->setX(position->getX()-1);
+    setPosition(position);
+}
+void Car::accelerate(){
+    Point3D *position = getPosition();
+    position->setX(position->getY()+1);
+    setPosition(position);
+}
+void Car::brake(){
+    Point3D *position = getPosition();
+    position->setX(position->getY()-1);
+    setPosition(position);
+}
 // ============================ Inherited Methods ===============================
 /*-------------------------------------------------------------------
  |  Function displayModels

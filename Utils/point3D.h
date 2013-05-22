@@ -30,6 +30,9 @@ public:
     float getX( void ) const;
     float getY( void ) const;
     float getZ( void ) const;
+    void setX(float x);
+    void setY(float y);
+    void setZ(float z);
     void setCoordinates( float a_x, float a_y, float a_z);
     void getCoordinates( float& a_x, float& a_y, float& a_z);
     float getDistance( const Point3D* a_pnt1);

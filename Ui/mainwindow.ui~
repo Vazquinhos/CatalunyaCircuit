@@ -43,7 +43,7 @@ QMainWindow{
        <string notr="true">QFrame{
      background-color: #333333;
 	 color:white;
-	
+	filter:Alpha(opacity=0);
 }
 
 QPushButton {

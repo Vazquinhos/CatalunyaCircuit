@@ -26,7 +26,7 @@ private: CameraManager();
 public: ~CameraManager();
 
 public:
-    // ============================ Methods ===============================
+    // ============================ Public Methods ===============================
     static CameraManager * getCameraManager();
     CameraAbs            * getCamera(QString a_camera_name);
     void                   addCamera(QString a_name, CameraAbs * a_camera);
@@ -45,6 +45,9 @@ private:
     std::map<QString, CameraAbs*> _cameras;
     bool _cameraOnCar; //This variable set if camera is focused on cars
     CameraAbs * _p_activeCamera;
+
+     // ============================ Private Methods ===============================
+    void setupCameras();
 };
 
 #endif // CAMERAMANAGER_H

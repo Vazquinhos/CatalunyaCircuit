@@ -42,7 +42,7 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
     _buildings6 = manager->getModel("Circuit/buildings6.3ds");
 
     // ========================== Phisics Bullet =================
-    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-76);
+    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-77.3);
     _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,_groundMotionState,_groundShape,btVector3(0,0,0));
     _groundRigidBody = new btRigidBody(groundRigidBodyCI);

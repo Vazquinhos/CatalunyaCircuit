@@ -1,6 +1,5 @@
 #include <QtGui/QMouseEvent>
 #include "contextgl.h"
-#include "Objects/modelManager.h"
 #include <QApplication>
 #include <QTimeLine>
 #include <QStringList>
@@ -9,7 +8,6 @@
 #include "Cameras/cameramanager.h"
 #include "Cameras/fixedcamera.h"
 #include "GL/glut.h"
-#include "Sound/SoundManager.h"
 #include <QThread>
 
 
@@ -77,45 +75,25 @@ void GLWidget::initializeGL()
  *      Makes all needed inicialization that is not part of openGL config
  *****************************************************************************/
 void GLWidget::initializeWorld(){
-    SoundManager::GetInstance()->CleanUP();
-    SoundManager::GetInstance()->LoadSounds( "Media/XML/sounds.xml" );
-    SoundManager::GetInstance()->PlayAction("intro");
-    ModelManager *modelManager = ModelManager::getModelManager();
-    QStringList modelFilters;
-    QStringList textureFilters;
+    _soundManager = SoundManager::getSoundManager();
+    _soundManager->CleanUP();
+    _soundManager->getSoundManager()->LoadSounds( "Media/XML/sounds.xml" );
+    _soundManager->getSoundManager()->PlayAction("intro");
 
-    /*_countFrames = 0; //Current number of frames measured before reset
-    _maxCountFrames = 300; //Max frames before calculating fps*/
-    _fps = 0;
-
-    // 1) Load Models
-    modelFilters << "*.3ds";
-    textureFilters << "*";
-
-    modelManager->setFolderToLoad("/Media/Models/", modelFilters, textureFilters);
-
-    //modelManager->loadModels();
-
+    // 1) Load and initialize managers
 
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();
+    _modelManager  =  ModelManager::getModelManager();
+
 
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
-    SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
-    _cameraManager->addCamera(spCam->getName(), spCam);
-    FreeCamera * frCam = new FreeCamera(QString("free"));
-    _cameraManager->addCamera(frCam->getName(), frCam);
-    _cameraManager->setActiveCamera("free");
-    FixedCamera* fxCam = new FixedCamera(QString("CarsCamera"));
-    _cameraManager->addCamera(fxCam->getName(),fxCam);
-    setCameraCarsValues(fxCam);
-    changingCar = false;
-
+    _isInCarViewerMode = false;
+    _isInDriveMode = false;
+     _fps = 0;
     _indexCamera = 0;
     _maxVisibleDistance = 200;
-
-
 
     glEnable(GL_TEXTURE_2D);
 
@@ -126,28 +104,20 @@ void GLWidget::initializeWorld(){
 
 
     QThread *p_thread = new QThread();
-    modelManager->moveToThread( p_thread );
+    _modelManager->moveToThread( p_thread );
     //QObject::connect(modelManager, error(QString),this,SLOT(er));
-    QObject::connect(p_thread, SIGNAL(started()),modelManager,SLOT(loadModels()));
-    QObject::connect(modelManager,SIGNAL(finish()),p_thread,SLOT(quit()));
-    QObject::connect(modelManager,SIGNAL(NewModel(QString,int)),this,SLOT(PrintModel(QString,int)));
+    QObject::connect(p_thread, SIGNAL(started()),_modelManager,SLOT(loadModels()));
+    QObject::connect(_modelManager,SIGNAL(finish()),p_thread,SLOT(quit()));
+    QObject::connect(_modelManager,SIGNAL(NewModel(QString,int)),this,SLOT(PrintModel(QString,int)));
     p_thread->start();
-    QObject::connect(modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
+    QObject::connect(_modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
 
-}
-
-void GLWidget::setCameraCarsValues( CameraAbs* ap_camera )
-{
-    Point3D* point= new Point3D(152.742,157.498,-74.439);
-    ap_camera->setPosition(point);
-
-    ap_camera->setYawPitch(143,325.5);
 }
 
 void GLWidget::changeCarModel( void )
 {
     _cameraManager->setActiveCamera("CarsCamera");
-    changingCar = true;
+    _isInCarViewerMode = true;
 }
 
 void GLWidget::simulatePhysics()
@@ -185,7 +155,7 @@ GLWidget::startTimers( void )
 
     emit LoadingFinished();
 
-    viewer = new CarViewer();
+    _viewer = new CarViewer();
 }
 
 
@@ -337,28 +307,40 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         emit MPushed();
         break;
     case Qt::Key_Escape: //Move camera to right
-        if(changingCar)
-            changingCar = false;
+        if(_isInCarViewerMode){
+            _isInCarViewerMode = false;
             _cameraManager->setActiveCamera("free");
+        }
         break;
+
+    case Qt::Key_Return: //Move camera to right
+        if(_isInCarViewerMode){
+            _viewer->selectCar();
+            _cameraManager->setActiveCamera("free");
+            _isInCarViewerMode = false;
+            _isInDriveMode = true;
+        }
+
+        break;
+
     case Qt::Key_Right: //Move camera to right
         //qDebug() << "PULSANDO RIGHT";
-        if(!changingCar)
+        if(!_isInCarViewerMode)
         {
             _cameraManager->getActiveCamera()->move(1, false);
             _objectManager->checkVisibility();
         }else{
-            viewer->shiftNextCar();
+            _viewer->shiftNextCar();
         }
         break;
 
     case Qt::Key_Left: //Move camera to left
         //qDebug() << "PULSANDO LEFT";
-        if(!changingCar){
+        if(!_isInCarViewerMode){
             _cameraManager->getActiveCamera()->move(-1, false);
             _objectManager->checkVisibility();
         } else {
-            viewer->shiftPreviousCar();
+            _viewer->shiftPreviousCar();
         }
         break;
     case Qt::Key_Up: //Move camera to front
@@ -390,33 +372,29 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         break;
 
     case Qt::Key_W:
-        break;
-    case Qt::Key_S:
-        {
-            Point3D * position = _cameraManager->getCamera("free")->getPosition();
-
-            float yaw, pitch;
-            _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
-
-            float zoom = _cameraManager->getCamera("free")->getZoom();
-            QString qStr = QString::number(_indexCamera);
-            QString Qname = QString("fixedCamera");
-            Qname.append(qStr);
-            FixedCamera * newcam = new FixedCamera(Qname);
-            newcam->getPosition()->setCoordinates(position->getX(),
-                                                  position->getY(),
-                                                  position->getZ());
-            newcam->setYawPitch(yaw, pitch);
-            newcam->setZoom(zoom);
-            _cameraManager->addCamera(Qname, newcam);
-            ++_indexCamera;
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->accelerate();
         }
         break;
-    case Qt::Key_R:
-        break;
+
     case Qt::Key_A:
+         if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->turnLeft();
+         }
         break;
+    case Qt::Key_S:
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->brake();
+        }
+        break;
+
     case Qt::Key_D:
+        if(_isInDriveMode){
+            _objectManager->getActiveDriveCar()->turnRight();
+        }
+        break;
+
+    case Qt::Key_R:
         break;
     case Qt::Key_0:
         pos = _objectManager->getCar(0)->getPosition();

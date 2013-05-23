@@ -23,7 +23,6 @@
 #include "Cameras/cameramanager.h"
 #include "Cameras/fixedcamera.h"
 
-
 class Car
 {
 
@@ -52,17 +51,27 @@ public:
     void turnLeft();
     void accelerate();
     void brake();
-    void updateCurrentCameraPos();
     void viewCurrentCamera();
-    void viewFrontCamera();
-    void viewRearCamera();
-    void viewLeftCamera();
-    void viewRightCamera();
+    void updateCurrentCameraPos();
+    void viewCamera(int mode);
+
     // ============================ Inherited Methods ===============================
     void displayModels();
     vector<GLuint> checkVisibility();
 
 private:
+    struct OffsetYawPitch{
+        Point3D *cameraOffset;
+        Point2D *cameraYawPitch;
+        OffsetYawPitch(){
+            cameraOffset = new Point3D();
+            cameraYawPitch = new Point2D();
+        }
+        OffsetYawPitch(Point3D *offset,  Point2D *yawPitch){
+            cameraOffset = offset;
+            cameraYawPitch = yawPitch;
+        }
+    };
     // ========================== Data Members ============================
     PhysicsObject3D *_chasisObj;
     PhysicsObject3D *_wheelObj;
@@ -71,17 +80,9 @@ private:
     PhysicsObject3D *_wheelRearRight;
     PhysicsObject3D *_wheelRearLeft;
 
-    Point3D *_frontCameraOffset;
-    Point2D *_frontCameraYawPitch;
-    Point3D *_rearCameraOffset;
-    Point2D *_rearCameraYawPitch;
-    Point3D *_rightCameraOffset;
-    Point2D *_rightCameraYawPitch;
-    Point3D *_leftCameraOffset;
-    Point2D *_leftCameraYawPitch;
+    std::map<int, OffsetYawPitch> _cameraOffsets;
 
     int _cameraMode;
-
     // ========================== Bullet Phisics Members ==================
     btRigidBody* _fallRigidBody;
     btCollisionShape* _chassisCollisionShape;
@@ -89,7 +90,7 @@ private:
     // ============================ Methods ===============================
     void setModelsWithPos(QString folderPath, Point3D *position);
 
-    void viewCamera(Point3D* offset, Point2D *yawPitch);
+    void viewCameraOffeset(OffsetYawPitch offset);
 };
 
 #endif // CARMeshInstance_H

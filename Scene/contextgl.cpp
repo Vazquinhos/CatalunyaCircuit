@@ -73,10 +73,10 @@ void GLWidget::initializeGL()
     glEnable(GL_COLOR_MATERIAL);
 
     // default components for global illumination
-    float pos[4] = {146.0f, 161.0f, -64.0f, 1.0f};
+    float pos[4] = {146.0f, 161.0f, 0.0f, 1.0f};
     qDebug() << "LightPosition: " << pos[0] << " " << pos[1] << " "<< pos[2] << " "<< pos[3] << " ";
     float dif[4] = {0.6, 0.6, 0.6, 1.0};
-    float amb[4] = {0.3f, 0.3f, 0.3f, 1.0f};
+    float amb[4] = {1.0f, 1.0f, 1.0f, 1.0f};
     float spe[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 
     glDisable(GL_LIGHT0);
@@ -423,22 +423,22 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     case Qt::Key_1:
         if(_isInDriveMode){
-            _objectManager->getActiveDriveCar()->viewFrontCamera();
+            _objectManager->getActiveDriveCar()->viewCamera(Car::FRONTAL_CAMERA);
         }
         break;
     case Qt::Key_2:
         if(_isInDriveMode){
-            _objectManager->getActiveDriveCar()->viewRearCamera();
+            _objectManager->getActiveDriveCar()->viewCamera(Car::REAR_CAMERA);
         }
         break;
     case Qt::Key_3:
         if(_isInDriveMode){
-            _objectManager->getActiveDriveCar()->viewLeftCamera();
+            _objectManager->getActiveDriveCar()->viewCamera(Car::LEFT_CAMERA);
         }
         break;
     case Qt::Key_4:
         if(_isInDriveMode){
-            _objectManager->getActiveDriveCar()->viewRightCamera();
+            _objectManager->getActiveDriveCar()->viewCamera(Car::RIGHT_CAMERA);
         }
         break;
     default:

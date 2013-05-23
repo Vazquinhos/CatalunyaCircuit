@@ -21,8 +21,12 @@ CarViewer::CarViewer()
     _carActualIndex = 0;
     _isInCarViewerMode = false;
 
+    float zIncrement = 0.00;
     for(int i = 0; i < _numCars; i++){
-        car = new Car("Cars/" + _carFolders[i], new Point3D(150,160+i*10,-76.85));
+        if(i > 4){
+            zIncrement += 0.032;
+        }
+        car = new Car("Cars/" + _carFolders[i], new Point3D(150,140+i*10,-76.85+zIncrement));
         manager->addCar(car);
     }
 
@@ -70,7 +74,7 @@ void CarViewer::exitViewer(){
 void CarViewer::shiftNextCar(){
     Point3D *point;
 
-    if((_carActualIndex < _numCars) && (_cam)){
+    if((_carActualIndex < _numCars-1) && (_cam)){
         _carActualIndex++;
         point = _cam->getPosition();
         point->setCoordinates(point->getX(), point->getY()  + 10, point->getZ());
@@ -102,13 +106,19 @@ void CarViewer::selectCar(){
     Car *c1 = new Car("Cars/" + _carFolders[_carActualIndex]);
     int cameraMode = Car::FRONTAL_CAMERA;
 
+    manager->setActiveDriveCar(c1);
+
     if(lastCar){
         cameraMode = lastCar->getCameraMode();
+        c1->setCameraMode(cameraMode);
+        c1->updateCurrentCameraPos();
+    }else{
+         c1->setCameraMode(cameraMode);
+         c1->viewCurrentCamera();
     }
 
-    manager->setActiveDriveCar(c1);
-    c1->setCameraMode(cameraMode);
-    c1->viewCurrentCamera();
+
+
 
     _isInCarViewerMode = false;
 }

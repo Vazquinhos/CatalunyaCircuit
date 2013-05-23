@@ -53,7 +53,7 @@ void CameraManager::setupCameras() {
     FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
     FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
 
-    Point3D* point= new Point3D(152.742,157.498,-74.439);
+    Point3D* point= new Point3D(152.742,137.498,-74.439);
     fxCam->setPosition(point);
     fxCam->setYawPitch(143,325.5);
 

@@ -152,15 +152,12 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelRearRight.3ds", transform);
     _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelRearLeft.3ds", transform);
 
+
     _cameraMode = FRONTAL_CAMERA;
-    _frontCameraOffset = new Point3D(0,0,2);
-    _frontCameraYawPitch = new Point2D(271.5, 342.5);
-    _rearCameraOffset  = new Point3D(0,0,2);
-    _rearCameraYawPitch = new Point2D(90, 359.5);
-    _rightCameraOffset  = new Point3D(0,0,2);
-    _rightCameraYawPitch = new Point2D(183, 356);
-    _leftCameraOffset  = new Point3D(0,0,2);
-    _leftCameraYawPitch = new Point2D(1, 0.5);
+    _cameraOffsets[(int)FRONTAL_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(271.5, 342.5));
+    _cameraOffsets[(int)REAR_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(90, 359.5));
+    _cameraOffsets[(int)LEFT_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(183, 356));
+    _cameraOffsets[(int)RIGHT_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(1, 0.5));
 }
 
 // ============================ Methods ===============================
@@ -174,7 +171,7 @@ void Car::turnRight(){
     Point3D *position = getPosition();
     position->setX(position->getX()-1);
     setPosition(position);
-    viewCurrentCamera();
+    updateCurrentCameraPos();
 }
 /*-------------------------------------------------------------------
  |  Default turnLeft
@@ -186,7 +183,7 @@ void Car::turnLeft(){
     Point3D *position = getPosition();
     position->setX(position->getX()+1);
     setPosition(position);
-    viewCurrentCamera();
+    updateCurrentCameraPos();
 }
 /*-------------------------------------------------------------------
  |  Default accelerate
@@ -198,7 +195,7 @@ void Car::accelerate(){
     Point3D *position = getPosition();
     position->setX(position->getY()+1);
     setPosition(position);
-    viewCurrentCamera();
+    updateCurrentCameraPos();
 }
 /*-------------------------------------------------------------------
  |  Default brake
@@ -210,24 +207,24 @@ void Car::brake(){
     Point3D *position = getPosition();
     position->setX(position->getY()-1);
     setPosition(position);
-    viewCurrentCamera();
+    updateCurrentCameraPos();
 }
 
 /*-------------------------------------------------------------------
- |  Default viewCamera
+ |  Default viewCameraOffeset
  |
  |  Purpose: Views the front camera of the car
  |  Parameters: Point3D* offset: offset of the camera with car position
  |              Point2D *yawPitch: yaw and pitch values of the camera
  *-------------------------------------------------------------------*/
-void Car::viewCamera(Point3D* offset, Point2D *yawPitch){
+void Car::viewCameraOffeset(OffsetYawPitch offset){
     CameraManager*  manager;
     FixedCamera*    camera;
     manager = CameraManager::getCameraManager();
     camera = dynamic_cast<FixedCamera*>(manager->getCamera("CarCamera"));
 
-    camera->setPosition(*getPosition() + *offset);
-    camera->setYawPitch(yawPitch->getX(), yawPitch->getY());
+    camera->setPosition(*getPosition() + *offset.cameraOffset);
+    camera->setYawPitch(offset.cameraYawPitch->getX(), offset.cameraYawPitch->getY());
     manager->setActiveCamera("CarCamera");
 }
 
@@ -236,8 +233,25 @@ void Car::viewCamera(Point3D* offset, Point2D *yawPitch){
  |
  |  Purpose: Update current camera position when the car is moved (no pitch no yaw)
  *-------------------------------------------------------------------*/
-void updateCurrentCameraPos(){
+void Car::updateCurrentCameraPos(){
+    OffsetYawPitch offset = _cameraOffsets[_cameraMode];
+    CameraManager*  manager;
+    FixedCamera*    camera;
+    manager = CameraManager::getCameraManager();
+    camera = dynamic_cast<FixedCamera*>(manager->getCamera("CarCamera"));
 
+    camera->setPosition(*getPosition() + *offset.cameraOffset);
+    manager->setActiveCamera("CarCamera");
+}
+
+/*-------------------------------------------------------------------
+ |  Default viewCamera
+ |
+ |  Purpose: Views the front camera of the car
+ |  Parameters: cameraMode: camera mode to view
+ *-------------------------------------------------------------------*/
+void Car::viewCamera(int cameraMode){
+    viewCameraOffeset(_cameraOffsets[cameraMode]);
 }
 
 /*-------------------------------------------------------------------
@@ -247,63 +261,7 @@ void updateCurrentCameraPos(){
  |  Parameters:
  *-------------------------------------------------------------------*/
 void Car::viewCurrentCamera(){
-    switch(_cameraMode){
-    case FRONTAL_CAMERA:
-        viewFrontCamera();
-        break;
-    case REAR_CAMERA:
-        viewRearCamera();
-        break;
-    case LEFT_CAMERA:
-        viewLeftCamera();
-        break;
-    case RIGHT_CAMERA:
-        viewRightCamera();
-        break;
-    }
-}
-/*-------------------------------------------------------------------
- |  Default viewFrontCamera
- |
- |  Purpose:Views the front camera of the car
- |  Parameters:
- *-------------------------------------------------------------------*/
-void Car::viewFrontCamera(){
-    _cameraMode = FRONTAL_CAMERA;
-    viewCamera(_frontCameraOffset, _frontCameraYawPitch);
-}
-
-/*-------------------------------------------------------------------
- |  Default viewRearCamera
- |
- |  Purpose:Views the rear camera of the car
- |  Parameters:
- *-------------------------------------------------------------------*/
-void Car::viewRearCamera(){
-    _cameraMode = REAR_CAMERA;
-    viewCamera(_rearCameraOffset, _rearCameraYawPitch);
-}
-
-/*-------------------------------------------------------------------
- |  Default viewLeftCamera
- |
- |  Purpose:Views the left camera of the car
- |  Parameters:
- *-------------------------------------------------------------------*/
-void Car::viewLeftCamera(){
-    _cameraMode = LEFT_CAMERA;
-    viewCamera(_leftCameraOffset, _leftCameraYawPitch);
-}
-
-/*-------------------------------------------------------------------
- |  Default viewRightCamera
- |
- |  Purpose:Views the right camera of the car
- |  Parameters:
- *-------------------------------------------------------------------*/
-void Car::viewRightCamera(){
-    _cameraMode = RIGHT_CAMERA;
-    viewCamera(_rightCameraOffset, _rightCameraYawPitch);
+    viewCameraOffeset(_cameraOffsets[_cameraMode]);
 }
 
 // ============================ Inherited Methods ===============================

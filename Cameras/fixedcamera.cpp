@@ -78,9 +78,8 @@ void FixedCamera::update()
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
-   Point3D* pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
-                                      sin(yaw)*cos(pitch) + getPosition()->getY(),
-                                      sin(pitch) + getPosition()->getZ() );
+    Point3D* pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(), sin(yaw)*cos(pitch) + getPosition()->getY(),
+                                             sin(pitch) + getPosition()->getZ() );
 
 
     glMatrixMode(GL_MODELVIEW);
@@ -91,7 +90,7 @@ void FixedCamera::update()
               pointToLook->getX(),
               pointToLook->getY(),
               pointToLook->getZ(),
-              0, 1, 0 );
+              0, 0, 1 );
 }
 
 void FixedCamera::animate()

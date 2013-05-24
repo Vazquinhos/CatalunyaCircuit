@@ -28,7 +28,7 @@ CarViewer::CarViewer()
         if(i > 4){
             zIncrement += 0.032;
         }
-        car = new Car("Cars/" + _carFolders[i], new Point3D(150,-76.85,-200+i*10+zIncrement));
+        car = new Car("Cars/" + _carFolders[i], new Point3D(150,140+i*10,-76.85+zIncrement));
         manager->addCar(car);
     }
 }
@@ -81,7 +81,7 @@ void CarViewer::shiftNextCar(){
     if((_carActualIndex < _numCars-1) && (_cam)){
         _carActualIndex++;
         point = _cam->getPosition();
-        point->setCoordinates(point->getX(), point->getY(), point->getZ()- 10);
+        point->setCoordinates(point->getX(), point->getY()  + 10, point->getZ());
     }
 }
 
@@ -95,7 +95,7 @@ void CarViewer::shiftPreviousCar(){
     if((_carActualIndex > 0) && (_cam)){
         _carActualIndex--;
         point = _cam->getPosition();
-        point->setCoordinates(point->getX(), point->getY(), point->getZ()+ 10);
+        point->setCoordinates(point->getX(), point->getY()  - 10, point->getZ());
     }
 }
 

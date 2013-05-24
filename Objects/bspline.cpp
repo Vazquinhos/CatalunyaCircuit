@@ -39,6 +39,7 @@ BSpline::ImportBSpline( QString a_filename ){
 }
 
 void BSpline::render(){
+    /*
     Point3D *point;
     if (glIsList(_displayList)) { //If we already have a display list, we delete it
         glDeleteLists(_displayList, 1);
@@ -59,7 +60,8 @@ void BSpline::render(){
     glPopAttrib();
     glPopMatrix();
     glEndList();
+    */
 }
 void BSpline::display(){
-    glCallList(_displayList);
+    //glCallList(_displayList);
 }

@@ -58,7 +58,7 @@ private:
     void generateObjectBuffers(const aiScene* pScene);
     void mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void renderMeshInstances(const aiNode *node);
-    void renderNode(const aiNode *node, aiMatrix4x4 parentTransform);
+    void renderNode(const aiNode *node);
 
 public:
     Model3D();
@@ -87,6 +87,7 @@ public:
     void display();
     void render(map<QString, GLuint> *textureIdMap);
     void checkVisibility(vector<GLuint> *displayLists);
+    void putDisplayLists(vector<GLuint> *displayLists);
 
     void release();
 };

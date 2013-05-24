@@ -43,12 +43,24 @@ bool PhysicsObject3D::isVisible(){
 |  Returns: The visibility of the entire object
 *-------------------------------------------------------------------*/
 void PhysicsObject3D::checkVisibility(){
-    //int d = sqrt(pow(pointCamera->getX() - _transform.getOrigin().getX(),2) + pow(pointCamera->getY() - _transform.getOrigin().getY(),2) + pow(pointCamera->getZ() - _transform.getOrigin().getZ(),2));
-    //if(d < distance){
+    CameraAbs* p_camera = CameraManager::getCameraManager()->getActiveCamera();
+    Vector3D* vCamera = p_camera->getDirectionVector();
+    Point3D*  posCamera = p_camera->getPosition();
+
+    Vector3D* vObject;
+    Point3D *pObject;
+
+    pObject = _model->getCenter();
+    vObject = pObject->resta(posCamera);
+
+    //float direction = (*vCamera)^(*vObject);
+    //if(direction >= 0){
+    if(vObject->module() < 400){
         _isVisible = true;
-    //}else{
-        //_isVisible = false;
-    //}
+    }else{
+        _isVisible = false;
+    }
+
 }
 
 // ============== Inherited Bullet Physics methods ===============================

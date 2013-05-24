@@ -39,7 +39,6 @@ private:
     Model3D *_sky;
     Model3D *_terrain;
     Model3D *_advertisement;
-    Model3D *_flags;
     Model3D *_objects;
     Model3D *_fences;
     Model3D *_pneumatic_fences;

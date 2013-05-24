@@ -36,7 +36,7 @@ Scene::Scene()
     _dispatcher = new btCollisionDispatcher(_collisionConfiguration); //Dispatcher for dectect collisions and make callbacks
     _solver = new btSequentialImpulseConstraintSolver(); //Handles object interactions like gravity
     _dynamicsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration); //World simulator
-    _dynamicsWorld->setGravity(btVector3(0,-9.81f,0));//Sets the gravity (choose -10m/s² on Z axis)
+    _dynamicsWorld->setGravity(btVector3(0,0,-9.81f));//Sets the gravity (choose -10m/s² on Z axis)
 
     _debugMode = true;
 
@@ -46,7 +46,7 @@ Scene::Scene()
     //unsigned int numCars = 1;
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
-    Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-76.3775), _dynamicsWorld);
+    Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-46.3775), _dynamicsWorld);
     _objectManager->addCar(c1);
     // xPos+=1;
     //}
@@ -107,11 +107,13 @@ void Scene::display(float fps)
     
 	if(_debugMode)
     {
+        CameraManager::getCameraManager()->render();
+        /*
         Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
         //Point3D *cameraPos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
         Point3D *cameraPos = CameraManager::getCameraManager()->getCamera(QString("freeTest"))->getPosition();
 
-        CameraManager::getCameraManager()->render();
+
         glPushMatrix();
 
         glPushAttrib(GL_CURRENT_BIT);
@@ -141,6 +143,7 @@ void Scene::display(float fps)
 
         glPopAttrib();
         glPopMatrix();
+        */
     }
 
 }

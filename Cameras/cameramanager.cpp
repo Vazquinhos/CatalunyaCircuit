@@ -69,9 +69,12 @@ void CameraManager::setupCameras() {
     frCamTEST->setPosition(new Point3D(210.696f, -68.176f, -45.7906));
     //(150,-76.85,-200+i*10+zIncrement)
 
-    Point3D* point= new Point3D(152.742,-74.439, -200);
+    Point3D* point= new Point3D(152.742,137.498,-74.439);
     fxCam->setPosition(point);
     fxCam->setYawPitch(143,325.5);
+
+    frCam->setPosition(new Point3D(214.621,39.6959,-73.664));
+    frCam->setYawPitch(59,356);
 
     _cameraManager->addCamera(spCam);
     _cameraManager->addCamera(frCam);

@@ -34,7 +34,7 @@ Car::Car(const Car& car)
 Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
 {
     setModelsWithPos(folderPath, position);
-    _chassisCollisionShape = new btBoxShape(btVector3(1,0.4,3));
+    _chassisCollisionShape = new btBoxShape(btVector3(1,3,0.4));
 
     btScalar mass = 700;
     btVector3 fallInertia(0,0,0);
@@ -83,7 +83,7 @@ Car::~Car()
  *-------------------------------------------------------------------*/
 Point3D * Car::getPosition(){
     btTransform transform;
-    btScalar *openglMatrix = new btScalar[16];
+    //btScalar openglMatrix = new btScalar[16];
     this->_chasisObj->getWorldTransform(transform);
 
     //transform.getOpenGLMatrix(openglMatrix);

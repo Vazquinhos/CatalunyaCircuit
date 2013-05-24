@@ -317,17 +317,12 @@ void Model3D::release(){
 void Model3D::checkVisibility(vector<GLuint> *displayLists){
     MeshInstance *meshInstance;
 
-    CameraAbs* p_camera = _camMngr->getCamera("free");
+    CameraAbs* p_camera = _camMngr->getActiveCamera();
     Vector3D* vCamera = p_camera->getDirectionVector();
     Point3D*  posCamera = p_camera->getPosition();
 
     Vector3D* vObject;
     Point3D *pObject;
-    Point3D *vObject2;
-    Point3D *vObject3;
-    Point3D *vObject4;
-    Point3D *vObject5;
-    Point3D *vObject6;
 
     for(unsigned int i=0; i < _vMeshInstances.size(); i++){
         meshInstance = _vMeshInstances[i];
@@ -336,14 +331,26 @@ void Model3D::checkVisibility(vector<GLuint> *displayLists){
 
         //float direction = (*vCamera)^(*vObject);
         //if(direction >= 0){
-        //if(vObject->module() < 200){
+        if(vObject->module() < 400){
             displayLists->push_back(meshInstance->getDisplayList());
             _isVisible = true;
-        //}else{
-          //  _isVisible = false;
-        //}
+        }else{
+            _isVisible = false;
+        }
     }
 }
+
+
+/*-------------------------------------------------------------------
+|  Function putDisplayLists
+|  Purpose: Puts all display lists of the model into displaylists
+*-------------------------------------------------------------------*/
+void Model3D::putDisplayLists(vector<GLuint> *displayLists){
+    for(unsigned int i=0; i < _vMeshInstances.size(); i++){
+        displayLists->push_back(_vMeshInstances[i]->getDisplayList());
+    }
+}
+
 
 /*-------------------------------------------------------------------
  |  Function display
@@ -471,7 +478,7 @@ void Model3D::generateObjectBuffers(const aiScene* pScene)
  |  Purpose: Recursively renders a node and all of its children
  |  Parameteres: const aiNode* node: Root node for rendering
  *-------------------------------------------------------------------*/
-void Model3D::renderNode(const aiNode* node, aiMatrix4x4 parentTransform){
+void Model3D::renderNode(const aiNode* node){
     Mesh *mesh;
     const aiNode *child;
     GLuint displayList;
@@ -486,7 +493,6 @@ void Model3D::renderNode(const aiNode* node, aiMatrix4x4 parentTransform){
         glNewList(displayList, GL_COMPILE); //Starting rendering in memory
 
         glPushMatrix();
-        glMultMatrixf((float*)&parentTransform); //Apply transformation for the node
         glMultMatrixf((float*)&transform); //Apply transformation for the node
         glCallList(mesh->_gi_displayListId); //Node rendering
         glPopMatrix();
@@ -515,7 +521,6 @@ void Model3D::renderNode(const aiNode* node, aiMatrix4x4 parentTransform){
             displayList = glGenLists(1); //Generate new display list identifier
             glNewList(displayList, GL_COMPILE); //Starting rendering in memory
             glPushMatrix();
-            glMultMatrixf((float*)&parentTransform); //Apply transformation for the node
             glMultMatrixf((float*)&transform); //Apply transformation for the node
             glCallList(mesh->_gi_displayListId); //Node rendering
             glPopMatrix();
@@ -552,8 +557,7 @@ void Model3D::renderMeshInstances(const aiNode* node){
     const aiNode* lastObject;
     Mesh *mesh;
     GLuint displayList;
-    aiMatrix4x4 parentTransform = node->mTransformation;
-    parentTransform.Transpose();
+
 
     //Here we are in the root node that does not contain any mesh, and its transformation is not applied
 
@@ -561,10 +565,10 @@ void Model3D::renderMeshInstances(const aiNode* node){
         child = node->mChildren[i];
 
         if(child->mNumChildren > 0){ //If the node has children, it is a "root MeshInstance" that we will keep as lastObject rendered
-            renderNode(child, parentTransform); //Also we render this "root MeshInstance"
+            renderNode(child); //Also we render this "root MeshInstance"
             lastObject = child;
         }else if(child->mNumMeshes > 0){ //If it has meshes, it won't have any MeshInstances
-            renderNode(child, parentTransform);
+            renderNode(child);
         }else { //If it doesn't have any mesh or any child, it only has a transformation
             aiMatrix4x4 transform = child->mTransformation;
             transform.Transpose(); //Apply transformation
@@ -579,7 +583,6 @@ void Model3D::renderMeshInstances(const aiNode* node){
                     glNewList(displayList, GL_COMPILE); //Starting rendering in memory
 
                     glPushMatrix();         //Render the childs of last succesfully rendered object
-                    glMultMatrixf((float*)&parentTransform);
                     glMultMatrixf((float*)&transform);
                     glCallList(mesh->_gi_displayListId);
                     glPopMatrix();

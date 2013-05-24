@@ -103,12 +103,27 @@ void CameraAbs::resizeProjection(int w, int h)
  *-------------------------------------------------------------------*/
 void CameraAbs::render()
 {
+    float yawAux = _yaw;
+    float pitchAux = _pitch;
+
+    Point3D* direction = new Point3D( (cos(yawAux)*cos(pitchAux) + getPosition()->getX())*1000,
+                                      (sin(yawAux)*cos(pitchAux) + getPosition()->getY() )*1000,
+                                      (sin(pitchAux) + getPosition()->getZ())*1000 );
+
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
+
+    glBegin(GL_LINES);
+    glLineWidth(1.0f);
+    glVertex3f(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
+    glVertex3f(direction->getX(),direction->getY(),direction->getZ());
+    glEnd();
+
+
         glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
         glPushMatrix();
             glRotatef(_pitch, 1,0,0);
-            glRotatef(_yaw+180, 0,1,0);
+            glRotatef(_yaw, 0,1,0);
             glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
             glutSolidCone(1.0f, 4.0f, 100, 100);
         glPopMatrix();

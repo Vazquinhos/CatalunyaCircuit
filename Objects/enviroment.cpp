@@ -28,7 +28,6 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
     _sky = manager->getModel("Circuit/sky.3ds");
     _terrain = manager->getModel("Circuit/terrain.3ds");
     _advertisement = manager->getModel("Circuit/advertisement.3ds");
-    _flags = manager->getModel("Circuit/flags.3ds");
     _objects = manager->getModel("Circuit/objects.3ds");
     _fences = manager->getModel("Circuit/fences.3ds");
     _pneumatic_fences = manager->getModel("Circuit/pneumatic_fences.3ds");
@@ -51,7 +50,7 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
                 //heightfieldData[i]=-76.3;
             //}
         //}
-    _groundShape = new btStaticPlaneShape(btVector3(0,1,0),-76.3);
+    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-77.3);
             //new btHeightfieldTerrainShape(width,length,heightfieldData,maxHeight,2,false,false);
     _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,1,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,_groundMotionState,_groundShape,btVector3(0,0,0));
@@ -92,11 +91,9 @@ Enviroment::~Enviroment()
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void Enviroment::checkVisibility(vector<GLuint> *displayLists){
-
-    _sky->checkVisibility(displayLists);
+    _sky->putDisplayLists(displayLists);
     _terrain->checkVisibility(displayLists);
     _advertisement->checkVisibility(displayLists);
-    _flags->checkVisibility(displayLists);
     _objects->checkVisibility(displayLists);
     _fences->checkVisibility(displayLists);
     _pneumatic_fences->checkVisibility(displayLists);
@@ -108,9 +105,6 @@ void Enviroment::checkVisibility(vector<GLuint> *displayLists){
     _buildings4->checkVisibility(displayLists);
     _buildings5->checkVisibility(displayLists);
     _buildings6->checkVisibility(displayLists);
-
-
-
 }
 
 

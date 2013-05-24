@@ -320,6 +320,10 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     switch(event->key()) {
 
+    case Qt::Key_V://Move camera to right
+        _scene->turnDebugMode();
+        break;
+
     case Qt::Key_M://Move camera to right
         emit MPushed();
         break;

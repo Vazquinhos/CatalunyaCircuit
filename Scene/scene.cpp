@@ -36,6 +36,8 @@ Scene::Scene()
     _dynamicsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration); //World simulator
     _dynamicsWorld->setGravity(btVector3(0,-9.81f,0));//Sets the gravity (choose -10m/s² on Z axis)
 
+    _debugMode = true;
+
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
 
@@ -82,6 +84,10 @@ Scene::~Scene()
 }
 
 // ============================ Methods ===============================
+void Scene::turnDebugMode()
+{
+    _debugMode = !_debugMode;
+}
 
 /*-------------------------------------------------------------------
  |  Function display
@@ -96,42 +102,43 @@ void Scene::display(float fps)
     this->_objectManager->displayAll();
     _bSplineManager->display();
 
+    if(_debugMode)
+    {
+        Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
+        //Point3D *cameraPos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
+        Point3D *cameraPos = CameraManager::getCameraManager()->getCamera(QString("freeTest"))->getPosition();
 
-    Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
-    Point3D *cameraPos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
+        CameraManager::getCameraManager()->render();
+        glPushMatrix();
 
+        glPushAttrib(GL_CURRENT_BIT);
+        glDisable(GL_LIGHTING);
 
+        // Eix X (vermell)
+        glColor3f(1.0,0.0,0.0);
+        //glutSolidSphere(100, 20,20);
 
-    glPushMatrix();
-
-    glPushAttrib(GL_CURRENT_BIT);
-    glDisable(GL_LIGHTING);
-
-    // Eix X (vermell)
-    glColor3f(1.0,0.0,0.0);
-    //glutSolidSphere(100, 20,20);
-
-    glBegin(GL_LINES);
-    glLineWidth(1.0f);
-    glVertex3f(0,0,0);
-    glVertex3f(carPos->getX(),carPos->getY(),carPos->getZ());
-    glEnd();
-
-
-    glColor3f(0.0,1.0,0.0);
-    glBegin(GL_LINES);
-    glLineWidth(1.0f);
-    glVertex3f(0,0,0);
-    glVertex3f(cameraPos->getZ(), cameraPos->getY(),cameraPos->getX()+1);
-    glEnd();
+        glBegin(GL_LINES);
+        glLineWidth(1.0f);
+        glVertex3f(0,0,0);
+        glVertex3f(carPos->getX(),carPos->getY(),carPos->getZ());
+        glEnd();
 
 
+        glColor3f(0.0,1.0,0.0);
+        glBegin(GL_LINES);
+        glLineWidth(1.0f);
+        glVertex3f(0,0,0);
+        glVertex3f(cameraPos->getX(), cameraPos->getY(),cameraPos->getZ());
+        glEnd();
 
-    glEnable(GL_LIGHTING);
 
-    glPopAttrib();
-    glPopMatrix();
 
+        glEnable(GL_LIGHTING);
+
+        glPopAttrib();
+        glPopMatrix();
+    }
 
 }
 

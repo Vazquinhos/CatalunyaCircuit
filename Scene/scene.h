@@ -39,12 +39,13 @@ public:
     void display(float fps);
     void simulatePhisics(btScalar timeStep);
     void paint2DText(float x, float y, void *font, const char *string);
+    void turnDebugMode();
 
 private:
     // ========================== Data Members ============================
     ObjectManager  *    _objectManager;
     BSplineManager *    _bSplineManager;
-
+    bool                _debugMode;
     // ========================== Physics / Bullet ========================
     QTime _stepTimer;
     btBroadphaseInterface* _broadphase;

@@ -98,10 +98,16 @@ void FreeCamera::update()
               0, 1, 0 );
 }
 
-void FreeCamera::render()
+/*void FreeCamera::render()
 {
-
-}
+    glPushMatrix();
+    glPushAttrib(GL_CURRENT_BIT);
+        glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+        glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
+        glutSolidSphere(2.0f, 100, 100);
+    glPushAttrib(GL_CURRENT_BIT);
+    glPopMatrix();
+}*/
 
 void FreeCamera::move(float velocity, bool front)
 {

@@ -47,13 +47,26 @@ CameraManager * CameraManager::getCameraManager()
     return _cameraManager;
 }
 
+void CameraManager::render()
+{
+    CameraAbs* camera;
+    for(std::map<QString, CameraAbs*>::iterator iter =  _cameras.begin(); iter !=  _cameras.end(); ++iter)
+    {
+        camera = iter->second;
+        if(!camera || _p_activeCamera==camera)
+            continue;
+        camera->render();
+    }
+}
+
 void CameraManager::setupCameras() {
     SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
     FreeCamera * frCam = new FreeCamera(QString("free"));
     FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
     FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
 
-
+    FreeCamera * frCamTEST = new FreeCamera(QString("freeTest"));
+    frCamTEST->setPosition(new Point3D(210.696f, -68.176f, -45.7906));
     //(150,-76.85,-200+i*10+zIncrement)
 
     Point3D* point= new Point3D(152.742,-74.439, -200);
@@ -62,6 +75,7 @@ void CameraManager::setupCameras() {
 
     _cameraManager->addCamera(spCam);
     _cameraManager->addCamera(frCam);
+    _cameraManager->addCamera(frCamTEST);
     _cameraManager->addCamera(fxCam);
     _cameraManager->addCamera(fxCamCar);
     _cameraManager->setActiveCamera("free");

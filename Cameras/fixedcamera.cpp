@@ -84,10 +84,21 @@ void FixedCamera::update()
               pointToLook->getX(),
               pointToLook->getY(),
               pointToLook->getZ(),
-              0, 0, 1 );
+              0, 1, 0 );
 }
 
 void FixedCamera::animate()
 {
 
 }
+
+/*void FixedCamera::render()
+{
+    glPushMatrix();
+    glPushAttrib(GL_CURRENT_BIT);
+        glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+        glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
+        glutSolidSphere(2.0f, 100, 100);
+    glPopAttrib();
+    glPopMatrix();
+}*/

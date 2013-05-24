@@ -57,7 +57,7 @@ void LightManager::setLight(QString light_name, Light *light)
     _lights[light_name] = light;
 }
 /*-------------------------------------------------------------------
- |  getXMLCameraInfoToExport( void )
+ |  getXMLCameraInfoToExport()
  |
  |  Purpose: Gets the info of the cameras to export them into the XML
  |  Parameters:

@@ -104,6 +104,7 @@ void GLWidget::initializeWorld(){
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();
     _modelManager  =  ModelManager::getModelManager();
+    BSplineManager::getBSplineManager();
 
 
     // 2) Init our own architecture (camera, lights, action!)
@@ -118,7 +119,7 @@ void GLWidget::initializeWorld(){
     // 3) Init shaders
     //----------------------------------------------------------
     shader =  new QGLShaderProgram();
-    initializeShaders(QString("./Shader/simple"));
+    //initializeShaders(QString("./Shader/simple"));
 
 
     QThread *p_thread = new QThread();
@@ -129,10 +130,9 @@ void GLWidget::initializeWorld(){
     QObject::connect(_modelManager,SIGNAL(NewModel(QString,int)),this,SLOT(PrintModel(QString,int)));
     p_thread->start();
     QObject::connect(_modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
-
 }
 
-void GLWidget::changeCarModel( void )
+void GLWidget::changeCarModel()
 {
     _carViewer->changeToViewerMode();
 }
@@ -148,7 +148,7 @@ void GLWidget::PrintModel(QString a,int val)
 }
 
 void
-GLWidget::startTimers( void )
+GLWidget::startTimers()
 {
     ModelManager *modelManager = ModelManager::getModelManager();
     modelManager->loadMaterials();
@@ -182,8 +182,8 @@ GLWidget::startTimers( void )
  *****************************************************************************/
 void GLWidget::resizeGL(int w, int h)
 {
-    glViewport(0,0,w,h);
-    _cameraManager->getActiveCamera()->resizeProjection(w, h);
+        glViewport(0,0,w,h);
+        _cameraManager->getActiveCamera()->resizeProjection(w, h);
 }
 
 /*****************************************************************************
@@ -246,6 +246,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         _cameraManager->getActiveCamera()
                 ->addYawPitch(posCam.getX()- event->x(),  posCam.getY() - event->y());
         posCam.setCoordinates(event->x(), event->y());
+        _objectManager->checkVisibility();
     }
 }
 
@@ -319,7 +320,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     switch(event->key()) {
 
-    case Qt::Key_M: //Move camera to right
+    case Qt::Key_M://Move camera to right
         emit MPushed();
         break;
     case Qt::Key_Escape: //Move camera to right

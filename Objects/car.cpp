@@ -143,14 +143,14 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     btQuaternion rotationX(btVector3(1,0,0), btScalar(-1.570796327));
 
     transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
-    transform.setRotation(rotationX);
+    //transform.setRotation(rotationX);
 
     _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transform);
     _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transform);
-    _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelFrontRight.3ds", transform);
-    _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelFrontLeft.3ds", transform);
-    _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelRearRight.3ds", transform);
-    _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelRearLeft.3ds", transform);
+    _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
+    _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
+    _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
+    _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
 
 
     _cameraMode = FRONTAL_CAMERA;

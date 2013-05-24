@@ -23,6 +23,7 @@
 #include <QTime>
 #include <string>
 #include <bullet/btBulletDynamicsCommon.h>
+#include <Objects/bsplinemanager.h>
 
 using namespace std;
 
@@ -40,7 +41,8 @@ public:
 
 private:
     // ========================== Data Members ============================
-    ObjectManager *_objectManager;
+    ObjectManager  *    _objectManager;
+    BSplineManager *    _bSplineManager;
 
     // ========================== Physics / Bullet ========================
     QTime _stepTimer;

@@ -25,19 +25,19 @@ public:
   ~Vector3D();
 
   // ============================ Methods ===============================
-  double angle( const Vector3D& a_vec );
-  double module( void ) const;
+  float angle( const Vector3D& a_vec );
+  double module() const;
   void makeContrary();
   void normalize();
   void setCoordinates(float a_x, float a_y, float a_z);
   void getCoordinates(float& a_x, float& a_y, float& a_z);
-  float getX( void ) const;
-  float getY( void ) const;
-  float getZ( void ) const;
+  float getX() const;
+  float getY() const;
+  float getZ() const;
 
   // ============================ Operators ===================================
   bool operator==( const Vector3D& a_vec );
-  double operator^( const Vector3D& a_vec );
+  float operator^( const Vector3D& a_vec );
   Vector3D operator^( const double& a_scalar );
   Vector3D operator*( const Vector3D& a_vec );
 

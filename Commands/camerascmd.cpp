@@ -23,7 +23,7 @@ CamerasCmd::CamerasCmd() : QObject()
 CamerasCmd::~CamerasCmd(){}
 
 void
-CamerasCmd::updateCamerasSettings( void )
+CamerasCmd::updateCamerasSettings()
 {    
 }
 

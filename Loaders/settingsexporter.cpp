@@ -13,7 +13,7 @@ SettingsExporter::SettingsExporter( QString a_fileName )
     _lights = false;
 }
 
-SettingsExporter::~SettingsExporter( void )
+SettingsExporter::~SettingsExporter()
 {
 }
 
@@ -28,7 +28,7 @@ SettingsExporter::SetParameters( bool a_cameras,
 }
 
 void
-SettingsExporter::Execute( void )
+SettingsExporter::Execute()
 {
     QFile file(_fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))

@@ -24,7 +24,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Vector3D::Vector3D( void )
+Vector3D::Vector3D()
 {
     _x = 0;
     _y = 0;
@@ -69,7 +69,7 @@ Vector3D::Vector3D( const Vector3D& a_vec )
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Vector3D::~Vector3D( void )
+Vector3D::~Vector3D()
 {
 
 }
@@ -83,10 +83,18 @@ Vector3D::~Vector3D( void )
  |  Parameters[in]: const Vector3D& a_vec = Vector to get the angle with;
  |  Returns: double angle = value of angle of the vector.
  *-------------------------------------------------------------------*/
-double
+float
 Vector3D::angle( const Vector3D& a_vec )
 {
-    return acos( ((*this)^a_vec) / (module() * a_vec.module()));
+    float num =  ((*this)^a_vec);
+    float den = module() * a_vec.module();
+
+    float res = -2;
+    if(den != 0){
+        res = acos(num/den);
+    }
+
+    return  res;
 }
 
 /*-------------------------------------------------------------------
@@ -97,7 +105,7 @@ Vector3D::angle( const Vector3D& a_vec )
  |  Returns: double module = value of module of the vector.
  *-------------------------------------------------------------------*/
 double
-Vector3D::module( void ) const
+Vector3D::module() const
 {
     return sqrt(_x*_x + _y*_y +_z*_z);
 }
@@ -110,7 +118,7 @@ Vector3D::module( void ) const
  |  Returns:
  *-------------------------------------------------------------------*/
 void
-Vector3D::makeContrary( void )
+Vector3D::makeContrary()
 {
     _x = _x*-1;
     _y = _y*-1;
@@ -125,7 +133,7 @@ Vector3D::makeContrary( void )
  |  Returns:
  *-------------------------------------------------------------------*/
 void
-Vector3D::normalize( void )
+Vector3D::normalize()
 {
     double modul = module();
 
@@ -178,7 +186,7 @@ Vector3D::getCoordinates(float& a_x, float& a_y, float& a_z)
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Vector3D::getX( void ) const
+Vector3D::getX() const
 {
     return _x;
 }
@@ -191,7 +199,7 @@ Vector3D::getX( void ) const
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Vector3D::getY( void ) const
+Vector3D::getY() const
 {
     return _y;
 }
@@ -204,7 +212,7 @@ Vector3D::getY( void ) const
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Vector3D::getZ( void ) const
+Vector3D::getZ() const
 {
     return _z;
 }
@@ -231,7 +239,7 @@ Vector3D::operator==( const Vector3D& a_vec )
  |  Parameters[in]: const Vector3D& a_vec = //TODO;
  |  Returns:
  *-------------------------------------------------------------------*/
-double
+float
 Vector3D::operator^( const Vector3D& a_vec )
 {
     return ((_x * a_vec.getX() ) + (_y * a_vec.getY())+  (_z * a_vec.getZ()));

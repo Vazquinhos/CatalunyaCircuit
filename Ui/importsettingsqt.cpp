@@ -56,7 +56,7 @@ void ImportSettingsQt::on_buttonBox_accepted()
     }
 }
 
-void ImportSettingsQt::errorAcepted( void )
+void ImportSettingsQt::errorAcepted()
 {
     // The error has been confirmed show again the window
     show();

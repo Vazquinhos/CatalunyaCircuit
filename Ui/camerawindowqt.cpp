@@ -296,7 +296,7 @@ void CameraWindowQt::on_cb_type_currentIndexChanged(int index)
     }
 }
 
-CameraAbs* CameraWindowQt::getCameraFromQt( void )
+CameraAbs* CameraWindowQt::getCameraFromQt()
 {
     CameraAbs* p_camera_to_rtn;
     switch (ui->cb_type->currentIndex())

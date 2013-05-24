@@ -16,7 +16,7 @@ SettingsImporter::SettingsImporter( QString a_fileName )
     _lights = false;
 }
 
-SettingsImporter::~SettingsImporter( void )
+SettingsImporter::~SettingsImporter()
 {
 }
 
@@ -65,7 +65,7 @@ stractValue(char in[], char out[], int size)
 }
 
 void
-SettingsImporter::Execute( void )
+SettingsImporter::Execute()
 {
     qDebug() << "EXECUTE!";
 

@@ -21,6 +21,7 @@
 FixedCamera::FixedCamera() : CameraAbs()
 {
     _type = FIXED;
+
 }
 FixedCamera::FixedCamera( QString a_name ): CameraAbs( a_name )
 {
@@ -57,7 +58,7 @@ FixedCamera::~FixedCamera()
  |  Parameters: none
  |  Returns: The QString with the type
  *-------------------------------------------------------------------*/
-QString FixedCamera::getTypeInQString( void )
+QString FixedCamera::getTypeInQString()
 {
     return "FixedCamera";
 }
@@ -70,9 +71,10 @@ void FixedCamera::update()
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
-    Point3D * pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
+   Point3D* pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
                                       sin(yaw)*cos(pitch) + getPosition()->getY(),
                                       sin(pitch) + getPosition()->getZ() );
+
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

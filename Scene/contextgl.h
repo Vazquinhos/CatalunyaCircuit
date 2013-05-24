@@ -16,6 +16,7 @@
 #include "Objects/carviewer.h"
 #include "Sound/SoundManager.h"
 #include "Objects/modelManager.h"
+#include "Objects/bsplinemanager.h"
 
 
 class GLWidget : public QGLWidget {
@@ -75,6 +76,9 @@ private:
     QTime  _displayTimer;
     QTime  _physicsTimer;
     LoaderQt* loader;
+
+    bool menuWasVisible;
+    bool menuIsVisible;
 
     QGLShaderProgram *shader;
 

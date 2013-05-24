@@ -46,7 +46,6 @@ SOURCES += main.cpp\
     Objects/mesh.cpp \
     Objects/enviroment.cpp \
     Objects/car.cpp \
-    Operators/trajectories.cpp \
     Scene/scene.cpp \
     Scene/fragmentview.cpp \
     Scene/contextgl.cpp \
@@ -55,7 +54,9 @@ SOURCES += main.cpp\
     Utils/point2D.cpp \
     Sound/SoundManager.cpp \
     Utils/XMLParser.cpp \
-    Objects/carviewer.cpp
+    Objects/carviewer.cpp \
+    Objects/bspline.cpp \
+    Objects/bsplinemanager.cpp
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -93,7 +94,6 @@ HEADERS  += \
     Objects/mesh.h \
     Objects/enviroment.h \
     Objects/car.h \
-    Operators/trajectories.h \
     Scene/scene.h \
     Scene/fragmentview.h \
     Scene/contextgl.h \
@@ -105,7 +105,9 @@ HEADERS  += \
     Sound/SoundManager.h \
     Utils/XMLParser.h \
     Utils/expat.h \
-    Objects/carviewer.h
+    Objects/carviewer.h \
+    Objects/bspline.h \
+    Objects/bsplinemanager.h
 
 FORMS    += \
     Ui/importsettingsqt.ui \

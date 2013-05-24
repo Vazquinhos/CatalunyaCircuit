@@ -26,8 +26,8 @@ public:
 
     // ============================ Methods ===============================
 
-    float getX( void ) const;
-    float getY( void ) const;
+    float getX() const;
+    float getY() const;
     void setCoordinates( float a_x, float a_y);
     void getCoordinates( float& a_x, float& a_y);
 

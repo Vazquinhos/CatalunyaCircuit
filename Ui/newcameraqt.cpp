@@ -30,13 +30,13 @@ void NewCameraQt::on_buttonBox_accepted()
     }
 }
 
-void NewCameraQt::errorAcepted( void )
+void NewCameraQt::errorAcepted()
 {
     // The error has been confirmed show again the window
     show();
 }
 
-CameraAbs* NewCameraQt::getNewCamera( void )
+CameraAbs* NewCameraQt::getNewCamera()
 {
     CameraAbs* p_camera_to_rtn;
     switch (ui->comboBox->currentIndex())

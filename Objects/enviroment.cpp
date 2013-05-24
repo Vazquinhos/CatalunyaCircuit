@@ -42,11 +42,22 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
     _buildings6 = manager->getModel("Circuit/buildings6.3ds");
 
     // ========================== Phisics Bullet =================
-    _groundShape = new btStaticPlaneShape(btVector3(0,0,1),-77.3);
+    //int width = 40000, length = 40000;
+    //btScalar maxHeight = 10.f;
+    //unsigned char* heightfieldData = new unsigned char[width*length];
+    //{
+            //for (int i=0;i<width*length;i++)
+            //{
+                //heightfieldData[i]=-76.3;
+            //}
+        //}
+    _groundShape = new btStaticPlaneShape(btVector3(0,1,0),-76.3);
+            //new btHeightfieldTerrainShape(width,length,heightfieldData,maxHeight,2,false,false);
     _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,_groundMotionState,_groundShape,btVector3(0,0,0));
     _groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld->addRigidBody(_groundRigidBody); //Add rigid body to the world
+
 }
 
 /*-------------------------------------------------------------------

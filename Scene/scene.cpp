@@ -34,7 +34,7 @@ Scene::Scene()
     _dispatcher = new btCollisionDispatcher(_collisionConfiguration); //Dispatcher for dectect collisions and make callbacks
     _solver = new btSequentialImpulseConstraintSolver(); //Handles object interactions like gravity
     _dynamicsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration); //World simulator
-    _dynamicsWorld->setGravity(btVector3(0,0,-9.81f));//Sets the gravity (choose -10m/s² on Z axis)
+    _dynamicsWorld->setGravity(btVector3(0,-9.81f,0));//Sets the gravity (choose -10m/s² on Z axis)
 
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
@@ -42,7 +42,7 @@ Scene::Scene()
     //unsigned int numCars = 1;
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
-        Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-76.3775));
+        Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-76.3775), _dynamicsWorld);
          _objectManager->addCar(c1);
         // xPos+=1;
     //}
@@ -50,6 +50,8 @@ Scene::Scene()
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
     unsigned int vuelta = SoundManager::getSoundManager()->CreateSource();
     SoundManager::getSoundManager()->PlayRelativeSource(vuelta, "vuelta", true);
+
+    _bSplineManager = BSplineManager::getBSplineManager();
 }
 
 /*-------------------------------------------------------------------
@@ -92,6 +94,38 @@ void Scene::display(float fps)
     sprintf(_frames, "FPS = %f", fps);
     paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();
+    _bSplineManager->display();
+
+/*
+    glPushMatrix();
+    glDisable(GL_LIGHTING);
+
+        // Eix X (vermell)
+        glColor3f(1.0,0.0,0.0);
+        glBegin(GL_LINES);
+        glVertex3f(0.0,0.0,0.0);
+        glVertex3f(300.0,0.0,0.0);
+        glEnd();
+
+        // Eix Y (verd)
+        glColor3f(0.0,1.0,0.0);
+        glBegin(GL_LINES);
+        glVertex3f(0.0,0.0,0.0);
+        glVertex3f(0.0,300.0,0.0);
+        glEnd();
+
+        // Eix Z (blau)
+        glColor3f(0.0,0.0,1.0);
+        glBegin(GL_LINES);
+        glVertex3f(0.0,0.0,0.0);
+        glVertex3f(0.0,0.0,300.0);
+        glEnd();
+
+        glEnable(GL_LIGHTING);
+
+        glPopMatrix();
+
+        */
 }
 
 /*-------------------------------------------------------------------

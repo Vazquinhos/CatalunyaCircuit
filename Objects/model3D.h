@@ -51,12 +51,14 @@ private:
     Point3D     * _p_center;
     bool _isVisible;
 
+    CameraManager* _camMngr;
+
     // ========================== Importer Methods ===========================
     bool loadFromFile(unsigned int assimpFlags);
     void generateObjectBuffers(const aiScene* pScene);
     void mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void renderMeshInstances(const aiNode *node);
-    void renderNode(const aiNode *node);
+    void renderNode(const aiNode *node, aiMatrix4x4 parentTransform);
 
 public:
     Model3D();

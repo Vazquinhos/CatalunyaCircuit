@@ -22,26 +22,27 @@ class Point3D{
 public:
     // ================= Constructores/Destructores ======================
     Point3D();
-    Point3D(float a_x, float a_y, float a_z);
-    Point3D(const Point3D& a_pnt);
+    Point3D(const float a_x, float a_y, float a_z);
+    Point3D(Point3D& a_pnt);
     ~Point3D();
 
     // ============================ Methods ===============================
-    float getX( void ) const;
-    float getY( void ) const;
-    float getZ( void ) const;
+    float getX() const;
+    float getY() const;
+    float getZ() const;
     void setX(float x);
     void setY(float y);
     void setZ(float z);
     void setCoordinates( float a_x, float a_y, float a_z);
     void getCoordinates( float& a_x, float& a_y, float& a_z);
     float getDistance( const Point3D* a_pnt1);
-    Vector3D getVector(Point3D *a_pnt);
+    Vector3D getVector(const Point3D &a_pnt);
 
     // ============================ Operators =============================
     bool operator==( const Point3D& a_pnt);
     bool operator!=( const Point3D& a_pnt);
     Point3D* operator+( const Point3D& a_pnt);
+    Vector3D* resta(Point3D* a_pnt);
 
 private:
     // =========================== Data Members ===========================

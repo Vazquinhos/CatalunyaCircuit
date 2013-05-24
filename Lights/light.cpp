@@ -93,7 +93,7 @@ void Light::update()
  |  Returns: The QString with the info
   *-------------------------------------------------------------------*/
 QString
-Light::getSettingsInfo( void )
+Light::getSettingsInfo()
 {
     QString string_to_rtn;
 
@@ -153,7 +153,7 @@ Light::getSettingsInfo( void )
  |  Parameters: none
  |  Returns: The QString with the name
  *-------------------------------------------------------------------*/
-QString Light::getName( void )
+QString Light::getName()
 {
     return _name;
 }

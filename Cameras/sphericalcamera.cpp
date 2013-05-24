@@ -57,7 +57,7 @@ SphericalCamera::~SphericalCamera()
  |  Parameters: none
  |  Returns: The QString with the type
  *-------------------------------------------------------------------*/
-QString SphericalCamera::getTypeInQString( void )
+QString SphericalCamera::getTypeInQString()
 {
     return "SphericalCamera";
 }

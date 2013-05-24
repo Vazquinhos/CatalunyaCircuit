@@ -96,7 +96,7 @@ void MainWindow::Menu(){
     }
 }
 
-void MainWindow::showMySelf( void )
+void MainWindow::showMySelf()
 {
     show();
 }

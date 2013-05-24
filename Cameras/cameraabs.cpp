@@ -22,11 +22,15 @@
 CameraAbs::CameraAbs()
 {
     _zoom = 10;
-    _yaw = 57;
-    _pitch = 359.5;
+    _yaw = 359.5;
+    _pitch = 57;
     _mode = PERSPECTIVE;
     _name = QString("Not init");
-    setPosition(new Point3D(211.558f, 43.2373f, -72.7428f));
+    setPosition(new Point3D(224.533f, -68.3924f, -46.2934f));
+
+    _dirVec = new Vector3D(cos(_yaw)*cos(_pitch),
+                           sin(_yaw)*cos(_pitch),
+                           sin(_pitch) );
 }
 
 /*-------------------------------------------------------------------
@@ -43,7 +47,10 @@ CameraAbs::CameraAbs(QString a_name)
     _pitch = 359.5;
     _mode = PERSPECTIVE;
     _name = a_name;
-    setPosition(new Point3D(211.558f, 43.2373f, -72.7428f));
+    setPosition(new Point3D(224.533f, -68.3924f, -46.2934f));
+    _dirVec = new Vector3D(cos(_yaw)*cos(_pitch),
+                           sin(_yaw)*cos(_pitch),
+                           sin(_pitch) );
 }
 
 /*-------------------------------------------------------------------
@@ -162,32 +169,13 @@ Point3D * CameraAbs::getPosition()
 }
 
 /*-------------------------------------------------------------------
- |  Function SetPointToLook
- |
- |  Purpose: Sets the look point of the camera
- *-------------------------------------------------------------------*/
-void CameraAbs::setPointToLook(Point3D *point){
-    _pointToLook = point;
-}
-
-/*-------------------------------------------------------------------
- |  Function GetPointToLook
- |
- |  Purpose: Gets the look point of the camera
- |  Returns: The look point of the camera
- *-------------------------------------------------------------------*/
-Point3D *CameraAbs::getPointToLook(){
-    return _pointToLook;
-}
-
-/*-------------------------------------------------------------------
  |  Function
  |
  |  Purpose: Gets the type of the camera
  |  Parameters: none
  |  Returns: The camera_type, defined in utils.h
  *-------------------------------------------------------------------*/
-camera_type CameraAbs::getType( void )
+camera_type CameraAbs::getType()
 {
     return _type;
 }
@@ -199,7 +187,7 @@ camera_type CameraAbs::getType( void )
  |  Returns: The QString with the type
  *-------------------------------------------------------------------*/
 QString
-CameraAbs::getSettingsInfo( void )
+CameraAbs::getSettingsInfo()
 {
     // We make a qstring to add all the settins info
     QString settings_to_return;
@@ -249,7 +237,7 @@ CameraAbs::getSettingsInfo( void )
  |  Parameters: none
  |  Returns: The QString with the name
  *-------------------------------------------------------------------*/
-QString CameraAbs::getName( void )
+QString CameraAbs::getName()
 {
     return _name;
 }
@@ -307,4 +295,24 @@ void CameraAbs::setYaw( float yaw )
 void CameraAbs::setPitch( float pitch )
 {
     _pitch = pitch;
+}
+
+float CameraAbs::getYaw(float yaw){
+    return _yaw;
+}
+
+float CameraAbs::getPitch(float pitch){
+    return _pitch;
+}
+
+Vector3D*
+CameraAbs::getDirectionVector()
+{
+    return _dirVec;
+}
+
+void
+CameraAbs::setDirectionVector(Vector3D* a_vec)
+{
+    _dirVec = a_vec;
 }

@@ -61,7 +61,7 @@ FreeCamera::~FreeCamera()
  |  Parameters: none
  |  Returns: The QString with the type
  *-------------------------------------------------------------------*/
-QString FreeCamera::getTypeInQString( void )
+QString FreeCamera::getTypeInQString()
 {
     return "FreeCamera";
 }
@@ -74,9 +74,14 @@ void FreeCamera::update()
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
-    _pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
-                                      sin(yaw)*cos(pitch) + getPosition()->getY(),
-                                      sin(pitch) + getPosition()->getZ() );
+    Point3D* pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
+                                          sin(yaw)*cos(pitch) + getPosition()->getY(),
+                                          sin(pitch) + getPosition()->getZ() );
+
+/*
+    Point3D* pointToLook = new Point3D( cos(yaw)*sin(pitch) + getPosition()->getX(),
+                                        sin(pitch) + getPosition()->getY(),
+                                        cos(yaw)*cos(pitch) + getPosition()->getZ() );*/
 
     /*Vector3D * up = new Vector3D(-cos(yaw)*sin(pitch),
                                  -sin(yaw)*sin(pitch),
@@ -87,9 +92,9 @@ void FreeCamera::update()
     gluLookAt(getPosition()->getX(),
               getPosition()->getY(),
               getPosition()->getZ(),
-              _pointToLook->getX(),
-              _pointToLook->getY(),
-              _pointToLook->getZ(),
+              pointToLook->getX(),
+              pointToLook->getY(),
+              pointToLook->getZ(),
               0, 0, 1 );
 }
 
@@ -115,7 +120,7 @@ void FreeCamera::move(float velocity, bool front)
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
-    Vector3D * direction = new Vector3D( cos(yaw)*cos(pitch),
+    Vector3D * direction = new Vector3D(cos(yaw)*cos(pitch),
                                        sin(yaw)*cos(pitch),
                                        sin(pitch) );
     direction->normalize();

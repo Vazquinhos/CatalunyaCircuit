@@ -19,7 +19,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Point2D::Point2D( void )
+Point2D::Point2D()
 {
     _x = 0;
     _y = 0;
@@ -60,7 +60,7 @@ Point2D::Point2D( const Point2D& a_pnt)
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Point2D::~Point2D( void )
+Point2D::~Point2D()
 {
 
 }
@@ -75,7 +75,7 @@ Point2D::~Point2D( void )
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Point2D::getX( void ) const
+Point2D::getX() const
 {
     return _x;
 }
@@ -88,7 +88,7 @@ Point2D::getX( void ) const
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Point2D::getY( void ) const
+Point2D::getY() const
 {
     return _y;
 }

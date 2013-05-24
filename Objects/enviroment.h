@@ -21,6 +21,7 @@
 #include <map>
 #include "Utils/util.h"
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 
 class Enviroment
@@ -53,6 +54,7 @@ private:
 
 
     // ========================== Phisics Bullet Members =================
+    //btHeightfieldTerrainShape* _groundShape;
     btCollisionShape* _groundShape;
     btDefaultMotionState* _groundMotionState;
     btRigidBody* _groundRigidBody;

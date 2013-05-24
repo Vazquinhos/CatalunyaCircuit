@@ -20,7 +20,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Point3D::Point3D( void )
+Point3D::Point3D()
 {
     _x = 0;
     _y = 0;
@@ -37,7 +37,7 @@ Point3D::Point3D( void )
  |  Parameters[out]:
  |  Returns:
  *-------------------------------------------------------------------*/
-Point3D::Point3D( float a_x, float a_y, float a_z)
+Point3D::Point3D( const float a_x, float a_y, float a_z)
 {
     _x = a_x;
     _y = a_y;
@@ -51,7 +51,7 @@ Point3D::Point3D( float a_x, float a_y, float a_z)
  |  Parameters: const Point3D& a_pnt = Point3D to copy;
  |  Returns:
  *-------------------------------------------------------------------*/
-Point3D::Point3D( const Point3D& a_pnt)
+Point3D::Point3D( Point3D &a_pnt)
 {
     _x = a_pnt.getX();
     _y = a_pnt.getY();
@@ -65,7 +65,7 @@ Point3D::Point3D( const Point3D& a_pnt)
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Point3D::~Point3D( void )
+Point3D::~Point3D()
 {
 
 }
@@ -80,7 +80,7 @@ Point3D::~Point3D( void )
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Point3D::getX( void ) const
+Point3D::getX() const
 {
     return _x;
 }
@@ -93,7 +93,7 @@ Point3D::getX( void ) const
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Point3D::getY( void ) const
+Point3D::getY() const
 {
     return _y;
 }
@@ -106,7 +106,7 @@ Point3D::getY( void ) const
  |  Returns:
  *-------------------------------------------------------------------*/
 float
-Point3D::getZ( void ) const
+Point3D::getZ() const
 {
     return _z;
 }
@@ -228,11 +228,9 @@ Point3D* Point3D::operator+( const Point3D& a_pnt)
  |  Returns:
  *-------------------------------------------------------------------*/
 Vector3D
-Point3D::getVector(Point3D *a_pnt)
+Point3D::getVector(const Point3D &a_pnt)
 {
-    qDebug() << _x << " " << _y  << " " << _z;
-    qDebug() << a_pnt->getX() << " " << a_pnt->getY()  << " " << a_pnt->getZ();
-  return Vector3D(_x - a_pnt->getX() , _y - a_pnt->getY(), _z - a_pnt->getZ());
+  return Vector3D(_x - a_pnt.getX() , _y - a_pnt.getY(), _z - a_pnt.getZ());
 }
 
 /*-------------------------------------------------------------------
@@ -244,6 +242,12 @@ Point3D::getVector(Point3D *a_pnt)
  *-------------------------------------------------------------------*/
 float Point3D::getDistance( const Point3D *a_pnt1){
     return sqrt(pow(a_pnt1->getX()-_x, 2) + pow(a_pnt1->getY()-_y, 2) + pow(a_pnt1->getZ()-_z, 2));
+}
+
+Vector3D*
+Point3D::resta( Point3D *a_pnt )
+{
+    return new Vector3D( a_pnt->getX() - _x, a_pnt->getY() - _y, a_pnt->getZ() - _z);
 }
 
 

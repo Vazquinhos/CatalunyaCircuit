@@ -23,7 +23,7 @@ ErrorWindow::SetErrorMsg( QString a_error_msg)
 }
 
 void
-ErrorWindow::ShowWindow( void )
+ErrorWindow::ShowWindow()
 {
     show();
 }

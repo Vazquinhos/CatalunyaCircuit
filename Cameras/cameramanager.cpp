@@ -31,7 +31,7 @@ CameraManager::CameraManager()
 // ============================ Methods ===============================
 
 /*-------------------------------------------------------------------
- |  getCameraManager( void )
+ |  getCameraManager()
  |
  |  Purpose: Gets the singleton of the camera
  |  Parameters:
@@ -53,7 +53,10 @@ void CameraManager::setupCameras() {
     FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
     FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
 
-    Point3D* point= new Point3D(152.742,137.498,-74.439);
+
+    //(150,-76.85,-200+i*10+zIncrement)
+
+    Point3D* point= new Point3D(152.742,-74.439, -200);
     fxCam->setPosition(point);
     fxCam->setYawPitch(143,325.5);
 
@@ -117,13 +120,13 @@ void CameraManager::setCameraOnCar(Point3D *position)
 }
 
 /*-------------------------------------------------------------------
- |  getXMLCameraInfoToExport( void )
+ |  getXMLCameraInfoToExport()
  |
  |  Purpose: Gets the info of the cameras to export them into the XML
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-QString CameraManager::getCCSCameraInfoToExport( void )
+QString CameraManager::getCCSCameraInfoToExport()
 {
     QString string_to_rtn;
 
@@ -154,9 +157,9 @@ void CameraManager::setActiveCamera(CameraAbs * camera)
     //Comprobamos si es una camara del manager.
     //Si no lo es, la añadimos.
     QString camera_name = camera->getName();
-    if(_cameras.find(camera->getName()) == _cameras.end())
+    if(_cameras.find(camera_name) == _cameras.end())
     {
-        _cameras[camera->getName()] = camera;
+        _cameras[camera_name] = camera;
     }
 
     //Ponemos la camara como camara activa.
@@ -169,7 +172,7 @@ void CameraManager::setActiveCamera(QString name)
 }
 
 std::map<QString,CameraAbs*>
-CameraManager::getCameras( void )
+CameraManager::getCameras()
 {
     return _cameras;
 }

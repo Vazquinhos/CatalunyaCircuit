@@ -53,7 +53,9 @@ SOURCES += main.cpp\
     Utils/point3D.cpp \
     Utils/point2D.cpp \
     Sound/SoundManager.cpp \
-    Utils/XMLParser.cpp
+    Utils/XMLParser.cpp \
+    Utils/fileutils.cpp \
+    Utils/color.cpp
 
 
 HEADERS  += \
@@ -102,7 +104,9 @@ HEADERS  += \
     Utils/point2D.h \
     Sound/SoundManager.h \
     Utils/XMLParser.h \
-    Utils/expat.h
+    Utils/expat.h \
+    Utils/fileutils.h \
+    Utils/color.h
 
 FORMS    += \
     Ui/importsettingsqt.ui \

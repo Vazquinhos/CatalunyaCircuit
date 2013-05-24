@@ -20,6 +20,7 @@
 #include "Lights/swivellight.h"
 #include "Lights/lightmanager.h"
 #include "Objects/bsplinemanager.h"
+#include "Objects/bspline.h"
 
 class GLWidget : public QGLWidget {
 
@@ -58,6 +59,9 @@ protected:
     CameraManager *_cameraManager;
     SoundManager  *_soundManager;
     ModelManager  *_modelManager;
+
+    BSplineManager* _bSplineManager;
+
 
 private:
     int _maxVisibleDistance;

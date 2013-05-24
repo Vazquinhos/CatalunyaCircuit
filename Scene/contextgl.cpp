@@ -93,8 +93,6 @@ void GLWidget::initializeWorld(){
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();
     _modelManager  =  ModelManager::getModelManager();
-    BSplineManager::getBSplineManager();
-
 
     // 2) Init our own architecture (camera, lights, action!)
     //----------------------------------------------------------
@@ -110,6 +108,7 @@ void GLWidget::initializeWorld(){
     shader =  new QGLShaderProgram();
     initializeShaders(QString("./Shader/simple"));
 
+    _bSplineManager = BSplineManager::getBSplineManager();
 
     QThread *p_thread = new QThread();
     _modelManager->moveToThread( p_thread );
@@ -119,7 +118,6 @@ void GLWidget::initializeWorld(){
     QObject::connect(_modelManager,SIGNAL(NewModel(QString,int)),this,SLOT(PrintModel(QString,int)));
     p_thread->start();
     QObject::connect(_modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
-
 }
 
 void GLWidget::changeCarModel()
@@ -163,6 +161,7 @@ GLWidget::startTimers()
     emit LoadingFinished();
 
     _carViewer = new CarViewer();
+    BSplineManager::getBSplineManager();
 }
 
 
@@ -315,6 +314,13 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
     switch(event->key()) {
 
+    case Qt::Key_E:
+        _bSplineManager->saveCapturingSpline();
+        break;
+    case Qt::Key_C:
+        _bSplineManager->captureNewSpline();
+        break;
+
     case Qt::Key_V://Move camera to right
         _scene->turnDebugMode();
         break;
@@ -348,6 +354,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         {
             _cameraManager->getActiveCamera()->move(1, false);
             _objectManager->checkVisibility();
+            _bSplineManager->updateCapturingSpline();
         }else{
             _carViewer->shiftNextCar();
         }
@@ -358,6 +365,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         if(!_carViewer->isActive()){
             _cameraManager->getActiveCamera()->move(-1, false);
             _objectManager->checkVisibility();
+            _bSplineManager->updateCapturingSpline();
         } else {
             _carViewer->shiftPreviousCar();
         }
@@ -366,12 +374,14 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         //qDebug() << "PULSANDO UP";
         _cameraManager->getActiveCamera()->move(1, true);
         _objectManager->checkVisibility();
+        _bSplineManager->updateCapturingSpline();
         break;
 
     case Qt::Key_Down: //Move camera to back
         //qDebug() << "PULSANDO DOWN";
         _cameraManager->getActiveCamera()->move(-1, true);
         _objectManager->checkVisibility();
+        _bSplineManager->updateCapturingSpline();
         break;
 
         //DEBUG

@@ -9,7 +9,13 @@ class BSplineManager
 
 public:
     static BSplineManager* getBSplineManager();
-    BSpline* getBspline(int i);
+    BSpline* getBspline(QString fileName);
+    BSpline* getCapturingSpline();
+
+    void captureNewSpline();
+    void cancelCapturingSpline();
+    void updateCapturingSpline();
+    void saveCapturingSpline();
 
     void display();
     void render();
@@ -17,9 +23,12 @@ public:
 private:
     BSplineManager();
     static BSplineManager *  _bSplineManager;
-    BSpline *   bSpline;
+    BSpline *   _capturingSpline;
+    bool _isCapturingSpline;
+    int _numSavedSplines;
+    int _lastSavedSpline;
 
-    std::vector<BSpline*>  _vBSplines;
+    std::map<QString, BSpline*>  _vBSplines;
 };
 
 #endif // BSPLINEMANAGER_H

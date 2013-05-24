@@ -74,9 +74,9 @@ void FreeCamera::update()
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
-    Point3D* pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(),
-                                          sin(yaw)*cos(pitch) + getPosition()->getY(),
-                                          sin(pitch) + getPosition()->getZ() );
+    Point3D* pointToLook = new Point3D( -cos(pitch)*sin(yaw) + getPosition()->getX(),
+                                        sin(pitch) + getPosition()->getY(),
+                                        -cos(pitch)*cos(yaw) + getPosition()->getZ() );
 
 /*
     Point3D* pointToLook = new Point3D( cos(yaw)*sin(pitch) + getPosition()->getX(),
@@ -95,7 +95,7 @@ void FreeCamera::update()
               pointToLook->getX(),
               pointToLook->getY(),
               pointToLook->getZ(),
-              0, 0, 1 );
+              0, 1, 0 );
 }
 
 void FreeCamera::render()
@@ -120,9 +120,9 @@ void FreeCamera::move(float velocity, bool front)
     yaw = yaw*PI/180;
     pitch = pitch*PI/180;
 
-    Vector3D * direction = new Vector3D(cos(yaw)*cos(pitch),
-                                       sin(yaw)*cos(pitch),
-                                       sin(pitch) );
+    Vector3D * direction = new Vector3D( -cos(pitch)*sin(yaw),
+                                        sin(pitch),
+                                        -cos(pitch)*cos(yaw));
     direction->normalize();
 
     move(direction->getX()*velocity, direction->getY()*velocity, direction->getZ()*velocity);

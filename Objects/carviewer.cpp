@@ -29,7 +29,6 @@ CarViewer::CarViewer()
         car = new Car("Cars/" + _carFolders[i], new Point3D(150,-76.85,-200+i*10+zIncrement));
         manager->addCar(car);
     }
-
 }
 
 // ====================================================================

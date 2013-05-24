@@ -47,7 +47,8 @@ void BSpline::render(){
     glNewList(_displayList, GL_COMPILE); //Starting rendering in memory
 
     glPushMatrix();
-
+    glPushAttrib(GL_CURRENT_BIT);
+    glColor3f(0,1,0);
 
     for(int i = 0; i < _vPoints.size(); ++i){
         point = _vPoints[i];
@@ -55,6 +56,7 @@ void BSpline::render(){
         glTranslatef(point->getX(), point->getY(), point->getZ());
     }
 
+    glPopAttrib();
     glPopMatrix();
     glEndList();
 }

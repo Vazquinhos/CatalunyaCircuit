@@ -42,9 +42,9 @@ Scene::Scene()
     //unsigned int numCars = 1;
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
-        Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-76.3775), _dynamicsWorld);
-         _objectManager->addCar(c1);
-        // xPos+=1;
+    Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-76.3775), _dynamicsWorld);
+    _objectManager->addCar(c1);
+    // xPos+=1;
     //}
 
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
@@ -96,36 +96,43 @@ void Scene::display(float fps)
     this->_objectManager->displayAll();
     _bSplineManager->display();
 
-/*
+
+    Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
+    Point3D *cameraPos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
+
+
+
     glPushMatrix();
+
+    glPushAttrib(GL_CURRENT_BIT);
     glDisable(GL_LIGHTING);
 
-        // Eix X (vermell)
-        glColor3f(1.0,0.0,0.0);
-        glBegin(GL_LINES);
-        glVertex3f(0.0,0.0,0.0);
-        glVertex3f(300.0,0.0,0.0);
-        glEnd();
+    // Eix X (vermell)
+    glColor3f(1.0,0.0,0.0);
+    //glutSolidSphere(100, 20,20);
 
-        // Eix Y (verd)
-        glColor3f(0.0,1.0,0.0);
-        glBegin(GL_LINES);
-        glVertex3f(0.0,0.0,0.0);
-        glVertex3f(0.0,300.0,0.0);
-        glEnd();
+    glBegin(GL_LINES);
+    glLineWidth(1.0f);
+    glVertex3f(0,0,0);
+    glVertex3f(carPos->getX(),carPos->getY(),carPos->getZ());
+    glEnd();
 
-        // Eix Z (blau)
-        glColor3f(0.0,0.0,1.0);
-        glBegin(GL_LINES);
-        glVertex3f(0.0,0.0,0.0);
-        glVertex3f(0.0,0.0,300.0);
-        glEnd();
 
-        glEnable(GL_LIGHTING);
+    glColor3f(0.0,1.0,0.0);
+    glBegin(GL_LINES);
+    glLineWidth(1.0f);
+    glVertex3f(0,0,0);
+    glVertex3f(cameraPos->getZ(), cameraPos->getY(),cameraPos->getX()+1);
+    glEnd();
 
-        glPopMatrix();
 
-        */
+
+    glEnable(GL_LIGHTING);
+
+    glPopAttrib();
+    glPopMatrix();
+
+
 }
 
 /*-------------------------------------------------------------------

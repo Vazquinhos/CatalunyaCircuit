@@ -53,7 +53,7 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
         //}
     _groundShape = new btStaticPlaneShape(btVector3(0,1,0),-76.3);
             //new btHeightfieldTerrainShape(width,length,heightfieldData,maxHeight,2,false,false);
-    _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
+    _groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,1,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,_groundMotionState,_groundShape,btVector3(0,0,0));
     _groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld->addRigidBody(_groundRigidBody); //Add rigid body to the world
@@ -92,6 +92,7 @@ Enviroment::~Enviroment()
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void Enviroment::checkVisibility(vector<GLuint> *displayLists){
+
     _sky->checkVisibility(displayLists);
     _terrain->checkVisibility(displayLists);
     _advertisement->checkVisibility(displayLists);
@@ -107,6 +108,7 @@ void Enviroment::checkVisibility(vector<GLuint> *displayLists){
     _buildings4->checkVisibility(displayLists);
     _buildings5->checkVisibility(displayLists);
     _buildings6->checkVisibility(displayLists);
+
 
 
 }

@@ -83,7 +83,10 @@ Car::~Car()
  *-------------------------------------------------------------------*/
 Point3D * Car::getPosition(){
     btTransform transform;
+    btScalar *openglMatrix = new btScalar[16];
     this->_chasisObj->getWorldTransform(transform);
+
+    //transform.getOpenGLMatrix(openglMatrix);
     return new Point3D(transform.getOrigin().getX(), transform.getOrigin().getY(),transform.getOrigin().getZ());
 }
 
@@ -139,18 +142,18 @@ void Car::setCameraMode(int mode){
 void Car::setModelsWithPos(QString folderPath, Point3D *position){
     ModelManager *manager = ModelManager::getModelManager();
     QString wheelsFolder = QString("Cars/Wheels/");
-    btTransform transform;
-    btQuaternion rotationX(btVector3(1,0,0), btScalar(-1.570796327));
+    btTransform transformChasis;
+    btTransform transformWheelFR;
 
-    transform = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
-    //transform.setRotation(rotationX);
+    transformChasis = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
+    transformWheelFR = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX()-1.7369 ,position->getY()+0.1339,position->getZ()-2.628));
 
-    _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transform);
-    _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transform);
-    _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
-    _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
-    _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
-    _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transform);
+    _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transformChasis);
+    _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transformChasis);
+    _wheelFrontRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformWheelFR);
+    _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformChasis);
+    _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformChasis);
+    _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformChasis);
 
 
     _cameraMode = FRONTAL_CAMERA;
@@ -193,7 +196,7 @@ void Car::turnLeft(){
  *-------------------------------------------------------------------*/
 void Car::accelerate(){
     Point3D *position = getPosition();
-    position->setX(position->getY()+1);
+    position->setX(position->getZ()+1);
     setPosition(position);
     updateCurrentCameraPos();
 }
@@ -205,7 +208,7 @@ void Car::accelerate(){
  *-------------------------------------------------------------------*/
 void Car::brake(){
     Point3D *position = getPosition();
-    position->setX(position->getY()-1);
+    position->setX(position->getZ()-1);
     setPosition(position);
     updateCurrentCameraPos();
 }

@@ -24,6 +24,7 @@
 #include <string>
 #include <bullet/btBulletDynamicsCommon.h>
 #include <Objects/bsplinemanager.h>
+#include <Objects/objectManager.h>
 
 using namespace std;
 

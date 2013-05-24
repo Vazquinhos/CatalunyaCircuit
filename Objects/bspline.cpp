@@ -4,64 +4,92 @@
 #include <QString>
 #include <QFile>
 #include <QStringList>
+#include "Utils/color.h"
 
 BSpline::BSpline(QString filePath)
 {
-    const aiScene* pScene = _importer.ReadFile(filePath.toAscii().data(), 0); //Loads and optmizes object
-
-    if (!pScene) {
-        qDebug() << "Error before loading SPLINE: " << _importer.GetErrorString();
-    }
-
-    //ImportBSpline(filePath);
-   int numVertex = pScene->mMeshes[0]->mNumVertices;
-   for(int i = 0; i < numVertex; ++i){
-        _vPoints.push_back(new Point3D(pScene->mMeshes[0]->mVertices[i].x , pScene->mMeshes[0]->mVertices[i].y, pScene->mMeshes[0]->mVertices[i].z));
-    }
+    _filename = filePath;
+    ImportBSpline(filePath);
 }
 
 void
 BSpline::ImportBSpline( QString a_filename ){
+
+
     QFile file( a_filename );
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "BSpline " << a_filename << " could not be loaded";
         return;
+    }
+
 
     QTextStream in(&file);
     while (!in.atEnd()) {
-     QString line = in.readLine();
-     QStringList line_list = line.split(" ");
+        QString line = in.readLine();
+        QStringList line_list = line.split(" ");
 
-    if(line_list[0] == QString("v")){
-        _vPoints.push_back(new Point3D(line_list[1].toFloat(),line_list[2].toFloat(),line_list[3].toFloat()));
-    }
+        if(line_list[0] == QString("v")){
+            _vPoints.push_back(new Point3D(line_list[1].toFloat(),line_list[2].toFloat(),line_list[3].toFloat()));
+        }
 
     }
 }
 
 void BSpline::render(){
-    /*
     Point3D *point;
-    if (glIsList(_displayList)) { //If we already have a display list, we delete it
-        glDeleteLists(_displayList, 1);
-    }
+    Color randColor;
+    //if (glIsList(_displayList)) { //If we already have a display list, we delete it
+      //  glDeleteLists(_displayList, 1);
+    //}
     _displayList = glGenLists(1); //Generate new display list identifier
     glNewList(_displayList, GL_COMPILE); //Starting rendering in memory
 
-    glPushMatrix();
-    glPushAttrib(GL_CURRENT_BIT);
-    glColor3f(0,1,0);
 
-    for(int i = 0; i < _vPoints.size(); ++i){
+
+    for(unsigned int i = 0; i < _vPoints.size(); ++i){
         point = _vPoints[i];
-        glutSolidSphere(20, 20, 20);
-        glTranslatef(point->getX(), point->getY(), point->getZ());
-    }
+        glPushMatrix();
+        glPushAttrib(GL_CURRENT_BIT);
+        glColor3f(randColor.getRed(),randColor.getGreen(),randColor.getBlue());
 
-    glPopAttrib();
-    glPopMatrix();
+        glTranslatef(point->getX(), point->getY(), point->getZ());
+        glutSolidSphere(0.5, 20, 20);
+
+        glPopAttrib();
+        glPopMatrix();
+
+
+    }
     glEndList();
-    */
+
+
 }
 void BSpline::display(){
-    //glCallList(_displayList);
+    glCallList(_displayList);
+}
+
+void BSpline::captureCameraPosition(){
+        Point3D * point = CameraManager::getCameraManager()->getActiveCamera()->getPosition();
+        _vPoints.push_back(point);
+        qDebug() << "Bspline: " << getFilename() << " captured point: " << point->getX() << " " << point->getY() << point->getZ();
+}
+
+void BSpline::saveCapture( ){
+
+    QFile file(_filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+    QTextStream out(&file);
+    unsigned int size = _vPoints.size();
+
+    for(unsigned int i = 0; i<size; ++i)
+    {
+        out << "v " << _vPoints[i]->getX() <<" "<< _vPoints[i]->getY() <<" "<<_vPoints[i]->getZ() << "\n";
+    }
+
+    file.close();
+}
+
+QString BSpline::getFilename(){
+    return _filename;
 }

@@ -331,7 +331,7 @@ void Model3D::checkVisibility(vector<GLuint> *displayLists){
 
         //float direction = (*vCamera)^(*vObject);
         //if(direction >= 0){
-        if(vObject->module() < 400){
+        if(vObject->module() < 2000){
             displayLists->push_back(meshInstance->getDisplayList());
             _isVisible = true;
         }else{

@@ -16,8 +16,10 @@
 #include "Objects/carviewer.h"
 #include "Sound/SoundManager.h"
 #include "Objects/modelManager.h"
+#include "Lights/light.h"
+#include "Lights/swivellight.h"
+#include "Lights/lightmanager.h"
 #include "Objects/bsplinemanager.h"
-
 
 class GLWidget : public QGLWidget {
 

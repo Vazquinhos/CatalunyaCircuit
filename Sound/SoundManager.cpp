@@ -610,6 +610,7 @@ void SoundManager::_clear()
 	std::map<Action, IdBuffer>::iterator itBuffer;
 	for( itBuffer = mBuffers.begin(); itBuffer != mBuffers.end(); ++itBuffer )
 	{
+        //TODO: ESTO PETA CUANDO LO CIERRAS DEL TIRI EN DEBUG
 		aux = (*itBuffer).second;
 		alDeleteBuffers (1,&aux);
 	}

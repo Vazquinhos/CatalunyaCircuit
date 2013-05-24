@@ -1,5 +1,5 @@
 /*
- * Archivo: camerasloader.cpp
+ * Archivo: CamerasCmd.cpp
  * Fecha: 19/03/2013
  * Autores: David Pérez Castilla
  *          Alejandro Vázquez

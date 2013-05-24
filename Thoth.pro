@@ -31,11 +31,9 @@ SOURCES += main.cpp\
     Commands/camerascmd.cpp \
     Lights/lightmanager.cpp \
     Lights/light.cpp \
+    Lights/swivellight.cpp \
     Loaders/settingsimporter.cpp \
     Loaders/settingsexporter.cpp \
-    Loaders/lightloader.cpp \
-    Loaders/fileParser.cpp \
-    Loaders/camerasloader.cpp \
     Log/assimpLog.cpp \
     Objects/texture.cpp \
     Objects/physicsObject3D.cpp \
@@ -46,17 +44,17 @@ SOURCES += main.cpp\
     Objects/mesh.cpp \
     Objects/enviroment.cpp \
     Objects/car.cpp \
+    Objects/carviewer.cpp \
+    Objects/bspline.cpp \
+    Objects/bsplinemanager.cpp \
     Scene/scene.cpp \
-    Scene/fragmentview.cpp \
     Scene/contextgl.cpp \
     Utils/vector3D.cpp \
     Utils/point3D.cpp \
     Utils/point2D.cpp \
     Sound/SoundManager.cpp \
-    Utils/XMLParser.cpp \
-    Objects/carviewer.cpp \
-    Objects/bspline.cpp \
-    Objects/bsplinemanager.cpp
+    Utils/XMLParser.cpp
+
 
 HEADERS  += \
     Objects/object3DFile.h \
@@ -79,11 +77,9 @@ HEADERS  += \
     Commands/camerascmd.h \
     Lights/lightmanager.h \
     Lights/light.h \
+    Lights/swivellight.h \
     Loaders/settingsimporter.h \
     Loaders/settingsexporter.h \
-    Loaders/lightloader.h \
-    Loaders/fileParser.h \
-    Loaders/camerasloader.h \
     Log/assimpLog.h \
     Objects/texture.h \
     Objects/physicsObject3D.h \
@@ -94,8 +90,10 @@ HEADERS  += \
     Objects/mesh.h \
     Objects/enviroment.h \
     Objects/car.h \
+    Objects/carviewer.h \
+    Objects/bspline.h \
+    Objects/bsplinemanager.h \
     Scene/scene.h \
-    Scene/fragmentview.h \
     Scene/contextgl.h \
     Utils/vector3D.h \
     Utils/util.h \
@@ -104,10 +102,7 @@ HEADERS  += \
     Utils/point2D.h \
     Sound/SoundManager.h \
     Utils/XMLParser.h \
-    Utils/expat.h \
-    Objects/carviewer.h \
-    Objects/bspline.h \
-    Objects/bsplinemanager.h
+    Utils/expat.h
 
 FORMS    += \
     Ui/importsettingsqt.ui \

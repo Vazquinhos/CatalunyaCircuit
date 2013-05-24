@@ -1,4 +1,6 @@
 #include "carviewer.h"
+#include "Lights/lightmanager.h"
+#include "Lights/swivellight.h"
 // ====================================================================
 // ============================ CONSTRUCTORS ==========================
 // ====================================================================
@@ -52,7 +54,10 @@ bool CarViewer::isActive(){
  |  Purpose: Starts the car viewer and selector tool
  *-------------------------------------------------------------------*/
 void CarViewer::changeToViewerMode(){
+    LightManager * lightManager = LightManager::getLightManager();
     _cameraManager->setActiveCamera("CarViewerCamera");
+    lightManager->setActiveLight("swivelLight0");
+    ((SwivelLight*)lightManager->getActiveLight())->startAnimation();
     _isInCarViewerMode = true;
 }
 

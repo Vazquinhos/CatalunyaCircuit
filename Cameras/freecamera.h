@@ -30,9 +30,10 @@ public:
     // ============================ Methods ===============================
     virtual QString     getTypeInQString();
     virtual void        update();
+    //virtual void        render();
     virtual void        move(float velocity, bool front);
     void                move(float incrementX, float incrementY, float incrementZ);
-    void                render();
+
 
 private:
     // ========================== Data Members ============================

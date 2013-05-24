@@ -13,17 +13,24 @@
 LightManager * LightManager::_lightManager = NULL;
 
 // ================= Constructores/Destructores ======================
+/*-------------------------------------------------------------------
+ |  Default Constructor
+ |
+ |  Purpose: Construct a default LightManager. Private.
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 LightManager::LightManager()
 {
 }
 
 // ============================ Methods ===============================
 /*-------------------------------------------------------------------
- |  getLightManager()
+ |  Function getLightManager
  |
- |  Purpose: Get the camera manager
+ |  Purpose: Get the Light manager
  |  Parameters:
- |  Returns:
+ |  Returns: LightManager: returns the LightManager's instance.
  *-------------------------------------------------------------------*/
 LightManager * LightManager::getLightManager()
 {
@@ -34,10 +41,92 @@ LightManager * LightManager::getLightManager()
 }
 
 /*-------------------------------------------------------------------
- |  getLight(QString light_name)
+ |  Function getLight
  |
  |  Purpose: Gets a light with a given name
- |  Parameters:
+ |  Parameters[in]: QString light_name: name of the light
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void LightManager::setupDefault()
+{
+    //Point3D * pos = new Point3D(146.0f, 161.0f, -64.0f);
+    //150,160+i*10,-76.85
+    Point3D * pos = new Point3D(0, 0, 0);
+    sfvector dif;
+    dif.push_back(0.8f);
+    dif.push_back(0.8f);
+    dif.push_back(0.8f);
+    dif.push_back(1.0f);
+
+    sfvector amb;
+    amb.push_back(0.5f);
+    amb.push_back(0.5f);
+    amb.push_back(0.5f);
+    amb.push_back(1.0f);
+
+    sfvector spe;
+    spe.push_back(0.5f);
+    spe.push_back(0.5f);
+    spe.push_back(0.5f);
+    spe.push_back(1.0f);
+
+    sfvector col;
+    col.push_back(1.0f);
+    col.push_back(1.0f);
+    col.push_back(0.79f);
+    col.push_back(1.0f);
+
+    Light * light = new SwivelLight();
+    light->setAmbient(amb);
+    light->setPosition(pos);
+    light->setColor(col);
+    light->setName(QString("Light0"));
+    light->setSpecular(spe);
+    light->setDiffuse(dif);
+
+    LightManager::getLightManager()->setLight(light);
+
+    Point3D * pos2 = new Point3D(0, 0, 0);
+    sfvector dif2;
+    dif2.push_back(0.8f);
+    dif2.push_back(0.8f);
+    dif2.push_back(0.8f);
+    dif2.push_back(1.0f);
+
+    sfvector amb2;
+    amb2.push_back(0.5f);
+    amb2.push_back(0.5f);
+    amb2.push_back(0.5f);
+    amb2.push_back(1.0f);
+
+    sfvector spe2;
+    spe2.push_back(0.5f);
+    spe2.push_back(0.5f);
+    spe2.push_back(0.5f);
+    spe2.push_back(1.0f);
+
+    sfvector col2;
+    col2.push_back(1.0f);
+    col2.push_back(1.0f);
+    col2.push_back(0.79f);
+    col2.push_back(1.0f);
+
+    SwivelLight * light2 = new SwivelLight();
+    light2->setAmbient(amb2);
+    light2->setPosition(pos2);
+    light2->setColor(col2);
+    light2->setName(QString("swivelLight0"));
+    light2->setSpecular(spe2);
+    light2->setDiffuse(dif2);
+
+    LightManager::getLightManager()->setLight(light2);
+}
+
+/*-------------------------------------------------------------------
+ |  Function getLight
+ |
+ |  Purpose: Gets a light with a given name
+ |  Parameters[in]: QString light_name: name of the light
  |  Returns:
  *-------------------------------------------------------------------*/
 Light * LightManager::getLight(QString light_name)
@@ -46,18 +135,57 @@ Light * LightManager::getLight(QString light_name)
 }
 
 /*-------------------------------------------------------------------
- |  setLight(QString light_name, Light *light)
+ |  Function setLight
  |
  |  Purpose: Sets a light into the map
+ |  Parameters[in]: Light *light: Light to be added.
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void LightManager::setLight(Light *light)
+{
+    _lights[light->getName()] = light;
+}
+
+/*-------------------------------------------------------------------
+ |  Function getActiveLight
+ |
+ |  Purpose: Gets the current active light
+ |  Parameters:
+ |  Returns: Light*: Current active camera.
+ *-------------------------------------------------------------------*/
+Light * LightManager::getActiveLight()
+{
+    return _lights[_active];
+}
+
+/*-------------------------------------------------------------------
+ |  Function setActiveLight
+ |
+ |  Purpose: Sets a light into the map
+ |  Parameters[in]: QString active: name of active camera want to set.
+ |  Returns:
+ *-------------------------------------------------------------------*/
+void LightManager::setActiveLight(QString active)
+{
+    _active = active;
+}
+
+/*-------------------------------------------------------------------
+ |  Function update
+ |
+ |  Purpose: Update the lights.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-void LightManager::setLight(QString light_name, Light *light)
+void LightManager::update()
 {
-    _lights[light_name] = light;
+
+    _lights[_active]->update(GL_LIGHT0);
 }
+
+
 /*-------------------------------------------------------------------
- |  getXMLCameraInfoToExport()
+ |  Function getXMLCameraInfoToExport
  |
  |  Purpose: Gets the info of the cameras to export them into the XML
  |  Parameters:

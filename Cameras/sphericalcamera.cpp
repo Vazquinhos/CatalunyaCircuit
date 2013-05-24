@@ -14,7 +14,7 @@
 /*-------------------------------------------------------------------
  |  Defaul Constructor
  |
- |  Purpose:
+ |  Purpose: Construct a SphericalCamera object with default vaules.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
@@ -51,7 +51,7 @@ SphericalCamera::~SphericalCamera()
 
 // ============================ Methods ===============================
 /*-------------------------------------------------------------------
- |  Function
+ |  Function getTypeInQString
  |
  |  Purpose: Gets the type in a QString format
  |  Parameters: none
@@ -62,6 +62,13 @@ QString SphericalCamera::getTypeInQString()
     return "SphericalCamera";
 }
 
+/*-------------------------------------------------------------------
+ |  Function update
+ |
+ |  Purpose: updates the parameters of the camera.
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void SphericalCamera::update()
 {
     float yaw, pitch, zoom;
@@ -89,6 +96,13 @@ void SphericalCamera::update()
 
 }
 
+/*-------------------------------------------------------------------
+ |  Function render
+ |
+ |  Purpose: renderize a representation of the camera
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 /*void SphericalCamera::render()
 {
     glPushMatrix();

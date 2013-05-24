@@ -24,27 +24,30 @@ public:
     // ================= Constructores/Destructores ======================
     Light();
     Light(const Light&ligjt);
-    ~Light();
+    virtual ~Light();
 
     // ============================ Methods ===============================
     void              render();
-    void              update();
+    void              update(GLenum lightName);
     void              setColor(sfvector v_color);
     sfvector          getColor();
-    void              setEspecular(sfvector v_especular);
-    sfvector          getEspecular();
+    void              setSpecular(sfvector v_specular);
+    sfvector          getSpecular();
     void              setAmbient(sfvector v_ambient);
     sfvector          getAmbient();
+    void              setDiffuse(sfvector v_diffuse);
+    sfvector          getDiffuse();
     void              setPosition(Point3D * p_position);
     Point3D         * getPosition();
     QString           getSettingsInfo();
     void              setName( QString a_name);
     QString           getName();
-private:
+protected:
     // ========================== Data Members ============================
     sfvector         _v_color;
-    sfvector         _v_especular;
+    sfvector         _v_specular;
     sfvector         _v_ambient;
+    sfvector         _v_diffuse;
     Point3D        * _p_position;
     QString         _name;
 

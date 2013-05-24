@@ -68,24 +68,13 @@ void GLWidget::initializeGL()
     //1) Initialize variables
     initializeWorld();
 
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
     //glEnable(GL_LIGHTING);
     glEnable(GL_COLOR_MATERIAL);
 
     // default components for global illumination
-    float pos[4] = {146.0f, 161.0f, 0.0f, 1.0f};
-    qDebug() << "LightPosition: " << pos[0] << " " << pos[1] << " "<< pos[2] << " "<< pos[3] << " ";
-    float dif[4] = {0.6, 0.6, 0.6, 1.0};
-    float amb[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-    float spe[4] = {0.5f, 0.5f, 0.5f, 1.0f};
-
-    glDisable(GL_LIGHT0);
-    glLightfv(GL_LIGHT0,GL_POSITION, pos);
-    glLightfv(GL_LIGHT0,GL_DIFFUSE,  dif);
-    glLightfv(GL_LIGHT0,GL_SPECULAR, spe);
-    glLightfv(GL_LIGHT0,GL_AMBIENT,  amb);
-    glEnable(GL_LIGHT0);
-    glDisable(GL_LIGHTING);
+    LightManager::getLightManager()->setupDefault();
+    LightManager::getLightManager()->setActiveLight(QString("Light0"));
 }
 
 
@@ -119,7 +108,7 @@ void GLWidget::initializeWorld(){
     // 3) Init shaders
     //----------------------------------------------------------
     shader =  new QGLShaderProgram();
-    //initializeShaders(QString("./Shader/simple"));
+    initializeShaders(QString("./Shader/simple"));
 
 
     QThread *p_thread = new QThread();
@@ -130,6 +119,7 @@ void GLWidget::initializeWorld(){
     QObject::connect(_modelManager,SIGNAL(NewModel(QString,int)),this,SLOT(PrintModel(QString,int)));
     p_thread->start();
     QObject::connect(_modelManager,SIGNAL(finish()),this,SLOT(startTimers()));
+
 }
 
 void GLWidget::changeCarModel()
@@ -205,19 +195,24 @@ void GLWidget::paintGL()
     qDebug() << "Elap: " << elapsedTime;
     qDebug() << "Total: " << _totalTime;
     qDebug() << _cameraManager->getActiveCamera()->getName();
-*/
+   */
 
     // Clean buffers:
     // COLOR to ensure final representation has no waste from previous renders
     // DEPTH to ensure correct representation of objects given the depht testing used
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+    if(_carViewer->isActive())
+        ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->update(d_elapsedTime, GL_LIGHT0);
+    else
+        LightManager::getLightManager()->update();
 
     // Update camera to its current position
     _cameraManager->getActiveCamera()->update();
 
     // Update the scene (all the objects)
     _scene->display(_fps);
+
 }
 
 /*****************************************************************************
@@ -331,6 +326,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 
         if(_carViewer->isActive()){
             _carViewer->exitViewer();
+            ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
         }
         if(_isInDriveMode){
             _isInDriveMode = false;
@@ -398,16 +394,37 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         if(_isInDriveMode){
             _objectManager->getActiveDriveCar()->accelerate();
         }
+        else
+        {
+            Light* light = LightManager::getLightManager()->getLight("Light0");
+            light->setPosition(new Point3D(light->getPosition()->getX()+2,
+                                           light->getPosition()->getY(),
+                                           light->getPosition()->getZ()));
+        }
         break;
 
     case Qt::Key_A:
         if(_isInDriveMode){
             _objectManager->getActiveDriveCar()->turnLeft();
         }
+        else
+        {
+            Light* light = LightManager::getLightManager()->getLight("Light0");
+            light->setPosition(new Point3D(light->getPosition()->getX(),
+                                           light->getPosition()->getY()-2,
+                                           light->getPosition()->getZ()));
+        }
         break;
     case Qt::Key_S:
         if(_isInDriveMode){
             _objectManager->getActiveDriveCar()->brake();
+        }
+        else
+        {
+            Light* light = LightManager::getLightManager()->getLight("Light0");
+            light->setPosition(new Point3D(light->getPosition()->getX()-2,
+                                           light->getPosition()->getY(),
+                                           light->getPosition()->getZ()));
         }
         break;
 
@@ -415,15 +432,23 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         if(_isInDriveMode){
             _objectManager->getActiveDriveCar()->turnRight();
         }
+        else
+        {
+            Light* light = LightManager::getLightManager()->getLight("Light0");
+            light->setPosition(new Point3D(light->getPosition()->getX(),
+                                           light->getPosition()->getY()+2,
+                                           light->getPosition()->getZ()));
+        }
         break;
 
     case Qt::Key_R:
-        if(_shaders)
+        /*if(_shaders)
             releaseAllShaders();
 
         else
             initializeShaders(QString("./Shader/simple"));
-        _shaders = !_shaders;
+        _shaders = !_shaders;*/
+        //((SwivelLight*)LightManager::getLightManager()->getActiveLight())->startAnimation();
         break;
 
     case Qt::Key_1:

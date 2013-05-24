@@ -31,7 +31,7 @@ CameraManager::CameraManager()
 // ============================ Methods ===============================
 
 /*-------------------------------------------------------------------
- |  getCameraManager()
+ |  getCameraManager
  |
  |  Purpose: Gets the singleton of the camera
  |  Parameters:

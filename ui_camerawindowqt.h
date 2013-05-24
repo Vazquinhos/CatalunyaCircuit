@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'camerawindowqt.ui'
 **
-** Created: Fri May 24 04:28:02 2013
+** Created: Fri May 24 17:56:59 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

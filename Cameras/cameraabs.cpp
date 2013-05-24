@@ -15,7 +15,7 @@
 /*-------------------------------------------------------------------
  |  Default Constructor
  |
- |  Purpose:
+ |  Purpose: Construct a camera object with default vaules.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
@@ -24,7 +24,6 @@ CameraAbs::CameraAbs()
     _zoom = 10;
     _yaw = 359.5;
     _pitch = 57;
-    _mode = PERSPECTIVE;
     _name = QString("Not init");
     setPosition(new Point3D(224.533f, -68.3924f, -46.2934f));
 
@@ -36,7 +35,7 @@ CameraAbs::CameraAbs()
 /*-------------------------------------------------------------------
  |  Argument Constructor
  |
- |  Purpose:
+ |  Purpose: Construct a camera with specific name and default values.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
@@ -45,7 +44,6 @@ CameraAbs::CameraAbs(QString a_name)
     _zoom = 10;
     _yaw = 57;
     _pitch = 359.5;
-    _mode = PERSPECTIVE;
     _name = a_name;
     setPosition(new Point3D(224.533f, -68.3924f, -46.2934f));
     _dirVec = new Vector3D(cos(_yaw)*cos(_pitch),
@@ -56,13 +54,12 @@ CameraAbs::CameraAbs(QString a_name)
 /*-------------------------------------------------------------------
  |  Copy Constructor
  |
- |  Purpose:
+ |  Purpose: Constructs a camera object using another camera object.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
 CameraAbs::CameraAbs(const CameraAbs &cameraAbs)
 {
-    this->_mode = cameraAbs._mode;
 }
 
 /*-------------------------------------------------------------------
@@ -74,14 +71,16 @@ CameraAbs::CameraAbs(const CameraAbs &cameraAbs)
  *-------------------------------------------------------------------*/
 CameraAbs::~CameraAbs()
 {
+    _p_position->~Point3D();
 }
 
 // ============================ Methods ===============================
 /*-------------------------------------------------------------------
- |  Function
+ |  Function resizeProjection
  |
  |  Purpose:
- |  Parameters:
+ |  Parameters[in]: int w: new width of the context.
+ |                  int h: new height of the context.
  |  Returns:
  *-------------------------------------------------------------------*/
 void CameraAbs::resizeProjection(int w, int h)
@@ -89,30 +88,16 @@ void CameraAbs::resizeProjection(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    if (_mode == PERSPECTIVE)
-    {
-        if(w>=h)
-            gluPerspective(60.0, 1.0*w/h, 0.1, 40000);
-        else
-            gluPerspective(60.0*h/w, 1.0*w/h, 0.1, 40000);
-    }
+    if(w>=h)
+        gluPerspective(60.0, 1.0*w/h, 0.1, 40000);
+    else
+        gluPerspective(60.0*h/w, 1.0*w/h, 0.1, 40000);
 }
 
 /*-------------------------------------------------------------------
- |  Function
+ |  Function render
  |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-void CameraAbs::update()
-{
-}
-
-/*-------------------------------------------------------------------
- |  Function
- |
- |  Purpose:
+ |  Purpose: renderize a representation of the camera
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
@@ -120,42 +105,25 @@ void CameraAbs::render()
 {
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
-        glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
         glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
+        glPushMatrix();
+            glRotatef(_pitch, 1,0,0);
+            glRotatef(_yaw+180, 0,1,0);
+            glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+            glutSolidCone(1.0f, 4.0f, 100, 100);
+        glPopMatrix();
+        glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
         glutSolidSphere(2.0f, 100, 100);
     glPopAttrib();
     glPopMatrix();
 }
 
 /*-------------------------------------------------------------------
- |  Function
+ |  Function setPosition
  |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-void CameraAbs::setModeProjection(mode_projection mode)
-{
-    _mode = mode;
-}
-
-/*-------------------------------------------------------------------
- |  Function
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-mode_projection CameraAbs::getModeProjection()
-{
-    return _mode;
-}
-
-/*-------------------------------------------------------------------
- |  Function
- |
- |  Purpose:
- |  Parameters:
+ |  Purpose: Sets Position of the camera.
+ |  Parameters[in]: Point3D * p_position: Object Point3D with the
+ |                  coordinates of the camera.
  |  Returns:
  *-------------------------------------------------------------------*/
 void CameraAbs::setPosition(Point3D * p_position)
@@ -164,11 +132,12 @@ void CameraAbs::setPosition(Point3D * p_position)
 }
 
 /*-------------------------------------------------------------------
- |  Function
+ |  Function getPosition
  |
- |  Purpose:
+ |  Purpose: Gets the position of the camera
  |  Parameters:
- |  Returns:
+ |  Returns: Point3D*: Object Point3D with the coordinates x, y and z
+ |  of the camera.
  *-------------------------------------------------------------------*/
 Point3D * CameraAbs::getPosition()
 {
@@ -176,7 +145,10 @@ Point3D * CameraAbs::getPosition()
 }
 
 /*-------------------------------------------------------------------
- |  Function
+ |  Parameters[in]: Point3D *point: Sets the point to look.
+ |  Return:
+ |  Parameters:
+ |  Function getType
  |
  |  Purpose: Gets the type of the camera
  |  Parameters: none
@@ -187,7 +159,7 @@ camera_type CameraAbs::getType()
     return _type;
 }
 /*-------------------------------------------------------------------
- |  Function
+ |  Function getSettingInfo
  |
  |  Purpose: Gets the settings of the camera
  |  Parameters: none
@@ -238,7 +210,7 @@ CameraAbs::getSettingsInfo()
     return settings_to_return;
 }
 /*-------------------------------------------------------------------
- |  Function
+ |  Function getName
  |
  |  Purpose: Gets the name of the camera
  |  Parameters: none
@@ -250,23 +222,39 @@ QString CameraAbs::getName()
 }
 
 /*-------------------------------------------------------------------
- |  Function
+ |  Function setName
  |
  |  Purpose: Sets the name of the camera
  |  Parameters: The QString with the name
- |  Returns: nothing
+ |  Returns:
  *-------------------------------------------------------------------*/
 void CameraAbs::setName( QString a_name )
 {
     _name = a_name;
 }
 
+/*-------------------------------------------------------------------
+ |  Function setYawPitch
+ |
+ |  Purpose: Sets the value of the yaw and the pitch
+ |  Parameters[in]: float yaw: float value of the yaw.
+ |                  float pitch: float value of the pitch.
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void CameraAbs::setYawPitch(float yaw, float pitch)
 {
     _yaw = yaw;
     _pitch = pitch;
 }
 
+/*-------------------------------------------------------------------
+ |  Function addYawPitch
+ |
+ |  Purpose: Add an increment to the yaw and the pitch
+ |  Parameters[in]: float yaw: float value of increment for the yaw.
+ |                  float pitch: float value of increment for the pitch.
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void CameraAbs::addYawPitch(float yaw, float pitch)
 {
     _yaw += yaw/2;
@@ -278,27 +266,63 @@ void CameraAbs::addYawPitch(float yaw, float pitch)
     if(_pitch<0)	_pitch=_pitch+360;
 }
 
+/*-------------------------------------------------------------------
+ |  Function getYawPitch
+ |
+ |  Purpose: Gets the name of the camera
+ |  Parameters[out]: float yaw: float variable to get yaw.
+ |                   float pitch: float variable to get pitch.
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void CameraAbs::getYawPitch(float &yaw, float &pitch)
 {
     yaw = _yaw;
     pitch = _pitch;
 }
 
+/*-------------------------------------------------------------------
+ |  Function setZoom
+ |
+ |  Purpose: Sets the zoom of the camera
+ |  Parameters[in]: float zoom: float value of the zoom.
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void CameraAbs::setZoom(float zoom)
 {
     _zoom = zoom;
 }
 
+/*-------------------------------------------------------------------
+ |  Function getZoom
+ |
+ |  Purpose: Gets the zoom of the camera
+ |  Parameters:
+ |  Returns: float: float value of the zoom
+ *-------------------------------------------------------------------*/
 float CameraAbs::getZoom()
 {
     return _zoom;
 }
 
+/*-------------------------------------------------------------------
+ |  Function setYaw
+ |
+ |  Purpose: Sets the yaw of the camera
+ |  Parameters[in]: float yaw: float value of the yaw.
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void CameraAbs::setYaw( float yaw )
 {
     _yaw = yaw;
 }
 
+/*-------------------------------------------------------------------
+ |  Function setPitch
+ |
+ |  Purpose: Sets the pitch of the camera
+ |  Parameters[in]: float pitch: float value of the pitch.
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void CameraAbs::setPitch( float pitch )
 {
     _pitch = pitch;

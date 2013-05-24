@@ -14,6 +14,8 @@
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 #include "GL/glut.h"
 #include "Sound/SoundManager.h"
+#include "Lights/lightmanager.h"
+#include "Lights/light.h"
 
 char _frames[15]; //String that shows fps
 // ================= Constructores/Destructores ======================
@@ -101,8 +103,9 @@ void Scene::display(float fps)
     paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();
     _bSplineManager->display();
-
-    if(_debugMode)
+	LightManager::getLightManager()->getLight(QString("Light0"))->render();
+    
+	if(_debugMode)
     {
         Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
         //Point3D *cameraPos = CameraManager::getCameraManager()->getCamera("free")->getPosition();

@@ -16,7 +16,7 @@
 /*-------------------------------------------------------------------
  |  Default Constructor
  |
- |  Purpose:
+ |  Purpose: Construct a FreeCamera object with default vaules.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
@@ -55,7 +55,7 @@ FreeCamera::~FreeCamera()
 // ============================ Methods ===============================
 
 /*-------------------------------------------------------------------
- |  Function
+ |  Function getTypeInQString
  |
  |  Purpose: Gets the type in a QString format
  |  Parameters: none
@@ -66,6 +66,13 @@ QString FreeCamera::getTypeInQString()
     return "FreeCamera";
 }
 
+/*-------------------------------------------------------------------
+ |  Function update
+ |
+ |  Purpose: updates the parameters of the camera.
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void FreeCamera::update()
 {
     float yaw, pitch;
@@ -78,8 +85,8 @@ void FreeCamera::update()
                                         sin(pitch) + getPosition()->getY(),
                                         -cos(pitch)*cos(yaw) + getPosition()->getZ() );
 
-/*
-    Point3D* pointToLook = new Point3D( cos(yaw)*sin(pitch) + getPosition()->getX(),
+
+    /*Point3D* pointToLook = new Point3D( cos(yaw)*sin(pitch) + getPosition()->getX(),
                                         sin(pitch) + getPosition()->getY(),
                                         cos(yaw)*cos(pitch) + getPosition()->getZ() );*/
 
@@ -98,6 +105,13 @@ void FreeCamera::update()
               0, 1, 0 );
 }
 
+/*-------------------------------------------------------------------
+ |  Function render
+ |
+ |  Purpose: renderize a representation of the camera
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 /*void FreeCamera::render()
 {
     glPushMatrix();

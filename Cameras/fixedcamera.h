@@ -30,8 +30,9 @@ public:
     // ============================ Methods ===============================
     virtual QString     getTypeInQString();
     virtual void        update();
+    //virtual void        render();
     void                animate();
-    void                render();
+
 
 private:
     // ========================== Data Members ============================

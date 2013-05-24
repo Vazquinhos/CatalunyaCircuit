@@ -48,11 +48,6 @@
 #include "StdAfx.h"
 
 // ============================= Typedef ==================================
-typedef enum e_ProjectionType {
-    ORTOGONAL,
-    PERSPECTIVE
-}mode_projection;
-
 typedef enum e_CameraType {
     FREE,
     FIXED,

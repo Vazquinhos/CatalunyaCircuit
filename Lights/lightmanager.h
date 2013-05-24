@@ -19,6 +19,7 @@
 #include <map>
 
 #include "light.h"
+#include "swivellight.h"
 
 class LightManager
 {
@@ -30,12 +31,17 @@ public:
     // ============================ Methods ===============================
     static LightManager		* getLightManager();
     Light			        * getLight(QString light_name);
-    void			          setLight(QString light_name, Light *light);
+    void			          setLight(Light *light);
+    Light*                    getActiveLight();
+    void                      setActiveLight(QString active);
+    void                      update();
     QString                   getCCSCameraInfoToExport();
+    void                      setupDefault();
 private:
     // ========================== Data Members ============================
     static LightManager           * _lightManager;
     std::map<QString, Light*>     _lights;
+    QString                       _active;
 
     // ============================ Methods ===============================
 

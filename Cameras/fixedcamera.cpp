@@ -14,7 +14,7 @@
 /*-------------------------------------------------------------------
  |  Default Constructor
  |
- |  Purpose:
+ |  Purpose: Construct a FixedCamera object with default vaules.
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
@@ -52,7 +52,7 @@ FixedCamera::~FixedCamera()
 
 // ============================ Methods ===============================
 /*-------------------------------------------------------------------
- |  Function
+ |  Function getTypeInQString
  |
  |  Purpose: Gets the type in a QString format
  |  Parameters: none
@@ -63,6 +63,13 @@ QString FixedCamera::getTypeInQString()
     return "FixedCamera";
 }
 
+/*-------------------------------------------------------------------
+ |  Function update
+ |
+ |  Purpose: updates the parameters of the camera.
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 void FixedCamera::update()
 {
     float yaw, pitch;
@@ -92,6 +99,13 @@ void FixedCamera::animate()
 
 }
 
+/*-------------------------------------------------------------------
+ |  Function render
+ |
+ |  Purpose: renderize a representation of the camera
+ |  Parameters:
+ |  Returns:
+ *-------------------------------------------------------------------*/
 /*void FixedCamera::render()
 {
     glPushMatrix();

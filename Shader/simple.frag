@@ -20,12 +20,12 @@ void main()
 
     spec = gl_LightSource[0].specular * pow(max(dot(R,V), 0.0), gl_FrontMaterial.shininess);
 
-    sum = amb + diff + spec;
-    //gl_FragColor = sum;
+    //gl_FragColor = amb;
+    //gl_FragColor = diff;
+    //gl_FragColor = spec;
     //gl_FragColor = base;
     //gl_FragColor = amb*base;
     //gl_FragColor = diff*base;
     //gl_FragColor = amb*base + diff*base;
-    //gl_FragColor = spec;
-    gl_FragColor = amb*base + diff*base + spec;
+    gl_FragColor = (amb*base + diff*base) + spec;
 }

@@ -65,14 +65,8 @@ CameraWindowQt::updateWidgetsWithCamera( CameraAbs* ap_camera )
 
     ui->line_name->setText(camera_name);
 
-    mode_projection mode = ap_camera->getModeProjection();
+    ui->cb_mode->setCurrentIndex(0);
 
-    if( mode == ORTOGONAL)
-    {
-        ui->cb_mode->setCurrentIndex(1);
-    } else {
-        ui->cb_mode->setCurrentIndex(0);
-    }
 
     camera_type type = ap_camera->getType();
     switch (type)
@@ -213,16 +207,6 @@ void CameraWindowQt::on_cb_mode_currentIndexChanged(int index)
         return;
 
     QString current_camera = p_item->text();
-
-    mode_projection mode;
-    if( index  == 0)
-    {
-        mode = PERSPECTIVE;
-    } else {
-        mode = ORTOGONAL;
-    }
-    // Le pedimos al camera manager que nos elimine la camara seleccionada
-    CameraManager::getCameraManager()->getCamera(current_camera)->setModeProjection(mode);
 }
 
 void CameraWindowQt::on_sb_yaw_editingFinished()
@@ -319,14 +303,7 @@ CameraAbs* CameraWindowQt::getCameraFromQt()
 
     p_camera_to_rtn->setName( new_camera_name );
     p_camera_to_rtn->setPosition( new Point3D( ui->x->value(), ui->y->value(), ui->z->value()));
-    mode_projection mode;
-    if( ui->cb_mode->currentIndex() == 0)
-    {
-        mode = PERSPECTIVE;
-    } else {
-        mode = ORTOGONAL;
-    }
-    p_camera_to_rtn->setModeProjection( mode );
+
     p_camera_to_rtn->setYawPitch(ui->sb_yaw->value(),ui->sb_pitch->value());
     p_camera_to_rtn->setZoom(ui->cb_zoom->value());
 

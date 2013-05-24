@@ -27,11 +27,9 @@ public:
 
     // ============================ Methods ===============================
     void              resizeProjection( int w, int h );
-    virtual void      update();
-    void              render();
+    virtual void      update() = 0;
+    virtual void      render();
     virtual void      move(float velocity, bool front){(void) velocity; (void) front;}
-    void              setModeProjection( mode_projection mode );
-    mode_projection   getModeProjection();
     void              setPosition( Point3D * p_position );
     Point3D         * getPosition();
     camera_type       getType();
@@ -55,7 +53,6 @@ public:
 
 protected:
     // =========================== Data Members ===========================
-    mode_projection     _mode;
     Point3D           * _p_position;
     camera_type         _type;
     QString             _name;

@@ -1,8 +1,14 @@
 <SoundManager>
 
-	<Sound action="intro" path="./Media/Sounds/Coches/f1.wav" />
-	<Sound action="vuelta" path="./Media/Sounds/Coches/vuelta.wav" />
+        <Sound action="intro" path="./Media/Sounds/Coches/f1_introM.wav" />
+        <Sound action="vuelta" path="./Media/Sounds/Coches/vuelta.wav" />
         <Sound action="tribuna" path="./Media/Sounds/Coches/tribuna.wav" />
         <Sound action="cochePasada" path="./Media/Sounds/Coches/cochedelejos.wav" />
+        <Sound action="ambiente" path="./Media/Sounds/Coches/f1_ambient.wav" />
+        <Sound action="bocinas" path="./Media/Sounds/Coches/bocinas.wav" />
+        <Sound action="griterio" path="./Media/Sounds/Coches/griterio.wav" />
+        <Sound action="griterio2" path="./Media/Sounds/Coches/griterio2.wav" />
+
+
 
 <SoundManager/>

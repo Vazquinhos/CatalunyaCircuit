@@ -11,24 +11,33 @@
 #include <assimp/postprocess.h>     // Post processing flags
 
 #include "Utils/point3D.h"
-
 #include "Cameras/cameramanager.h"
-class BSpline
+#include "Utils/updatable.h"
+
+class BSpline : public Updatable
 {
 public:
-    BSpline(QString filePath);
+    BSpline(QString filePath, int updateTime);
+    virtual ~BSpline();
     QString getFilename();
+    Point3D* getPoint(int pos);
+    int getNumPoints();
 
     void render();
     void display();
     void captureCameraPosition();
     void saveCapture();
 
+    //************** INHERITED ************
+    virtual void update();
+
 private:
 QString _filename;
 GLuint _displayList;
 Assimp::Importer _importer;
 std::vector<Point3D*> _vPoints;
+int _currentAngle;
+
 void ImportBSpline( QString a_filename );
 
 };

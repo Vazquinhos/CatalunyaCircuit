@@ -21,6 +21,7 @@
 #include "Lights/lightmanager.h"
 #include "Objects/bsplinemanager.h"
 #include "Objects/bspline.h"
+#include "Utils/timemanager.h"
 
 class GLWidget : public QGLWidget {
 
@@ -60,12 +61,14 @@ protected:
     CameraManager *_cameraManager;
     SoundManager  *_soundManager;
     ModelManager  *_modelManager;
+    TimeManager  *_timeManager;
 
     BSplineManager* _bSplineManager;
 
 
 private:
     int _maxVisibleDistance;
+    QSet<int> _pressedKeys;
 
     float _fps;
     /*float _countFrames;
@@ -74,7 +77,6 @@ private:
     double _totalTime;
 
     bool _shaders;
-    bool _pressedKeys[256];
 
     CarViewer *_carViewer;
     bool _isInDriveMode;
@@ -101,7 +103,7 @@ private:
     /*void onZoomChanged(qreal x);
     void onAnimZoomFinished();*/
     //********************************************
-
+    void processKeys();
     void initializeShaders(QString filename);
     void releaseAllShaders();
 };

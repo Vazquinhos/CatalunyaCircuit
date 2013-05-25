@@ -51,7 +51,7 @@ void LightManager::setupDefault()
 {
     //Point3D * pos = new Point3D(146.0f, 161.0f, -64.0f);
     //150,160+i*10,-76.85
-    Point3D * pos = new Point3D(0, 0, 0);
+    Point3D * pos = new Point3D(0, 0, 80);
     sfvector dif;
     dif.push_back(0.8f);
     dif.push_back(0.8f);

@@ -48,6 +48,9 @@ Scene::Scene()
     //for(unsigned int i = 0; i < numCars; i++){
     Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-46.3775), _dynamicsWorld);
     _objectManager->addCar(c1);
+
+    Car *c2 = new CarAutomatic("Cars/" + carFolders[qrand() % (carFolders.size()-1)], "/home/gabriel/catalunyacircuit/Media/BSplines/Correct/bsplineGabriel.obj", 50);
+    _objectManager->addCar(c2);
     // xPos+=1;
     //}
 
@@ -56,17 +59,6 @@ Scene::Scene()
     SoundManager::getSoundManager()->PlayRelativeSource(vuelta, "ambiente", true);
 
     _bSplineManager = BSplineManager::getBSplineManager();
-}
-
-/*-------------------------------------------------------------------
- |  Function
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-Scene::Scene(const Scene &scene)
-{
 }
 
 /*-------------------------------------------------------------------
@@ -102,11 +94,11 @@ void Scene::display(float fps)
     sprintf(_frames, "FPS = %f", fps);
     paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();
-    _bSplineManager->display();
-	LightManager::getLightManager()->getLight(QString("Light0"))->render();
-    
+
 	if(_debugMode)
     {
+        _bSplineManager->display();
+        LightManager::getLightManager()->getActiveLight()->render();
         CameraManager::getCameraManager()->render();
         /*
         Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();

@@ -15,12 +15,15 @@
 #ifndef __Vector3D_H__
 #define __Vector3D_H__
 
+class Point3D;
+
 class Vector3D
 {
 public:
   // ================= Constructores/Destructores ======================
   Vector3D();
   Vector3D( float a_x, float a_y, float a_z );
+  Vector3D( Point3D* origin, Point3D* dest);
   Vector3D( const Vector3D& a_vec );
   ~Vector3D();
 

@@ -67,7 +67,7 @@ public:
     void displayModels();
     vector<GLuint> checkVisibility();
 
-private:
+protected:
     struct OffsetYawPitch{
         Point3D *cameraOffset;
         Point2D *cameraYawPitch;
@@ -94,6 +94,7 @@ private:
     // ========================== Bullet Phisics Members ==================
     btRigidBody* _fallRigidBody;
     btCollisionShape* _chassisCollisionShape;
+    Vector3D *_orientation;
 
     // ============================ Methods ===============================
     void setModelsWithPos(QString folderPath, Point3D *position);

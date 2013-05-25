@@ -85,7 +85,7 @@ Point3D * Car::getPosition(){
     btTransform transform;
     //btScalar openglMatrix = new btScalar[16];
     this->_chasisObj->getWorldTransform(transform);
-    /*
+
     QString string;
     btScalar matrix[16];
     transform.getOpenGLMatrix(matrix);
@@ -99,8 +99,6 @@ Point3D * Car::getPosition(){
         string += "]";
         qDebug() << string;
     }
-    */
-
     //transform.getOpenGLMatrix(openglMatrix);
     return new Point3D(transform.getOrigin().getX(), transform.getOrigin().getY(),transform.getOrigin().getZ());
 }
@@ -111,9 +109,9 @@ Point3D * Car::getPosition(){
  *-------------------------------------------------------------------*/
 void Car::setPosition(Point3D *position){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
     transform.setOrigin(btVector3(position->getX(),position->getY(),position->getZ()));
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -122,10 +120,12 @@ void Car::setPosition(Point3D *position){
  *-------------------------------------------------------------------*/
 Point3D * Car::getRotation(){
     btTransform transform;
-    btQuaternion rotation;
-    this->_chasisObj->getWorldTransform(transform);
-    rotation = transform.getRotation();
-    return new Point3D(rotation.getX(), rotation.getY(),rotation.getZ());
+    _chasisObj->getWorldTransform(transform);
+    btVector3 angle;
+    transform.getOrigin().angle(angle);
+
+    //qDebug() << "AXIS " << axis.getX() << " " <<axis.getY() << " " << axis.getZ();
+    return new Point3D(angle.getX(), angle.getY(),angle.getZ());
 }
 
 /*-------------------------------------------------------------------
@@ -134,12 +134,14 @@ Point3D * Car::getRotation(){
  *-------------------------------------------------------------------*/
 void Car::setRotation(Point3D *angle){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
+
+
     transform.setRotation(btQuaternion(btVector3(1,0,0), angle->getX() ));
     transform.setRotation(btQuaternion(btVector3(0,1,0), angle->getY() ));
     transform.setRotation(btQuaternion(btVector3(0,0,1), angle->getZ() ));
 
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -149,9 +151,9 @@ void Car::setRotation(Point3D *angle){
  *-------------------------------------------------------------------*/
 void Car:: setRotationX(float angle){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
     transform.setRotation(btQuaternion(btVector3(1,0,0), angle));
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -161,9 +163,10 @@ void Car:: setRotationX(float angle){
  *-------------------------------------------------------------------*/
 void Car::setRotationY(float angle){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
+
     transform.setRotation(btQuaternion(btVector3(0,1,0), angle ));
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -173,9 +176,9 @@ void Car::setRotationY(float angle){
  *-------------------------------------------------------------------*/
 void Car::setRotationZ(float angle){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
     transform.setRotation(btQuaternion(btVector3(0,0,1), angle));
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -185,10 +188,10 @@ void Car::setRotationZ(float angle){
  *-------------------------------------------------------------------*/
 void Car::rotateIncX(float angleInc){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
     transform.setRotation(btQuaternion(btVector3(1,0,0), transform.getRotation().getX() + angleInc ));
 
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -198,10 +201,10 @@ void Car::rotateIncX(float angleInc){
  *-------------------------------------------------------------------*/
 void Car::rotateIncY(float angleInc){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
     transform.setRotation(btQuaternion(btVector3(0,1,0), transform.getRotation().getY() + angleInc ));
 
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->setWorldTransform(transform);
 }
 
 /*-------------------------------------------------------------------
@@ -211,10 +214,10 @@ void Car::rotateIncY(float angleInc){
  *-------------------------------------------------------------------*/
 void Car::rotateIncZ(float angleInc){
     btTransform transform;
-    this->_chasisObj->getWorldTransform(transform);
-    transform.setRotation(btQuaternion(btVector3(0,0,1), transform.getRotation().getZ() + angleInc ));
-
-    this->_chasisObj->setWorldTransform(transform);
+    _chasisObj->getWorldTransform(transform);
+    Point3D *angle= getRotation();
+    transform.setRotation(btQuaternion(btVector3(0,0,1), angle->getZ() + angleInc ));
+    _chasisObj->setWorldTransform(transform);
 }
 /*-------------------------------------------------------------------
  |  Default Constructor
@@ -260,8 +263,8 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     btTransform transformChasis;
     btTransform transformWheelFR;
 
-    transformChasis = btTransform(btQuaternion(0,0,0,1),btVector3(position->getX(),position->getY(),position->getZ()));
-    transformWheelFR = btTransform(btQuaternion(0,0,0,1),btVector3(position->getX()-1.7369 ,position->getY()+0.1339,position->getZ()-2.628));
+    transformChasis = btTransform(btQuaternion(0,0,0,300),btVector3(position->getX(),position->getY(),position->getZ()));
+    transformWheelFR = btTransform(btQuaternion(0,0,0,300),btVector3(position->getX()-1.7369 ,position->getY()+0.1339,position->getZ()-2.628));
 
     _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transformChasis);
     _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transformChasis);
@@ -275,6 +278,10 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     _cameraOffsets[(int)REAR_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(90, 359.5));
     _cameraOffsets[(int)LEFT_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(183, 356));
     _cameraOffsets[(int)RIGHT_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(1, 0.5));
+
+
+    // All the cars are oriented towards the X axis
+    _orientation = new Vector3D(1,0,0);
 }
 
 // ============================ Methods ===============================

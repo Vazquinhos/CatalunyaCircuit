@@ -55,11 +55,11 @@ void PhysicsObject3D::checkVisibility(){
 
     //float direction = (*vCamera)^(*vObject);
     //if(direction >= 0){
-    if(vObject->module() < 400){
+    //if(vObject->module() < 400){
         _isVisible = true;
-    }else{
-        _isVisible = false;
-    }
+    //}else{
+      //  _isVisible = false;
+    //}
 
 }
 

@@ -55,7 +55,11 @@ SOURCES += main.cpp\
     Sound/SoundManager.cpp \
     Utils/XMLParser.cpp \
     Utils/fileutils.cpp \
-    Utils/color.cpp
+    Utils/color.cpp \
+    Utils/timemanager.cpp \
+    Utils/updatable.cpp \
+    Objects/carautomatic.cpp
+
 
 
 HEADERS  += \
@@ -106,7 +110,11 @@ HEADERS  += \
     Utils/XMLParser.h \
     Utils/expat.h \
     Utils/fileutils.h \
-    Utils/color.h
+    Utils/color.h \
+    Utils/timemanager.h \
+    Utils/updatable.h \
+    Objects/carautomatic.h
+
 
 FORMS    += \
     Ui/importsettingsqt.ui \

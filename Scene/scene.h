@@ -25,6 +25,8 @@
 #include <bullet/btBulletDynamicsCommon.h>
 #include <Objects/bsplinemanager.h>
 #include <Objects/objectManager.h>
+#include <Utils/updatable.h>
+#include <Objects/carautomatic.h>
 
 using namespace std;
 
@@ -33,7 +35,6 @@ class Scene
 public:
     // ================= Constructores/Destructores ======================
     Scene();
-    Scene(const Scene& scene);
     ~Scene();
     // ============================ Methods ===============================
     void display(float fps);
@@ -41,6 +42,8 @@ public:
     void paint2DText(float x, float y, void *font, const char *string);
     void turnDebugMode();
 
+    // ============================ Inherited ===============================
+    void update();
 private:
     // ========================== Data Members ============================
     ObjectManager  *    _objectManager;

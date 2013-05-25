@@ -6,10 +6,22 @@
 #include <QStringList>
 #include "Utils/color.h"
 
-BSpline::BSpline(QString filePath)
+BSpline::BSpline(QString filePath, int updateTime) : Updatable(updateTime)
 {
     _filename = filePath;
+    _currentAngle = 0;
     ImportBSpline(filePath);
+}
+
+BSpline::~BSpline(){
+
+}
+
+Point3D* BSpline::getPoint(int pos){
+    return _vPoints[pos];
+}
+int BSpline::getNumPoints(){
+    return _vPoints.size();
 }
 
 void
@@ -38,9 +50,9 @@ BSpline::ImportBSpline( QString a_filename ){
 void BSpline::render(){
     Point3D *point;
     Color randColor;
-    //if (glIsList(_displayList)) { //If we already have a display list, we delete it
-      //  glDeleteLists(_displayList, 1);
-    //}
+    if (glIsList(_displayList)) { //If we already have a display list, we delete it
+        glDeleteLists(_displayList, 1);
+    }
     _displayList = glGenLists(1); //Generate new display list identifier
     glNewList(_displayList, GL_COMPILE); //Starting rendering in memory
 
@@ -52,8 +64,13 @@ void BSpline::render(){
         glPushAttrib(GL_CURRENT_BIT);
         glColor3f(randColor.getRed(),randColor.getGreen(),randColor.getBlue());
 
+        _currentAngle +=1;
+        //_currentAngle /= 360;
+
         glTranslatef(point->getX(), point->getY(), point->getZ());
-        glutSolidSphere(0.5, 20, 20);
+        glRotatef(_currentAngle, 0,0,1);
+        //glutSolidSphere(0.5, 20, 20);
+        glutSolidCube(0.2);
 
         glPopAttrib();
         glPopMatrix();
@@ -66,6 +83,10 @@ void BSpline::render(){
 }
 void BSpline::display(){
     glCallList(_displayList);
+}
+
+void BSpline::update(){
+    render();
 }
 
 void BSpline::captureCameraPosition(){

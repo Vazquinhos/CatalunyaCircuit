@@ -20,7 +20,7 @@ BSplineManager::BSplineManager()
     if(_numSavedSplines > 0){
         for(int i = 0; i < _numSavedSplines; ++i){
             file = fileNames[i];
-            spline = new BSpline(file);
+            spline = new BSpline(file, 200);
             _vBSplines[file] = spline;
             qDebug() << "Loading spline: " << file;
         }
@@ -68,7 +68,7 @@ void BSplineManager::captureNewSpline(){
     cancelCapturingSpline();
     _isCapturingSpline = true;
     QString filename = QDir::currentPath() + "/Media/BSplines/Captured/capturedSpline" + QString::number(_lastSavedSpline) + ".obj";
-    _capturingSpline = new BSpline(filename);
+    _capturingSpline = new BSpline(filename, 200);
     qDebug() << "Capture of spline " << _capturingSpline->getFilename() << " has been started";
 }
 

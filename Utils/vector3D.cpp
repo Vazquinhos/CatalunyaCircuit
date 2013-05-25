@@ -12,6 +12,7 @@
 // All rights reserved.´
 
 #include "vector3D.h" // Class declaration
+#include "point3D.h"
 
 #include <math.h>
 #include <QDebug>
@@ -60,6 +61,20 @@ Vector3D::Vector3D( const Vector3D& a_vec )
     _x = a_vec.getX();
     _y = a_vec.getY();
     _z = a_vec.getZ();
+}
+
+/*-------------------------------------------------------------------
+ |  Origin and Destination Points constructor
+ |
+ |  Purpose: Constructs a Vector3D object using two points
+ |  Parameters: const Vector3D& a_pnt = Vector3D to copy;
+ |  Returns:
+ *-------------------------------------------------------------------*/
+Vector3D::Vector3D(Point3D *origin, Point3D *dest)
+{
+    _x = dest->getX() - origin->getX();
+    _y = dest->getY() - origin->getY();
+    _z = dest->getZ() - origin->getZ();
 }
 
 /*-------------------------------------------------------------------

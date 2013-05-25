@@ -169,12 +169,16 @@ Point3D * Light::getPosition()
 
 void Light::render()
 {
+    glEnable(GL_BLEND);
     glPushMatrix();
-    glColor4f(1.0, 1.0, 0.8, 1.0);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+    glColor4f(1.0, 1.0, 0.8, 0.5);
     glTranslatef(_p_position->getX(), _p_position->getY(), _p_position->getZ());
-    glutSolidSphere(1.0, 100, 100);
+    glutSolidSphere(20.0, 100, 100);
     glPopMatrix();
+    glDisable(GL_BLEND);
 }
+
 
 /*-------------------------------------------------------------------
  |  Function

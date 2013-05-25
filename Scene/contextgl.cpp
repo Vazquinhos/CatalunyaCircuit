@@ -355,6 +355,7 @@ void GLWidget::processKeys(){
                 _carViewer->exitViewer();
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
             }
+
             if(_isInDriveMode){
                 _isInDriveMode = false;
                 _cameraManager->setActiveCamera("free");
@@ -365,9 +366,8 @@ void GLWidget::processKeys(){
             if(_carViewer->isActive()){
                 _carViewer->selectCar();
                 _isInDriveMode = true;
-            }
-
-            break;
+                ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
+            }break;
 
         case Qt::Key_Right: //Move camera to right
             //qDebug() << "PULSANDO RIGHT";

@@ -31,6 +31,14 @@ CarViewer::CarViewer()
         car = new Car("Cars/" + _carFolders[i], new Point3D(150,140+i*10,-76.85+zIncrement));
         manager->addCar(car);
     }
+
+    // Setting up the position of the camera at the positon of the viewer
+    _currentViewedCarPosition = new Point3D(152.742,137.498,-74.439);
+    counter = 0;
+    _timerMovementNext = new QTimer(this);
+    connect(_timerMovementNext, SIGNAL(timeout()), this, SLOT( shiftCarToNext() ));
+    _timerMovementPrevious = new QTimer(this);
+    connect(_timerMovementPrevious, SIGNAL(timeout()), this, SLOT( shiftCarToPrevious() ));
 }
 
 // ====================================================================
@@ -76,13 +84,7 @@ void CarViewer::exitViewer(){
  |  Purpose: Goes to next car
  *-------------------------------------------------------------------*/
 void CarViewer::shiftNextCar(){
-    Point3D *point;
-
-    if((_carActualIndex < _numCars-1) && (_cam)){
-        _carActualIndex++;
-        point = _cam->getPosition();
-        point->setCoordinates(point->getX(), point->getY()  + 10, point->getZ());
-    }
+    _timerMovementNext->start(10);
 }
 
 /*-------------------------------------------------------------------
@@ -90,13 +92,7 @@ void CarViewer::shiftNextCar(){
  |  Purpose: Goes to the previous car
  *-------------------------------------------------------------------*/
 void CarViewer::shiftPreviousCar(){
-    Point3D *point;
-
-    if((_carActualIndex > 0) && (_cam)){
-        _carActualIndex--;
-        point = _cam->getPosition();
-        point->setCoordinates(point->getX(), point->getY()  - 10, point->getZ());
-    }
+    _timerMovementPrevious->start(10);
 }
 
 
@@ -121,8 +117,43 @@ void CarViewer::selectCar(){
          c1->viewCurrentCamera();
     }
 
-
-
-
     _isInCarViewerMode = false;
 }
+
+void CarViewer::shiftCarToPrevious()
+{
+    Point3D *point = CameraManager::getCameraManager()->getActiveCamera()->getPosition();
+
+    if(( counter < 10) && (_carActualIndex > 0)){
+        point->setCoordinates(point->getX(), point->getY()  - 1, point->getZ());
+        counter++;
+    } else  if( _carActualIndex == 0 ){
+        _timerMovementPrevious->stop();
+        counter = 0;
+    } else {
+        _currentViewedCarPosition = point;
+        _timerMovementPrevious->stop();
+        _carActualIndex--;
+        counter = 0;
+    }
+}
+
+void CarViewer::shiftCarToNext()
+{
+    Point3D *point = CameraManager::getCameraManager()->getActiveCamera()->getPosition();
+
+    if(( counter < 10) && (_carActualIndex < _numCars)){
+        point->setCoordinates(point->getX(), point->getY()  + 1, point->getZ());
+        counter++;
+    } else  if( _carActualIndex == _numCars ){
+        _timerMovementNext->stop();
+        counter = 0;
+    } else {
+        _currentViewedCarPosition = point;
+        _timerMovementNext->stop();
+        _carActualIndex++;
+        counter = 0;
+    }
+}
+
+

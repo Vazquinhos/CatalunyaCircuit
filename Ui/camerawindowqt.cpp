@@ -120,6 +120,8 @@ void CameraWindowQt::on_pushButton_clicked()
         // Le decimos que sera la camara activa
         CameraManager::getCameraManager()->setActiveCamera( current_camera );
     }
+
+
 }
 
 void CameraWindowQt::on_pb_delete_clicked()
@@ -143,13 +145,13 @@ void CameraWindowQt::on_pb_delete_clicked()
 
 void CameraWindowQt::on_pb_add_clicked()
 {
-    //NewCameraQt* _p_new_cam= new NewCameraQt();
+    NewCameraQt* _p_new_cam= new NewCameraQt();
 
-    //QObject::connect((_p_new_cam), SIGNAL(NewCameraCreated(CameraAbs*)), this, SLOT(NewCameraAdded(CameraAbs*)));
+    QObject::connect((_p_new_cam), SIGNAL(NewCameraCreated(CameraAbs*)), this, SLOT(NewCameraAdded(CameraAbs*)));
 
-    //_p_new_cam->show();
+    _p_new_cam->show();
 
-    //hide();
+    hide();
 }
 
 void
@@ -159,7 +161,7 @@ CameraWindowQt::NewCameraAdded( CameraAbs* ap_camera )
 
     // The icon of the cameras for the list widget
     QIcon icon;
-    icon.addFile("Media/Images/1365553750_film_camera_35mm.png");
+    icon.addFile("Media/Images/camera.png");
 
     // Insert an item in the last positon of the list
     ui->listWidget->addItem(new QListWidgetItem(icon,ap_camera->getName()));

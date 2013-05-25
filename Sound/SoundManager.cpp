@@ -90,7 +90,7 @@ void SoundManager::Stop()
 
 	for( it = mSources.begin(); it != mSources.end(); ++it )
 	{
-		alGetSourcei((*it).source,AL_SOURCE_STATE, &state);
+        alGetSourcei((*it).source,AL_SOURCE_STATE, &state);
 		if (state == AL_PLAYING || state == AL_PAUSED)
 		{
 			alSourceStop((*it).source);

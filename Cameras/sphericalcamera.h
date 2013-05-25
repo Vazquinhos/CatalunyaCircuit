@@ -29,7 +29,7 @@ public:
 
     // ============================ Methods ===============================
     virtual QString     getTypeInQString();
-    //virtual void render();
+    virtual void render();
     virtual void update();
 
 private:

@@ -75,14 +75,9 @@ QString FreeCamera::getTypeInQString()
  *-------------------------------------------------------------------*/
 void FreeCamera::update()
 {
-    float yaw, pitch;
-
-    getYawPitch(yaw, pitch);
-    yaw = yaw*PI/180;
-    pitch = pitch*PI/180;
-
-    Point3D* pointToLook = new Point3D( cos(yaw)*cos(pitch) + getPosition()->getX(), sin(yaw)*cos(pitch) + getPosition()->getY(),
-                                             sin(pitch) + getPosition()->getZ() );
+    Point3D* pointToLook = new Point3D(_dirVec->getX() + getPosition()->getX(),
+                                       _dirVec->getY() + getPosition()->getY(),
+                                       _dirVec->getZ() + getPosition()->getZ());
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(getPosition()->getX(),
@@ -117,6 +112,14 @@ void FreeCamera::move(float velocity, bool front)
     float yaw, pitch;
 
     getYawPitch(yaw, pitch);
+    yaw = yaw*PI/180;
+    pitch = pitch*PI/180;
+
+    _dirVec = new Vector3D(cos(yaw)*cos(pitch),
+                           sin(yaw)*cos(pitch),
+                           sin(pitch) );
+
+    getYawPitch(yaw, pitch);
     if(!front)
     {
         yaw = yaw - 90;
@@ -130,8 +133,8 @@ void FreeCamera::move(float velocity, bool front)
     pitch = pitch*PI/180;
 
     Vector3D * direction = new Vector3D(cos(yaw)*cos(pitch),
-                                            sin(yaw)*cos(pitch),
-                                            sin(pitch) );
+                                        sin(yaw)*cos(pitch),
+                                        sin(pitch) );
 
     direction->normalize();
 
@@ -144,4 +147,10 @@ void FreeCamera::move(float incrementX, float incrementY, float incrementZ)
                                         getPosition()->getY()+incrementY,
                                         getPosition()->getZ()+incrementZ);
     setPosition(newPosition);
+}
+
+Vector3D*
+FreeCamera::getDirectionVector()
+{
+    return _dirVec;
 }

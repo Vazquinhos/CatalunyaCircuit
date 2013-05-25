@@ -18,6 +18,7 @@
 #include <QFile>
 #include <QDir>
 #include <algorithm>
+#include "math.h"
 
 /******************************* PUBLIC *****************************************/
 
@@ -322,22 +323,130 @@ void Model3D::checkVisibility(vector<GLuint> *displayLists){
     Point3D*  posCamera = p_camera->getPosition();
 
     Vector3D* vObject;
-    Point3D *pObject;
+    Point3D *pObjectMax;
+    Point3D *pObjectMin;
+    Point3D *pObject = new Point3D();
 
     for(unsigned int i=0; i < _vMeshInstances.size(); i++){
         meshInstance = _vMeshInstances[i];
-        pObject = meshInstance->getCenter();
+        displayLists->push_back(meshInstance->getDisplayList());
+        /*pObject = meshInstance->getCenter();
         vObject = pObject->resta(posCamera);
 
         //float direction = (*vCamera)^(*vObject);
-        //if(direction >= 0){
-        if(vObject->module() < 200){
+        float direction = vCamera->angle(*vObject);
+        if(true){
             displayLists->push_back(meshInstance->getDisplayList());
             _isVisible = true;
         }else{
             _isVisible = false;
-        }
+        }*/
     }
+
+    /*_isVisible = false;
+    float direction;
+    unsigned int i;
+    for(i=0; i < _vMeshInstances.size(); i++){
+        meshInstance = _vMeshInstances[i];
+        pObjectMax = meshInstance->getMaxVertex();
+        pObjectMin = meshInstance->getMinVertex();
+
+        //Min, Min, Min
+        pObject->setCoordinates(pObjectMin->getX(), pObjectMin->getY(), pObjectMin->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Min, Min, Max
+        pObject->setCoordinates(pObjectMin->getX(), pObjectMin->getY(), pObjectMax->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Min, Max, Min
+        pObject->setCoordinates(pObjectMin->getX(), pObjectMax->getY(), pObjectMin->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Min, Max, Max
+        pObject->setCoordinates(pObjectMin->getX(), pObjectMax->getY(), pObjectMax->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Max, Min, Min
+        pObject->setCoordinates(pObjectMax->getX(), pObjectMin->getY(), pObjectMin->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Max, Min, Max
+        pObject->setCoordinates(pObjectMax->getX(), pObjectMin->getY(), pObjectMax->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Max, Max, Min
+        pObject->setCoordinates(pObjectMax->getX(), pObjectMax->getY(), pObjectMin->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+
+        //Max, Max, Max
+        pObject->setCoordinates(pObjectMax->getX(), pObjectMax->getY(), pObjectMax->getZ());
+        vObject = pObject->resta(posCamera);
+
+        //float direction = (*vCamera)^(*vObject);
+        direction = vCamera->angle(*vObject);
+        if(fabs(direction) < PI/2.0f){
+            displayLists->push_back(meshInstance->getDisplayList());
+            _isVisible = true;
+            continue;
+        }
+    }*/
 }
 
 
@@ -419,19 +528,19 @@ void Model3D::generateObjectBuffers(const aiScene* pScene)
             minYmesh = maxYmesh =  pPos->y;
             minZmesh = maxZmesh =  pPos->z;
 
-            for (unsigned int k = 0 ; k < aiMesh->mNumVertices ; k++) {
+            for (unsigned int k = 0 ; k < aiMesh->mNumVertices ; ++k) {
                 pPos      = &(aiMesh->mVertices[k]);
                 pNormal   = &(aiMesh->mNormals[k]);
                 pTexCoord = aiMesh->HasTextureCoords(0) ? &(aiMesh->mTextureCoords[0][k]) : &Zero3D;
 
-                minX = min(minXmesh, pPos->x);
-                maxX = max(maxXmesh, pPos->x);
+                minXmesh = min(minXmesh, pPos->x);
+                maxXmesh = max(maxXmesh, pPos->x);
 
-                minY = min(minYmesh, pPos->y);
-                maxY = max(maxYmesh, pPos->y);
+                minYmesh = min(minYmesh, pPos->y);
+                maxYmesh = max(maxYmesh, pPos->y);
 
-                minZ = min(minZmesh, pPos->z);
-                maxZ = max(maxZmesh, pPos->z);
+                minZmesh = min(minZmesh, pPos->z);
+                maxZmesh = max(maxZmesh, pPos->z);
 
                 verticesCoord.push_back(pPos->x);
                 verticesCoord.push_back(pPos->y);
@@ -499,13 +608,13 @@ void Model3D::renderNode(const aiNode* node){
         glEndList();
 
         aiVector3D center = aiVector3D(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
-        center = node->mTransformation*center;
+        center = transform*center;
 
         aiVector3D min = aiVector3D(mesh->_p_minVertex->getX(), mesh->_p_minVertex->getY(), mesh->_p_minVertex->getZ());
-        min = node->mTransformation*center;
+        min = transform*min;
 
         aiVector3D max = aiVector3D(mesh->_p_maxVertex->getX(), mesh->_p_maxVertex->getY(), mesh->_p_maxVertex->getZ());
-        max = node->mTransformation*center;
+        max = transform*max;
 
         _vMeshInstances.push_back(new MeshInstance(new Point3D(min.x, min.y, min.z), new Point3D(max.x, max.y, max.z), new Point3D(center.x, center.y, center.z), displayList));
     }
@@ -528,13 +637,13 @@ void Model3D::renderNode(const aiNode* node){
 
 
             aiVector3D center = aiVector3D(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
-            center = node->mTransformation*center;
+            center = transform*center;
 
             aiVector3D min = aiVector3D(mesh->_p_minVertex->getX(), mesh->_p_minVertex->getY(), mesh->_p_minVertex->getZ());
-            min = node->mTransformation*center;
+            min = transform*min;
 
             aiVector3D max = aiVector3D(mesh->_p_maxVertex->getX(), mesh->_p_maxVertex->getY(), mesh->_p_maxVertex->getZ());
-            max = node->mTransformation*center;
+            max = transform*max;
 
             _vMeshInstances.push_back(new MeshInstance(new Point3D(min.x, min.y, min.z), new Point3D(max.x, max.y, max.z), new Point3D(center.x, center.y, center.z), displayList));
         }
@@ -590,13 +699,13 @@ void Model3D::renderMeshInstances(const aiNode* node){
                     glEndList();
 
                     aiVector3D center = aiVector3D(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
-                    center = node->mChildren[i]->mTransformation*center;
+                    center = (node->mChildren[i]->mTransformation).Transpose()*center;
 
                     aiVector3D min = aiVector3D(mesh->_p_minVertex->getX(), mesh->_p_minVertex->getY(), mesh->_p_minVertex->getZ());
-                    min = node->mChildren[i]->mTransformation*center;
+                    min = (node->mChildren[i]->mTransformation).Transpose()*min;
 
                     aiVector3D max = aiVector3D(mesh->_p_maxVertex->getX(), mesh->_p_maxVertex->getY(), mesh->_p_maxVertex->getZ());
-                    max = node->mChildren[i]->mTransformation*center;
+                    max = (node->mChildren[i]->mTransformation).Transpose()*max;
 
                     _vMeshInstances.push_back(new MeshInstance(new Point3D(min.x, min.y, min.z), new Point3D(max.x, max.y, max.z), new Point3D(center.x, center.y, center.z), displayList));
                 }
@@ -616,6 +725,19 @@ btCompoundShape* Model3D::getCollisionShape(btTransform transform){
     }
 
     return shape;
+}
+
+void Model3D::drawCenters()
+{
+    Mesh * mesh;
+    for(unsigned int i = 0; i < _vMeshes.size(); i++)
+    {
+        mesh = _vMeshes[i];
+        glPushMatrix();
+        glTranslatef(mesh->_p_center->getX(), mesh->_p_center->getY(), mesh->_p_center->getZ());
+        glutSolidCube(2.0f);
+        glPopMatrix();
+    }
 }
 
 #endif /* OBJECT3DASSIMP_H_ */

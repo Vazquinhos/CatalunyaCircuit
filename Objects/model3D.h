@@ -89,6 +89,8 @@ public:
     void checkVisibility(vector<GLuint> *displayLists);
     void putDisplayLists(vector<GLuint> *displayLists);
 
+    void drawCenters();
+
     void release();
 };
 

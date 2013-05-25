@@ -244,3 +244,12 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
     }
     return textureIdMap;
 }
+
+void ModelManager::drawCenters()
+{
+    for(std::map<QString,Model3D*>::iterator iter = _models.begin(); iter != _models.end(); ++iter)
+    {
+        Model3D * model = iter->second;
+        model->drawCenters();
+    }
+}

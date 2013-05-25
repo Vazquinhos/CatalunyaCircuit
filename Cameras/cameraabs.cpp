@@ -22,10 +22,10 @@
 CameraAbs::CameraAbs()
 {
     _zoom = 10;
-    _yaw = 359.5;
-    _pitch = 57;
+    _yaw = 0;
+    _pitch = 0;
     _name = QString("Not init");
-    setPosition(new Point3D(224.533f, -68.3924f, -46.2934f));
+    setPosition(new Point3D(0, 0, 0));
 
     _dirVec = new Vector3D(cos(_yaw)*cos(_pitch),
                            sin(_yaw)*cos(_pitch),
@@ -42,10 +42,10 @@ CameraAbs::CameraAbs()
 CameraAbs::CameraAbs(QString a_name)
 {
     _zoom = 10;
-    _yaw = 57;
-    _pitch = 359.5;
+    _yaw = 0;
+    _pitch = 0;
     _name = a_name;
-    setPosition(new Point3D(224.533f, -68.3924f, -46.2934f));
+    setPosition(new Point3D(0, 0, 0));
     _dirVec = new Vector3D(cos(_yaw)*cos(_pitch),
                            sin(_yaw)*cos(_pitch),
                            sin(_pitch) );
@@ -103,12 +103,14 @@ void CameraAbs::resizeProjection(int w, int h)
  *-------------------------------------------------------------------*/
 void CameraAbs::render()
 {
-    float yawAux = _yaw;
-    float pitchAux = _pitch;
+    float yaw, pitch;
 
-    Point3D* direction = new Point3D( (cos(yawAux)*cos(pitchAux) + getPosition()->getX())*1000,
-                                      (sin(yawAux)*cos(pitchAux) + getPosition()->getY() )*1000,
-                                      (sin(pitchAux) + getPosition()->getZ())*1000 );
+    getYawPitch(yaw, pitch);
+    yaw = yaw*PI/180;
+    pitch = pitch*PI/180;
+
+    Point3D* direction = new Point3D( cos(yaw)*cos(pitch)*1000 + getPosition()->getX(), sin(yaw)*cos(pitch)*1000 + getPosition()->getY(),
+                                             sin(pitch)*1000 + getPosition()->getZ() );
 
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
@@ -122,8 +124,8 @@ void CameraAbs::render()
 
         glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
         glPushMatrix();
-            glRotatef(_pitch, 1,0,0);
-            glRotatef(_yaw, 0,1,0);
+            glRotatef(_yaw-90, 0,0,1);
+            glRotatef(_pitch - 90, 1, 0, 0);
             glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
             glutSolidCone(1.0f, 4.0f, 100, 100);
         glPopMatrix();
@@ -279,6 +281,15 @@ void CameraAbs::addYawPitch(float yaw, float pitch)
     if(_yaw<0)	    _yaw=_yaw+360;
     if(_pitch>=360)	_pitch=_pitch-360;
     if(_pitch<0)	_pitch=_pitch+360;
+
+    float yawRad, pitchRad;
+
+    yawRad = _yaw*PI/180;
+    pitchRad = _pitch*PI/180;
+
+    _dirVec = new Vector3D(cos(yawRad)*cos(pitchRad),
+                           sin(yawRad)*cos(pitchRad),
+                           sin(pitchRad) );
 }
 
 /*-------------------------------------------------------------------
@@ -329,6 +340,15 @@ float CameraAbs::getZoom()
 void CameraAbs::setYaw( float yaw )
 {
     _yaw = yaw;
+    float pitch;
+
+    getYawPitch(yaw, pitch);
+    yaw = yaw*PI/180;
+    pitch = pitch*PI/180;
+
+    _dirVec = new Vector3D(cos(yaw)*cos(pitch),
+                           sin(yaw)*cos(pitch),
+                           sin(pitch) );
 }
 
 /*-------------------------------------------------------------------
@@ -354,11 +374,14 @@ float CameraAbs::getPitch(float pitch){
 Vector3D*
 CameraAbs::getDirectionVector()
 {
-    return _dirVec;
-}
 
-void
-CameraAbs::setDirectionVector(Vector3D* a_vec)
-{
-    _dirVec = a_vec;
+    float yaw, pitch;
+
+    getYawPitch(yaw, pitch);
+    yaw = yaw*PI/180;
+    pitch = pitch*PI/180;
+
+    Vector3D* direction = new Vector3D( cos(yaw)*cos(pitch), sin(yaw)*cos(pitch),
+                                             sin(pitch));
+    return direction;
 }

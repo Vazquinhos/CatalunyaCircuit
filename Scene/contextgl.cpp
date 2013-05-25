@@ -150,7 +150,7 @@ GLWidget::startTimers()
     //4) Init physics simulation
     _physicsEventTimer = new QTimer(this);
     connect(_physicsEventTimer, SIGNAL(timeout()), this, SLOT(simulatePhysics()));
-    _physicsEventTimer->start(18);
+    _physicsEventTimer->start(36);
 
     //4) Init physics simulation
     _displayEventTimer = new QTimer(this);

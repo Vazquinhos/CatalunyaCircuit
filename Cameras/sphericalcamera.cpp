@@ -103,13 +103,13 @@ void SphericalCamera::update()
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-/*void SphericalCamera::render()
+void SphericalCamera::render()
 {
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
-        glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+        glColor4f(0.8f, 0.0f, 0.0f, 1.0f);
         glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
         glutSolidSphere(2.0f, 100, 100);
     glPushAttrib(GL_CURRENT_BIT);
     glPopMatrix();
-}*/
+}

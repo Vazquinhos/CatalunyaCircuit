@@ -16,6 +16,7 @@
 #include "Sound/SoundManager.h"
 #include "Lights/lightmanager.h"
 #include "Lights/light.h"
+#include "Objects/modelManager.h"
 
 char _frames[15]; //String that shows fps
 // ================= Constructores/Destructores ======================
@@ -38,7 +39,7 @@ Scene::Scene()
     _dynamicsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration); //World simulator
     _dynamicsWorld->setGravity(btVector3(0,0,-9.81f));//Sets the gravity (choose -10m/s² on Z axis)
 
-    _debugMode = true;
+    _debugMode = false;
 
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
@@ -49,8 +50,8 @@ Scene::Scene()
     Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-46.3775), _dynamicsWorld);
     _objectManager->addCar(c1);
 
-    Car *c2 = new CarAutomatic("Cars/" + carFolders[qrand() % (carFolders.size()-1)], "/home/gabriel/catalunyacircuit/Media/BSplines/Correct/bsplineGabriel.obj", 50);
-    _objectManager->addCar(c2);
+    //Car *c2 = new CarAutomatic("Cars/" + carFolders[qrand() % (carFolders.size()-1)], QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj", 50);
+    //_objectManager->addCar(c2);
     // xPos+=1;
     //}
 
@@ -97,11 +98,12 @@ void Scene::display(float fps)
 
 	if(_debugMode)
     {
-        _bSplineManager->display();
+        //_bSplineManager->display();
         LightManager::getLightManager()->getActiveLight()->render();
         CameraManager::getCameraManager()->render();
-        /*
-        Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
+        //ModelManager::getModelManager()->drawCenters();
+
+        /*Point3D *carPos = ObjectManager::getObjectManager()->getCar(0)->getPosition();
         //Point3D *cameraPos = CameraManager::getCameraManager()->getCamera("free")->getPosition();
         Point3D *cameraPos = CameraManager::getCameraManager()->getCamera(QString("freeTest"))->getPosition();
 
@@ -134,8 +136,8 @@ void Scene::display(float fps)
         glEnable(GL_LIGHTING);
 
         glPopAttrib();
-        glPopMatrix();
-        */
+        glPopMatrix();*/
+
     }
 
 }

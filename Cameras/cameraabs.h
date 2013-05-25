@@ -47,7 +47,7 @@ public:
     float              getPitch(float pitch);
     void              setZoom(float zoom);
     float             getZoom();
-    Vector3D*          getDirectionVector();
+    virtual Vector3D* getDirectionVector();
     void              setDirectionVector( Vector3D* );
 
 

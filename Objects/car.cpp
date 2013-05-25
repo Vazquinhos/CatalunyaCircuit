@@ -86,11 +86,11 @@ Point3D * Car::getPosition(){
     //btScalar openglMatrix = new btScalar[16];
     this->_chasisObj->getWorldTransform(transform);
 
-    QString string;
+    //QString string;
     btScalar matrix[16];
     transform.getOpenGLMatrix(matrix);
 
-    qDebug() << "*********************";
+    /*qDebug() << "*********************";
     for(int i = 0;i < 4 ;++i){
         string = "[";
         for(int j = 0; j < 4; ++j){
@@ -98,7 +98,7 @@ Point3D * Car::getPosition(){
         }
         string += "]";
         qDebug() << string;
-    }
+    }*/
     //transform.getOpenGLMatrix(openglMatrix);
     return new Point3D(transform.getOrigin().getX(), transform.getOrigin().getY(),transform.getOrigin().getZ());
 }

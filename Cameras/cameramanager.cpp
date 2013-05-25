@@ -60,27 +60,27 @@ void CameraManager::render()
 }
 
 void CameraManager::setupCameras() {
-    SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
+    //SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
     FreeCamera * frCam = new FreeCamera(QString("free"));
-    FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
-    FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
+    //FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
+    //FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
 
     FreeCamera * frCamTEST = new FreeCamera(QString("freeTest"));
-    frCamTEST->setPosition(new Point3D(210.696f, -68.176f, -45.7906));
+    frCamTEST->setPosition(new Point3D(214.621,39.6959,-73.664));
     //(150,-76.85,-200+i*10+zIncrement)
 
-    Point3D* point= new Point3D(152.742,137.498,-74.439);
-    fxCam->setPosition(point);
-    fxCam->setYawPitch(143,325.5);
+    //Point3D* point= new Point3D(214.621,39.6959,-73.664);
+    //fxCam->setPosition(point);
+    //fxCam->setYawPitch(143,325.5);
 
     frCam->setPosition(new Point3D(214.621,39.6959,-73.664));
-    frCam->setYawPitch(59,356);
+    //frCam->setYawPitch(59,356);
 
-    _cameraManager->addCamera(spCam);
+    //_cameraManager->addCamera(spCam);
     _cameraManager->addCamera(frCam);
     _cameraManager->addCamera(frCamTEST);
-    _cameraManager->addCamera(fxCam);
-    _cameraManager->addCamera(fxCamCar);
+    //_cameraManager->addCamera(fxCam);
+    //_cameraManager->addCamera(fxCamCar);
     _cameraManager->setActiveCamera("free");
 }
 

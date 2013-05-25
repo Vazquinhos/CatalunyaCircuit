@@ -31,6 +31,7 @@ public:
     virtual QString     getTypeInQString();
     virtual void        update();
     //virtual void        render();
+    virtual Vector3D*   getDirectionVector();
     virtual void        move(float velocity, bool front);
     void                move(float incrementX, float incrementY, float incrementZ);
 

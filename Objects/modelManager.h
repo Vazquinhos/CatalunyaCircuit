@@ -29,6 +29,8 @@ public:
     PhysicsObject3D * getPyisicsObject(QString modelName, btTransform transform);
 
     void setFolderToLoad(QString folderPath, QStringList modelFilters, QStringList textureFilters);
+    void drawCenters();
+
 public slots:
     void loadModels();
 

@@ -85,6 +85,21 @@ Point3D * Car::getPosition(){
     btTransform transform;
     //btScalar openglMatrix = new btScalar[16];
     this->_chasisObj->getWorldTransform(transform);
+    /*
+    QString string;
+    btScalar matrix[16];
+    transform.getOpenGLMatrix(matrix);
+
+    qDebug() << "*********************";
+    for(int i = 0;i < 4 ;++i){
+        string = "[";
+        for(int j = 0; j < 4; ++j){
+            string += " " + QString::number(matrix[i*4+j]);
+        }
+        string += "]";
+        qDebug() << string;
+    }
+    */
 
     //transform.getOpenGLMatrix(openglMatrix);
     return new Point3D(transform.getOrigin().getX(), transform.getOrigin().getY(),transform.getOrigin().getZ());
@@ -101,6 +116,106 @@ void Car::setPosition(Point3D *position){
     this->_chasisObj->setWorldTransform(transform);
 }
 
+/*-------------------------------------------------------------------
+ |  getPosition
+ |  Purpose: Set the rotation of the car
+ *-------------------------------------------------------------------*/
+Point3D * Car::getRotation(){
+    btTransform transform;
+    btQuaternion rotation;
+    this->_chasisObj->getWorldTransform(transform);
+    rotation = transform.getRotation();
+    return new Point3D(rotation.getX(), rotation.getY(),rotation.getZ());
+}
+
+/*-------------------------------------------------------------------
+ |  setRotation
+ |  Purpose: Set the rotation of the car
+ *-------------------------------------------------------------------*/
+void Car::setRotation(Point3D *angle){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(1,0,0), angle->getX() ));
+    transform.setRotation(btQuaternion(btVector3(0,1,0), angle->getY() ));
+    transform.setRotation(btQuaternion(btVector3(0,0,1), angle->getZ() ));
+
+    this->_chasisObj->setWorldTransform(transform);
+}
+
+/*-------------------------------------------------------------------
+ |  setRotation X
+ |  Purpose: Set the rotation on X axis
+ |  Parameters: The X angle
+ *-------------------------------------------------------------------*/
+void Car:: setRotationX(float angle){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(1,0,0), angle));
+    this->_chasisObj->setWorldTransform(transform);
+}
+
+/*-------------------------------------------------------------------
+ |  setRotationY
+ |  Purpose: Set the rotation on Y axis
+ |  Parameters: The Y angle
+ *-------------------------------------------------------------------*/
+void Car::setRotationY(float angle){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(0,1,0), angle ));
+    this->_chasisObj->setWorldTransform(transform);
+}
+
+/*-------------------------------------------------------------------
+ |  setRotationZ
+ |  Purpose: Set the rotation on Z axis
+ |  Parameters: The Z angle
+ *-------------------------------------------------------------------*/
+void Car::setRotationZ(float angle){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(0,0,1), angle));
+    this->_chasisObj->setWorldTransform(transform);
+}
+
+/*-------------------------------------------------------------------
+ |  rotateIncX
+ |  Purpose: Increments X rotation
+ |  Parameters: The X increment
+ *-------------------------------------------------------------------*/
+void Car::rotateIncX(float angleInc){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(1,0,0), transform.getRotation().getX() + angleInc ));
+
+    this->_chasisObj->setWorldTransform(transform);
+}
+
+/*-------------------------------------------------------------------
+ |  rotateIncY
+ |  Purpose: Increments Y rotation
+ |  Parameters: The Y increment
+ *-------------------------------------------------------------------*/
+void Car::rotateIncY(float angleInc){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(0,1,0), transform.getRotation().getY() + angleInc ));
+
+    this->_chasisObj->setWorldTransform(transform);
+}
+
+/*-------------------------------------------------------------------
+ |  rotateIncZ
+ |  Purpose: Increments Z rotation
+ |  Parameters: The z increment
+ *-------------------------------------------------------------------*/
+void Car::rotateIncZ(float angleInc){
+    btTransform transform;
+    this->_chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(0,0,1), transform.getRotation().getZ() + angleInc ));
+
+    this->_chasisObj->setWorldTransform(transform);
+}
 /*-------------------------------------------------------------------
  |  Default Constructor
  |
@@ -145,8 +260,8 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     btTransform transformChasis;
     btTransform transformWheelFR;
 
-    transformChasis = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX(),position->getY(),position->getZ()));
-    transformWheelFR = btTransform(btQuaternion(0,0,30,700),btVector3(position->getX()-1.7369 ,position->getY()+0.1339,position->getZ()-2.628));
+    transformChasis = btTransform(btQuaternion(0,0,0,1),btVector3(position->getX(),position->getY(),position->getZ()));
+    transformWheelFR = btTransform(btQuaternion(0,0,0,1),btVector3(position->getX()-1.7369 ,position->getY()+0.1339,position->getZ()-2.628));
 
     _chasisObj= manager->getPyisicsObject(folderPath + "chasis.3ds", transformChasis);
     _wheelObj= manager->getPyisicsObject(folderPath + "wheel.3ds", transformChasis);
@@ -154,7 +269,6 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
     _wheelFrontLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformChasis);
     _wheelRearRight= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformChasis);
     _wheelRearLeft= manager->getPyisicsObject(wheelsFolder + "wheelOrigin.3ds", transformChasis);
-
 
     _cameraMode = FRONTAL_CAMERA;
     _cameraOffsets[(int)FRONTAL_CAMERA] = OffsetYawPitch(new Point3D(0,0,1), new Point2D(271.5, 342.5));
@@ -171,9 +285,13 @@ void Car::setModelsWithPos(QString folderPath, Point3D *position){
  |  Parameters:
  *-------------------------------------------------------------------*/
 void Car::turnRight(){
+    /*
     Point3D *position = getPosition();
     position->setX(position->getX()-1);
     setPosition(position);
+    updateCurrentCameraPos();
+    */
+    rotateIncZ(-0.1);
     updateCurrentCameraPos();
 }
 /*-------------------------------------------------------------------
@@ -183,9 +301,14 @@ void Car::turnRight(){
  |  Parameters:
  *-------------------------------------------------------------------*/
 void Car::turnLeft(){
+    /*
     Point3D *position = getPosition();
     position->setX(position->getX()+1);
     setPosition(position);
+    updateCurrentCameraPos();
+    */
+
+    rotateIncZ(0.1);
     updateCurrentCameraPos();
 }
 /*-------------------------------------------------------------------
@@ -196,7 +319,7 @@ void Car::turnLeft(){
  *-------------------------------------------------------------------*/
 void Car::accelerate(){
     Point3D *position = getPosition();
-    position->setX(position->getZ()+1);
+    position->setY(position->getY()-1);
     setPosition(position);
     updateCurrentCameraPos();
 }
@@ -208,7 +331,7 @@ void Car::accelerate(){
  *-------------------------------------------------------------------*/
 void Car::brake(){
     Point3D *position = getPosition();
-    position->setX(position->getZ()-1);
+    position->setY(position->getY()+1);
     setPosition(position);
     updateCurrentCameraPos();
 }

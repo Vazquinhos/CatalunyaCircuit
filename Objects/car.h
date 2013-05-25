@@ -41,6 +41,14 @@ public:
 
     Point3D * getPosition();
     void      setPosition(Point3D *point);
+    Point3D * getRotation();
+    void      setRotation(Point3D *point);
+    void      setRotationX(float angle);
+    void      setRotationY(float angle);
+    void      setRotationZ(float angle);
+    void      rotateIncX(float angleInc);
+    void      rotateIncY(float angleInc);
+    void      rotateIncZ(float angleInc);
 
     // ================= Getter / Setter ==================================
     int getCameraMode();

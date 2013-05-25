@@ -100,6 +100,9 @@ void GLWidget::initializeWorld(){
     _fps = 0;
     _indexCamera = 0;
     _maxVisibleDistance = 200;
+    for(int i = 0; i < 256; i++){
+        _pressedKeys[i] = false;
+    }
 
     glEnable(GL_TEXTURE_2D);
 
@@ -171,8 +174,8 @@ GLWidget::startTimers()
  *****************************************************************************/
 void GLWidget::resizeGL(int w, int h)
 {
-        glViewport(0,0,w,h);
-        _cameraManager->getActiveCamera()->resizeProjection(w, h);
+    glViewport(0,0,w,h);
+    _cameraManager->getActiveCamera()->resizeProjection(w, h);
 }
 
 /*****************************************************************************
@@ -309,6 +312,21 @@ void GLWidget::onZoomChanged(qreal x)
  *****************************************************************************/
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
+    int currKey = event->key();
+    if(currKey >= 0 && currKey < 256)
+    {
+        _pressedKeys[event->key()] = true;
+    }
+
+    qDebug() << "*****************TECLAS PULSADAS********************** " ;
+    QString teclas = "";
+    for(int i = 0; i < 256 ;++i){
+        if(_pressedKeys[i]){
+            teclas += " " + QString::number(i);
+        }
+    }
+    qDebug() << teclas;
+
 
     bool update = true;
 
@@ -492,6 +510,15 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
         qDebug() << "CAMERA POSITION " << pos->getX() << " " << pos->getY() << " " << pos->getZ() << " " << yaw << " " << pitch;
     }
 
+}
+
+void GLWidget::keyReleaseEvent(QKeyEvent *event)
+{
+    int currKey = event->key();
+    if(currKey >= 0 && currKey < 256)
+    {
+        _pressedKeys[event->key()] = false;
+    }
 }
 
 /*****************************************************************************

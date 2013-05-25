@@ -52,6 +52,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
     void wheelEvent (QWheelEvent * event);
 
     Scene *_scene;
@@ -73,6 +74,7 @@ private:
     double _totalTime;
 
     bool _shaders;
+    bool _pressedKeys[256];
 
     CarViewer *_carViewer;
     bool _isInDriveMode;

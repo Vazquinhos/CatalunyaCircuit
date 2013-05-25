@@ -1,5 +1,8 @@
 #include "carautomatic.h"
 #include "Objects/bsplinemanager.h"
+#include <QVector>
+#include "Operators/BSplineInterpolatorOp.h"5
+
 
 CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Updatable(updateInterval), Car(folderPath, new Point3D())
 {
@@ -28,15 +31,29 @@ CarAutomatic::~CarAutomatic(){
 
 void CarAutomatic::update(){
     int numPoints = _spline->getNumPoints();
-    Point3D *point;
+    /*Point3D *point;
 
     if(_currentPoint < numPoints){
         point = _spline->getPoint(_currentPoint);
-        setPosition(point);
+
         ++_currentPoint;
     }else{
         _currentPoint = 0;
-    }
+    }   */
+
+    QVector<Point3D*> vPoints;
+
+    vPoints.append( _spline->getPoint(_currentPoint  ));
+    vPoints.append( _spline->getPoint(_currentPoint + 1 ));
+    vPoints.append( _spline->getPoint(_currentPoint + 2 ));
+    vPoints.append( _spline->getPoint(_currentPoint + 3 ));
+
+    _currentPoint++;
+
+    Point3D* point2 = spline(0, vPoints);
+    setPosition(point2);
+    point2 = spline(1, vPoints);
+    setPosition(point2);
 
     // Rotating the car towards the traject
     Vector3D splineVector(_spline->getPoint( _currentPoint ), _spline->getPoint( _currentPoint + 1 ));
@@ -44,6 +61,9 @@ void CarAutomatic::update(){
     btVector3 btsplineVector( splineVector.getX(),splineVector.getY(),splineVector.getZ() );
 
     btScalar angle = btsplineVector.angle( btVector3(0,1,0) );
+
+    if(angle > PI)
+        angle = btsplineVector.angle( btVector3(0,-1,0) );
 
     btTransform transform;
     _chasisObj->getWorldTransform(transform);

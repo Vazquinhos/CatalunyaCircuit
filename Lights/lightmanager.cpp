@@ -53,15 +53,15 @@ void LightManager::setupDefault()
     //150,160+i*10,-76.85
     Point3D * pos = new Point3D(0, 0, 80);
     sfvector dif;
-    dif.push_back(0.8f);
-    dif.push_back(0.8f);
-    dif.push_back(0.8f);
+    dif.push_back(1.8f);
+    dif.push_back(1.8f);
+    dif.push_back(1.8f);
     dif.push_back(1.0f);
 
     sfvector amb;
-    amb.push_back(0.5f);
-    amb.push_back(0.5f);
-    amb.push_back(0.5f);
+    amb.push_back(1.5f);
+    amb.push_back(1.5f);
+    amb.push_back(1.5f);
     amb.push_back(1.0f);
 
     sfvector spe;
@@ -76,7 +76,7 @@ void LightManager::setupDefault()
     col.push_back(0.79f);
     col.push_back(1.0f);
 
-    Light * light = new SwivelLight();
+    Light * light = new Light();
     light->setAmbient(amb);
     light->setPosition(pos);
     light->setColor(col);

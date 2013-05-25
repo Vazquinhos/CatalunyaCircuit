@@ -7,9 +7,12 @@
 #include "Cameras/fixedcamera.h"
 #include "Utils/point3D.h"
 #include <QStringList>
+#include <QTimer>
+#include <QObject>
 
-class CarViewer
+class CarViewer: public QObject
 {
+    Q_OBJECT
 public:
     // ============================ Constructors ==========================
     CarViewer();
@@ -21,6 +24,11 @@ public:
     void shiftNextCar();
     void shiftPreviousCar();
     void selectCar();
+
+public slots:
+    void shiftCarToNext();
+    void shiftCarToPrevious();
+
 private:
     FixedCamera *_cam;
     std::vector<Model3D*> _vCars;
@@ -29,6 +37,10 @@ private:
     int _carActualIndex;
     bool _isInCarViewerMode;
     CameraManager *_cameraManager;
+    QTimer* _timerMovementNext;
+    QTimer* _timerMovementPrevious;
+    Point3D* _currentViewedCarPosition;
+    int counter;
 };
 
 #endif // CARVIEWER_H

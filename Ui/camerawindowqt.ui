@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>791</width>
-    <height>371</height>
+    <width>548</width>
+    <height>367</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,37 +39,25 @@ QFrame {
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <item>
-             <widget class="QWidget" name="widget" native="true">
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>150</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QListWidget" name="listWidget">
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>200</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QListView {
+         <widget class="QListWidget" name="listWidget">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QListView {
      show-decoration-selected: 1; /* make the selection span the entire width of the view */
  }
 
@@ -96,15 +84,15 @@ QFrame {
                                  stop: 0 #FAFBFE, stop: 1 #DCDEF1);
 	 color:black;
  }</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QPushButton" name="pb_add">
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QPushButton" name="pb_add">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
      background-color: #333333;
 	 border: 1px solid white;
 	 color:white;
@@ -120,16 +108,16 @@ QFrame {
      border: 1px solid white;
 	background-color:#333333;
  }</string>
-                </property>
-                <property name="text">
-                 <string>Add Camera</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pb_delete">
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
+            </property>
+            <property name="text">
+             <string>Add Camera</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_delete">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
      background-color: #333333;
 	 border: 1px solid white;
 	 color:white;
@@ -140,16 +128,16 @@ QPushButton:pressed {
      border-style: inset;
 	 color:black;
  }</string>
-                </property>
-                <property name="text">
-                 <string>Delete Camera</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton">
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
+            </property>
+            <property name="text">
+             <string>Delete Camera</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
      background-color: #333333;
 	 border: 1px solid white;
 	 color:white;
@@ -160,198 +148,181 @@ QPushButton:pressed {
      border-style: inset;
 	 color:black;
  }</string>
-                </property>
-                <property name="text">
-                 <string>Set as Active</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Set as Active</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
-        <item>
-         <layout class="QGridLayout" name="gridLayout">
-          <property name="leftMargin">
-           <number>10</number>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Zoom</string>
           </property>
-          <property name="rightMargin">
-           <number>10</number>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Pich</string>
           </property>
-          <property name="bottomMargin">
-           <number>10</number>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Yaw</string>
           </property>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Zoom</string>
-            </property>
-           </widget>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="sb_pitch">
+          <property name="maximum">
+           <double>1000.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QDoubleSpinBox" name="cb_zoom">
+          <property name="maximum">
+           <double>1000.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="line_name"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="cb_mode">
+          <item>
+           <property name="text">
+            <string>PERSPECTIVE</string>
+           </property>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Pich</string>
-            </property>
-           </widget>
+          <item>
+           <property name="text">
+            <string>ORTOGONAL</string>
+           </property>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Yaw</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="sb_pitch">
-            <property name="maximum">
-             <double>1000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QDoubleSpinBox" name="cb_zoom">
-            <property name="maximum">
-             <double>1000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="line_name"/>
-          </item>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Mode</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDoubleSpinBox" name="sb_yaw">
+          <property name="maximum">
+           <double>1000.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <layout class="QGridLayout" name="gridLayout_2">
           <item row="1" column="1">
-           <widget class="QComboBox" name="cb_mode">
-            <item>
-             <property name="text">
-              <string>PERSPECTIVE</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>ORTOGONAL</string>
-             </property>
-            </item>
+           <widget class="QDoubleSpinBox" name="y">
+            <property name="maximum">
+             <double>1000.000000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Name</string>
+             <string>X</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_10">
+           <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Mode</string>
+             <string>Y</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Type</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="sb_yaw">
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="x">
             <property name="maximum">
              <double>1000.000000000000000</double>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>X</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDoubleSpinBox" name="x">
-              <property name="maximum">
-               <double>1000.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Y</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDoubleSpinBox" name="y">
-              <property name="maximum">
-               <double>1000.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>Z</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDoubleSpinBox" name="z">
-              <property name="maximum">
-               <double>1000.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>Position</string>
+             <string>Z</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="cb_type">
-            <item>
-             <property name="text">
-              <string>FREE</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>SPHERICAL</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>FIXED</string>
-             </property>
-            </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="z">
+            <property name="maximum">
+             <double>1000.000000000000000</double>
+            </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string>Position</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="cb_type">
+          <item>
+           <property name="text">
+            <string>FREE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>SPHERICAL</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FIXED</string>
+           </property>
+          </item>
+         </widget>
         </item>
        </layout>
       </item>

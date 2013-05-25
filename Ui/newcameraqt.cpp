@@ -2,12 +2,44 @@
 #include "errorwindow.h"
 #include "Cameras/cameramanager.h"
 #include "Utils/util.h"
+#include "Cameras/cameraabs.h"
 
 NewCameraQt::NewCameraQt(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NewCameraQt)
 {
     ui->setupUi(this);
+    setWindowTitle("New Camera");
+
+    CameraAbs* cam =  CameraManager::getCameraManager()->getActiveCamera();
+
+    ui->cb_mode->setCurrentIndex(0);
+
+    camera_type type = cam->getType();
+    switch (type)
+    {
+        case FREE:
+            ui->cb_type->setCurrentIndex(0);
+        break;
+        case SPHERICAL:
+            ui->cb_type->setCurrentIndex(1);
+        break;
+        case FIXED:
+            ui->cb_type->setCurrentIndex(2);
+        break;
+    }
+
+    float yaw, pitch;
+    cam->getYawPitch( yaw, pitch );
+    ui->sb_yaw->setValue(yaw);
+    ui->sb_pitch->setValue(pitch);
+
+    Point3D* p_point = cam->getPosition();
+
+    ui->x->setValue(p_point->getX());
+    ui->y->setValue(p_point->getY());
+    ui->z->setValue(p_point->getZ());
+
 }
 
 NewCameraQt::~NewCameraQt()
@@ -39,7 +71,7 @@ void NewCameraQt::errorAcepted()
 CameraAbs* NewCameraQt::getNewCamera()
 {
     CameraAbs* p_camera_to_rtn;
-    switch (ui->comboBox->currentIndex())
+    switch (ui->cb_type->currentIndex())
     {
         case 0: // Free
             p_camera_to_rtn = new FreeCamera();

@@ -92,7 +92,6 @@ CameraAbs* NewCameraQt::getNewCamera()
     p_camera_to_rtn->setName( new_camera_name );
     p_camera_to_rtn->setPosition( new Point3D( ui->x->value(), ui->y->value(), ui->z->value()));
     p_camera_to_rtn->setYawPitch(ui->sb_yaw->value(),ui->sb_pitch->value());
-    p_camera_to_rtn->setZoom(ui->cb_zoom->value());
 
     return p_camera_to_rtn;
 }

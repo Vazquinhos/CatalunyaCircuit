@@ -48,7 +48,7 @@ Scene::Scene()
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
     Car *c1 = new Car("Cars/" + carFolders[qrand() % (carFolders.size()-1)], new Point3D(223.494,54.6941,-46.3775), _dynamicsWorld);
-    _objectManager->addCar(c1);
+    //_objectManager->addCar(c1);
 
     Car *c2 = new CarAutomatic("Cars/" + carFolders[qrand() % (carFolders.size()-1)], QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj", 50);
     _objectManager->addCar(c2);

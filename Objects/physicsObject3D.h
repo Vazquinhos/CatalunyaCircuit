@@ -19,9 +19,17 @@ public:
     virtual void getWorldTransform(btTransform &transform) const;
     virtual void setWorldTransform(const btTransform &transform);
 
+    float _xTranslateRotation;
+    float _yTranslateRotation;
+    float _zTranslateRotation;
+
+    //float _xAngle;
+    //float _yAngle;
+    float _zAngle;
 private:
     bool _isVisible;
     Model3D *_model;
+
     // ========================== Bullet Phisics Members ==================
     btTransform _transform;
 };

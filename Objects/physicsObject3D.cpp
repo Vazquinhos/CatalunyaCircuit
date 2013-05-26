@@ -9,6 +9,13 @@ PhysicsObject3D::PhysicsObject3D(Model3D *model, btTransform transform)
 {
     _model = model;
     _transform = transform;
+
+    _xTranslateRotation = -1;
+    _yTranslateRotation = -0.5;
+    _zTranslateRotation = 0;
+    //_xAngle = 0;
+    //_yAngle = 0;
+    _zAngle = 45;
 }
 
 /*-------------------------------------------------------------------
@@ -17,14 +24,17 @@ PhysicsObject3D::PhysicsObject3D(Model3D *model, btTransform transform)
 *-------------------------------------------------------------------*/
 void PhysicsObject3D::display(){
     btScalar transformation[16];
+
+
     glPushMatrix();
 
     _transform.getOpenGLMatrix(transformation);
 
     glMultMatrixd(transformation);
 
-    _model->display();
 
+
+    _model->display();
     glPopMatrix();
 }
 

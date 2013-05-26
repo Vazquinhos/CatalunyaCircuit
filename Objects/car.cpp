@@ -108,10 +108,43 @@ Point3D * Car::getPosition(){
  |  Purpose: Set the position of the car
  *-------------------------------------------------------------------*/
 void Car::setPosition(Point3D *position){
-    btTransform transform;
-    _chasisObj->getWorldTransform(transform);
-    transform.setOrigin(btVector3(position->getX(),position->getY(),position->getZ()));
-    _chasisObj->setWorldTransform(transform);
+
+    _position = position;
+}
+
+void Car::wheelRotation(float angle)
+{
+    _wheelAngleTrans = angle;
+}
+
+void Car::setAngle(btScalar angle, float desfase)
+{
+
+    _angle = angle;
+    _desfaseTrans = desfase;
+}
+
+void Car::makeTransform()
+{
+    btTransform transformToPosition = btTransform(btQuaternion(), btVector3(_position->getX(),_position->getY(),_position->getZ()));
+
+    btTransform translationFR = btTransform(btQuaternion(btVector3(0,0,1), PI -_angle + _desfaseTrans), btVector3(-0.70954,-1.52448,0.32015));
+    btTransform translationBR = btTransform(btQuaternion(btVector3(0,0,1), PI -_angle + _desfaseTrans), btVector3(-0.69535,1.83094,0.32012));
+    btTransform wheelRotationRight = btTransform(btQuaternion(btVector3(0,0,1), _angle + _desfaseTrans +  PI)*btQuaternion(btVector3(1,0,0),  -_wheelAngleTrans), btVector3(0,0,0));
+
+    btTransform translationFI = btTransform(btQuaternion(btVector3(0,0,1), PI -_angle + _desfaseTrans), btVector3(0.70954,-1.522390, 0.31809));
+    btTransform translationBI = btTransform(btQuaternion(btVector3(0,0,1), PI -_angle + _desfaseTrans), btVector3( 0.69535, 1.83094, 0.32012));
+    btTransform wheelRotationLeft = btTransform(btQuaternion(btVector3(0,0,1), _angle + _desfaseTrans)*btQuaternion(btVector3(1,0,0),  -_wheelAngleTrans), btVector3(0,0,0));
+
+    transformToPosition.setRotation(btQuaternion(btVector3(0,0,1),  _angle + _desfaseTrans));
+    _wheelObj->setWorldTransform(transformToPosition);
+    _chasisObj->setWorldTransform(transformToPosition);
+
+    _wheelRearLeft->setWorldTransform(transformToPosition*translationBI*wheelRotationLeft);
+    _wheelFrontLeft->setWorldTransform(transformToPosition*translationFI*wheelRotationLeft);
+
+    _wheelRearRight->setWorldTransform(transformToPosition*translationBR*wheelRotationRight);
+    _wheelFrontRight->setWorldTransform(transformToPosition*translationFR*wheelRotationRight);
 }
 
 /*-------------------------------------------------------------------

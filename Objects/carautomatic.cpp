@@ -9,8 +9,40 @@ CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInt
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));
-    _currentPoint = 1500;
-    _totalTime = 1500;
+    _currentPoint = 0;
+    _totalTime = 0;
+    _desfase = PI/2;
+    // Rotating the car towards the traject
+    Vector3D splineVector(_spline->getPoint( 1 ), _spline->getPoint( 2 ));
+
+    btVector3 btsplineVector( splineVector.getX(),splineVector.getY(),splineVector.getZ() );
+    _lastDirection =  btVector3(0,1,0);
+
+    btScalar angle = btsplineVector.angle( btVector3(1,0,0) );
+
+    _firstRotation = -angle  + 1.57;
+
+    btTransform transform;
+    _chasisObj->getWorldTransform(transform);
+    transform.setRotation(btQuaternion(btVector3(0,0,1), _firstRotation ));
+    _chasisObj->setWorldTransform(transform);
+
+    axis = 1;
+
+    file = new QFile("out.txt");
+
+    if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    out = new QTextStream(file);
+}
+
+CarAutomatic::CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld) : Updatable(updateInterval), Car(folderPath, new Point3D(), dynamicsWorld)
+{
+    _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
+    setPosition(_spline->getPoint(0));
+    _currentPoint = 0;
+    _totalTime = 0;
     _desfase = PI/2;
     // Rotating the car towards the traject
     Vector3D splineVector(_spline->getPoint( 1 ), _spline->getPoint( 2 ));
@@ -52,21 +84,50 @@ void CarAutomatic::update(){
 
     QVector<Point3D*> vPoints;
 
-    vPoints.append( _spline->getPoint(_currentPoint  ));
-    vPoints.append( _spline->getPoint(_currentPoint + 1 ));
-    vPoints.append( _spline->getPoint(_currentPoint + 2 ));
-    vPoints.append( _spline->getPoint(_currentPoint + 3 ));
+    if(_currentPoint >= numPoints)
+        _currentPoint -= numPoints;
 
-    Point3D * position = spline(_totalTime - _currentPoint, vPoints);
+    vPoints.append( _spline->getPoint(_currentPoint  ));
+    if(_currentPoint + 1 < numPoints)
+        vPoints.append( _spline->getPoint(_currentPoint + 1 ));
+    else
+        vPoints.append( _spline->getPoint(_currentPoint - numPoints + 1 ));
+
+    if(_currentPoint + 2 < numPoints)
+        vPoints.append( _spline->getPoint(_currentPoint + 2 ));
+    else
+        vPoints.append( _spline->getPoint(_currentPoint - numPoints + 2 ));
+
+    if(_currentPoint + 3 < numPoints)
+        vPoints.append( _spline->getPoint(_currentPoint + 3 ));
+    else
+        vPoints.append( _spline->getPoint(_currentPoint - numPoints + 3 ));
+
+    float timeInterpolation = _totalTime;
+
+    while(timeInterpolation > numPoints)
+        timeInterpolation -= numPoints;
+
+    Point3D * position = spline(timeInterpolation - _currentPoint, vPoints);
 
     setPosition(position);
 
-    CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() + 8, position->getY() + 8, position->getZ() + 8) );
-
+    CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() +4 , position->getY() + 4, position->getZ()) );
 
     // Rotating the car towards the traject
 
-    Vector3D splineVector(_spline->getPoint( trunc(_totalTime) ), _spline->getPoint( trunc(_totalTime + 1) ));
+
+    float time = _totalTime;
+    float time1 = _totalTime+1;
+
+    while(time > numPoints)
+        time = time - numPoints;
+
+    while(time1 > numPoints)
+        time1 = time1 - numPoints;
+
+
+    Vector3D splineVector(_spline->getPoint( trunc(time) ), _spline->getPoint( trunc(time1) ));
 
     btVector3 btsplineVector( splineVector.getX(),splineVector.getY(), 0 );
 
@@ -85,8 +146,11 @@ void CarAutomatic::update(){
 
     btScalar angle = btsplineVector.angle( btVector3(axis,0,0) );
 
-    btTransform transform;
-    _chasisObj->getWorldTransform(transform);
-    transform.setRotation(btQuaternion(btVector3(0,0,1),  angle + _desfase));
-    _chasisObj->setWorldTransform(transform);
+    wheelRotation(_wheelAngle);
+    ++_wheelAngle;
+    if(_wheelAngle >= 360)
+        _wheelAngle = _wheelAngle - 360;
+
+    setAngle(angle, _desfase);
+    makeTransform();
 }

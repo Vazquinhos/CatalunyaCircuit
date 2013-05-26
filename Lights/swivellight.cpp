@@ -19,11 +19,12 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-SwivelLight::SwivelLight() : Light()
+SwivelLight::SwivelLight( QString a_name ):Light( a_name )
 {
     _animationExec = false;
     _radius = 1.0f;
     _animationTime = 0;
+    _type = SWIVEL;
 }
 
 SwivelLight::~SwivelLight()

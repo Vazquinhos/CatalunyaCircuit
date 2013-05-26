@@ -142,6 +142,44 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="lights">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>LIGTHS</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="trajects">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>TRAJECTS</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="import_2">
          <property name="minimumSize">
           <size>

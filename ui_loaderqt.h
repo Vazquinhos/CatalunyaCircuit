@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loaderqt.ui'
 **
-** Created: Sun May 26 02:11:48 2013
+** Created: Sun May 26 20:00:48 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,17 +35,31 @@ public:
         if (LoaderQt->objectName().isEmpty())
             LoaderQt->setObjectName(QString::fromUtf8("LoaderQt"));
         LoaderQt->resize(400, 300);
+        QSizePolicy sizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(LoaderQt->sizePolicy().hasHeightForWidth());
+        LoaderQt->setSizePolicy(sizePolicy);
+        LoaderQt->setMaximumSize(QSize(500, 500));
         LoaderQt->setStyleSheet(QString::fromUtf8("     background-color: #333333;\n"
 "	 color:white;"));
         verticalLayout = new QVBoxLayout(LoaderQt);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         image = new QLabel(LoaderQt);
         image->setObjectName(QString::fromUtf8("image"));
+        image->setMaximumSize(QSize(16777212, 16777215));
+        image->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(image);
 
         progressBar = new QProgressBar(LoaderQt);
         progressBar->setObjectName(QString::fromUtf8("progressBar"));
+        QSizePolicy sizePolicy1(QSizePolicy::Ignored, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy1);
+        progressBar->setMaximumSize(QSize(500, 16777215));
         progressBar->setStyleSheet(QString::fromUtf8("QProgressBar::chunk {\n"
 "     border-radius: 2px;\n"
 "     background-color: #CC0000;\n"
@@ -64,6 +78,7 @@ public:
 
         out = new QLabel(LoaderQt);
         out->setObjectName(QString::fromUtf8("out"));
+        out->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(out);
 

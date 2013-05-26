@@ -87,7 +87,7 @@ void GLWidget::initializeWorld(){
     _soundManager = SoundManager::getSoundManager();
     _soundManager->CleanUP();
     _soundManager->getSoundManager()->LoadSounds( "Media/XML/sounds.xml" );
-    _soundManager->getSoundManager()->PlayAction("intro");
+    //_soundManager->getSoundManager()->PlayAction("intro");
 
     // 1) Load and initialize managers
 
@@ -107,7 +107,7 @@ void GLWidget::initializeWorld(){
     // 3) Init shaders
     //----------------------------------------------------------
     shader =  new QGLShaderProgram();
-    initializeShaders(QString("./Shader/simple"));
+    //initializeShaders(QString("./Shader/simple"));
 
 
     QThread *p_thread = new QThread();

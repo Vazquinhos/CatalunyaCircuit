@@ -76,15 +76,14 @@ void LightManager::setupDefault()
     col.push_back(0.79f);
     col.push_back(1.0f);
 
-    Light * light = new Light();
+    Light * light = new Light(QString("Light0"));
     light->setAmbient(amb);
     light->setPosition(pos);
     light->setColor(col);
-    light->setName(QString("Light0"));
     light->setSpecular(spe);
     light->setDiffuse(dif);
 
-    LightManager::getLightManager()->setLight(light);
+    LightManager::getLightManager()->addLight(light);
 
     Point3D * pos2 = new Point3D(0, 0, 0);
     sfvector dif2;
@@ -111,15 +110,14 @@ void LightManager::setupDefault()
     col2.push_back(0.79f);
     col2.push_back(1.0f);
 
-    SwivelLight * light2 = new SwivelLight();
+    SwivelLight * light2 = new SwivelLight(QString("swivelLight0"));
     light2->setAmbient(amb2);
     light2->setPosition(pos2);
     light2->setColor(col2);
-    light2->setName(QString("swivelLight0"));
     light2->setSpecular(spe2);
     light2->setDiffuse(dif2);
 
-    LightManager::getLightManager()->setLight(light2);
+    LightManager::getLightManager()->addLight(light2);
 }
 
 /*-------------------------------------------------------------------
@@ -141,7 +139,7 @@ Light * LightManager::getLight(QString light_name)
  |  Parameters[in]: Light *light: Light to be added.
  |  Returns:
  *-------------------------------------------------------------------*/
-void LightManager::setLight(Light *light)
+void LightManager::addLight(Light *light)
 {
     _lights[light->getName()] = light;
 }
@@ -182,6 +180,11 @@ void LightManager::update()
 
     _lights[_active]->update(GL_LIGHT0);
 }
+std::map<QString, Light*>
+LightManager::getLights()
+{
+    return _lights;
+}
 
 
 /*-------------------------------------------------------------------
@@ -191,7 +194,7 @@ void LightManager::update()
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-QString LightManager::getCCSCameraInfoToExport(  )
+QString LightManager::getCCSLightsInfoToExport(  )
 {
     QString string_to_rtn;
     // Auxiliar varables to get the information of each camera
@@ -211,3 +214,5 @@ QString LightManager::getCCSCameraInfoToExport(  )
 
     return string_to_rtn;
 }
+
+

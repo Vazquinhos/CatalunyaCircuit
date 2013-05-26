@@ -14,7 +14,7 @@ ImportSettingsQt::ImportSettingsQt(QWidget *parent) :
     ui->car_icon->setPixmap(pix);
     QPixmap pix1("Media/Images/1365560323_Gear.png");
     ui->icon->setPixmap(pix1);
-    QPixmap pix2("Media/Images/1365553750_film_camera_35mm.png");
+    QPixmap pix2("Media/Images/camera.png");
     ui->camera_icon->setPixmap(pix2);
     QPixmap pix3("Media/Images/1365553596_idea.png");
     ui->light_icon->setPixmap(pix3);

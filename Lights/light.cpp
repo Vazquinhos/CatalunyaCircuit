@@ -11,7 +11,6 @@
 #include "light.h"
 
 // ================= Constructores/Destructores ======================
-
 /*-------------------------------------------------------------------
  |  Default Constructor
  |
@@ -19,14 +18,15 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Light::Light()
+Light::Light( QString a_name )
 {
+    _name = a_name;
     _v_color = sfvector();
     _v_ambient = sfvector();
     _v_diffuse = sfvector();
     _v_specular = sfvector();
+    _type = NORMAL;
 }
-
 /*-------------------------------------------------------------------
  |  Copy Constructor
  |
@@ -315,4 +315,16 @@ void Light::setName( QString a_name )
 {
     _name = a_name;
 }
+
+void Light::setType( light_type a_type )
+{
+    _type = a_type;
+}
+
+light_type
+Light::getType()
+{
+    return _type;
+}
+
 

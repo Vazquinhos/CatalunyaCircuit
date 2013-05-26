@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newcameraqt.ui'
 **
-** Created: Sun May 26 02:28:15 2013
+** Created: Sun May 26 20:00:48 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,6 +35,7 @@ public:
     QFrame *frame;
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout;
+    QComboBox *cb_type;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_2;
     QDoubleSpinBox *x;
@@ -42,24 +43,21 @@ public:
     QDoubleSpinBox *y;
     QLabel *label_5;
     QDoubleSpinBox *z;
-    QLabel *label_8;
     QLabel *label_7;
-    QLineEdit *line_name;
-    QComboBox *cb_mode;
-    QLabel *label;
-    QLabel *label_10;
-    QLabel *label_6;
     QDoubleSpinBox *sb_yaw;
+    QLabel *label_8;
     QLabel *label_3;
-    QComboBox *cb_type;
     QDoubleSpinBox *sb_pitch;
+    QLabel *label_6;
+    QLabel *label;
+    QLineEdit *line_name;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *NewCameraQt)
     {
         if (NewCameraQt->objectName().isEmpty())
             NewCameraQt->setObjectName(QString::fromUtf8("NewCameraQt"));
-        NewCameraQt->resize(546, 278);
+        NewCameraQt->resize(533, 235);
         NewCameraQt->setStyleSheet(QString::fromUtf8("QDialog {\n"
 "     background-color: #333333;\n"
 "	 color:white;\n"
@@ -80,6 +78,11 @@ public:
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(10, -1, 10, 10);
+        cb_type = new QComboBox(frame);
+        cb_type->setObjectName(QString::fromUtf8("cb_type"));
+
+        gridLayout->addWidget(cb_type, 3, 2, 1, 1);
+
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         label_2 = new QLabel(frame);
@@ -114,71 +117,57 @@ public:
         z = new QDoubleSpinBox(frame);
         z->setObjectName(QString::fromUtf8("z"));
         z->setMinimum(-999999);
+        z->setMaximum(1e+06);
         z->setValue(0);
 
         horizontalLayout_3->addWidget(z);
 
 
-        gridLayout->addLayout(horizontalLayout_3, 5, 2, 1, 1);
-
-        label_8 = new QLabel(frame);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-
-        gridLayout->addWidget(label_8, 3, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout_3, 4, 2, 1, 1);
 
         label_7 = new QLabel(frame);
         label_7->setObjectName(QString::fromUtf8("label_7"));
 
-        gridLayout->addWidget(label_7, 2, 0, 1, 1);
-
-        line_name = new QLineEdit(frame);
-        line_name->setObjectName(QString::fromUtf8("line_name"));
-
-        gridLayout->addWidget(line_name, 0, 2, 1, 1);
-
-        cb_mode = new QComboBox(frame);
-        cb_mode->setObjectName(QString::fromUtf8("cb_mode"));
-
-        gridLayout->addWidget(cb_mode, 1, 2, 1, 1);
-
-        label = new QLabel(frame);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        gridLayout->addWidget(label, 0, 0, 1, 1);
-
-        label_10 = new QLabel(frame);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-
-        gridLayout->addWidget(label_10, 1, 0, 1, 1);
-
-        label_6 = new QLabel(frame);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-
-        gridLayout->addWidget(label_6, 4, 0, 1, 1);
+        gridLayout->addWidget(label_7, 1, 0, 1, 1);
 
         sb_yaw = new QDoubleSpinBox(frame);
         sb_yaw->setObjectName(QString::fromUtf8("sb_yaw"));
         sb_yaw->setMinimum(-99999);
         sb_yaw->setMaximum(999999);
 
-        gridLayout->addWidget(sb_yaw, 2, 2, 1, 1);
+        gridLayout->addWidget(sb_yaw, 1, 2, 1, 1);
+
+        label_8 = new QLabel(frame);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+
+        gridLayout->addWidget(label_8, 2, 0, 1, 1);
 
         label_3 = new QLabel(frame);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
-        gridLayout->addWidget(label_3, 5, 0, 1, 1);
-
-        cb_type = new QComboBox(frame);
-        cb_type->setObjectName(QString::fromUtf8("cb_type"));
-
-        gridLayout->addWidget(cb_type, 4, 2, 1, 1);
+        gridLayout->addWidget(label_3, 4, 0, 1, 1);
 
         sb_pitch = new QDoubleSpinBox(frame);
         sb_pitch->setObjectName(QString::fromUtf8("sb_pitch"));
         sb_pitch->setMinimum(-99999);
         sb_pitch->setMaximum(9999.99);
 
-        gridLayout->addWidget(sb_pitch, 3, 2, 1, 1);
+        gridLayout->addWidget(sb_pitch, 2, 2, 1, 1);
+
+        label_6 = new QLabel(frame);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        gridLayout->addWidget(label_6, 3, 0, 1, 1);
+
+        label = new QLabel(frame);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        line_name = new QLineEdit(frame);
+        line_name->setObjectName(QString::fromUtf8("line_name"));
+
+        gridLayout->addWidget(line_name, 0, 2, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout);
@@ -215,26 +204,20 @@ public:
     void retranslateUi(QDialog *NewCameraQt)
     {
         NewCameraQt->setWindowTitle(QApplication::translate("NewCameraQt", "Dialog", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("NewCameraQt", "X", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("NewCameraQt", "Y", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("NewCameraQt", "Z", 0, QApplication::UnicodeUTF8));
-        label_8->setText(QApplication::translate("NewCameraQt", "Pitch", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("NewCameraQt", "Yaw", 0, QApplication::UnicodeUTF8));
-        cb_mode->clear();
-        cb_mode->insertItems(0, QStringList()
-         << QApplication::translate("NewCameraQt", "PERSPECTIVE", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("NewCameraQt", "ORTOGONAL", 0, QApplication::UnicodeUTF8)
-        );
-        label->setText(QApplication::translate("NewCameraQt", "Name", 0, QApplication::UnicodeUTF8));
-        label_10->setText(QApplication::translate("NewCameraQt", "Mode", 0, QApplication::UnicodeUTF8));
-        label_6->setText(QApplication::translate("NewCameraQt", "Type", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("NewCameraQt", "Position", 0, QApplication::UnicodeUTF8));
         cb_type->clear();
         cb_type->insertItems(0, QStringList()
          << QApplication::translate("NewCameraQt", "FREE", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("NewCameraQt", "SPHERICAL", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("NewCameraQt", "FIXED", 0, QApplication::UnicodeUTF8)
         );
+        label_2->setText(QApplication::translate("NewCameraQt", "X", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("NewCameraQt", "Y", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("NewCameraQt", "Z", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("NewCameraQt", "Yaw", 0, QApplication::UnicodeUTF8));
+        label_8->setText(QApplication::translate("NewCameraQt", "Pitch", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("NewCameraQt", "Position", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("NewCameraQt", "Type", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("NewCameraQt", "Name", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -56,10 +56,14 @@ SOURCES += main.cpp\
     Utils/XMLParser.cpp \
     Utils/fileutils.cpp \
     Utils/color.cpp \
-    Utils/timemanager.cpp \
     Utils/updatable.cpp \
     Objects/carautomatic.cpp \
-    Operators/BSplineInterpolatorOp.cpp
+    Operators/BSplineInterpolatorOp.cpp \
+    Ui/trajectselectionqt.cpp \
+    Ui/lightwindowqt.cpp \
+    Commands/lightscmd.cpp \
+    Utils/timemanager.cpp \
+    Objects/semaphore.cpp
 
 
 
@@ -112,10 +116,14 @@ HEADERS  += \
     Utils/expat.h \
     Utils/fileutils.h \
     Utils/color.h \
-    Utils/timemanager.h \
     Utils/updatable.h \
     Objects/carautomatic.h \
-    Operators/BSplineInterpolatorOp.h
+    Operators/BSplineInterpolatorOp.h \
+    Ui/trajectselectionqt.h \
+    Ui/lightwindowqt.h \
+    Commands/lightscmd.h \
+    Utils/timemanager.h \
+    Objects/semaphore.h
 
 
 FORMS    += \
@@ -126,7 +134,9 @@ FORMS    += \
     Ui/camerawindowqt.ui \
     Ui/newcameraqt.ui \
     Ui/loaderqt.ui \
-    Ui/about.ui
+    Ui/about.ui \
+    Ui/trajectselectionqt.ui \
+    Ui/lightwindowqt.ui
 
 OTHER_FILES += \
     simple.vert \
@@ -1381,7 +1391,8 @@ OTHER_FILES += \
     Shader/simple.vert \
     Shader/simple.frag \
     Media/Sounds/Coches/f1_ambient.wav \
-    Media/Sounds/Coches/f1_introM.wav
+    Media/Sounds/Coches/f1_introM.wav \
+    Media/Images/bspline.png
 
 
 

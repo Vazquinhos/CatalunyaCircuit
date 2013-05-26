@@ -385,3 +385,9 @@ CameraAbs::getDirectionVector()
                                              sin(pitch));
     return direction;
 }
+
+void
+CameraAbs::setType( camera_type a_type )
+{
+    _type = a_type;
+}

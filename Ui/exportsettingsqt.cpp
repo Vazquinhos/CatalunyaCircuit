@@ -15,7 +15,7 @@ ExportSettingsQt::ExportSettingsQt(QWidget *parent) :
     ui->carlab->setPixmap(pix);
     QPixmap pix1("Media/Images/1365560323_Gear.png");
     ui->settlab->setPixmap(pix1);
-    QPixmap pix2("Media/Images/1365553750_film_camera_35mm.png");
+    QPixmap pix2("Media/Images/camera.png");
     ui->cameralab->setPixmap(pix2);
     QPixmap pix3("Media/Images/1365553596_idea.png");
     ui->light_ico->setPixmap(pix3);

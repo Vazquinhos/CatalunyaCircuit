@@ -5,6 +5,7 @@
 #include "importsettingsqt.h"
 #include "exportsettingsqt.h"
 #include "camerawindowqt.h"
+#include "trajectselectionqt.h"
 #include "about.h"
 
 namespace Ui {
@@ -39,7 +40,13 @@ private slots:
 
     void CarEditingFinish();
 
+    void on_play_clicked();
 
+    void on_pause_clicked();
+
+    void on_trajects_clicked();
+
+    void on_lights_clicked();
 
 private:
     // ========================== Data Members ============================
@@ -48,6 +55,7 @@ private:
     ExportSettingsQt*     _p_exp_qt;
     CameraWindowQt*       _p_camera_qt;
     About*                _p_about;
+    TrajectSelectionQt*   _p_traject_qt;
 
     bool menuVisible;
     bool CarEditing;

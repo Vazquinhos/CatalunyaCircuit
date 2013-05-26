@@ -39,6 +39,8 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
     _buildings4 = manager->getModel("Circuit/buildings4.3ds");
     _buildings5 = manager->getModel("Circuit/buildings5.3ds");
     _buildings6 = manager->getModel("Circuit/buildings6.3ds");
+    _semNormal =  new Semaphore();
+    _semNormal->startSemaphore();
 
     // ========================== Phisics Bullet =================
     //int width = 40000, length = 40000;
@@ -91,6 +93,7 @@ Enviroment::~Enviroment()
  |  Parameters: Point3D *pointCamera : Position of the camera, int distance : Maximum distance that the object will be visible
  *-------------------------------------------------------------------*/
 void Enviroment::checkVisibility(vector<GLuint> *displayLists){
+
     _sky->putDisplayLists(displayLists);
     _terrain->checkVisibility(displayLists);
     _advertisement->checkVisibility(displayLists);
@@ -105,6 +108,8 @@ void Enviroment::checkVisibility(vector<GLuint> *displayLists){
     _buildings4->checkVisibility(displayLists);
     _buildings5->checkVisibility(displayLists);
     _buildings6->checkVisibility(displayLists);
+
+    _semNormal->getModel()->checkVisibility(displayLists);
 }
 
 

@@ -6,6 +6,7 @@
 #include "Commands/camerascmd.h"
 #include "about.h"
 #include "Sound/SoundManager.h"
+#include "Commands/lightscmd.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -50,12 +51,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cars->setIcon(icon8);
 
 
-    //--------------- Camera Settings -----------------
+    //--------------- Camera Settings --------
     QIcon icon9;
     icon9.addFile("Media/Images/camera.png");
     ui->cameras->setIcon(icon9);
     _p_camera_qt = new CameraWindowQt();
 
+    //--------------- Lights Settings ---------
+    QIcon icon4;
+    icon4.addFile("Media/Images/1365553596_idea.png");
+    ui->lights->setIcon(icon4);
+
+    //--------------- Spline Settings ---------
+    QIcon icon3;
+    icon3.addFile("Media/Images/bspline.png");
+    ui->trajects->setIcon(icon3);
+    _p_traject_qt = new TrajectSelectionQt();
 
     //--------------- About  -----------------
     QIcon icon10;
@@ -71,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->frame->setMinimumHeight(ui->widget->height());
 
     CarEditing = false;
+    ui->pause->hide();
+    ui->play->show();
 }
 
 MainWindow::~MainWindow()
@@ -144,4 +157,28 @@ void MainWindow::closeEvent(QCloseEvent *event)
     qDebug() << "CERRANDO";
     //SoundManager::getSoundManager()->Stop();
     //SoundManager::getSoundManager()->CleanUP();
+}
+
+void MainWindow::on_play_clicked()
+{
+    ui->pause->show();
+    ui->play->hide();
+}
+
+void MainWindow::on_pause_clicked()
+{
+    ui->pause->hide();
+    ui->play->show();
+}
+
+void MainWindow::on_trajects_clicked()
+{
+    if(_p_traject_qt)
+        _p_traject_qt->show();
+}
+
+void MainWindow::on_lights_clicked()
+{
+    LightsCmd* light_cmd = new LightsCmd();
+    light_cmd->process();
 }

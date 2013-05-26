@@ -22,7 +22,7 @@ class Light
 {
 public:
     // ================= Constructores/Destructores ======================
-    Light();
+    Light(QString a_name);
     Light(const Light&ligjt);
     virtual ~Light();
 
@@ -42,6 +42,8 @@ public:
     QString           getSettingsInfo();
     void              setName( QString a_name);
     QString           getName();
+    light_type        getType();
+    void              setType( light_type a_type );
 protected:
     // ========================== Data Members ============================
     sfvector         _v_color;
@@ -49,7 +51,8 @@ protected:
     sfvector         _v_ambient;
     sfvector         _v_diffuse;
     Point3D        * _p_position;
-    QString         _name;
+    QString          _name;
+    light_type       _type;
 
     // ============================ Methods ===============================
 };

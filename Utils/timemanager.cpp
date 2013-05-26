@@ -5,8 +5,8 @@ TimeManager * TimeManager::_p_timeManager = NULL;
 TimeManager::TimeManager() : QObject()
 {
     _timerUpdate = new QTimer(this);
-    connect(_timerUpdate, SIGNAL(timeout()), this, SLOT(update()));
-    _timerUpdate->start(0);
+    connect(_timerUpdate, SIGNAL(timeout()), this, SLOT(updateTimers()));
+    _timerUpdate->start(1);
 
     _timerCount.start();
 }
@@ -32,18 +32,15 @@ void TimeManager::addUpdateable(Updatable *updatable){
     _vUpdatables.push_back(updatable);
 }
 
-void TimeManager::update(){
+void TimeManager::updateTimers(){
     for(unsigned int i = 0; i < _vUpdatables.size(); ++i){
         _vUpdatables[i]->updateTimer();
     }
 }
 
-double TimeManager::getElapsedTime()
-{
-    return _elapsedTime;
+void TimeManager::setElapsedTime(float time){
+    _elapsedTime = time;
 }
-
-void TimeManager::setElapsedTime(double elapsedTime)
-{
-    _elapsedTime = elapsedTime;
+float TimeManager::getElapsedTime(){
+    return _elapsedTime;
 }

@@ -17,19 +17,19 @@ public:
     void addUpdateable(Updatable *updatable);
     int getCurrentTimeMilis();
     int getCurrentTimeSeconds();
+    void setElapsedTime(float time);
+    float getElapsedTime();
     ~TimeManager();
-    void setElapsedTime(double elapsedTime);
-    double getElapsedTime();
 
 private:
     static TimeManager * _p_timeManager;
     std::vector<Updatable*> _vUpdatables;
     QTimer *_timerUpdate;
     QTime _timerCount;
-    double _elapsedTime;
+    float _elapsedTime;
 
 private slots:
-    void update();
+    void updateTimers();
 };
 
 #endif // TIMEMANAGER_H

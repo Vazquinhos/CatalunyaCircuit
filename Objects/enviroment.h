@@ -22,6 +22,7 @@
 #include "Utils/util.h"
 #include <bullet/btBulletDynamicsCommon.h> //Physics Simulation, Bullet
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include "Objects/semaphore.h"
 
 
 class Enviroment
@@ -50,6 +51,7 @@ private:
     Model3D *_buildings4;
     Model3D *_buildings5;
     Model3D *_buildings6;
+    Semaphore *_semNormal;
 
 
     // ========================== Phisics Bullet Members =================

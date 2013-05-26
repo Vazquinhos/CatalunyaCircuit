@@ -31,7 +31,7 @@ CameraWindowQt::LoadWindow(std::map<QString,CameraAbs*> a_cameras)
 
     // The icon of the cameras for the list widget
     QIcon icon;
-    icon.addFile("Media/Images/1365553750_film_camera_35mm.png");
+    icon.addFile("Media/Images/camera.png");
 
     // For each element in the map..
     for(itr = a_cameras.begin(); itr != a_cameras.end(); ++itr)
@@ -64,9 +64,6 @@ CameraWindowQt::updateWidgetsWithCamera( CameraAbs* ap_camera )
     QString camera_name = ap_camera->getName();
 
     ui->line_name->setText(camera_name);
-
-    ui->cb_mode->setCurrentIndex(0);
-
 
     camera_type type = ap_camera->getType();
     switch (type)
@@ -307,12 +304,11 @@ CameraAbs* CameraWindowQt::getCameraFromQt()
     p_camera_to_rtn->setPosition( new Point3D( ui->x->value(), ui->y->value(), ui->z->value()));
 
     p_camera_to_rtn->setYawPitch(ui->sb_yaw->value(),ui->sb_pitch->value());
-    p_camera_to_rtn->setZoom(ui->cb_zoom->value());
 
     return p_camera_to_rtn;
 }
 
-void CameraWindowQt::on_cb_zoom_editingFinished()
+void CameraWindowQt::on_x_editingFinished()
 {
     QListWidgetItem* p_item = ui->listWidget->currentItem();
 
@@ -322,5 +318,5 @@ void CameraWindowQt::on_cb_zoom_editingFinished()
     QString current_camera = p_item->text();
 
     // Le pedimos al camera manager que nos elimine la camara seleccionada
-    CameraManager::getCameraManager()->getCamera(current_camera)->setZoom(ui->cb_zoom->value());
+    CameraManager::getCameraManager()->getCamera(current_camera)->setPitch(ui->sb_pitch->value());
 }

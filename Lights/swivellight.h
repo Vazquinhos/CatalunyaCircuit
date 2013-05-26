@@ -24,7 +24,7 @@ class SwivelLight : public Light
 {
 public:
     // ================= Constructores/Destructores ======================
-    SwivelLight();
+    SwivelLight( QString a_name );
     ~SwivelLight();
 
     // ============================ Methods ===============================

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
-    <height>367</height>
+    <width>449</width>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -169,92 +169,36 @@ QPushButton:pressed {
         <property name="bottomMargin">
          <number>10</number>
         </property>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Zoom</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="label_8">
           <property name="text">
            <string>Pich</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="1" column="0">
          <widget class="QLabel" name="label_7">
           <property name="text">
            <string>Yaw</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item row="2" column="1">
          <widget class="QDoubleSpinBox" name="sb_pitch">
           <property name="maximum">
            <double>1000.000000000000000</double>
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QDoubleSpinBox" name="cb_zoom">
-          <property name="maximum">
-           <double>1000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="line_name"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="cb_mode">
-          <item>
-           <property name="text">
-            <string>PERSPECTIVE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ORTOGONAL</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Name</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Mode</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Type</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="sb_yaw">
-          <property name="maximum">
-           <double>1000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
+        <item row="4" column="1">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="1" column="1">
            <widget class="QDoubleSpinBox" name="y">
+            <property name="minimum">
+             <double>-9999999.000000000000000</double>
+            </property>
             <property name="maximum">
-             <double>1000.000000000000000</double>
+             <double>999999.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -274,8 +218,11 @@ QPushButton:pressed {
           </item>
           <item row="0" column="1">
            <widget class="QDoubleSpinBox" name="x">
+            <property name="minimum">
+             <double>-99991.000000000000000</double>
+            </property>
             <property name="maximum">
-             <double>1000.000000000000000</double>
+             <double>100000.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -288,14 +235,17 @@ QPushButton:pressed {
           </item>
           <item row="2" column="1">
            <widget class="QDoubleSpinBox" name="z">
+            <property name="minimum">
+             <double>-9999999.000000000000000</double>
+            </property>
             <property name="maximum">
-             <double>1000.000000000000000</double>
+             <double>9999999.000000000000000</double>
             </property>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="6" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="label_3">
           <property name="styleSheet">
            <string notr="true"/>
@@ -305,7 +255,7 @@ QPushButton:pressed {
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item row="3" column="1">
          <widget class="QComboBox" name="cb_type">
           <item>
            <property name="text">
@@ -322,6 +272,30 @@ QPushButton:pressed {
             <string>FIXED</string>
            </property>
           </item>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="line_name"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="sb_yaw">
+          <property name="maximum">
+           <double>1000.000000000000000</double>
+          </property>
          </widget>
         </item>
        </layout>

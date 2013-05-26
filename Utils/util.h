@@ -54,6 +54,11 @@ typedef enum e_CameraType {
     SPHERICAL
 }camera_type;
 
+typedef enum e_LightType {
+    NORMAL,
+    SWIVEL
+}light_type;
+
 #ifndef PI
 #define PI 3.141592653589
 #endif

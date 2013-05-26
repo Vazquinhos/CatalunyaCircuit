@@ -42,13 +42,14 @@ public:
     void              addYawPitch(float yaw, float pitch);
     void              getYawPitch(float &yaw, float &pitch);
     void              setYaw(float yaw);
-    void             setPitch(float pitch);
+    void              setPitch(float pitch);
     float             getYaw(float yaw);
-    float              getPitch(float pitch);
+    float             getPitch(float pitch);
     void              setZoom(float zoom);
     float             getZoom();
     virtual Vector3D* getDirectionVector();
     void              setDirectionVector( Vector3D* );
+    void              setType( camera_type a_type );
 
 
 protected:

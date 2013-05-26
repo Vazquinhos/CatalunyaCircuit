@@ -53,7 +53,7 @@ SettingsExporter::Execute()
     if( _lights )
     {
         out << "<lights>" << endl;
-        QString info_lights = LightManager::getLightManager()->getCCSCameraInfoToExport();
+        QString info_lights = LightManager::getLightManager()->getCCSLightsInfoToExport();
         out << info_lights << endl;
         out << "</lights>" << endl;
     }

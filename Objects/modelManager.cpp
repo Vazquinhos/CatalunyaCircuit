@@ -70,7 +70,12 @@ void ModelManager::setFolderToLoad(QString folderPath, QStringList modelFilters,
  |  Parameters: string modelName : The name of the file of the model
  *-------------------------------------------------------------------*/
 Model3D*  ModelManager::getModel(QString modelName){
-    return _models[modelName];
+    Model3D *model;
+    model = _models[modelName];;
+    if(!model){
+        qDebug() << "Model manager does not have " << modelName;
+    }
+    return model;
 }
 
 /*-------------------------------------------------------------------
@@ -113,7 +118,7 @@ void ModelManager::loadModels(){
 
     int i;
     int size = modelsList.size();
-    int progress = 47/size+1;
+    int progress = 52/size+1;
 #pragma omp parallel for private(i) firstprivate(size) shared(modelsList, progress) default(none)
     for(i=0; i < size; i++){ //Load all models
         QString modelName = modelsList[i];
@@ -122,6 +127,7 @@ void ModelManager::loadModels(){
             assimpFlags = aiProcess_TransformUVCoords | aiProcess_JoinIdenticalVertices |aiProcess_SortByPType | aiProcess_Triangulate | aiProcess_SplitLargeMeshes| aiProcess_FindInstances | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeMeshes | aiProcess_ImproveCacheLocality;
         }
         QString model = QString("1/3 Loading model: ") + modelName;
+        qDebug() << model;
         progress++;
         emit NewModel( model, progress);
 
@@ -140,7 +146,7 @@ void ModelManager::loadMaterials(){
 void ModelManager::render(){
     //Bind all textures and render models
     int size = _models.size();
-    int progress = 47/size+1;
+    int progress = 52/size+1;
     for(std::map<QString,Model3D*>::iterator i = _models.begin(); i != _models.end(); i++){
         Model3D *object3D = i->second;
         QString modelName = QString("3/3 Render model: ") +  object3D->getName();

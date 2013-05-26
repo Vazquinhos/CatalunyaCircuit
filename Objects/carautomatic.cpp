@@ -5,7 +5,7 @@
 #include "Utils/timemanager.h"
 #include <math.h>
 
-CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Updatable(updateInterval), Car(folderPath, new Point3D())
+CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Updatable(updateInterval, true), Car(folderPath, new Point3D())
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));
@@ -61,7 +61,7 @@ void CarAutomatic::update(){
 
     setPosition(position);
 
-    CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() + 8, position->getY() + 8, position->getZ() + 8) );
+    //CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() + 8, position->getY() + 8, position->getZ() + 8) );
 
 
     // Rotating the car towards the traject

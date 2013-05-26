@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun May 26 12:54:27 2013
+** Created: Sun May 26 20:00:48 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -43,6 +43,8 @@ public:
     QPushButton *pause;
     QPushButton *cars;
     QPushButton *cameras;
+    QPushButton *lights;
+    QPushButton *trajects;
     QPushButton *import_2;
     QPushButton *export_2;
     QPushButton *about;
@@ -130,6 +132,20 @@ public:
 
         verticalLayout->addWidget(cameras);
 
+        lights = new QPushButton(frame);
+        lights->setObjectName(QString::fromUtf8("lights"));
+        lights->setMinimumSize(QSize(180, 70));
+        lights->setIconSize(QSize(64, 64));
+
+        verticalLayout->addWidget(lights);
+
+        trajects = new QPushButton(frame);
+        trajects->setObjectName(QString::fromUtf8("trajects"));
+        trajects->setMinimumSize(QSize(180, 70));
+        trajects->setIconSize(QSize(64, 64));
+
+        verticalLayout->addWidget(trajects);
+
         import_2 = new QPushButton(frame);
         import_2->setObjectName(QString::fromUtf8("import_2"));
         import_2->setMinimumSize(QSize(180, 70));
@@ -185,6 +201,8 @@ public:
         pause->setText(QApplication::translate("MainWindow", "PAUSE", 0, QApplication::UnicodeUTF8));
         cars->setText(QApplication::translate("MainWindow", "CARS", 0, QApplication::UnicodeUTF8));
         cameras->setText(QApplication::translate("MainWindow", "CAMERAS", 0, QApplication::UnicodeUTF8));
+        lights->setText(QApplication::translate("MainWindow", "LIGTHS", 0, QApplication::UnicodeUTF8));
+        trajects->setText(QApplication::translate("MainWindow", "TRAJECTS", 0, QApplication::UnicodeUTF8));
         import_2->setText(QApplication::translate("MainWindow", "IMPORT...", 0, QApplication::UnicodeUTF8));
         export_2->setText(QApplication::translate("MainWindow", "EXPORT..", 0, QApplication::UnicodeUTF8));
         about->setText(QApplication::translate("MainWindow", "ABOUT US", 0, QApplication::UnicodeUTF8));

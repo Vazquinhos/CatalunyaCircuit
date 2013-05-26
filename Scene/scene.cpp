@@ -56,8 +56,8 @@ Scene::Scene()
     //}
 
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
-    unsigned int vuelta = SoundManager::getSoundManager()->CreateSource();
-    SoundManager::getSoundManager()->PlayRelativeSource(vuelta, "ambiente", true);
+    //unsigned int vuelta = SoundManager::getSoundManager()->CreateSource();
+    //SoundManager::getSoundManager()->PlayRelativeSource(vuelta, "ambiente", true);
 
     _bSplineManager = BSplineManager::getBSplineManager();
 }

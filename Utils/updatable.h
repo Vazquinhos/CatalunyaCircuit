@@ -6,12 +6,16 @@
 class Updatable
 {
 public:
-    Updatable(int updateInterval);
-    virtual ~Updatable();
-    virtual void update();
+    Updatable(int updateInterval, bool start);
+    ~Updatable();
+    void update();
     void updateTimer();
 
+    void startAllTimers();
+    void stopAllTimers();
+
 protected:
+    bool _isActive;
     int _updateInterval;
     int _currentTime;
 };

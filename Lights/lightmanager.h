@@ -31,12 +31,13 @@ public:
     // ============================ Methods ===============================
     static LightManager		* getLightManager();
     Light			        * getLight(QString light_name);
-    void			          setLight(Light *light);
+    void			          addLight(Light *light);
     Light*                    getActiveLight();
     void                      setActiveLight(QString active);
     void                      update();
-    QString                   getCCSCameraInfoToExport();
+    QString                   getCCSLightsInfoToExport();
     void                      setupDefault();
+    std::map<QString, Light*> getLights();
 private:
     // ========================== Data Members ============================
     static LightManager           * _lightManager;

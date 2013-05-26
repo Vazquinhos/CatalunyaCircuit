@@ -20,7 +20,7 @@
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Car::Car(const Car& car)
+Car::Car(const Car& car) : QObject()
 {
 }
 
@@ -31,7 +31,7 @@ Car::Car(const Car& car)
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld)
+Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamicsWorld) : QObject()
 {
     setModelsWithPos(folderPath, position);
     _chassisCollisionShape = new btBoxShape(btVector3(1,3,0.4));
@@ -60,7 +60,7 @@ Car::Car(QString folderPath, Point3D *position, btDiscreteDynamicsWorld *dynamic
  |  Parameters:
  |  Returns:
  *-------------------------------------------------------------------*/
-Car::Car(QString folderPath, Point3D *position)
+Car::Car(QString folderPath, Point3D *position) : QObject()
 {
     setModelsWithPos(folderPath, position);
 }
@@ -107,8 +107,8 @@ Point3D * Car::getPosition(){
  |  setPosition
  |  Purpose: Set the position of the car
  *-------------------------------------------------------------------*/
-void Car::setPosition(Point3D *position){
-
+void Car::setPosition(Point3D *position)
+{
     _position = position;
 }
 

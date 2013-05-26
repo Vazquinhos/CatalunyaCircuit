@@ -31,6 +31,9 @@ public:
     GLWidget(QWidget *parent = NULL);
     ~GLWidget();
 
+    void StartAnimation();
+    void StopAnimation();
+
 public slots:
     void onZoomChanged(qreal x);
     void onAnimZoomFinished();

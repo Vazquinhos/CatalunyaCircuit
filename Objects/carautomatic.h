@@ -5,16 +5,17 @@
 #include "Objects/car.h"
 #include <QFile>
 #include <QTextStream>
+#include <QTimer>
 
-class CarAutomatic: public Updatable, public Car
+class CarAutomatic: public Car
 {
 public:
     CarAutomatic(QString folderPath,QString splinePath, int updateInterval);
     CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld);
     virtual ~CarAutomatic();
 
-    virtual void update();
-
+    void startRace();
+    void resetRace();
 private:
     BSpline *_spline;
     int _currentPoint;
@@ -32,6 +33,10 @@ private:
 
     QFile* file;
     QTextStream* out;
+    QTimer * _timerUpdate;
+
+    public slots:
+        virtual void update();
 
 };
 

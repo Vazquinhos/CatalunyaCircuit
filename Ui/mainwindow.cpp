@@ -163,12 +163,15 @@ void MainWindow::on_play_clicked()
 {
     ui->pause->show();
     ui->play->hide();
+
+    ui->widget->StartAnimation();
 }
 
 void MainWindow::on_pause_clicked()
 {
     ui->pause->hide();
     ui->play->show();
+    ui->widget->StopAnimation();
 }
 
 void MainWindow::on_trajects_clicked()

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'trajectselectionqt.ui'
 **
-** Created: Sun May 26 19:59:19 2013
+** Created: Sun May 26 23:35:30 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

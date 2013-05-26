@@ -6,7 +6,7 @@
 #include <QStringList>
 #include "Utils/color.h"
 
-BSpline::BSpline(QString filePath, int updateTime) : Updatable(updateTime, true)
+BSpline::BSpline(QString filePath, int updateTime)
 {
     _filename = filePath;
     _currentAngle = 0;

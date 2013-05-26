@@ -22,6 +22,9 @@ public:
     void closeEvent(QCloseEvent *event);
     ~MainWindow();
 
+signals:
+    void StartAnimation();
+
 private slots:
     // ============================ Slots ==============================
     void on_cameras_clicked();

@@ -1,11 +1,11 @@
 #include "carautomatic.h"
 #include "Objects/bsplinemanager.h"
 #include <QVector>
-#include "Operators/BSplineInterpolatorOp.h"5
+#include "Operators/BSplineInterpolatorOp.h"
 #include "Utils/timemanager.h"
 #include <math.h>
 
-CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Updatable(updateInterval, true), Car(folderPath, new Point3D())
+CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Car(folderPath, new Point3D())
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));
@@ -33,11 +33,15 @@ CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInt
 
     if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
         return;
+
+
+    _timerUpdate = new QTimer(this);
+    connect(_timerUpdate, SIGNAL(timeout()), this, SLOT(update()));
 
     out = new QTextStream(file);
 }
 
-CarAutomatic::CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld) : Updatable(updateInterval), Car(folderPath, new Point3D(), dynamicsWorld)
+CarAutomatic::CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld) : Car(folderPath, new Point3D(), dynamicsWorld)
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));
@@ -65,12 +69,28 @@ CarAutomatic::CarAutomatic(QString folderPath,QString splinePath, int updateInte
 
     if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
         return;
+
+
+    _timerUpdate = new QTimer(this);
+    connect(_timerUpdate, SIGNAL(timeout()), this, SLOT(update()));
 
     out = new QTextStream(file);
 }
 
 CarAutomatic::~CarAutomatic(){
 
+}
+
+void CarAutomatic::startRace()
+{
+    _timerUpdate->start(100);
+}
+
+void CarAutomatic::resetRace()
+{
+    _timerUpdate->stop();
+    _totalTime = 0;
+    _currentPoint = 0;
 }
 
 void CarAutomatic::update(){

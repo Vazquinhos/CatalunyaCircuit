@@ -23,9 +23,9 @@
 #include "Cameras/cameramanager.h"
 #include "Cameras/fixedcamera.h"
 
-class Car
+class Car : public QObject
 {
-
+    Q_OBJECT
 public:
     static const int FRONTAL_CAMERA = 1;
     static const int REAR_CAMERA    = 2;
@@ -107,6 +107,10 @@ protected:
     void setModelsWithPos(QString folderPath, Point3D *position);
 
     void viewCameraOffeset(OffsetYawPitch offset);
+
+
+public slots:
+    virtual void update(){}
 };
 
 #endif // CARMeshInstance_H

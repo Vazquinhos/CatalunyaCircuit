@@ -56,7 +56,6 @@ SOURCES += main.cpp\
     Utils/XMLParser.cpp \
     Utils/fileutils.cpp \
     Utils/color.cpp \
-    Utils/updatable.cpp \
     Objects/carautomatic.cpp \
     Operators/BSplineInterpolatorOp.cpp \
     Ui/trajectselectionqt.cpp \
@@ -116,7 +115,6 @@ HEADERS  += \
     Utils/expat.h \
     Utils/fileutils.h \
     Utils/color.h \
-    Utils/updatable.h \
     Objects/carautomatic.h \
     Operators/BSplineInterpolatorOp.h \
     Ui/trajectselectionqt.h \

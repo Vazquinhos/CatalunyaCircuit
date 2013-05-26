@@ -218,6 +218,16 @@ void GLWidget::paintGL()
 
 }
 
+void GLWidget::StartAnimation()
+{
+    _scene->startCarAnimation();
+}
+
+void GLWidget::StopAnimation()
+{
+    _scene->stopCarAnimation();
+}
+
 /*****************************************************************************
  * resizeGL()
  *      Called on mouse click. Controls this input.

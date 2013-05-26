@@ -12,9 +12,8 @@
 
 #include "Utils/point3D.h"
 #include "Cameras/cameramanager.h"
-#include "Utils/updatable.h"
 
-class BSpline : public Updatable
+class BSpline
 {
 public:
     BSpline(QString filePath, int updateTime);

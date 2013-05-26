@@ -25,7 +25,6 @@
 #include <bullet/btBulletDynamicsCommon.h>
 #include <Objects/bsplinemanager.h>
 #include <Objects/objectManager.h>
-#include <Utils/updatable.h>
 #include <Objects/carautomatic.h>
 
 using namespace std;
@@ -41,6 +40,8 @@ public:
     void simulatePhisics(btScalar timeStep);
     void paint2DText(float x, float y, void *font, const char *string);
     void turnDebugMode();
+    void startCarAnimation();
+    void stopCarAnimation();
 
     // ============================ Inherited ===============================
     void update();
@@ -56,6 +57,8 @@ private:
     btCollisionDispatcher* _dispatcher;
     btSequentialImpulseConstraintSolver* _solver;
     btDiscreteDynamicsWorld* _dynamicsWorld;
+
+    CarAutomatic * c2;
 
     // ============================ Methods ===============================
 };

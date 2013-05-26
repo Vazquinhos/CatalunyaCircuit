@@ -8,7 +8,7 @@
  *          Gabriel Diaz Arias
  */
 
-#include "lightscmd.h".h"
+#include "lightscmd.h"
 #include "Lights/lightmanager.h"
 #include "Ui/camerawindowqt.h"
 #include <QObject>

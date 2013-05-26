@@ -37,3 +37,13 @@ void TimeManager::update(){
         _vUpdatables[i]->updateTimer();
     }
 }
+
+double TimeManager::getElapsedTime()
+{
+    return _elapsedTime;
+}
+
+void TimeManager::setElapsedTime(double elapsedTime)
+{
+    _elapsedTime = elapsedTime;
+}

@@ -190,6 +190,7 @@ void GLWidget::paintGL()
     double _fps = 1000.0f/_displayTimer.elapsed();
     _displayTimer.restart();
 
+    TimeManager::getTimeManager()->setElapsedTime(d_elapsedTime);
     _totalTime += d_elapsedTime;
     float elapsedTime = (float)d_elapsedTime/1000.f;
     /*
@@ -354,11 +355,13 @@ void GLWidget::processKeys(){
             if(_carViewer->isActive()){
                 _carViewer->exitViewer();
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
+                emit CarFinishEditing();
             }
 
             if(_isInDriveMode){
                 _isInDriveMode = false;
                 _cameraManager->setActiveCamera("free");
+                emit CarFinishEditing();
             }
             break;
 
@@ -367,6 +370,7 @@ void GLWidget::processKeys(){
                 _carViewer->selectCar();
                 _isInDriveMode = true;
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
+                emit CarFinishEditing();
             }break;
 
         case Qt::Key_Right: //Move camera to right

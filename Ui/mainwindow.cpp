@@ -65,9 +65,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->widget, SIGNAL(MPushed()), this, SLOT(Menu()));
     QObject::connect(ui->widget, SIGNAL(LoadingFinished()),this, SLOT(showMySelf()));
+    QObject::connect(ui->widget, SIGNAL(CarFinishEditing()),this, SLOT(CarEditingFinish()));
     menuVisible = true;
 
     ui->frame->setMinimumHeight(ui->widget->height());
+
+    CarEditing = false;
 }
 
 MainWindow::~MainWindow()
@@ -102,30 +105,43 @@ void MainWindow::showMySelf()
 }
 void MainWindow::on_import_2_clicked()
 {
+    if(!CarEditing){
     if(_p_imp_qt)
         _p_imp_qt->show();
+    }
 }
 
 void MainWindow::on_export_2_clicked()
 {
+    if(!CarEditing){
     if(_p_exp_qt)
         _p_exp_qt->show();
+    }
 }
 
 void MainWindow::on_cars_clicked()
 {
     ui->widget->changeCarModel();
+    ui->frame->hide();
+    CarEditing = true;
+}
+
+void MainWindow::CarEditingFinish()
+{
+    CarEditing = false;
 }
 
 void MainWindow::on_about_clicked()
 {
+    if(!CarEditing){
     if(_p_about)
         _p_about->show();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     qDebug() << "CERRANDO";
-    SoundManager::getSoundManager()->Stop();
-    SoundManager::getSoundManager()->CleanUP();
+    //SoundManager::getSoundManager()->Stop();
+    //SoundManager::getSoundManager()->CleanUP();
 }

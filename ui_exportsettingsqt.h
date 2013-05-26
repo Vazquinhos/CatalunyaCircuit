@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportsettingsqt.ui'
 **
-** Created: Sun May 26 02:11:48 2013
+** Created: Sun May 26 11:34:48 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,9 +39,10 @@ public:
     QLabel *label;
     QLabel *label_3;
     QHBoxLayout *horizontalLayout_2;
+    QCheckBox *_light;
+    QLabel *light_ico;
     QCheckBox *_cameras;
     QLabel *cameralab;
-    QFrame *line;
     QCheckBox *_cars;
     QLabel *carlab;
     QFrame *line_2;
@@ -102,6 +103,16 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        _light = new QCheckBox(frame);
+        _light->setObjectName(QString::fromUtf8("_light"));
+
+        horizontalLayout_2->addWidget(_light);
+
+        light_ico = new QLabel(frame);
+        light_ico->setObjectName(QString::fromUtf8("light_ico"));
+
+        horizontalLayout_2->addWidget(light_ico);
+
         _cameras = new QCheckBox(frame);
         _cameras->setObjectName(QString::fromUtf8("_cameras"));
 
@@ -112,13 +123,6 @@ public:
         cameralab->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_2->addWidget(cameralab);
-
-        line = new QFrame(frame);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::VLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        horizontalLayout_2->addWidget(line);
 
         _cars = new QCheckBox(frame);
         _cars->setObjectName(QString::fromUtf8("_cars"));
@@ -177,6 +181,8 @@ public:
         settlab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("ExportSettingsQt", ".css", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("ExportSettingsQt", "Select which setting you want to export...", 0, QApplication::UnicodeUTF8));
+        _light->setText(QString());
+        light_ico->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
         _cameras->setText(QString());
         cameralab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
         _cars->setText(QString());

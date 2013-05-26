@@ -20,7 +20,8 @@ private:
     btVector3 _lastDirection;
 
     int axis;
-
+    float _desfase;
+    float _totalTime;
     // This float describes the first rotation that is needed
     // to be applied to the car, in order to put the car towards the
     // first point of the BSpline

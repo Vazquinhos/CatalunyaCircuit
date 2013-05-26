@@ -2,14 +2,16 @@
 #include "Objects/bsplinemanager.h"
 #include <QVector>
 #include "Operators/BSplineInterpolatorOp.h"5
-
+#include "Utils/timemanager.h"
+#include <math.h>
 
 CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Updatable(updateInterval), Car(folderPath, new Point3D())
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));
-    _currentPoint = 1400;
-
+    _currentPoint = 1500;
+    _totalTime = 1500;
+    _desfase = PI/2;
     // Rotating the car towards the traject
     Vector3D splineVector(_spline->getPoint( 1 ), _spline->getPoint( 2 ));
 
@@ -41,15 +43,12 @@ CarAutomatic::~CarAutomatic(){
 
 void CarAutomatic::update(){
     int numPoints = _spline->getNumPoints();
-    /*Point3D *point;
 
-    if(_currentPoint < numPoints){
-        point = _spline->getPoint(_currentPoint);
+    float vel = 10.0f;
+    _totalTime += ((float) TimeManager::getTimeManager()->getElapsedTime()*vel/1000);
 
+    if(_totalTime - _currentPoint > 1)
         ++_currentPoint;
-    }else{
-        _currentPoint = 0;
-    }   */
 
     QVector<Point3D*> vPoints;
 
@@ -58,43 +57,36 @@ void CarAutomatic::update(){
     vPoints.append( _spline->getPoint(_currentPoint + 2 ));
     vPoints.append( _spline->getPoint(_currentPoint + 3 ));
 
-    _currentPoint++;
+    Point3D * position = spline(_totalTime - _currentPoint, vPoints);
 
-    Point3D* point2 = spline(0, vPoints);
-    setPosition(point2);
-    point2 = spline(1, vPoints);
-    setPosition(point2);
+    setPosition(position);
 
-    CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(point2->getX() + 8, point2->getY() + 8, point2->getZ() + 8) );
+    CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() + 8, position->getY() + 8, position->getZ() + 8) );
 
 
     // Rotating the car towards the traject
-    Vector3D splineVector(_spline->getPoint( _currentPoint ), _spline->getPoint( _currentPoint + 1 ));
 
-    btVector3 btsplineVector( splineVector.getX(),splineVector.getY(),splineVector.getZ() );
+    Vector3D splineVector(_spline->getPoint( trunc(_totalTime) ), _spline->getPoint( trunc(_totalTime + 1) ));
 
-    if( _currentPoint > 1140 )
+    btVector3 btsplineVector( splineVector.getX(),splineVector.getY(), 0 );
+
+
+    //comprobar el quadrante del vector director.
+    if(btsplineVector.getY() < 0 )
     {
         axis = -1;
+        _desfase = 3*PI/2;
     }
-
-    if( _currentPoint > 1670  )
+    else
     {
         axis = 1;
+        _desfase = PI/2;
     }
 
-    btScalar angle = btsplineVector.angle( btVector3(0,axis,0) );
-
-
-    if(angle > 0)
-        *out << "POSITIVO: " << angle << "\n";
-    else
-        *out << "NEGATIVO: " << angle << "\n";
-
-    _lastDirection = btsplineVector;
+    btScalar angle = btsplineVector.angle( btVector3(axis,0,0) );
 
     btTransform transform;
     _chasisObj->getWorldTransform(transform);
-    transform.setRotation(btQuaternion(btVector3(0,0,1),  angle + PI));
+    transform.setRotation(btQuaternion(btVector3(0,0,1),  angle + _desfase));
     _chasisObj->setWorldTransform(transform);
 }

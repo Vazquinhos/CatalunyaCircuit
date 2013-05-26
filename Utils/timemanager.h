@@ -18,12 +18,15 @@ public:
     int getCurrentTimeMilis();
     int getCurrentTimeSeconds();
     ~TimeManager();
+    void setElapsedTime(double elapsedTime);
+    double getElapsedTime();
 
 private:
     static TimeManager * _p_timeManager;
     std::vector<Updatable*> _vUpdatables;
     QTimer *_timerUpdate;
     QTime _timerCount;
+    double _elapsedTime;
 
 private slots:
     void update();

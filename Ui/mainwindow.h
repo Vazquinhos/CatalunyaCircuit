@@ -20,7 +20,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     void closeEvent(QCloseEvent *event);
     ~MainWindow();
-    
+
 private slots:
     // ============================ Slots ==============================
     void on_cameras_clicked();
@@ -37,6 +37,9 @@ private slots:
 
     void on_about_clicked();
 
+    void CarEditingFinish();
+
+
 
 private:
     // ========================== Data Members ============================
@@ -47,6 +50,7 @@ private:
     About*                _p_about;
 
     bool menuVisible;
+    bool CarEditing;
     // ============================ Methods ===============================
 };
 

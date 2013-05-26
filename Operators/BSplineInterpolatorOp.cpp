@@ -44,7 +44,7 @@ btVector3 Dspline(float time, QVector<Point3D*> ctr)
     // Pre-Condition
     unsigned sizeVec = ctr.size();
 
-    if((sizeVec == 0) || ( sizeVec != 4))
+    if((sizeVec > 0) || ( sizeVec > 4))
     {
         for(unsigned int i=0; i<4; ++i)
         {

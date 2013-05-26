@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'importsettingsqt.ui'
 **
-** Created: Sun May 26 02:11:48 2013
+** Created: Sun May 26 11:34:48 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,10 +41,10 @@ public:
     QLabel *label_2;
     QLabel *label_3;
     QHBoxLayout *horizontalLayout;
+    QCheckBox *_lights;
+    QLabel *light_icon;
     QCheckBox *camera_chk;
     QLabel *camera_icon;
-    QFrame *line_2;
-    QFrame *line_3;
     QCheckBox *car_chk;
     QLabel *car_icon;
     QDialogButtonBox *buttonBox;
@@ -116,6 +116,16 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        _lights = new QCheckBox(frame);
+        _lights->setObjectName(QString::fromUtf8("_lights"));
+
+        horizontalLayout->addWidget(_lights);
+
+        light_icon = new QLabel(frame);
+        light_icon->setObjectName(QString::fromUtf8("light_icon"));
+
+        horizontalLayout->addWidget(light_icon);
+
         camera_chk = new QCheckBox(frame);
         camera_chk->setObjectName(QString::fromUtf8("camera_chk"));
 
@@ -125,20 +135,6 @@ public:
         camera_icon->setObjectName(QString::fromUtf8("camera_icon"));
 
         horizontalLayout->addWidget(camera_icon);
-
-        line_2 = new QFrame(frame);
-        line_2->setObjectName(QString::fromUtf8("line_2"));
-        line_2->setFrameShape(QFrame::VLine);
-        line_2->setFrameShadow(QFrame::Sunken);
-
-        horizontalLayout->addWidget(line_2);
-
-        line_3 = new QFrame(frame);
-        line_3->setObjectName(QString::fromUtf8("line_3"));
-        line_3->setFrameShape(QFrame::VLine);
-        line_3->setFrameShadow(QFrame::Sunken);
-
-        horizontalLayout->addWidget(line_3);
 
         car_chk = new QCheckBox(frame);
         car_chk->setObjectName(QString::fromUtf8("car_chk"));
@@ -189,6 +185,8 @@ public:
         icon->setText(QApplication::translate("ImportSettingsQt", "TextLabel", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("ImportSettingsQt", "Select the settings to import...", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("ImportSettingsQt", "Select wich settings you want to import..", 0, QApplication::UnicodeUTF8));
+        _lights->setText(QString());
+        light_icon->setText(QApplication::translate("ImportSettingsQt", "TextLabel", 0, QApplication::UnicodeUTF8));
         camera_chk->setText(QString());
         camera_icon->setText(QApplication::translate("ImportSettingsQt", "TextLabel", 0, QApplication::UnicodeUTF8));
         car_chk->setText(QString());

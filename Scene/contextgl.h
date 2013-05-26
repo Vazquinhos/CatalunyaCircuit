@@ -43,6 +43,7 @@ signals:
     void MPushed();
     void LoadingFinished();
     void NewModelToPrint( QString );
+    void CarFinishEditing();
 
 
 protected:

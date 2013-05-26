@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     Utils/color.cpp \
     Utils/timemanager.cpp \
     Utils/updatable.cpp \
-    Objects/carautomatic.cpp
+    Objects/carautomatic.cpp \
+    Operators/BSplineInterpolatorOp.cpp
 
 
 
@@ -113,7 +114,8 @@ HEADERS  += \
     Utils/color.h \
     Utils/timemanager.h \
     Utils/updatable.h \
-    Objects/carautomatic.h
+    Objects/carautomatic.h \
+    Operators/BSplineInterpolatorOp.h
 
 
 FORMS    += \

@@ -1,0 +1,14 @@
+git add Cameras/*
+git add Commands/*
+git add docs/*
+git add Lights/*
+git add Loaders/*
+git add Log/*
+git add Media/*
+git add Objects/*
+git add Operators/*
+git add Scene/*
+git add Shader/*
+git add Sound/*
+git add Ui/*
+git add Utils/*

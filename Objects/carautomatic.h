@@ -10,6 +10,7 @@ class CarAutomatic: public Updatable, public Car
 {
 public:
     CarAutomatic(QString folderPath,QString splinePath, int updateInterval);
+    CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld);
     virtual ~CarAutomatic();
 
     virtual void update();
@@ -22,6 +23,8 @@ private:
     int axis;
     float _desfase;
     float _totalTime;
+    float _wheelAngle;
+
     // This float describes the first rotation that is needed
     // to be applied to the car, in order to put the car towards the
     // first point of the BSpline

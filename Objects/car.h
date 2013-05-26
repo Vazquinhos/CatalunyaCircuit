@@ -49,6 +49,8 @@ public:
     void      rotateIncX(float angleInc);
     void      rotateIncY(float angleInc);
     void      rotateIncZ(float angleInc);
+    void      setAngle(btScalar angle, float desfase);
+    void      wheelRotation(float angle);
 
     // ================= Getter / Setter ==================================
     int getCameraMode();
@@ -62,6 +64,7 @@ public:
     void viewCurrentCamera();
     void updateCurrentCameraPos();
     void viewCamera(int mode);
+    void makeTransform();
 
     // ============================ Inherited Methods ===============================
     void displayModels();
@@ -96,6 +99,10 @@ protected:
     btCollisionShape* _chassisCollisionShape;
     Vector3D *_orientation;
 
+    float _angle;
+    float _desfaseTrans;
+    float _wheelAngleTrans;
+    Point3D * _position;
     // ============================ Methods ===============================
     void setModelsWithPos(QString folderPath, Point3D *position);
 

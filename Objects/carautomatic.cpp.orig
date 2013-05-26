@@ -105,8 +105,12 @@ void CarAutomatic::update(){
 
     float timeInterpolation = _totalTime;
 
+<<<<<<< HEAD
+    //CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() + 8, position->getY() + 8, position->getZ() + 8) );
+=======
     while(timeInterpolation > numPoints)
         timeInterpolation -= numPoints;
+>>>>>>> Nando
 
     Point3D * position = spline(timeInterpolation - _currentPoint, vPoints);
 

@@ -16,10 +16,11 @@ public:
     void startSemaphore();
     void endSemaphore();
     Model3D * getModel();
+    bool isActive();
 
     //=================== Inherited =================
 public slots:
-    void update();
+    void updateSemaphoreState();
 
 private:
     int _state;
@@ -27,12 +28,12 @@ private:
     ModelManager *_modelManager;
     Model3D *_semNormal;
     Model3D *_semRed1;
-    Model3D *_semRed2;
     Model3D *_semYellow;
     Model3D *_semGreen;
 
     Model3D *_model;
     QTimer *_timerUpdate;
+    bool _isActive;
 };
 
 #endif // SEMAPHORE_H

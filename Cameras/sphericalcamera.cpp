@@ -110,6 +110,6 @@ void SphericalCamera::render()
         glColor4f(0.8f, 0.0f, 0.0f, 1.0f);
         glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
         glutSolidSphere(2.0f, 100, 100);
-    glPushAttrib(GL_CURRENT_BIT);
+    glPopAttrib();
     glPopMatrix();
 }

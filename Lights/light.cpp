@@ -171,10 +171,12 @@ void Light::render()
 {
     glEnable(GL_BLEND);
     glPushMatrix();
+    glPushAttrib(GL_CURRENT_BIT);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
     glColor4f(1.0, 1.0, 0.8, 0.5);
     glTranslatef(_p_position->getX(), _p_position->getY(), _p_position->getZ());
     glutSolidSphere(20.0, 100, 100);
+    glPopAttrib();
     glPopMatrix();
     glDisable(GL_BLEND);
 }

@@ -58,4 +58,6 @@ SettingsExporter::Execute()
         out << "</lights>" << endl;
     }
     out << "</Catalunya Circuit Settings>" << endl;
+
+    file.close();
 }

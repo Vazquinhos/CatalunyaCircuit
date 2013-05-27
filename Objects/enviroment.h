@@ -34,6 +34,7 @@ public:
     ~Enviroment();
     // ============================ Methods ===============================
     void checkVisibility(vector<GLuint> *displayLists);
+    Semaphore * getSemaphore();
 
 private:
     // ========================== Data Members ============================

@@ -108,7 +108,7 @@ void Scene::display(float fps)
 
 	if(_debugMode)
     {
-        //_bSplineManager->display();
+        _bSplineManager->display();
         LightManager::getLightManager()->getActiveLight()->render();
         CameraManager::getCameraManager()->render();
         //ModelManager::getModelManager()->drawCenters();

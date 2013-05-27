@@ -17,6 +17,7 @@
 #define FIXEDCAMERA_H
 
 #include "cameraabs.h"
+#include "Utils/util.h"
 
 class FixedCamera : public CameraAbs
 {
@@ -32,11 +33,13 @@ public:
     virtual void        update();
     //virtual void        render();
     void                animate();
+    Point3D*    getPointToLook();
+    void    setPointToLook( Point3D* ap_point);
 
 
 private:
     // ========================== Data Members ============================
-
+    Point3D* _pointToLook;
 
     // ============================ Methods ===============================
 

@@ -67,6 +67,7 @@ stractValue(char in[], char out[], int size)
 void
 SettingsImporter::Execute()
 {
+    try{
     qDebug() << "EXECUTE!";
 
     char buff[256];
@@ -190,5 +191,9 @@ SettingsImporter::Execute()
         }
 
     }
-    file->close();
+        file->close();
+    } catch( ... ){
+
+    }
+    qDebug() << "";
 }

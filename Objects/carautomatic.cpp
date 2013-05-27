@@ -83,7 +83,7 @@ CarAutomatic::~CarAutomatic(){
 
 void CarAutomatic::startRace()
 {
-    _timerUpdate->start(100);
+    _timerUpdate->start(10);
 }
 
 void CarAutomatic::resetRace()
@@ -132,8 +132,8 @@ void CarAutomatic::update(){
 
     setPosition(position);
 
-    CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() +4 , position->getY() + 4, position->getZ()) );
-
+    //CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() +4 , position->getY() + 4, position->getZ()) );
+    ((FixedCamera*)CameraManager::getCameraManager()->getCamera("Recorrido1"))->setPointToLook(new Point3D(position->getX() , position->getY(), position->getZ()));
     // Rotating the car towards the traject
 
 

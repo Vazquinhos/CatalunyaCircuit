@@ -86,6 +86,10 @@ Enviroment::~Enviroment()
 // ============================ Methods ===============================
 
 
+Semaphore * Enviroment::getSemaphore(){
+    return _semNormal;
+}
+
 /*-------------------------------------------------------------------
  |  Function checkVisibility
  |

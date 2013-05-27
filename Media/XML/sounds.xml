@@ -12,6 +12,8 @@
         <Sound action="cursorAccept" path="./Media/Sounds/GT5/gt_life.wav" />
         <Sound action="buyCar" path="./Media/Sounds/GT5/ka_ching.wav" />
         <Sound action="startRace" path="./Media/Sounds/GT5/ready_set_go.wav" />
+        <Sound action="ready" path="./Media/Sounds/GT5/ready.wav" />
+        <Sound action="go" path="./Media/Sounds/GT5/go.wav" />
         <Sound action="cursorSelect" path="./Media/Sounds/GT5/select.wav.wav" />
 
 

@@ -329,9 +329,9 @@ void Model3D::checkVisibility(vector<GLuint> *displayLists){
 
     for(unsigned int i=0; i < _vMeshInstances.size(); i++){
         meshInstance = _vMeshInstances[i];
-        if(_isVisible){
+
             displayLists->push_back(meshInstance->getDisplayList());
-        }
+
         /*pObject = meshInstance->getCenter();
         vObject = pObject->resta(posCamera);
 

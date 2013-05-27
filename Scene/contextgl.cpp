@@ -496,6 +496,13 @@ void GLWidget::processKeys(){
             }
             break;
 
+        case Qt::Key_P:{
+            if(!_objectManager->getEnviroment()->getSemaphore()->isActive()){
+                _objectManager->getEnviroment()->getSemaphore()->startSemaphore();
+            }
+        }
+            break;
+
         case Qt::Key_R:
             /*if(_shaders)
             releaseAllShaders();

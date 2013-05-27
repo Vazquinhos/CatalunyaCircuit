@@ -124,10 +124,12 @@ void CameraAbs::render()
 
         glTranslatef(getPosition()->getX(),getPosition()->getY(), getPosition()->getZ());
         glPushMatrix();
+        glPushAttrib(GL_CURRENT_BIT);
             glRotatef(_yaw-90, 0,0,1);
             glRotatef(_pitch - 90, 1, 0, 0);
             glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
             glutSolidCone(1.0f, 4.0f, 100, 100);
+            glPopAttrib();
         glPopMatrix();
         glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
         glutSolidSphere(2.0f, 100, 100);
@@ -213,7 +215,7 @@ CameraAbs::getSettingsInfo()
     QString name = getName();
 
     settings_to_return = QString("<camera>\n") +  QString("<type>") + type +
-            QString("</type>\n") + QString("<name>\n")  + name +
+            QString("</type>\n") + QString("<name>")  + name +
             QString("</name>\n") + QString("<position>\n") +
             QString("<x>") + x + QString("</x>\n") +
             QString("<y>") + y + QString("</y>\n") +

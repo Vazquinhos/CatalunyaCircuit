@@ -262,13 +262,13 @@ bool Model3D::loadFromFile(unsigned int assimpFlags){
 |  Function render()
 |  Purpose: Renderizes the object by calling all buffer arrays of all meshes. Generates a display list for every mesh and MeshInstance
 *-------------------------------------------------------------------*/
-void Model3D::render(map<QString, GLuint> *textureIdMap) {
+void Model3D::render(map<QString, GLuint> *textureIdMap, bool saveVertex) {
     const aiScene *scene = _importer.GetScene();
     const aiNode *node = scene->mRootNode;
 
-     mapMaterials(scene, textureIdMap);
+    mapMaterials(scene, textureIdMap);
 
-    generateObjectBuffers(scene);
+    generateObjectBuffers(scene, saveVertex);
 
     renderMeshInstances(node);
 }
@@ -330,7 +330,7 @@ void Model3D::checkVisibility(vector<GLuint> *displayLists){
     for(unsigned int i=0; i < _vMeshInstances.size(); i++){
         meshInstance = _vMeshInstances[i];
 
-            displayLists->push_back(meshInstance->getDisplayList());
+        displayLists->push_back(meshInstance->getDisplayList());
 
         /*pObject = meshInstance->getCenter();
         vObject = pObject->resta(posCamera);
@@ -481,7 +481,7 @@ void Model3D::display() {
 |  Purpose: Generates all buffer arrays of all meshes by copying and parsing the needed info from the aiScene provided
 |  Parameters: const aiScene* pScene = The assimp object info of the object
 *-------------------------------------------------------------------*/
-void Model3D::generateObjectBuffers(const aiScene* pScene)
+void Model3D::generateObjectBuffers(const aiScene* pScene, bool saveVertex)
 {
     float minX, minY, minZ; //Max cooridnate vertex of all model
     float maxX, maxY, maxZ; //Min coordinate vertex of all model
@@ -575,7 +575,7 @@ void Model3D::generateObjectBuffers(const aiScene* pScene)
                 indices.push_back(Face.mIndices[2]);
             }
             //Generate and initialize the buffers with the copied data from importer, renders every mesh
-            mesh->render(pScene,&verticesCoord, &texturesCoord, &normalsCoord, &indices, &_vTextures);
+            mesh->render(pScene,&verticesCoord, &texturesCoord, &normalsCoord, &indices, &_vTextures, saveVertex);
             _vMeshes.push_back(mesh);
         }
         this->setMinVertex(new Point3D(minX, minY, minZ));
@@ -740,6 +740,48 @@ void Model3D::drawCenters()
         glutSolidCube(2.0f);
         glPopMatrix();
     }
+}
+
+
+float Model3D::getZofPoint(Point3D* point){
+    Mesh * mesh;
+    Point3D *pointObject = new Point3D;
+    btScalar pointX;
+    btScalar pointY;
+    btScalar pointZ;
+
+
+    mesh =  _vMeshes[0];
+    btScalar minPointX = (mesh->_verticesCoord)[0];
+    btScalar minPointY = (mesh->_verticesCoord)[1];
+    btScalar minPointZ = (mesh->_verticesCoord)[2];
+    pointObject->setCoordinates(minPointX, minPointY, minPointZ);
+
+    int distance;
+    int minDistance = pointObject->getDistance(point);
+
+
+    for(unsigned int i = 0; i < _vMeshes.size(); i++)
+    {
+        mesh = _vMeshes[i];
+        qDebug() << "Vertices Coord Size" << mesh->_verticesCoord.size();
+        for(int j = 0; j < mesh->_verticesCoord.size(); j+=3){
+            pointX = (mesh->_verticesCoord)[j];
+            pointY = (mesh->_verticesCoord)[j+1];
+            pointZ = (mesh->_verticesCoord)[j+2];
+            pointObject->setCoordinates(pointX, pointY, pointZ);
+            distance = pointObject->getDistance(point);
+
+            if(distance < minDistance){
+                minDistance = distance;
+                minPointX = pointX;
+                minPointY = pointY;
+                minPointZ = pointZ;
+            }
+
+        }
+    }
+    return minPointZ;
 }
 
 #endif /* OBJECT3DASSIMP_H_ */

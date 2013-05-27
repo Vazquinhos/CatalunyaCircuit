@@ -17,7 +17,7 @@ public:
     ~Mesh();
 
     void render(const aiScene* scene, vector<btScalar> *verticesCoord, vector<float> *texturesCoord, vector<float> *normalsCoord,
-                vector<int> *Indices, vector<Texture *> *_vTextures);
+                vector<int> *Indices, vector<Texture *> *_vTextures, bool saveVertex);
     GLuint _vertexBufferBindId;      //Vertex buffer array ID bind
     GLuint _texturesBufferBindId;    //Textures buffer array ID bind
     GLuint _normalsBufferBindId;     //Normals buffer array ID bind
@@ -31,6 +31,7 @@ public:
     GLuint        _gi_displayListId; //Display list of the mesh
     btBvhTriangleMeshShape *collisionShape;
     bool _isVisible; //Visibility of the mesh
+    vector<btScalar> _verticesCoord;
 
     void apply_material(const aiMaterial *mtl);
 

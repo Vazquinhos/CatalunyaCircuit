@@ -153,7 +153,12 @@ void ModelManager::render(){
         emit NewModel( modelName, progress++);
         QCoreApplication::processEvents();
 
-        object3D->render(&textureMap);
+        if(object3D->getName().contains("terrain")){
+            object3D->render(&textureMap, true);
+        }else{
+            object3D->render(&textureMap, false);
+        }
+
         object3D->release();
     }
 }

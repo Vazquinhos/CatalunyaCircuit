@@ -55,7 +55,7 @@ private:
 
     // ========================== Importer Methods ===========================
     bool loadFromFile(unsigned int assimpFlags);
-    void generateObjectBuffers(const aiScene* pScene);
+    void generateObjectBuffers(const aiScene* pScene, bool saveVertex);
     void mapMaterials(const aiScene* pScene, map<QString, GLuint> *textureIdMap);
     void renderMeshInstances(const aiNode *node);
     void renderNode(const aiNode *node);
@@ -83,9 +83,10 @@ public:
     void setVisibility(bool visibility);
     bool getVisibility();
     btCompoundShape *getCollisionShape(btTransform transform);
+    float getZofPoint(Point3D* point);
 
     void display();
-    void render(map<QString, GLuint> *textureIdMap);
+    void render(map<QString, GLuint> *textureIdMap, bool saveVertex);
     void checkVisibility(vector<GLuint> *displayLists);
     void putDisplayLists(vector<GLuint> *displayLists);
 

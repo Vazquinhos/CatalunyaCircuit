@@ -40,7 +40,7 @@ Mesh::~Mesh()
 |               const vector<float> &normalsCoord   = Vector with all normals info to generate its buffer array buffer id
 |               const vector<unsigned int> &indices = Vector with all face indexes info to generate its buffer array buffer id
 *-------------------------------------------------------------------*/
-void Mesh::render(const aiScene *scene, vector<btScalar> *verticesCoord, vector<float> *texturesCoord, vector<float> *normalsCoord, vector<int> *indices, vector<Texture *> *_vTextures)
+void Mesh::render(const aiScene *scene, vector<btScalar> *verticesCoord, vector<float> *texturesCoord, vector<float> *normalsCoord, vector<int> *indices, vector<Texture *> *_vTextures, bool saveVertex)
 {
     //*********************** Upload vertex, normals, textures coords to memory ***********************
     _numIndices = indices->size();
@@ -106,6 +106,13 @@ void Mesh::render(const aiScene *scene, vector<btScalar> *verticesCoord, vector<
 
 
     //collisionShape = new btBvhTriangleMeshShape(mIndexVertexArray, useQuantizedAabbCompression, aabbMin, aabbMax);
+
+    if(saveVertex){
+        _verticesCoord = *verticesCoord;
+        //for(unsigned int i = 0; i < verticesCoord->size(); ++i){
+
+        //}
+    }
 }
 
 /*-------------------------------------------------------------------

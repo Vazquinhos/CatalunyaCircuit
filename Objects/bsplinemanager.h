@@ -3,6 +3,7 @@
 
 #include "Objects/bspline.h"
 #include <vector>
+#include "Objects/model3D.h"
 
 class BSplineManager
 {
@@ -22,11 +23,13 @@ public:
 
 private:
     BSplineManager();
+    void correctSpline(BSpline* bspline);
     static BSplineManager *  _bSplineManager;
     BSpline *   _capturingSpline;
     bool _isCapturingSpline;
     int _numSavedSplines;
     int _lastSavedSpline;
+    Model3D* _terrainModel;
 
     std::map<QString, BSpline*>  _vBSplines;
 };

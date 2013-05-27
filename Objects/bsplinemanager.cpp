@@ -3,6 +3,7 @@
 
 #include "bsplinemanager.h"
 #include "Utils/fileutils.h"
+#include "Objects/modelManager.h"
 
 BSplineManager * BSplineManager::_bSplineManager = NULL;
 
@@ -22,12 +23,23 @@ BSplineManager::BSplineManager()
             file = fileNames[i];
             spline = new BSpline(file, 200);
             _vBSplines[file] = spline;
+
+
+            /*_isCapturingSpline = true;
+            _capturingSpline = _vBSplines[file];
+            saveCapturingSpline();*/
+
+
+
+
             qDebug() << "Loading spline: " << file;
         }
     }else{
         qDebug() << "Any bspline loaded";
     }
     render();
+
+    _terrainModel = ModelManager::getModelManager()->getModel("Circuit/terrain.3ds");
 }
 
 BSplineManager* BSplineManager::getBSplineManager(){
@@ -75,7 +87,7 @@ void BSplineManager::captureNewSpline(){
 void BSplineManager::cancelCapturingSpline(){
     if(_capturingSpline){
         _isCapturingSpline = false;
-        qDebug() << "Capture of spline " << _capturingSpline->getFilename() << " has been cancelled";
+        //qDebug() << "Capture of spline " << _capturingSpline->getFilename() << " has been cancelled";
     }
 }
 
@@ -87,11 +99,22 @@ void BSplineManager::updateCapturingSpline(){
 
 void BSplineManager::saveCapturingSpline(){
     if(_isCapturingSpline){
+        correctSpline(_capturingSpline);
         _vBSplines[_capturingSpline->getFilename()] = _capturingSpline;
         _capturingSpline->saveCapture();
         _capturingSpline->render();
         _isCapturingSpline = false;
         ++_lastSavedSpline;
         qDebug() << "Bspline: " << _capturingSpline->getFilename() << " saved successfully";
+    }
+}
+
+
+void BSplineManager::correctSpline(BSpline* bspline){
+    Point3D *point;
+
+    for(int i = 0; i < bspline->getNumPoints(); ++i){
+        point = bspline->getPoint(i);
+        point->setZ(_terrainModel->getZofPoint(point));
     }
 }

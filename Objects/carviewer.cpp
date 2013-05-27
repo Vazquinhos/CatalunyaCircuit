@@ -16,7 +16,7 @@ CarViewer::CarViewer()
 
     _cameraManager = CameraManager::getCameraManager();
 
-    _cam = dynamic_cast<FixedCamera*>(_cameraManager->getCamera("CarViewerCamera"));
+    _cam = dynamic_cast<FreeCamera*>(_cameraManager->getCamera("CarViewerCamera"));
 
     _carFolders<< "Ferrari/"<<"Hrt/"<<"India/"<<"Lotus/"<<"Mclaren/"<<"Mercedes/"<<"RedBull/"<<"Renault/"<<"Sauber/"<<"Virgin/"<<"Williams/";
     _numCars = _carFolders.size();

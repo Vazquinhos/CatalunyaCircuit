@@ -4,11 +4,12 @@
 #include "Objects/model3D.h"
 #include "Objects/objectManager.h"
 #include "Cameras/cameramanager.h"
-#include "Cameras/fixedcamera.h"
+#include "Cameras/freecamera.h"
 #include "Utils/point3D.h"
 #include <QStringList>
 #include <QTimer>
 #include <QObject>
+
 
 class CarViewer: public QObject
 {
@@ -30,7 +31,7 @@ public slots:
     void shiftCarToPrevious();
 
 private:
-    FixedCamera *_cam;
+    FreeCamera *_cam;
     std::vector<Model3D*> _vCars;
     QStringList _carFolders;
     int _numCars;

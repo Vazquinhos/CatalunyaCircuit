@@ -40,7 +40,6 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
     _buildings5 = manager->getModel("Circuit/buildings5.3ds");
     _buildings6 = manager->getModel("Circuit/buildings6.3ds");
     _semNormal =  new Semaphore();
-    _semNormal->startSemaphore();
 
     // ========================== Phisics Bullet =================
     //int width = 40000, length = 40000;

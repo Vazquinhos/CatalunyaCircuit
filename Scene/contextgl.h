@@ -34,6 +34,8 @@ public:
     void StartAnimation();
     void StopAnimation();
 
+    void CarViewerShow();
+
 public slots:
     void onZoomChanged(qreal x);
     void onAnimZoomFinished();
@@ -41,13 +43,13 @@ public slots:
     void startTimers();
     void PrintModel( QString, int val );
     void changeCarModel();
+    void runCar();
 
 signals:
     void MPushed();
     void LoadingFinished();
     void NewModelToPrint( QString );
     void CarFinishEditing();
-
 
 protected:
     virtual void initializeGL();
@@ -81,12 +83,15 @@ private:
     double _totalTime;
 
     bool _shaders;
+    bool animationEnabled;
+    bool carViewerActive;
 
     CarViewer *_carViewer;
     bool _isInDriveMode;
 
     QTimer *_physicsEventTimer;
     QTimer *_displayEventTimer;
+    QTimer *_semaEventTimer;
     QTime  _displayTimer;
     QTime  _physicsTimer;
     LoaderQt* loader;

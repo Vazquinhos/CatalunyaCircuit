@@ -134,9 +134,11 @@ void MainWindow::on_export_2_clicked()
 
 void MainWindow::on_cars_clicked()
 {
+    ui->widget->CarViewerShow();
     ui->widget->changeCarModel();
     ui->frame->hide();
     CarEditing = true;
+    ui->widget->CarViewerShow();
 }
 
 void MainWindow::CarEditingFinish()

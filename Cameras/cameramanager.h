@@ -38,7 +38,7 @@ public:
     void                   setActiveCamera(QString name);
     std::map<QString,CameraAbs*> getCameras();
     void                   render();
-
+    void                   setPointToLookAnimationCameras(Point3D* pointToLook);
 private:
 
     // =========================== Data Members =================================

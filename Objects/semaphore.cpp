@@ -1,6 +1,7 @@
 #include "semaphore.h"
 #include "Objects/objectManager.h"
 #include <QDebug>
+#include "Scene/scene.h"
 
 Semaphore::Semaphore()
 {

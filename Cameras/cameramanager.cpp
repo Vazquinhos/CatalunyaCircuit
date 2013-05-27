@@ -62,7 +62,7 @@ void CameraManager::render()
 void CameraManager::setupCameras() {
     SphericalCamera * spCam = new SphericalCamera(QString("spherical"));
     FreeCamera * frCam = new FreeCamera(QString("free"));
-    FixedCamera* fxCam = new FixedCamera(QString("CarViewerCamera"));
+    FreeCamera* fxCam = new FreeCamera(QString("CarViewerCamera"));
     FixedCamera* fxCamCar = new FixedCamera(QString("CarCamera"));
 
     FreeCamera * frCamTEST = new FreeCamera(QString("freeTest"));
@@ -71,7 +71,7 @@ void CameraManager::setupCameras() {
 
     Point3D* point= new Point3D(152.742,137.498,-74.439);
     fxCam->setPosition(point);
-    fxCam->setYawPitch(143,325.5);
+    fxCam->setYawPitch(135,337);
 
     frCam->setPosition(new Point3D(214.621,39.6959,-73.664));
     frCam->setYawPitch(59,356);
@@ -167,6 +167,44 @@ QString CameraManager::getCCSCameraInfoToExport()
 CameraAbs * CameraManager::getActiveCamera()
 {
     return _p_activeCamera;
+}
+
+void CameraManager::setPointToLookAnimationCameras(Point3D* pointToLook)
+{
+    for (int i = 1; i <= 24; ++i)
+    {
+        QString name;
+        if(i <10)
+            name = QString("Recorrido0%1").arg(i);
+        else
+            name = QString("Recorrido%1").arg(i);
+        ((FixedCamera*)_cameras[name])->setPointToLook(pointToLook);
+    }
+/*
+    Point3D* currentCamPos =  getActiveCamera()->getPosition();
+
+    Vector3D* currentDistanceVec = new Vector3D(pointToLook->getX()- currentCamPos->getX(),
+                                                pointToLook->getY()- currentCamPos->getY(),
+                                                pointToLook->getZ()- currentCamPos->getZ());
+
+     QString name = getActiveCamera()->getName();
+
+     int number = name.rightRef(2).toString().toInt();
+
+     Point3D* nextCamPos;
+     if( number < 10 )
+     nextCamPos = (_cameras[QString("Recorrido0%1").arg(number + 1)])->getPosition();
+     else
+     nextCamPos = (_cameras[QString("Recorrido%1").arg(number + 1)])->getPosition();
+     Vector3D* nextDistanceVec = new Vector3D(pointToLook->getX()- nextCamPos->getX(),
+                                              pointToLook->getY()- nextCamPos->getY(),
+                                              pointToLook->getZ()- nextCamPos->getZ());
+
+     if( nextDistanceVec->module() < currentDistanceVec->module() )
+        setActiveCamera(QString("Recorrido%1").arg(number + 1));
+
+     setActiveCamera(QString("Recorrido%1").arg(number));
+*/
 }
 
 void CameraManager::setActiveCamera(CameraAbs * camera)

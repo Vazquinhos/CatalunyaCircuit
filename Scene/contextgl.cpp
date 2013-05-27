@@ -91,6 +91,7 @@ void GLWidget::initializeWorld(){
 
     // 1) Load and initialize managers
 
+    animationEnabled  = false;
     _objectManager = ObjectManager::getObjectManager();
     _cameraManager = CameraManager::getCameraManager();
     _modelManager  =  ModelManager::getModelManager();
@@ -107,7 +108,7 @@ void GLWidget::initializeWorld(){
     // 3) Init shaders
     //----------------------------------------------------------
     shader =  new QGLShaderProgram();
-    //initializeShaders(QString("./Shader/simple"));
+    initializeShaders(QString("./Shader/simple"));
 
 
     QThread *p_thread = new QThread();
@@ -144,7 +145,7 @@ GLWidget::startTimers()
     modelManager->loadMaterials();
     modelManager->render();
     loader->hide();
-    _scene = new Scene();
+    _scene = Scene::getScene();
     _objectManager->checkVisibility();
     // This slot will be called when the signal finish of loading models is emited
     //4) Init physics simulation
@@ -162,9 +163,12 @@ GLWidget::startTimers()
 
     emit LoadingFinished();
 
-    _carViewer = new CarViewer();
     _timeManager = TimeManager::getTimeManager();
     _bSplineManager = BSplineManager::getBSplineManager();
+
+    _cameraManager->setActiveCamera("free");
+
+    carViewerActive = false;
 }
 
 
@@ -205,10 +209,53 @@ void GLWidget::paintGL()
     // DEPTH to ensure correct representation of objects given the depht testing used
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-    if(_carViewer->isActive())
+    if(carViewerActive)
         ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->update(d_elapsedTime, GL_LIGHT0);
     else
         LightManager::getLightManager()->update();
+
+    /*if(animationEnabled)
+    {
+        Point3D* currentCamPos =  _cameraManager->getActiveCamera()->getPosition();
+        Point3D* pointToLook = ((FixedCamera*)(_cameraManager->getActiveCamera()))->getPointToLook();
+
+        Vector3D* currentDistanceVec = new Vector3D(pointToLook->getX()- currentCamPos->getX(),
+                                                    pointToLook->getY()- currentCamPos->getY(),
+                                                    pointToLook->getZ()- currentCamPos->getZ());
+
+         QString name = _cameraManager->getActiveCamera()->getName();
+
+         int number = name.rightRef(2).toString().toInt();
+
+         Point3D* nextCamPos;
+
+         Vector3D* nextDistanceVec;
+         if( number < 10 )
+         {
+            nextCamPos = _cameraManager->getCamera(QString("Recorrido0%1").arg(number + 1))->getPosition();
+            nextDistanceVec = new Vector3D(pointToLook->getX()- nextCamPos->getX(),
+                                                  pointToLook->getY()- nextCamPos->getY(),
+                                                  pointToLook->getZ()- nextCamPos->getZ());
+
+            if( nextDistanceVec->module() < currentDistanceVec->module() )
+            {
+                _cameraManager->setActiveCamera(QString("Recorrido0%1").arg(number + 1));
+            } else {
+                _cameraManager->setActiveCamera(QString("Recorrido0%1").arg(number));
+            }
+
+         }else{
+            nextCamPos = _cameraManager->getCamera(QString("Recorrido%1").arg(number + 1))->getPosition();
+            nextDistanceVec = new Vector3D(pointToLook->getX()- nextCamPos->getX(),
+                                               pointToLook->getY()- nextCamPos->getY(),
+                                               pointToLook->getZ()- nextCamPos->getZ());
+            if( nextDistanceVec->module() < currentDistanceVec->module() ){
+                _cameraManager->setActiveCamera(QString("Recorrido%1").arg(number));
+            } else {
+                _cameraManager->setActiveCamera(QString("Recorrido%1").arg(number));
+            }
+         }
+    }*/
 
     // Update camera to its current position
     _cameraManager->getActiveCamera()->update();
@@ -218,14 +265,34 @@ void GLWidget::paintGL()
 
 }
 
+void GLWidget::CarViewerShow()
+{
+    _carViewer = new CarViewer();
+    carViewerActive = true;
+}
+
 void GLWidget::StartAnimation()
 {
+    if(!_objectManager->getEnviroment()->getSemaphore()->isActive()){
+        _objectManager->getEnviroment()->getSemaphore()->startSemaphore();
+    }
+    _semaEventTimer = new QTimer(this);
+    connect(_semaEventTimer, SIGNAL(timeout()), this, SLOT(runCar()));
+    _semaEventTimer->start(3000);
+    animationEnabled = true;
+}
+
+void GLWidget::runCar()
+{
     _scene->startCarAnimation();
+    _semaEventTimer->stop();
 }
 
 void GLWidget::StopAnimation()
 {
     _scene->stopCarAnimation();
+
+    animationEnabled = false;
 }
 
 /*****************************************************************************
@@ -234,12 +301,10 @@ void GLWidget::StopAnimation()
  *****************************************************************************/
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-
     if (event->buttons() & Qt::LeftButton)
     {
         posCam.setCoordinates(event->x(), event->y());
     }
-
 }
 
 
@@ -362,9 +427,10 @@ void GLWidget::processKeys(){
             break;
         case Qt::Key_Escape: //Move camera to right
 
-            if(_carViewer->isActive()){
+            if(carViewerActive){
                 _carViewer->exitViewer();
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
+                carViewerActive = false;
                 emit CarFinishEditing();
             }
 
@@ -376,16 +442,17 @@ void GLWidget::processKeys(){
             break;
 
         case Qt::Key_Return: //Move camera to right
-            if(_carViewer->isActive()){
+            if(carViewerActive){
                 _carViewer->selectCar();
                 _isInDriveMode = true;
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
+                carViewerActive = false;
                 emit CarFinishEditing();
             }break;
 
         case Qt::Key_Right: //Move camera to right
             //qDebug() << "PULSANDO RIGHT";
-            if(!_carViewer->isActive())
+            if(!carViewerActive)
             {
                 _cameraManager->getActiveCamera()->move(1, false);
                 _objectManager->checkVisibility();
@@ -397,7 +464,7 @@ void GLWidget::processKeys(){
 
         case Qt::Key_Left: //Move camera to left
             //qDebug() << "PULSANDO LEFT";
-            if(!_carViewer->isActive()){
+            if(!carViewerActive){
                 _cameraManager->getActiveCamera()->move(-1, false);
                 _objectManager->checkVisibility();
                 _bSplineManager->updateCapturingSpline();

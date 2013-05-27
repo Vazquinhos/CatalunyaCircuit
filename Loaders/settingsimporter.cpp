@@ -105,11 +105,11 @@ SettingsImporter::Execute()
                             stractValue(buff, name, 256);
                             qDebug() << name;
 
-                            if(strcmp(type, "FreeCamera"))
+                            if(strcmp(type, "FreeCamera") == 0)
                                 newCamera = new FreeCamera(QString(name));
-                            else if(strcmp(type, "FixedCamera"))
+                            else if(strcmp(type, "FixedCamera") == 0)
                                 newCamera = new FixedCamera(QString(name));
-                            else if(strcmp(type, "SphericalCamera"))
+                            else if(strcmp(type, "SphericalCamera") == 0)
                                 newCamera = new SphericalCamera(QString(name));
                             else
                             {

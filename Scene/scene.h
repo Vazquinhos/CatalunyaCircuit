@@ -33,13 +33,13 @@ class Scene
 {
 public:
     // ================= Constructores/Destructores ======================
-    Scene();
     ~Scene();
     // ============================ Methods ===============================
     void display(float fps);
     void simulatePhisics(btScalar timeStep);
     void paint2DText(float x, float y, void *font, const char *string);
     void turnDebugMode();
+    static Scene * getScene();
     void startCarAnimation();
     void stopCarAnimation();
 
@@ -47,6 +47,7 @@ public:
     void update();
 private:
     // ========================== Data Members ============================
+    Scene();
     ObjectManager  *    _objectManager;
     BSplineManager *    _bSplineManager;
     bool                _debugMode;
@@ -58,6 +59,7 @@ private:
     btSequentialImpulseConstraintSolver* _solver;
     btDiscreteDynamicsWorld* _dynamicsWorld;
 
+    static Scene * _scene;
     CarAutomatic * c2;
 
     // ============================ Methods ===============================

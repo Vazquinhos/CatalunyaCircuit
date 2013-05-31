@@ -22,7 +22,9 @@ BSplineManager::BSplineManager()
         for(int i = 0; i < _numSavedSplines; ++i){
             file = fileNames[i];
             spline = new BSpline(file, 200);
+
             qDebug() << " BSpline Cargada " << file;
+
             _vBSplines[file] = spline;
 
 
@@ -65,6 +67,24 @@ void BSplineManager::display(){
     {
         bspline = iter->second;
         bspline->display();
+    }
+}
+
+void BSplineManager::startSpin(){
+    BSpline* bspline;
+    for(std::map<QString, BSpline*>::iterator iter =  _vBSplines.begin(); iter !=  _vBSplines.end(); ++iter)
+    {
+        bspline = iter->second;
+        bspline->startSpin();
+    }
+}
+
+void BSplineManager::endSpin(){
+    BSpline* bspline;
+    for(std::map<QString, BSpline*>::iterator iter =  _vBSplines.begin(); iter !=  _vBSplines.end(); ++iter)
+    {
+        bspline = iter->second;
+        bspline->endSpin();
     }
 }
 

@@ -66,6 +66,10 @@ Scene::setCarAutomatic( QString a)
     _objectManager->addCar(c2);
 }
 
+ CarAutomatic * Scene::getCarAutomatic(){
+    return c2;
+ }
+
 Scene * Scene::getScene()
 {
     if(_scene==NULL)
@@ -120,8 +124,8 @@ void Scene::turnDebugMode()
  *-------------------------------------------------------------------*/
 void Scene::display(float fps)
 {
-    sprintf(_frames, "FPS = %f", fps);
-    paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
+    //sprintf(_frames, "FPS = %f", fps);
+    //paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();
 
 	if(_debugMode)

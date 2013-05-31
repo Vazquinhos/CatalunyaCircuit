@@ -764,7 +764,6 @@ float Model3D::getZofPoint(Point3D* point){
     for(unsigned int i = 0; i < _vMeshes.size(); i++)
     {
         mesh = _vMeshes[i];
-        qDebug() << "Vertices Coord Size" << mesh->_verticesCoord.size();
         for(int j = 0; j < mesh->_verticesCoord.size(); j+=3){
             pointX = (mesh->_verticesCoord)[j];
             pointY = (mesh->_verticesCoord)[j+1];

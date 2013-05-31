@@ -21,6 +21,9 @@ public:
     void display();
     void render();
 
+    void startSpin();
+    void endSpin();
+
 private:
     BSplineManager();
     void correctSpline(BSpline* bspline);

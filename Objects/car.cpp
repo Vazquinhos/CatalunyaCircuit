@@ -418,7 +418,7 @@ void Car::updateCurrentCameraPos(){
     camera = dynamic_cast<FixedCamera*>(manager->getCamera("CarCamera"));
 
     camera->setPosition(*getPosition() + *offset.cameraOffset);
-    manager->setActiveCamera("CarCamera");
+    //manager->setActiveCamera("CarCamera");
 }
 
 /*-------------------------------------------------------------------

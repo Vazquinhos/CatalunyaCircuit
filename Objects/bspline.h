@@ -30,6 +30,9 @@ public:
     void captureCameraPosition();
     void saveCapture();
 
+    void startSpin();
+    void endSpin();
+
 private:
 QString _filename;
 GLuint _displayList;

@@ -12,6 +12,9 @@
 #include "Cameras/sphericalcamera.h"
 #include "Cameras/fixedcamera.h"
 #include "Cameras/freecamera.h"
+#include "Loaders/settingsimporter.h"
+
+#include <QDir>
 
 CameraManager * CameraManager::_cameraManager = NULL;
 
@@ -82,6 +85,12 @@ void CameraManager::setupCameras() {
     _cameraManager->addCamera(fxCam);
     _cameraManager->addCamera(fxCamCar);
     _cameraManager->setActiveCamera("free");
+
+    SettingsImporter *importer = new SettingsImporter(QDir::currentPath() + "/cameras.ccs");
+    importer->SetParameters(true,
+                                       false,//ui->car_chk->isChecked(),
+                                       false);
+    importer->Execute();
 }
 
 

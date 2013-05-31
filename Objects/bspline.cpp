@@ -14,11 +14,18 @@ BSpline::BSpline(QString filePath, int updateTime) : QObject()
     ImportBSpline(filePath);
     _timerRotation = new QTimer(this);
     QObject::connect(_timerRotation, SIGNAL(timeout()),this, SLOT(renderCubes()));
-    //_timerRotation->start(5);
 }
 
 BSpline::~BSpline(){
 
+}
+
+void BSpline::startSpin(){
+    _timerRotation->start(20);
+}
+
+void BSpline::endSpin(){
+    _timerRotation->stop();
 }
 
 Point3D* BSpline::getPoint(int pos){
@@ -94,9 +101,9 @@ void BSpline::renderCubes(){
 }
 
 void BSpline::captureCameraPosition(){
-        Point3D * point = CameraManager::getCameraManager()->getActiveCamera()->getPosition();
-        _vPoints.push_back(point);
-        qDebug() << "Bspline: " << getFilename() << " captured point: " << point->getX() << " " << point->getY() << point->getZ();
+    Point3D * point = CameraManager::getCameraManager()->getActiveCamera()->getPosition();
+    _vPoints.push_back(point);
+    qDebug() << "Bspline: " << getFilename() << " captured point: " << point->getX() << " " << point->getY() << point->getZ();
 }
 
 void BSpline::saveCapture( ){

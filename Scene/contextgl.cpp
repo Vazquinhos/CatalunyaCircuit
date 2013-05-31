@@ -102,6 +102,7 @@ void GLWidget::initializeWorld(){
     _fps = 0;
     _indexCamera = 0;
     _maxVisibleDistance = 200;
+    isInDebugMode = false;
 
     glEnable(GL_TEXTURE_2D);
 
@@ -383,23 +384,27 @@ void GLWidget::onZoomChanged(qreal x)
     }
 }
 
+void GLWidget::keyReleaseEvent(QKeyEvent *event)
+{
+    int key = event->key();
+    if(key != Qt::Key_Right&& key != Qt::Key_Left&&key != Qt::Key_Up&&key != Qt::Key_Down&&key != Qt::Key_Plus&&key != Qt::Key_Minus){
+         _pressedKeys.insert(key);
+    }else{
+        _pressedKeys.remove(key);
+    }
+}
+
 /*****************************************************************************
- * resizeGL()
+ * keyPressEvent()
  *      Called on keystrokes. Controls this input.
  *****************************************************************************/
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
-    _pressedKeys.insert(event->key());
+    int key = event->key();
 
-    /*
-      qDebug() << "*****************TECLAS PULSADAS********************** " ;
-            QString teclas = "";
-    int size = pressedKeys.size();
-    for(int i = 0; i < size ;++i){
-        teclas += " " + QString::number(pressedKeys.toList()[i]);
+    if(key == Qt::Key_Right|| key == Qt::Key_Left||key == Qt::Key_Up||key == Qt::Key_Down||key == Qt::Key_Plus||key == Qt::Key_Minus){
+        _pressedKeys.insert(key);
     }
-    qDebug() << teclas;
-    */
 }
 
 void GLWidget::processKeys(){
@@ -410,6 +415,7 @@ void GLWidget::processKeys(){
     presedKeys = _pressedKeys.toList();
 
     for(int i = 0; i < size ;++i){
+        update = false;
         switch(presedKeys[i]) {
 
         case Qt::Key_E:
@@ -424,6 +430,12 @@ void GLWidget::processKeys(){
             break;
 
         case Qt::Key_M://Move camera to right
+            isInDebugMode = !isInDebugMode;
+            if(isInDebugMode){
+                _bSplineManager->startSpin();
+            }else{
+                _bSplineManager->endSpin();
+            }
             emit MPushed();
             break;
         case Qt::Key_Escape: //Move camera to right
@@ -464,6 +476,7 @@ void GLWidget::processKeys(){
                 _carViewer->shiftNextCar();
                 SoundManager::getSoundManager()->PlayAction("cursorMove");
             }
+            update = true;
             break;
 
         case Qt::Key_Left: //Move camera to left
@@ -477,12 +490,14 @@ void GLWidget::processKeys(){
                 _carViewer->shiftPreviousCar();
                 SoundManager::getSoundManager()->PlayAction("cursorMove");
             }
+            update = true;
             break;
         case Qt::Key_Up: //Move camera to front
             //qDebug() << "PULSANDO UP";
             _cameraManager->getActiveCamera()->move(1, true);
             _objectManager->checkVisibility();
             _bSplineManager->updateCapturingSpline();
+            update = true;
             break;
 
         case Qt::Key_Down: //Move camera to back
@@ -490,6 +505,7 @@ void GLWidget::processKeys(){
             _cameraManager->getActiveCamera()->move(-1, true);
             _objectManager->checkVisibility();
             _bSplineManager->updateCapturingSpline();
+            update = true;
             break;
 
             //DEBUG
@@ -510,8 +526,8 @@ void GLWidget::processKeys(){
             break;
         }
         case Qt::Key_F:{
-             _scene->fallCar();
-               break;}
+            _scene->fallCar();
+            break;}
 
         case Qt::Key_Minus:{
             Light* light = LightManager::getLightManager()->getActiveLight();
@@ -590,24 +606,24 @@ void GLWidget::processKeys(){
             break;
 
         case Qt::Key_1:
-            if(_isInDriveMode){
-                _objectManager->getActiveDriveCar()->viewCamera(Car::FRONTAL_CAMERA);
-            }
+            //if(_isInDriveMode){
+            _scene->getCarAutomatic()->viewCamera(Car::FRONTAL_CAMERA);
+            //}
             break;
         case Qt::Key_2:
-            if(_isInDriveMode){
-                _objectManager->getActiveDriveCar()->viewCamera(Car::REAR_CAMERA);
-            }
+            //if(_isInDriveMode){
+            _scene->getCarAutomatic()->viewCamera(Car::REAR_CAMERA);
+            //}
             break;
         case Qt::Key_3:
-            if(_isInDriveMode){
-                _objectManager->getActiveDriveCar()->viewCamera(Car::LEFT_CAMERA);
-            }
+            //if(_isInDriveMode){
+            _scene->getCarAutomatic()->viewCamera(Car::LEFT_CAMERA);
+            //}
             break;
         case Qt::Key_4:
-            if(_isInDriveMode){
-                _objectManager->getActiveDriveCar()->viewCamera(Car::RIGHT_CAMERA);
-            }
+            //if(_isInDriveMode){
+            _scene->getCarAutomatic()->viewCamera(Car::RIGHT_CAMERA);
+            //}
             break;
         default:
             update = false;
@@ -617,13 +633,10 @@ void GLWidget::processKeys(){
             float yaw, pitch;
             Point3D *pos = _cameraManager->getCamera("free")->getPosition();
             _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
+        }else{
+            _pressedKeys.remove(presedKeys[i]);
         }
     }
-}
-
-void GLWidget::keyReleaseEvent(QKeyEvent *event)
-{
-    _pressedKeys.remove(event->key());
 }
 
 /*****************************************************************************

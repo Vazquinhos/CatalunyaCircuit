@@ -71,6 +71,8 @@ protected:
 
     BSplineManager* _bSplineManager;
 
+    bool isInDebugMode;
+
 
 private:
     int _maxVisibleDistance;

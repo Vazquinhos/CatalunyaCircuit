@@ -96,7 +96,7 @@ void CarAutomatic::resetRace()
 void CarAutomatic::update(){
     int numPoints = _spline->getNumPoints();
 
-    float vel = 10.0f;
+    float vel = 36.0f;
     _totalTime += ((float) TimeManager::getTimeManager()->getElapsedTime()*vel/1000);
 
     if(_totalTime - _currentPoint > 1)
@@ -141,11 +141,17 @@ void CarAutomatic::update(){
     float time = _totalTime;
     float time1 = _totalTime+1;
 
-    while(time > numPoints)
+    if(time > numPoints){
         time = time - numPoints;
+        resetRace();
+        startRace();
+    }
 
-    while(time1 > numPoints)
+    if(time1 > numPoints){
         time1 = time1 - numPoints;
+        resetRace();
+        startRace();
+    }
 
 
     Vector3D splineVector(_spline->getPoint( trunc(time) ), _spline->getPoint( trunc(time1) ));
@@ -174,4 +180,6 @@ void CarAutomatic::update(){
 
     setAngle(angle, _desfase);
     makeTransform();
+
+    updateCurrentCameraPos();
 }

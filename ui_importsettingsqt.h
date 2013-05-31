@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'importsettingsqt.ui'
 **
-** Created: Mon May 27 19:44:15 2013
+** Created: Fri May 31 19:28:35 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

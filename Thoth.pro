@@ -62,7 +62,8 @@ SOURCES += main.cpp\
     Ui/lightwindowqt.cpp \
     Commands/lightscmd.cpp \
     Utils/timemanager.cpp \
-    Objects/semaphore.cpp
+    Objects/semaphore.cpp \
+    Ui/newlightwindowqt.cpp
 
 
 
@@ -121,7 +122,8 @@ HEADERS  += \
     Ui/lightwindowqt.h \
     Commands/lightscmd.h \
     Utils/timemanager.h \
-    Objects/semaphore.h
+    Objects/semaphore.h \
+    Ui/newlightwindowqt.h
 
 
 FORMS    += \
@@ -134,7 +136,8 @@ FORMS    += \
     Ui/loaderqt.ui \
     Ui/about.ui \
     Ui/trajectselectionqt.ui \
-    Ui/lightwindowqt.ui
+    Ui/lightwindowqt.ui \
+    Ui/newlightwindowqt.ui
 
 OTHER_FILES += \
     simple.vert \
@@ -1390,7 +1393,13 @@ OTHER_FILES += \
     Shader/simple.frag \
     Media/Sounds/Coches/f1_ambient.wav \
     Media/Sounds/Coches/f1_introM.wav \
-    Media/Images/bspline.png
+    Media/Images/bspline.png \
+    Media/Sounds/GT5/select.wav \
+    Media/Sounds/GT5/ready.wav \
+    Media/Sounds/GT5/ka_ching.wav \
+    Media/Sounds/GT5/gt_life.wav \
+    Media/Sounds/GT5/go.wav \
+    Media/Sounds/GT5/cursor_move2.wav
 
 
 

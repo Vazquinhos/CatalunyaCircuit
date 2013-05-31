@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'importsettingsqt.ui'
 **
-** Created: Mon May 27 02:13:07 2013
+** Created: Mon May 27 19:44:15 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -45,8 +45,6 @@ public:
     QLabel *light_icon;
     QCheckBox *camera_chk;
     QLabel *camera_icon;
-    QCheckBox *car_chk;
-    QLabel *car_icon;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *ImportSettingsQt)
@@ -136,16 +134,6 @@ public:
 
         horizontalLayout->addWidget(camera_icon);
 
-        car_chk = new QCheckBox(frame);
-        car_chk->setObjectName(QString::fromUtf8("car_chk"));
-
-        horizontalLayout->addWidget(car_chk);
-
-        car_icon = new QLabel(frame);
-        car_icon->setObjectName(QString::fromUtf8("car_icon"));
-
-        horizontalLayout->addWidget(car_icon);
-
 
         verticalLayout_2->addLayout(horizontalLayout);
 
@@ -189,8 +177,6 @@ public:
         light_icon->setText(QApplication::translate("ImportSettingsQt", "TextLabel", 0, QApplication::UnicodeUTF8));
         camera_chk->setText(QString());
         camera_icon->setText(QApplication::translate("ImportSettingsQt", "TextLabel", 0, QApplication::UnicodeUTF8));
-        car_chk->setText(QString());
-        car_icon->setText(QApplication::translate("ImportSettingsQt", "TextLabel", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

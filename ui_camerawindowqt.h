@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'camerawindowqt.ui'
 **
-** Created: Mon May 27 02:13:07 2013
+** Created: Mon May 27 19:44:15 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -65,7 +65,7 @@ public:
     {
         if (CameraWindowQt->objectName().isEmpty())
             CameraWindowQt->setObjectName(QString::fromUtf8("CameraWindowQt"));
-        CameraWindowQt->resize(449, 301);
+        CameraWindowQt->resize(460, 301);
         CameraWindowQt->setStyleSheet(QString::fromUtf8("QDialog {\n"
 "     background-color: #333333;\n"
 "	 color:white;\n"

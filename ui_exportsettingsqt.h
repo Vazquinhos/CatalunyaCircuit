@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportsettingsqt.ui'
 **
-** Created: Mon May 27 02:13:07 2013
+** Created: Mon May 27 19:44:15 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -43,16 +43,13 @@ public:
     QLabel *light_ico;
     QCheckBox *_cameras;
     QLabel *cameralab;
-    QCheckBox *_cars;
-    QLabel *carlab;
-    QFrame *line_2;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *ExportSettingsQt)
     {
         if (ExportSettingsQt->objectName().isEmpty())
             ExportSettingsQt->setObjectName(QString::fromUtf8("ExportSettingsQt"));
-        ExportSettingsQt->resize(323, 278);
+        ExportSettingsQt->resize(319, 228);
         ExportSettingsQt->setStyleSheet(QString::fromUtf8("QDialog {\n"
 "     background-color: #333333;\n"
 "	 color:white;\n"
@@ -124,24 +121,6 @@ public:
 
         horizontalLayout_2->addWidget(cameralab);
 
-        _cars = new QCheckBox(frame);
-        _cars->setObjectName(QString::fromUtf8("_cars"));
-
-        horizontalLayout_2->addWidget(_cars);
-
-        carlab = new QLabel(frame);
-        carlab->setObjectName(QString::fromUtf8("carlab"));
-        carlab->setAlignment(Qt::AlignCenter);
-
-        horizontalLayout_2->addWidget(carlab);
-
-        line_2 = new QFrame(frame);
-        line_2->setObjectName(QString::fromUtf8("line_2"));
-        line_2->setFrameShape(QFrame::VLine);
-        line_2->setFrameShadow(QFrame::Sunken);
-
-        horizontalLayout_2->addWidget(line_2);
-
 
         verticalLayout_2->addLayout(horizontalLayout_2);
 
@@ -185,8 +164,6 @@ public:
         light_ico->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
         _cameras->setText(QString());
         cameralab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
-        _cars->setText(QString());
-        carlab->setText(QApplication::translate("ExportSettingsQt", "ico", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

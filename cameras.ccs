@@ -13,20 +13,20 @@
 <zoom>10</zoom>
 </camera>
 <camera>
-<type>FixedCamera</type>
+<type>FreeCamera</type>
 <name>CarViewerCamera</name>
 <position>
 <x>152.742</x>
 <y>137.498</y>
 <z>-74.439</z>
 </position>
-<yaw>143</yaw>
-<pitch>325.5</pitch>
+<yaw>144</yaw>
+<pitch>330.0</pitch>
 <zoom>10</zoom>
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido1</name>
+<name>Recorrido01</name>
 <position>
 <x>-179.83</x>
 <y>-534.48</y>
@@ -158,7 +158,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido2</name>
+<name>Recorrido02</name>
 <position>
 <x>-253.62</x>
 <y>-464.75</y>
@@ -230,7 +230,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido3</name>
+<name>Recorrido03</name>
 <position>
 <x>-373.6</x>
 <y>-577.19</y>
@@ -242,7 +242,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido4</name>
+<name>Recorrido04</name>
 <position>
 <x>-547.2</x>
 <y>-482.84</y>
@@ -254,7 +254,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido5</name>
+<name>Recorrido05</name>
 <position>
 <x>-391.53</x>
 <y>-155.12</y>
@@ -266,7 +266,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido6</name>
+<name>Recorrido06</name>
 <position>
 <x>-315.53</x>
 <y>-53.94</y>
@@ -278,7 +278,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido7</name>
+<name>Recorrido07</name>
 <position>
 <x>-283.43</x>
 <y>-268.65</y>
@@ -290,7 +290,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido8</name>
+<name>Recorrido08</name>
 <position>
 <x>-390.3</x>
 <y>-409.22</y>
@@ -302,7 +302,7 @@
 </camera>
 <camera>
 <type>FixedCamera</type>
-<name>Recorrido9</name>
+<name>Recorrido09</name>
 <position>
 <x>-195.58</x>
 <y>-380.89</y>

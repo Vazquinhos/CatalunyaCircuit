@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loaderqt.ui'
 **
-** Created: Mon May 27 02:13:07 2013
+** Created: Mon May 27 19:44:15 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -34,13 +34,13 @@ public:
     {
         if (LoaderQt->objectName().isEmpty())
             LoaderQt->setObjectName(QString::fromUtf8("LoaderQt"));
-        LoaderQt->resize(400, 300);
+        LoaderQt->resize(605, 326);
         QSizePolicy sizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(LoaderQt->sizePolicy().hasHeightForWidth());
         LoaderQt->setSizePolicy(sizePolicy);
-        LoaderQt->setMaximumSize(QSize(500, 500));
+        LoaderQt->setMaximumSize(QSize(10000, 10000));
         LoaderQt->setStyleSheet(QString::fromUtf8("     background-color: #333333;\n"
 "	 color:white;"));
         verticalLayout = new QVBoxLayout(LoaderQt);
@@ -59,6 +59,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
         progressBar->setSizePolicy(sizePolicy1);
+        progressBar->setMinimumSize(QSize(590, 0));
         progressBar->setMaximumSize(QSize(500, 16777215));
         progressBar->setStyleSheet(QString::fromUtf8("QProgressBar::chunk {\n"
 "     border-radius: 2px;\n"
@@ -72,6 +73,7 @@ public:
 "	 border-radius: 5px;\n"
 " }"));
         progressBar->setValue(24);
+        progressBar->setAlignment(Qt::AlignCenter);
         progressBar->setTextVisible(false);
 
         verticalLayout->addWidget(progressBar);

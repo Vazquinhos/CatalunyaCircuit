@@ -19,19 +19,20 @@ class BSpline : public QObject
 {
     Q_OBJECT
 public:
-    BSpline(QString filePath, int updateTime);
+    BSpline();
+    BSpline(QString filePath);
     virtual ~BSpline();
     QString getFilename();
     Point3D* getPoint(int pos);
     int getNumPoints();
 
-    void render();
     void display();
     void captureCameraPosition();
     void saveCapture();
 
     void startSpin();
     void endSpin();
+    void incrementAngle();
 
 private:
 QString _filename;

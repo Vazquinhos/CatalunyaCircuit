@@ -21,7 +21,7 @@ BSplineManager::BSplineManager()
     if(_numSavedSplines > 0){
         for(int i = 0; i < _numSavedSplines; ++i){
             file = fileNames[i];
-            spline = new BSpline(file, 200);
+            spline = new BSpline(file);
 
             qDebug() << " BSpline Cargada " << file;
 
@@ -40,14 +40,13 @@ BSplineManager::BSplineManager()
     }else{
         qDebug() << "Any bspline loaded";
     }
-    render();
 
     _terrainModel = ModelManager::getModelManager()->getModel("Circuit/terrain.3ds");
 }
 
 BSplineManager* BSplineManager::getBSplineManager(){
 
-    if(!_bSplineManager){
+    if(_bSplineManager == NULL){
         _bSplineManager = new BSplineManager();
     }
     return _bSplineManager;
@@ -88,20 +87,12 @@ void BSplineManager::endSpin(){
     }
 }
 
-void BSplineManager::render(){
-    BSpline* bspline;
-    for(std::map<QString, BSpline*>::iterator iter =  _vBSplines.begin(); iter !=  _vBSplines.end(); ++iter)
-    {
-        bspline = iter->second;
-        bspline->render();
-    }
-}
 
 void BSplineManager::captureNewSpline(){
     cancelCapturingSpline();
     _isCapturingSpline = true;
     QString filename = QDir::currentPath() + "/Media/BSplines/Captured/capturedSpline" + QString::number(_lastSavedSpline) + ".obj";
-    _capturingSpline = new BSpline(filename, 200);
+    _capturingSpline = new BSpline(filename);
     qDebug() << "Capture of spline " << _capturingSpline->getFilename() << " has been started";
 }
 
@@ -123,7 +114,6 @@ void BSplineManager::saveCapturingSpline(){
         correctSpline(_capturingSpline);
         _vBSplines[_capturingSpline->getFilename()] = _capturingSpline;
         _capturingSpline->saveCapture();
-        _capturingSpline->render();
         _isCapturingSpline = false;
         ++_lastSavedSpline;
         qDebug() << "Bspline: " << _capturingSpline->getFilename() << " saved successfully";

@@ -631,7 +631,6 @@ int SoundManager::_getSource(bool reserved)
 {
 	// Find a unused source
 	int i=0;
-	bool found=false;
 	ALint state;
 	ALenum error;
 	
@@ -694,4 +693,5 @@ std::string SoundManager::_getALErrorString(ALenum err)
             return std::string("AL_OUT_OF_MEMORY");
         break;
     };
+    return "";
 }

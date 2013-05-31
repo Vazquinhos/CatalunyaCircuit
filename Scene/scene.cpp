@@ -49,7 +49,7 @@ Scene::Scene()
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
 
-    c2 = new CarAutomatic("Cars/" + carFolders[1 % (carFolders.size()-1)], QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj", 50);
+    c2 = new CarAutomatic("Cars/" + carFolders[1 % (carFolders.size()-1)], QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj");
     _objectManager->addCar(c2);
     // xPos+=1;
     //}
@@ -62,7 +62,7 @@ Scene::Scene()
 void
 Scene::setCarAutomatic( QString a)
 {
-    c2 = new CarAutomatic(a, QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj", 50);
+    c2 = new CarAutomatic(a, QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj");
     _objectManager->addCar(c2);
 }
 
@@ -124,6 +124,7 @@ void Scene::turnDebugMode()
  *-------------------------------------------------------------------*/
 void Scene::display(float fps)
 {
+    (void) fps;
     //sprintf(_frames, "FPS = %f", fps);
     //paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();

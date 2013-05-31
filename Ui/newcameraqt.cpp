@@ -88,7 +88,7 @@ CameraAbs* NewCameraQt::getNewCamera()
         new_camera_name += QString("(1)");
 
     p_camera_to_rtn->setName( new_camera_name );
-    double d  =  ui->x->value();
+    //double d  =  ui->x->value();
     p_camera_to_rtn->setPosition( new Point3D( ui->x->value(), ui->y->value(), ui->z->value()));
     p_camera_to_rtn->setYawPitch(ui->sb_yaw->value(),ui->sb_pitch->value());
 

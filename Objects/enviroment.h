@@ -30,7 +30,6 @@ class Enviroment
 public:
     // ================= Constructores/Destructores ======================
     Enviroment(btDiscreteDynamicsWorld *dynamicsWorld);
-    Enviroment(const Enviroment& enviroment);
     ~Enviroment();
     // ============================ Methods ===============================
     void checkVisibility(vector<GLuint> *displayLists);

@@ -42,7 +42,7 @@ CameraManager::CameraManager()
  *-------------------------------------------------------------------*/
 CameraManager * CameraManager::getCameraManager()
 {
-    if(!_cameraManager){
+    if(_cameraManager == NULL){
         _cameraManager = new CameraManager();
         _cameraManager->setupCameras();
     }
@@ -132,17 +132,6 @@ void CameraManager::deleteCamera( QString a_name )
 {
     if(!(_cameras.find(a_name) == _cameras.end()))
         _cameras.erase(a_name);
-}
-/*-------------------------------------------------------------------
- |  setCameraOnCar(Point3D position)
- |
- |  Purpose:Sets a camera on a car
- |  Parameters:position
- |  Returns:none
- *-------------------------------------------------------------------*/
-void CameraManager::setCameraOnCar(Point3D *position)
-{
-
 }
 
 /*-------------------------------------------------------------------

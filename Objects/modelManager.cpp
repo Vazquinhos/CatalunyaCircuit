@@ -40,7 +40,7 @@ ModelManager * ModelManager::getModelManager(){
     QStringList modelFilters;
     QStringList textureFilters;
 
-    if( !_p_modelManager ) {
+    if(_p_modelManager == NULL) {
         _p_modelManager = new ModelManager();
         modelFilters << "*.3ds";
         textureFilters << "*";

@@ -36,7 +36,6 @@ public:
     Car(QString folderPath, Point3D * position, btDiscreteDynamicsWorld* dynamicsWorld);
     Car(QString folderPath, Point3D * position);
     Car(QString folderPath);
-    Car(const Car& car);
     ~Car();
 
     Point3D * getPosition();

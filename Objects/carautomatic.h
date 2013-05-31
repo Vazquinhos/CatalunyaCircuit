@@ -10,8 +10,8 @@
 class CarAutomatic: public Car
 {
 public:
-    CarAutomatic(QString folderPath,QString splinePath, int updateInterval);
-    CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld);
+    CarAutomatic(QString folderPath,QString splinePath);
+    CarAutomatic(QString folderPath,QString splinePath, btDiscreteDynamicsWorld *dynamicsWorld);
     virtual ~CarAutomatic();
 
     void startRace();

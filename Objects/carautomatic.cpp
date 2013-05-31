@@ -5,7 +5,7 @@
 #include "Utils/timemanager.h"
 #include <math.h>
 
-CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInterval) : Car(folderPath, new Point3D())
+CarAutomatic::CarAutomatic(QString folderPath, QString splinePath) : Car(folderPath, new Point3D())
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));
@@ -41,7 +41,7 @@ CarAutomatic::CarAutomatic(QString folderPath, QString splinePath, int updateInt
     out = new QTextStream(file);
 }
 
-CarAutomatic::CarAutomatic(QString folderPath,QString splinePath, int updateInterval, btDiscreteDynamicsWorld* dynamicsWorld) : Car(folderPath, new Point3D(), dynamicsWorld)
+CarAutomatic::CarAutomatic(QString folderPath,QString splinePath, btDiscreteDynamicsWorld* dynamicsWorld) : Car(folderPath, new Point3D(), dynamicsWorld)
 {
     _spline = BSplineManager::getBSplineManager()->getBspline(splinePath);
     setPosition(_spline->getPoint(0));

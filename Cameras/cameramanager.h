@@ -32,7 +32,6 @@ public:
     void                   addCamera(CameraAbs *a_camera);
     void                   deleteCamera( QString a_name );
     QString                getCCSCameraInfoToExport();
-    void                   setCameraOnCar(Point3D *position);
     CameraAbs            * getActiveCamera();
     void                   setActiveCamera(CameraAbs * camera);
     void                   setActiveCamera(QString name);

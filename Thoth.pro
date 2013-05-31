@@ -68,8 +68,6 @@ SOURCES += main.cpp\
 
 
 HEADERS  += \
-    Objects/object3DFile.h \
-    Objects/absObject3D.h \
     Ui/importsettingsqt.h \
     Ui/exportsettingsqt.h \
     Ui/errorwindow.h \
@@ -77,8 +75,6 @@ HEADERS  += \
     Ui/camerawindowqt.h \
     Ui/newcameraqt.h \
     Ui/loaderqt.h \
-    Objects/instance.h \
-    Objects/absModel.h \
     Ui/about.h \
     Cameras/sphericalcamera.h \
     Cameras/freecamera.h \

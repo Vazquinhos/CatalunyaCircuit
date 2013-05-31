@@ -6,8 +6,11 @@
 #include <QStringList>
 #include "Utils/color.h"
 
+BSpline::BSpline(){
 
-BSpline::BSpline(QString filePath, int updateTime) : QObject()
+}
+
+BSpline::BSpline(QString filePath) : QObject()
 {
     _filename = filePath;
     _currentAngle = 0;
@@ -21,7 +24,7 @@ BSpline::~BSpline(){
 }
 
 void BSpline::startSpin(){
-    _timerRotation->start(20);
+    _timerRotation->start(10);
 }
 
 void BSpline::endSpin(){
@@ -58,16 +61,9 @@ BSpline::ImportBSpline( QString a_filename ){
     }
 }
 
-void BSpline::render(){
+void BSpline::display(){
     Point3D *point;
     Color randColor;
-    if (glIsList(_displayList)) { //If we already have a display list, we delete it
-        glDeleteLists(_displayList, 1);
-    }
-    _displayList = glGenLists(1); //Generate new display list identifier
-    glNewList(_displayList, GL_COMPILE); //Starting rendering in memory
-
-
 
     for(unsigned int i = 0; i < _vPoints.size(); ++i){
         point = _vPoints[i];
@@ -85,19 +81,15 @@ void BSpline::render(){
 
         glPopAttrib();
         glPopMatrix();
-
-
     }
-    glEndList();
-
-
-}
-void BSpline::display(){
-    glCallList(_displayList);
 }
 
 void BSpline::renderCubes(){
-    render();
+    incrementAngle();
+}
+
+void BSpline::incrementAngle(){
+    _currentAngle +=1;
 }
 
 void BSpline::captureCameraPosition(){

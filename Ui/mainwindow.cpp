@@ -164,6 +164,7 @@ void MainWindow::on_about_clicked()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    (void) event;
     qDebug() << "CERRANDO";
     //SoundManager::getSoundManager()->Stop();
     //SoundManager::getSoundManager()->CleanUP();

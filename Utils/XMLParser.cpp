@@ -162,8 +162,8 @@ bool MKeyValue::getBool (const char *what, bool default_value) const {
 		return default_value;
   // Check agains valid keywords
   const char *yes[] = {"1", "yes", "YES", "Yes", "true", "TRUE", "True"};
-  int i = 0;
-  for (i=0; i<sizeof (yes)/sizeof(yes[0]); ++i) 
+  unsigned int i = 0;
+  for (i=0; i<sizeof (yes)/sizeof(yes[0]); ++i)
     if (it->second == yes[i])
       return true;
   return false;
@@ -237,12 +237,16 @@ CXMLParser::CXMLParser( )
 }
 
 void CXMLParser::onStartElement (const std::string &elem, MKeyValue &atts) {
+     (void) elem;
+     (void) atts;
 }
 
 void CXMLParser::onData (const std::string &data) {
+         (void) data;
 }
 
 void CXMLParser::onEndElement (const std::string &elem) {
+    (void) elem;
 }
 
 /*------------------------------------------------------------------
@@ -348,7 +352,7 @@ bool CXMLParser::xmlParseStream (std::istream &is, const char *stream_name) {
 
 	// Notify xml parse errors
 	if( !done ) {
-		char *error=strdup(xml_error.c_str());
+        //char *error=strdup(xml_error.c_str());
 		assert( !"XML Parse Error" );
 		//warn( "%s", xml_error.c_str() );
 	}

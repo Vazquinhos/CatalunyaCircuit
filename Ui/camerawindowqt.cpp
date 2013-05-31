@@ -206,6 +206,9 @@ void CameraWindowQt::on_cb_mode_currentIndexChanged(int index)
         return;
 
     QString current_camera = p_item->text();
+
+    (void) current_camera;
+    (void) index;
 }
 
 void CameraWindowQt::on_sb_yaw_editingFinished()
@@ -236,6 +239,7 @@ void CameraWindowQt::on_sb_pitch_editingFinished()
 
 void CameraWindowQt::on_cb_type_currentIndexChanged(int index)
 {
+    (void) index;
     QListWidgetItem* p_item = ui->listWidget->currentItem();
 
     int row = ui->listWidget->currentRow();

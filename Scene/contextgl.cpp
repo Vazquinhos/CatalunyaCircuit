@@ -197,7 +197,7 @@ void GLWidget::paintGL()
 
     TimeManager::getTimeManager()->setElapsedTime(d_elapsedTime);
     _totalTime += d_elapsedTime;
-    float elapsedTime = (float)d_elapsedTime/1000.f;
+    //float elapsedTime = (float)d_elapsedTime/1000.f;
     /*
     qDebug() << "FPS: " << _fps;
     qDebug() << "Elap: " << elapsedTime;
@@ -388,7 +388,7 @@ void GLWidget::keyReleaseEvent(QKeyEvent *event)
 {
     int key = event->key();
     if(key != Qt::Key_Right&& key != Qt::Key_Left&&key != Qt::Key_Up&&key != Qt::Key_Down&&key != Qt::Key_Plus&&key != Qt::Key_Minus){
-         _pressedKeys.insert(key);
+        _pressedKeys.insert(key);
     }else{
         _pressedKeys.remove(key);
     }
@@ -419,27 +419,35 @@ void GLWidget::processKeys(){
         switch(presedKeys[i]) {
 
         case Qt::Key_E:
+        {
             _bSplineManager->saveCapturingSpline();
             break;
+        }
         case Qt::Key_C:
+        {
             _bSplineManager->captureNewSpline();
             break;
+        }
 
-        case Qt::Key_V://Move camera to right
-            _scene->turnDebugMode();
-            break;
-
-        case Qt::Key_M://Move camera to right
+        case Qt::Key_V://Debug mode
+        {
             isInDebugMode = !isInDebugMode;
             if(isInDebugMode){
                 _bSplineManager->startSpin();
             }else{
                 _bSplineManager->endSpin();
             }
+            _scene->turnDebugMode();
+            break;
+        }
+
+        case Qt::Key_M://Move camera to right
+        {
             emit MPushed();
             break;
+        }
         case Qt::Key_Escape: //Move camera to right
-
+        {
             if(carViewerActive){
                 _carViewer->exitViewer();
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
@@ -454,18 +462,22 @@ void GLWidget::processKeys(){
                 emit CarFinishEditing();
             }
             break;
+        }
 
         case Qt::Key_Return: //Move camera to right
+        {
             if(carViewerActive){
-                QString string_car = _carViewer->selectCar();
+                //QString string_car = _carViewer->selectCar();
                 _isInDriveMode = true;
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
                 carViewerActive = false;
                 emit CarFinishEditing();
                 SoundManager::getSoundManager()->PlayAction("cursorMove");
             }break;
+        }
 
         case Qt::Key_Right: //Move camera to right
+        {
             //qDebug() << "PULSANDO RIGHT";
             if(!carViewerActive)
             {
@@ -478,8 +490,10 @@ void GLWidget::processKeys(){
             }
             update = true;
             break;
+        }
 
         case Qt::Key_Left: //Move camera to left
+        {
             //qDebug() << "PULSANDO LEFT";
             if(!carViewerActive){
                 _cameraManager->getActiveCamera()->move(-1, false);
@@ -492,31 +506,40 @@ void GLWidget::processKeys(){
             }
             update = true;
             break;
+        }
         case Qt::Key_Up: //Move camera to front
+        {
             //qDebug() << "PULSANDO UP";
             _cameraManager->getActiveCamera()->move(1, true);
             _objectManager->checkVisibility();
             _bSplineManager->updateCapturingSpline();
             update = true;
             break;
+        }
 
         case Qt::Key_Down: //Move camera to back
+        {
             //qDebug() << "PULSANDO DOWN";
             _cameraManager->getActiveCamera()->move(-1, true);
             _objectManager->checkVisibility();
             _bSplineManager->updateCapturingSpline();
             update = true;
             break;
+        }
 
             //DEBUG
         case Qt::Key_U:
+        {
             _cameraManager->getActiveCamera()->move(10, true);
             _objectManager->checkVisibility();
             break;
+        }
         case Qt::Key_J:
+        {
             _cameraManager->getActiveCamera()->move(-10, true);
             _objectManager->checkVisibility();
             break;
+        }
 
         case Qt::Key_Plus:{
             Light* light = LightManager::getLightManager()->getActiveLight();
@@ -525,9 +548,11 @@ void GLWidget::processKeys(){
                                            light->getPosition()->getZ()+2));
             break;
         }
-        case Qt::Key_F:{
+        case Qt::Key_F:
+        {
             _scene->fallCar();
-            break;}
+            break;
+        }
 
         case Qt::Key_Minus:{
             Light* light = LightManager::getLightManager()->getActiveLight();
@@ -538,6 +563,7 @@ void GLWidget::processKeys(){
         }
 
         case Qt::Key_W:
+        {
             if(_isInDriveMode){
                 _objectManager->getActiveDriveCar()->accelerate();
             }
@@ -549,8 +575,10 @@ void GLWidget::processKeys(){
                                                light->getPosition()->getZ()));
             }
             break;
+        }
 
         case Qt::Key_A:
+        {
             if(_isInDriveMode){
                 _objectManager->getActiveDriveCar()->turnLeft();
             }
@@ -562,7 +590,9 @@ void GLWidget::processKeys(){
                                                light->getPosition()->getZ()));
             }
             break;
+        }
         case Qt::Key_S:
+        {
             if(_isInDriveMode){
                 _objectManager->getActiveDriveCar()->brake();
             }
@@ -574,8 +604,10 @@ void GLWidget::processKeys(){
                                                light->getPosition()->getZ()));
             }
             break;
+        }
 
         case Qt::Key_D:
+        {
             if(_isInDriveMode){
                 _objectManager->getActiveDriveCar()->turnRight();
             }
@@ -587,6 +619,7 @@ void GLWidget::processKeys(){
                                                light->getPosition()->getZ()));
             }
             break;
+        }
 
         case Qt::Key_P:{
             if(!_objectManager->getEnviroment()->getSemaphore()->isActive()){
@@ -596,6 +629,7 @@ void GLWidget::processKeys(){
             break;
 
         case Qt::Key_R:
+             {
             /*if(_shaders)
             releaseAllShaders();
 
@@ -604,34 +638,43 @@ void GLWidget::processKeys(){
         _shaders = !_shaders;*/
             //((SwivelLight*)LightManager::getLightManager()->getActiveLight())->startAnimation();
             break;
+        }
 
         case Qt::Key_1:
+        {
             //if(_isInDriveMode){
             _scene->getCarAutomatic()->viewCamera(Car::FRONTAL_CAMERA);
             //}
             break;
+        }
         case Qt::Key_2:
+        {
             //if(_isInDriveMode){
             _scene->getCarAutomatic()->viewCamera(Car::REAR_CAMERA);
             //}
             break;
+        }
         case Qt::Key_3:
+        {
             //if(_isInDriveMode){
             _scene->getCarAutomatic()->viewCamera(Car::LEFT_CAMERA);
             //}
             break;
+        }
         case Qt::Key_4:
+        {
             //if(_isInDriveMode){
             _scene->getCarAutomatic()->viewCamera(Car::RIGHT_CAMERA);
             //}
             break;
+        }
         default:
             update = false;
         }
 
         if(update){
             float yaw, pitch;
-            Point3D *pos = _cameraManager->getCamera("free")->getPosition();
+            //Point3D *pos = _cameraManager->getCamera("free")->getPosition();
             _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
         }else{
             _pressedKeys.remove(presedKeys[i]);

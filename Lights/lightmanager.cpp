@@ -34,7 +34,7 @@ LightManager::LightManager()
  *-------------------------------------------------------------------*/
 LightManager * LightManager::getLightManager()
 {
-    if(!_lightManager)
+    if(_lightManager == NULL)
         _lightManager = new LightManager();
 
     return _lightManager;

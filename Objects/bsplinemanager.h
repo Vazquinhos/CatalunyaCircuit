@@ -19,7 +19,6 @@ public:
     void saveCapturingSpline();
 
     void display();
-    void render();
 
     void startSpin();
     void endSpin();

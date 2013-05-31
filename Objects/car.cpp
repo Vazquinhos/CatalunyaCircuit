@@ -13,16 +13,6 @@
 #include <Objects/modelManager.h>
 // ================= Constructores/Destructores ======================
 
-/*-------------------------------------------------------------------
- |  Copy Constructor
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-Car::Car(const Car& car) : QObject()
-{
-}
 
 /*-------------------------------------------------------------------
  |  Default Constructor

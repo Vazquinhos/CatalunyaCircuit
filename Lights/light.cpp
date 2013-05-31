@@ -27,16 +27,6 @@ Light::Light( QString a_name )
     _v_specular = sfvector();
     _type = NORMAL;
 }
-/*-------------------------------------------------------------------
- |  Copy Constructor
- |
- |  Purpose: Constructs a light object using another light object.
- |  Parameters: const light& a_pnt = light to copy;
- |  Returns:
- *-------------------------------------------------------------------*/
-Light::Light(const Light& light)
-{
-}
 
 Light::~Light()
 {

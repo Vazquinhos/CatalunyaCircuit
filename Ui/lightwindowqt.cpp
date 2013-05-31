@@ -38,6 +38,7 @@ LightWindowQt::~LightWindowQt()
 void
 LightWindowQt::positionChanged(double a)
 {
+    (void) a;
     //Obtenemos el nombre de la camara que esta actualmente seleccionada
     QListWidgetItem* p_item = ui->listWidget->currentItem();
 
@@ -56,6 +57,7 @@ LightWindowQt::positionChanged(double a)
 void
 LightWindowQt::ambientChanged(double a)
 {
+    (void) a;
     //Obtenemos el nombre de la camara que esta actualmente seleccionada
     QListWidgetItem* p_item = ui->listWidget->currentItem();
 
@@ -292,6 +294,7 @@ LightWindowQt::getLightFromQt()
 
 void LightWindowQt::on_cb_type_currentIndexChanged(const QString &arg1)
 {
+    (void) arg1;
     //Obtenemos el nombre de la camara que esta actualmente seleccionada
     QListWidgetItem* p_item = ui->listWidget->currentItem();
 
@@ -322,14 +325,13 @@ void LightWindowQt::on_listWidget_currentItemChanged(QListWidgetItem *current, Q
 {
     UpdateWidgetsWithLight(
                 LightManager::getLightManager()->getLight(current->text()));
+    (void) previous;
 }
 
 void LightWindowQt::on_buttonBox_2_accepted()
 {
     hide();
 }
-
-
 
 void LightWindowQt::on_buttonBox_2_rejected()
 {

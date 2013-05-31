@@ -61,17 +61,6 @@ Enviroment::Enviroment(btDiscreteDynamicsWorld *dynamicsWorld)
 }
 
 /*-------------------------------------------------------------------
- |  Copy Constructor
- |
- |  Purpose:
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-Enviroment::Enviroment(const Enviroment &enviroment)
-{
-}
-
-/*-------------------------------------------------------------------
  |  Destructor
  |
  |  Purpose:

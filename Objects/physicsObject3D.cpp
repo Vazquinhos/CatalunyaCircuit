@@ -53,15 +53,15 @@ bool PhysicsObject3D::isVisible(){
 |  Returns: The visibility of the entire object
 *-------------------------------------------------------------------*/
 void PhysicsObject3D::checkVisibility(){
-    CameraAbs* p_camera = CameraManager::getCameraManager()->getActiveCamera();
-    Vector3D* vCamera = p_camera->getDirectionVector();
-    Point3D*  posCamera = p_camera->getPosition();
+   // CameraAbs* p_camera = CameraManager::getCameraManager()->getActiveCamera();
+   // Vector3D* vCamera = p_camera->getDirectionVector();
+    //Point3D*  posCamera = p_camera->getPosition();
 
-    Vector3D* vObject;
-    Point3D *pObject;
+   // Vector3D* vObject;
+   // Point3D *pObject;
 
-    pObject = _model->getCenter();
-    vObject = pObject->resta(posCamera);
+   // pObject = _model->getCenter();
+    //vObject = pObject->resta(posCamera);
 
     //float direction = (*vCamera)^(*vObject);
     //if(direction >= 0){

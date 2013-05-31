@@ -51,16 +51,6 @@ CameraAbs::CameraAbs(QString a_name)
                            sin(_pitch) );
 }
 
-/*-------------------------------------------------------------------
- |  Copy Constructor
- |
- |  Purpose: Constructs a camera object using another camera object.
- |  Parameters:
- |  Returns:
- *-------------------------------------------------------------------*/
-CameraAbs::CameraAbs(const CameraAbs &cameraAbs)
-{
-}
 
 /*-------------------------------------------------------------------
  |  Destructor
@@ -365,11 +355,11 @@ void CameraAbs::setPitch( float pitch )
     _pitch = pitch;
 }
 
-float CameraAbs::getYaw(float yaw){
+float CameraAbs::getYaw(){
     return _yaw;
 }
 
-float CameraAbs::getPitch(float pitch){
+float CameraAbs::getPitch(){
     return _pitch;
 }
 

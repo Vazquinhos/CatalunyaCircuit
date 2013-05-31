@@ -318,14 +318,14 @@ void Model3D::release(){
 void Model3D::checkVisibility(vector<GLuint> *displayLists){
     MeshInstance *meshInstance;
 
-    CameraAbs* p_camera = _camMngr->getActiveCamera();
-    Vector3D* vCamera = p_camera->getDirectionVector();
-    Point3D*  posCamera = p_camera->getPosition();
+    //CameraAbs* p_camera = _camMngr->getActiveCamera();
+    //Vector3D* vCamera = p_camera->getDirectionVector();
+    //Point3D*  posCamera = p_camera->getPosition();
 
-    Vector3D* vObject;
-    Point3D *pObjectMax;
-    Point3D *pObjectMin;
-    Point3D *pObject = new Point3D();
+   // Vector3D* vObject;
+    //Point3D *pObjectMax;
+    //Point3D *pObjectMin;
+   // Point3D *pObject = new Point3D();
 
     for(unsigned int i=0; i < _vMeshInstances.size(); i++){
         meshInstance = _vMeshInstances[i];
@@ -764,7 +764,7 @@ float Model3D::getZofPoint(Point3D* point){
     for(unsigned int i = 0; i < _vMeshes.size(); i++)
     {
         mesh = _vMeshes[i];
-        for(int j = 0; j < mesh->_verticesCoord.size(); j+=3){
+        for(unsigned int j = 0; j < mesh->_verticesCoord.size(); j+=3){
             pointX = (mesh->_verticesCoord)[j];
             pointY = (mesh->_verticesCoord)[j+1];
             pointZ = (mesh->_verticesCoord)[j+2];

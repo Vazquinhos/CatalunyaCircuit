@@ -32,7 +32,7 @@ private slots:
 
     void diffuseChanged( double a);
 
-    void positionChanged( double a);
+    void positionChanged(double a );
 
     void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 

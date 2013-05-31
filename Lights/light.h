@@ -23,7 +23,6 @@ class Light
 public:
     // ================= Constructores/Destructores ======================
     Light(QString a_name);
-    Light(const Light&ligjt);
     virtual ~Light();
 
     // ============================ Methods ===============================

@@ -42,6 +42,7 @@ public:
     static Scene * getScene();
     void startCarAnimation();
     void stopCarAnimation();
+    void fallCar();
 
     // ============================ Inherited ===============================
     void update();
@@ -58,6 +59,7 @@ private:
     btCollisionDispatcher* _dispatcher;
     btSequentialImpulseConstraintSolver* _solver;
     btDiscreteDynamicsWorld* _dynamicsWorld;
+    void setCarAutomatic( QString a );
 
     static Scene * _scene;
     CarAutomatic * c2;

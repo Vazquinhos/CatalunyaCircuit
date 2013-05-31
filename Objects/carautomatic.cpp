@@ -83,7 +83,7 @@ CarAutomatic::~CarAutomatic(){
 
 void CarAutomatic::startRace()
 {
-    _timerUpdate->start(5);
+    _timerUpdate->start(2);
 }
 
 void CarAutomatic::resetRace()
@@ -130,6 +130,7 @@ void CarAutomatic::update(){
 
     Point3D * position = spline(timeInterpolation - _currentPoint, vPoints);
 
+    //position->setZ(-76.0);
     setPosition(position);
 
     //CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() +4 , position->getY() + 4, position->getZ()) );

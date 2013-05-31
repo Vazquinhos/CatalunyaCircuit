@@ -87,7 +87,7 @@ void GLWidget::initializeWorld(){
     _soundManager = SoundManager::getSoundManager();
     _soundManager->CleanUP();
     _soundManager->getSoundManager()->LoadSounds( "Media/XML/sounds.xml" );
-    //_soundManager->getSoundManager()->PlayAction("intro");
+    _soundManager->getSoundManager()->PlayAction("intro");
 
     // 1) Load and initialize managers
 
@@ -269,6 +269,7 @@ void GLWidget::CarViewerShow()
 {
     _carViewer = new CarViewer();
     carViewerActive = true;
+    _cameraManager->getActiveCamera()->update();
 }
 
 void GLWidget::StartAnimation()
@@ -432,6 +433,7 @@ void GLWidget::processKeys(){
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
                 carViewerActive = false;
                 emit CarFinishEditing();
+                SoundManager::getSoundManager()->PlayAction("cursorMove");
             }
 
             if(_isInDriveMode){
@@ -443,11 +445,12 @@ void GLWidget::processKeys(){
 
         case Qt::Key_Return: //Move camera to right
             if(carViewerActive){
-                _carViewer->selectCar();
+                QString string_car = _carViewer->selectCar();
                 _isInDriveMode = true;
                 ((SwivelLight*)LightManager::getLightManager()->getActiveLight())->stopAnimation();
                 carViewerActive = false;
                 emit CarFinishEditing();
+                SoundManager::getSoundManager()->PlayAction("cursorMove");
             }break;
 
         case Qt::Key_Right: //Move camera to right
@@ -457,8 +460,9 @@ void GLWidget::processKeys(){
                 _cameraManager->getActiveCamera()->move(1, false);
                 _objectManager->checkVisibility();
                 _bSplineManager->updateCapturingSpline();
-            }else{
+            }else if (!_carViewer->isChangingCar){
                 _carViewer->shiftNextCar();
+                SoundManager::getSoundManager()->PlayAction("cursorMove");
             }
             break;
 
@@ -468,8 +472,10 @@ void GLWidget::processKeys(){
                 _cameraManager->getActiveCamera()->move(-1, false);
                 _objectManager->checkVisibility();
                 _bSplineManager->updateCapturingSpline();
-            } else {
+
+            } else if (!_carViewer->isChangingCar){
                 _carViewer->shiftPreviousCar();
+                SoundManager::getSoundManager()->PlayAction("cursorMove");
             }
             break;
         case Qt::Key_Up: //Move camera to front
@@ -503,6 +509,9 @@ void GLWidget::processKeys(){
                                            light->getPosition()->getZ()+2));
             break;
         }
+        case Qt::Key_F:{
+             _scene->fallCar();
+               break;}
 
         case Qt::Key_Minus:{
             Light* light = LightManager::getLightManager()->getActiveLight();
@@ -608,7 +617,6 @@ void GLWidget::processKeys(){
             float yaw, pitch;
             Point3D *pos = _cameraManager->getCamera("free")->getPosition();
             _cameraManager->getCamera("free")->getYawPitch(yaw, pitch);
-            qDebug() << "CAMERA POSITION " << pos->getX() << " " << pos->getY() << " " << pos->getZ() << " " << yaw << " " << pitch;
         }
     }
 }

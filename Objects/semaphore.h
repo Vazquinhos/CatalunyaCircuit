@@ -34,6 +34,7 @@ private:
     Model3D *_model;
     QTimer *_timerUpdate;
     bool _isActive;
+
 };
 
 #endif // SEMAPHORE_H

@@ -120,7 +120,10 @@ void MainWindow::on_import_2_clicked()
 {
     if(!CarEditing){
     if(_p_imp_qt)
+    {
         _p_imp_qt->show();
+        SoundManager::getSoundManager()->PlayAction("cursorSelect");
+    }
     }
 }
 
@@ -128,7 +131,10 @@ void MainWindow::on_export_2_clicked()
 {
     if(!CarEditing){
     if(_p_exp_qt)
+    {
         _p_exp_qt->show();
+        SoundManager::getSoundManager()->PlayAction("cursorSelect");
+    }
     }
 }
 
@@ -139,6 +145,7 @@ void MainWindow::on_cars_clicked()
     ui->frame->hide();
     CarEditing = true;
     ui->widget->CarViewerShow();
+    SoundManager::getSoundManager()->PlayAction("cursorSelect");
 }
 
 void MainWindow::CarEditingFinish()
@@ -150,6 +157,7 @@ void MainWindow::on_about_clicked()
 {
     if(!CarEditing){
     if(_p_about)
+        SoundManager::getSoundManager()->PlayAction("cursorSelect");
         _p_about->show();
     }
 }
@@ -167,6 +175,7 @@ void MainWindow::on_play_clicked()
     ui->play->hide();
 
     ui->widget->StartAnimation();
+    SoundManager::getSoundManager()->PlayAction("cursorSelect");
 }
 
 void MainWindow::on_pause_clicked()
@@ -174,16 +183,21 @@ void MainWindow::on_pause_clicked()
     ui->pause->hide();
     ui->play->show();
     ui->widget->StopAnimation();
+    SoundManager::getSoundManager()->PlayAction("cursorSelect");
 }
 
 void MainWindow::on_trajects_clicked()
 {
     if(_p_traject_qt)
+    {
         _p_traject_qt->show();
+        SoundManager::getSoundManager()->PlayAction("cursorSelect");
+    }
 }
 
 void MainWindow::on_lights_clicked()
 {
     LightsCmd* light_cmd = new LightsCmd();
     light_cmd->process();
+    SoundManager::getSoundManager()->PlayAction("cursorSelect");
 }

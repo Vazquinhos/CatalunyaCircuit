@@ -40,6 +40,14 @@ LightManager * LightManager::getLightManager()
     return _lightManager;
 }
 
+void
+LightManager::deleteLight( QString a_name )
+{
+    if(!(_lights.find(a_name) == _lights.end()))
+    {
+        _lights.erase(a_name);
+    }
+}
 /*-------------------------------------------------------------------
  |  Function getLight
  |

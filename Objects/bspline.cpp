@@ -6,11 +6,15 @@
 #include <QStringList>
 #include "Utils/color.h"
 
-BSpline::BSpline(QString filePath, int updateTime)
+
+BSpline::BSpline(QString filePath, int updateTime) : QObject()
 {
     _filename = filePath;
     _currentAngle = 0;
     ImportBSpline(filePath);
+    _timerRotation = new QTimer(this);
+    QObject::connect(_timerRotation, SIGNAL(timeout()),this, SLOT(renderCubes()));
+    //_timerRotation->start(5);
 }
 
 BSpline::~BSpline(){
@@ -85,7 +89,7 @@ void BSpline::display(){
     glCallList(_displayList);
 }
 
-void BSpline::update(){
+void BSpline::renderCubes(){
     render();
 }
 

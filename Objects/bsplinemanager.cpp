@@ -22,6 +22,7 @@ BSplineManager::BSplineManager()
         for(int i = 0; i < _numSavedSplines; ++i){
             file = fileNames[i];
             spline = new BSpline(file, 200);
+            qDebug() << " BSpline Cargada " << file;
             _vBSplines[file] = spline;
 
 

@@ -48,20 +48,22 @@ Scene::Scene()
     //unsigned int numCars = 1;
     //int xPos = 70;
     //for(unsigned int i = 0; i < numCars; i++){
-    /*Car *c1 = new Car("Cars/" + carFolders[1 % (carFolders.size()-1)], new Point3D(223.494,54.6941,-46.3775), _dynamicsWorld);
-    _objectManager->addCar(c1);
-*/
+
     c2 = new CarAutomatic("Cars/" + carFolders[1 % (carFolders.size()-1)], QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj", 50);
-    //_objectManager->addCar(c2);
-    _objectManager->addCarAtPosition(c2,1);
+    _objectManager->addCar(c2);
     // xPos+=1;
     //}
 
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
-    //unsigned int vuelta = SoundManager::getSoundManager()->CreateSource();
-    //SoundManager::getSoundManager()->PlayRelativeSource(vuelta, "ambiente", true);
+
 
     _bSplineManager = BSplineManager::getBSplineManager();
+}
+void
+Scene::setCarAutomatic( QString a)
+{
+    c2 = new CarAutomatic(a, QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj", 50);
+    _objectManager->addCar(c2);
 }
 
 Scene * Scene::getScene()
@@ -69,6 +71,13 @@ Scene * Scene::getScene()
     if(_scene==NULL)
         _scene = new Scene();
     return _scene;
+}
+
+void
+Scene::fallCar()
+{
+    Car *c1 = new Car("Cars/Ferrari/", new Point3D(223.494,54.6941,-46.3775), _dynamicsWorld);
+    _objectManager->addCar(c1);
 }
 
 /*-------------------------------------------------------------------

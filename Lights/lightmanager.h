@@ -38,6 +38,7 @@ public:
     QString                   getCCSLightsInfoToExport();
     void                      setupDefault();
     std::map<QString, Light*> getLights();
+    void deleteLight( QString a_name );
 private:
     // ========================== Data Members ============================
     static LightManager           * _lightManager;

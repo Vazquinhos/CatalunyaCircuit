@@ -12,7 +12,7 @@ ExportSettingsQt::ExportSettingsQt(QWidget *parent) :
     setWindowTitle("Settings Exporter");
 
     QPixmap pix("Media/Images/1365559690_single_seater.png");
-    ui->carlab->setPixmap(pix);
+    //ui->carlab->setPixmap(pix);
     QPixmap pix1("Media/Images/1365560323_Gear.png");
     ui->settlab->setPixmap(pix1);
     QPixmap pix2("Media/Images/camera.png");
@@ -30,7 +30,7 @@ void ExportSettingsQt::on_buttonBox_accepted()
 {
     _p_exporter = new SettingsExporter( GetFileNameWithExtension(ui->lineEdit->text()) );
     _p_exporter->SetParameters( ui->_cameras->isChecked(),
-                                ui->_cars->isChecked(),
+                                false,//ui->_cars->isChecked(),
                                 ui->_light->isChecked());
     _p_exporter->Execute();
 }

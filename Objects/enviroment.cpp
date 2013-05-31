@@ -99,20 +99,20 @@ void Enviroment::checkVisibility(vector<GLuint> *displayLists){
 
     _sky->putDisplayLists(displayLists);
     _terrain->checkVisibility(displayLists);
-    _advertisement->checkVisibility(displayLists);
-    _objects->checkVisibility(displayLists);
-    _fences->checkVisibility(displayLists);
-    _pneumatic_fences->checkVisibility(displayLists);
-    _walls->checkVisibility(displayLists);
-    _forest->checkVisibility(displayLists);
-    _buildings1->checkVisibility(displayLists);
-    _buildings2->checkVisibility(displayLists);
-    _buildings3->checkVisibility(displayLists);
-    _buildings4->checkVisibility(displayLists);
-    _buildings5->checkVisibility(displayLists);
-    _buildings6->checkVisibility(displayLists);
+    //_advertisement->checkVisibility(displayLists);
+    //_objects->checkVisibility(displayLists);
+    //_fences->checkVisibility(displayLists);
+    //_pneumatic_fences->checkVisibility(displayLists);
+    //_walls->checkVisibility(displayLists);
+    //_forest->checkVisibility(displayLists);
+    //_buildings1->checkVisibility(displayLists);
+    //_buildings2->checkVisibility(displayLists);
+    //_buildings3->checkVisibility(displayLists);
+    //_buildings4->checkVisibility(displayLists);
+    //_buildings5->checkVisibility(displayLists);
+    //_buildings6->checkVisibility(displayLists);
 
-    _semNormal->getModel()->checkVisibility(displayLists);
+    //_semNormal->getModel()->checkVisibility(displayLists);
 }
 
 

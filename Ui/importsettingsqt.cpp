@@ -11,7 +11,6 @@ ImportSettingsQt::ImportSettingsQt(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("Settings Importer");
     QPixmap pix("Media/Images/1365559690_single_seater.png");
-    ui->car_icon->setPixmap(pix);
     QPixmap pix1("Media/Images/1365560323_Gear.png");
     ui->icon->setPixmap(pix1);
     QPixmap pix2("Media/Images/camera.png");
@@ -51,7 +50,7 @@ void ImportSettingsQt::on_buttonBox_accepted()
     {
         _p_settingsImporter = new SettingsImporter(fileName);
         _p_settingsImporter->SetParameters(ui->camera_chk->isChecked(),
-                                           ui->car_chk->isChecked(),
+                                           false,//ui->car_chk->isChecked(),
                                            ui->_lights->isChecked());
         _p_settingsImporter->Execute();
     }

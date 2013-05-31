@@ -2,6 +2,7 @@
 #include "Objects/objectManager.h"
 #include <QDebug>
 #include "Scene/scene.h"
+#include "Sound/SoundManager.h"
 
 Semaphore::Semaphore()
 {
@@ -33,24 +34,22 @@ bool Semaphore:: isActive(){
 
 void Semaphore::updateSemaphoreState(){
         if(_state == 0){
-            qDebug() << "ESTADO APAGADO1";
             _soundManager->PlayAction("ready");
             _model = _semYellow;
             ++_state;
         }else if(_state == 1){
             _soundManager->PlayAction("ready");
-            qDebug() << "ESTADO ROJO 1";
             _model = _semRed1;
 
             ++_state;
         }else if(_state == 2){
             _soundManager->PlayAction("go");
-            qDebug() << "ESTADO ROJO 2";
             _model = _semGreen;
+            unsigned int vuelta = SoundManager::getSoundManager()->CreateSource();
+            SoundManager::getSoundManager()->PlayRelativeSource(vuelta, "ambiente", true);
             ++_state;
         }
         else if(_state < 10){
-            qDebug() << "ESTADO VERDE";
             ++_state;
         }else{
             _state = 0;

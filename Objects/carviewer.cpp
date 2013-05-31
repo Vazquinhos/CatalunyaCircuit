@@ -15,6 +15,7 @@ CarViewer::CarViewer()
     Car *car;
 
     _cameraManager = CameraManager::getCameraManager();
+    isChangingCar = false;
 
     _cam = dynamic_cast<FreeCamera*>(_cameraManager->getCamera("CarViewerCamera"));
 
@@ -84,6 +85,7 @@ void CarViewer::exitViewer(){
  |  Purpose: Goes to next car
  *-------------------------------------------------------------------*/
 void CarViewer::shiftNextCar(){
+    isChangingCar = true;
     _timerMovementNext->start(10);
 }
 
@@ -92,6 +94,7 @@ void CarViewer::shiftNextCar(){
  |  Purpose: Goes to the previous car
  *-------------------------------------------------------------------*/
 void CarViewer::shiftPreviousCar(){
+    isChangingCar = true;
     _timerMovementPrevious->start(10);
 }
 
@@ -100,10 +103,13 @@ void CarViewer::shiftPreviousCar(){
  |  Function selectCar
  |  Purpose: Adds the current selected car
  *-------------------------------------------------------------------*/
-void CarViewer::selectCar(){
+QString CarViewer::selectCar(){
     ObjectManager *manager = ObjectManager::getObjectManager();
     Car *lastCar = manager->getActiveDriveCar();
     Car *c1 = new Car("Cars/" + _carFolders[_carActualIndex]);
+
+    c1->setPosition(new Point3D(210.696f, -68.176f, -45.7906));
+
     int cameraMode = Car::FRONTAL_CAMERA;
 
     manager->setActiveDriveCar(c1);
@@ -118,6 +124,9 @@ void CarViewer::selectCar(){
     }
 
     _isInCarViewerMode = false;
+
+    exitViewer();
+    return QString("Cars/" + _carFolders[_carActualIndex]);
 }
 
 void CarViewer::shiftCarToPrevious()
@@ -130,11 +139,13 @@ void CarViewer::shiftCarToPrevious()
     } else  if( _carActualIndex == 0 ){
         _timerMovementPrevious->stop();
         counter = 0;
+        isChangingCar = false;
     } else {
         _currentViewedCarPosition = point;
         _timerMovementPrevious->stop();
         _carActualIndex--;
         counter = 0;
+        isChangingCar = false;
     }
 }
 
@@ -147,13 +158,16 @@ void CarViewer::shiftCarToNext()
         counter++;
     } else  if( _carActualIndex == _numCars ){
         _timerMovementNext->stop();
+        isChangingCar = false;
         counter = 0;
     } else {
         _currentViewedCarPosition = point;
         _timerMovementNext->stop();
         _carActualIndex++;
         counter = 0;
+        isChangingCar = false;
     }
+
 }
 
 

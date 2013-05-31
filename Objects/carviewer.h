@@ -24,7 +24,8 @@ public:
     void exitViewer();
     void shiftNextCar();
     void shiftPreviousCar();
-    void selectCar();
+    QString selectCar();
+    bool isChangingCar;
 
 public slots:
     void shiftCarToNext();
@@ -42,6 +43,8 @@ private:
     QTimer* _timerMovementPrevious;
     Point3D* _currentViewedCarPosition;
     int counter;
+
+
 };
 
 #endif // CARVIEWER_H

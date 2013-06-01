@@ -258,8 +258,6 @@ void GLWidget::paintGL()
          }
     }*/
 
-    // Update camera to its current position
-    _cameraManager->getActiveCamera()->update();
 
     // Update the scene (all the objects)
     _scene->display(_fps);

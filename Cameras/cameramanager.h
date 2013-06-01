@@ -38,6 +38,8 @@ public:
     std::map<QString,CameraAbs*> getCameras();
     void                   render();
     void                   setPointToLookAnimationCameras(Point3D* pointToLook);
+    void                   updateAnimation(Point3D* carPosition);
+
 private:
 
     // =========================== Data Members =================================
@@ -45,6 +47,7 @@ private:
     std::map<QString, CameraAbs*> _cameras;
     bool _cameraOnCar; //This variable set if camera is focused on cars
     CameraAbs * _p_activeCamera;
+    int _currentCameraIndex;
 
      // ============================ Private Methods ===============================
     void setupCameras();

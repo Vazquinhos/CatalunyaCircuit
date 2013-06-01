@@ -65,6 +65,7 @@ private:
 
     static Scene * _scene;
     CarAutomatic * c2;
+    bool _race;
 
     // ============================ Methods ===============================
 };

@@ -29,6 +29,7 @@ CameraManager * CameraManager::_cameraManager = NULL;
 CameraManager::CameraManager()
 {
     _cameraOnCar = false;
+    _currentCameraIndex = 1;
 }
 
 // ============================ Methods ===============================
@@ -228,4 +229,65 @@ std::map<QString,CameraAbs*>
 CameraManager::getCameras()
 {
     return _cameras;
+}
+
+void CameraManager::updateAnimation(Point3D * carPosition)
+{
+    Point3D * cameraPosition;
+    float value1, value2;
+
+    QString name1;
+    QString name2;
+
+    if(_currentCameraIndex < 9)
+    {
+        name1 = QString("Recorrido0%1").arg(_currentCameraIndex);
+        name2 = QString("Recorrido0%1").arg(_currentCameraIndex+1);
+    }
+    else if(_currentCameraIndex < 10)
+    {
+        name1 = QString("Recorrido0%1").arg(_currentCameraIndex);
+        name2 = QString("Recorrido%1").arg(_currentCameraIndex+1);
+    }
+    else
+    {
+        name1 = QString("Recorrido%1").arg(_currentCameraIndex);
+        name2 = QString("Recorrido%1").arg(_currentCameraIndex+1);
+    }
+
+    cameraPosition = _cameras[name1]->getPosition();
+    value1 = cameraPosition->getDistance(carPosition);
+
+    cameraPosition = _cameras[name2]->getPosition();
+    value2 = cameraPosition->getDistance(carPosition);
+
+    if(value2 < value1)
+    {
+        _currentCameraIndex++;
+        if(_cameras[name2]!=NULL)
+            setActiveCamera(name2);
+    }
+    else
+    {
+        if(_cameras[name1]!=NULL)
+            setActiveCamera(name1);
+    }
+
+    /*for (int i = 2; i <= 24; ++i)
+    {
+        QString name;
+        if(i <10)
+            name = QString("Recorrido0%1").arg(i);
+        else
+            name = QString("Recorrido%1").arg(i);
+        cameraPosition = _cameras[name]->getPosition();
+        value = cameraPosition->getDistance(carPosition);
+        if(value < minValue)
+        {
+            minValue = value;
+            minIndex = i;
+        }
+    }
+*/
+
 }

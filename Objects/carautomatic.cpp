@@ -96,8 +96,8 @@ void CarAutomatic::resetRace()
 void CarAutomatic::update(){
     int numPoints = _spline->getNumPoints();
 
-    float vel = 36.0f;
-    _totalTime += ((float) TimeManager::getTimeManager()->getElapsedTime()*vel/1000);
+   /* float vel = 36.0f;
+    _totalTime += ((float) TimeManager::getTimeManager()->getElapsedTime())/1000.0f;
 
     if(_totalTime - _currentPoint > 1)
         ++_currentPoint;
@@ -128,12 +128,21 @@ void CarAutomatic::update(){
     while(timeInterpolation > numPoints)
         timeInterpolation -= numPoints;
 
-    Point3D * position = spline(timeInterpolation - _currentPoint, vPoints);
-
+   Point3D * position = spline(timeInterpolation - _currentPoint, vPoints);
+*/
     //position->setZ(-76.0);
+    /*vPoints.append( _spline->getPoint(_currentPoint  ));
+    vPoints.append( _spline->getPoint(_currentPoint + 1 ));
+    vPoints.append( _spline->getPoint(_currentPoint + 2 ));
+    vPoints.append( _spline->getPoint(_currentPoint + 3 ));
+    Point3D * position = spline(_currentPoint, vPoints);
+    _currentPoint++;*/
+   Point3D * position = _spline->getPoint(_currentPoint);
     setPosition(position);
 
+
     //CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() +4 , position->getY() + 4, position->getZ()) );
+    CameraManager::getCameraManager()->updateAnimation(position);
     CameraManager::getCameraManager()->setPointToLookAnimationCameras(new Point3D(position->getX() , position->getY(), position->getZ()));
     // Rotating the car towards the traject
 
@@ -154,7 +163,7 @@ void CarAutomatic::update(){
     }
 
 
-    Vector3D splineVector(_spline->getPoint( trunc(time) ), _spline->getPoint( trunc(time1) ));
+    Vector3D splineVector(_spline->getPoint( _currentPoint ), _spline->getPoint( _currentPoint +1 ));
 
     btVector3 btsplineVector( splineVector.getX(),splineVector.getY(), 0 );
 
@@ -182,4 +191,5 @@ void CarAutomatic::update(){
     makeTransform();
 
     updateCurrentCameraPos();
+    _currentPoint++;
 }

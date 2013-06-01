@@ -45,19 +45,14 @@ Scene::Scene()
     Enviroment *enviroment = new Enviroment(_dynamicsWorld);
     _objectManager = ObjectManager::getObjectManager();
 
-    //unsigned int numCars = 1;
-    //int xPos = 70;
-    //for(unsigned int i = 0; i < numCars; i++){
-
     c2 = new CarAutomatic("Cars/" + carFolders[1 % (carFolders.size()-1)], QDir::currentPath() + "/Media/BSplines/Correct/bsplineGabriel.obj");
     _objectManager->addCar(c2);
-    // xPos+=1;
-    //}
 
     _objectManager->setEnviroment(enviroment); //Add enviroment to object manager
 
 
     _bSplineManager = BSplineManager::getBSplineManager();
+    _race = false;
 }
 void
 Scene::setCarAutomatic( QString a)
@@ -104,11 +99,13 @@ void
 Scene::startCarAnimation()
 {
     c2->startRace();
+    _race = true;
 }
 
 void Scene::stopCarAnimation()
 {
     c2->resetRace();
+    _race = false;
 }
 // ============================ Methods ===============================
 void Scene::turnDebugMode()
@@ -124,12 +121,17 @@ void Scene::turnDebugMode()
  *-------------------------------------------------------------------*/
 void Scene::display(float fps)
 {
+
     (void) fps;
+
+    CameraManager::getCameraManager()->getActiveCamera()->update();
     //sprintf(_frames, "FPS = %f", fps);
     //paint2DText(20,20,(void *)GLUT_BITMAP_9_BY_15,_frames);
     this->_objectManager->displayAll();
 
-	if(_debugMode)
+
+
+    if(_debugMode && !_race)
     {
         _bSplineManager->display();
         LightManager::getLightManager()->getActiveLight()->render();

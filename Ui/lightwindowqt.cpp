@@ -81,6 +81,7 @@ LightWindowQt::ambientChanged(double a)
 void
 LightWindowQt::specularChanged(double a)
 {
+    (void) a;
     //Obtenemos el nombre de la camara que esta actualmente seleccionada
     QListWidgetItem* p_item = ui->listWidget->currentItem();
 

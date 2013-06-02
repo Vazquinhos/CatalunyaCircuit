@@ -214,43 +214,48 @@ map<QString, GLuint> ModelManager::loadTextures(QString folderName, QStringList 
         textureName = list[i];
         fullTexturePath = folderName + textureName;
 
-        QString model = QString("2/3 Loading texture: ") + textureName;
-        emit NewModel( model, i*47/size);
-        QCoreApplication::processEvents();
+        if(!fullTexturePath.endsWith("3ds")){
 
-        ilGenImages(1, &imageId); // Grab a new image name.(DEVIL)
-        success = ilLoadImage(fullTexturePath.toAscii());
+            QString model = QString("2/3 Loading texture: ") + textureName;
+            emit NewModel( model, i*47/size);
+            QCoreApplication::processEvents();
 
-        if(success){
-            ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
+            ilGenImages(1, &imageId); // Grab a new image name.(DEVIL)
+            success = ilLoadImage(fullTexturePath.toAscii());
+
             if(success){
-                glGenTextures(1,&textureId); //Generate texture ID (OPENGL)
-                glBindTexture(GL_TEXTURE_2D, textureId); //Bind the texture
-                textureIdMap[fullTexturePath] = textureId; //Save textureId to the map
+                success = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
+                if(success){
+                    glGenTextures(1,&textureId); //Generate texture ID (OPENGL)
+                    glBindTexture(GL_TEXTURE_2D, textureId); //Bind the texture
+                    textureIdMap[fullTexturePath] = textureId; //Save textureId to the map
 
-                //Set texture parameteres
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR ); //MIMAP LINEAR IS NOT VALID FOR MAG FILTER!
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                    //Set texture parameteres
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+                    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR ); //MIMAP LINEAR IS NOT VALID FOR MAG FILTER!
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-                GLfloat fLargest;
-                glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
-                glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest ); //Applies maximum aviable anisotropy for better texture quality on distance when using mipmaps
+                    GLfloat fLargest;
+                    glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
+                    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest ); //Applies maximum aviable anisotropy for better texture quality on distance when using mipmaps
 
-                glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);   //Requires GL 1.4. Removed from GL 3.1 and above. //Generate Mipmap for different quality on distance movement
+                    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);   //Requires GL 1.4. Removed from GL 3.1 and above. //Generate Mipmap for different quality on distance movement
 
-                glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
-                             ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
-                             ilGetData()); //Load texture to OPEN GL memory
-                ilBindImage(imageId);
-                ilDeleteImage(imageId);
-            }
-            else{
-                qDebug() << "ERROR WHILE TRANSFORMING TEXTURE TO OPENGL "  << fullTexturePath;
+                    glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
+                                 ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
+                                 ilGetData()); //Load texture to OPEN GL memory
+                    ilBindImage(imageId);
+                    ilDeleteImage(imageId);
+                }
+                else{
+                    qDebug() << "ERROR WHILE TRANSFORMING TEXTURE TO OPENGL "  << fullTexturePath;
+                }
+            }else{
+                //qDebug() << "ERROR AL CARGAR LA TEXTURA" << fullTexturePath;
             }
         }else{
-            //qDebug() << "ERROR AL CARGAR LA TEXTURA" << fullTexturePath;
+            //qDebug() << "It is a model not a texture";
         }
     }
     return textureIdMap;

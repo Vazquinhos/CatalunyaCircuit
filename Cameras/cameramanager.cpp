@@ -168,7 +168,7 @@ CameraAbs * CameraManager::getActiveCamera()
     return _p_activeCamera;
 }
 
-void CameraManager::setPointToLookAnimationCameras(Point3D* pointToLook)
+void CameraManager::setPointToLookAnimationCameras(Point3D* pointToLook, Vector3D* vectorDir )
 {
     for (int i = 1; i <= 24; ++i)
     {
@@ -179,6 +179,10 @@ void CameraManager::setPointToLookAnimationCameras(Point3D* pointToLook)
             name = QString("Recorrido%1").arg(i);
         ((FixedCamera*)_cameras[name])->setPointToLook(pointToLook);
     }
+
+    ((FixedCamera*) _cameras[QString("CarCamera")])->setPointToLook(new Point3D(pointToLook->getX() + vectorDir->getX(),
+                                                                                pointToLook->getY() + vectorDir->getY(),
+                                                                                pointToLook->getZ()+1));
 /*
     Point3D* currentCamPos =  getActiveCamera()->getPosition();
 
@@ -213,6 +217,10 @@ void CameraManager::setActiveCamera(CameraAbs * camera)
     QString camera_name = camera->getName();
     if(_cameras.find(camera_name) == _cameras.end())
     {
+        if(camera_name == "CarCamera")
+            _cameraOnCar = true;
+        else
+            _cameraOnCar = false;
         _cameras[camera_name] = camera;
     }
 
@@ -222,6 +230,10 @@ void CameraManager::setActiveCamera(CameraAbs * camera)
 
 void CameraManager::setActiveCamera(QString name)
 {
+    if(name == "CarCamera")
+        _cameraOnCar = true;
+    else
+        _cameraOnCar = false;
     _p_activeCamera = this->getCamera(name);
 }
 
@@ -239,55 +251,43 @@ void CameraManager::updateAnimation(Point3D * carPosition)
     QString name1;
     QString name2;
 
-    if(_currentCameraIndex < 9)
+    if(!_cameraOnCar)
     {
-        name1 = QString("Recorrido0%1").arg(_currentCameraIndex);
-        name2 = QString("Recorrido0%1").arg(_currentCameraIndex+1);
-    }
-    else if(_currentCameraIndex < 10)
-    {
-        name1 = QString("Recorrido0%1").arg(_currentCameraIndex);
-        name2 = QString("Recorrido%1").arg(_currentCameraIndex+1);
-    }
-    else
-    {
-        name1 = QString("Recorrido%1").arg(_currentCameraIndex);
-        name2 = QString("Recorrido%1").arg(_currentCameraIndex+1);
-    }
-
-    cameraPosition = _cameras[name1]->getPosition();
-    value1 = cameraPosition->getDistance(carPosition);
-
-    cameraPosition = _cameras[name2]->getPosition();
-    value2 = cameraPosition->getDistance(carPosition);
-
-    if(value2 < value1)
-    {
-        _currentCameraIndex++;
-        if(_cameras[name2]!=NULL)
-            setActiveCamera(name2);
-    }
-    else
-    {
-        if(_cameras[name1]!=NULL)
-            setActiveCamera(name1);
-    }
-
-    /*for (int i = 2; i <= 24; ++i)
-    {
-        QString name;
-        if(i <10)
-            name = QString("Recorrido0%1").arg(i);
-        else
-            name = QString("Recorrido%1").arg(i);
-        cameraPosition = _cameras[name]->getPosition();
-        value = cameraPosition->getDistance(carPosition);
-        if(value < minValue)
+        if(_currentCameraIndex < 9)
         {
-            minValue = value;
-            minIndex = i;
+            name1 = QString("Recorrido0%1").arg(_currentCameraIndex);
+            name2 = QString("Recorrido0%1").arg(_currentCameraIndex+1);
+        }
+        else if(_currentCameraIndex < 10)
+        {
+            name1 = QString("Recorrido0%1").arg(_currentCameraIndex);
+            name2 = QString("Recorrido%1").arg(_currentCameraIndex+1);
+        }
+        else
+        {
+            name1 = QString("Recorrido%1").arg(_currentCameraIndex);
+            name2 = QString("Recorrido%1").arg(_currentCameraIndex+1);
+        }
+
+        if(_currentCameraIndex < 24)
+        {
+            cameraPosition = _cameras[name1]->getPosition();
+            value1 = cameraPosition->getDistance(carPosition);
+
+            cameraPosition = _cameras[name2]->getPosition();
+            value2 = cameraPosition->getDistance(carPosition);
+
+            if(value2 < value1)
+            {
+                _currentCameraIndex++;
+                if(_cameras[name2]!=NULL)
+                    setActiveCamera(name2);
+            }
+            else
+            {
+                if(_cameras[name1]!=NULL)
+                    setActiveCamera(name1);
+            }
         }
     }
-*/
-
 }

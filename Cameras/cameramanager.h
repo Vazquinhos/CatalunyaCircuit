@@ -37,7 +37,7 @@ public:
     void                   setActiveCamera(QString name);
     std::map<QString,CameraAbs*> getCameras();
     void                   render();
-    void                   setPointToLookAnimationCameras(Point3D* pointToLook);
+    void                   setPointToLookAnimationCameras(Point3D* pointToLook, Vector3D* vectorDir);
     void                   updateAnimation(Point3D* carPosition);
 
 private:

@@ -84,6 +84,7 @@ CarAutomatic::~CarAutomatic(){
 void CarAutomatic::startRace()
 {
     _timerUpdate->start(2);
+    CameraManager::getCameraManager()->setActiveCamera("CarCamera");
 }
 
 void CarAutomatic::resetRace()
@@ -140,10 +141,12 @@ void CarAutomatic::update(){
    Point3D * position = _spline->getPoint(_currentPoint);
     setPosition(position);
 
+    if(_currentPoint == 600)
+        CameraManager::getCameraManager()->setActiveCamera("Recorrido01");
 
-    //CameraManager::getCameraManager()->getActiveCamera()->setPosition( new Point3D(position->getX() +4 , position->getY() + 4, position->getZ()) );
-    CameraManager::getCameraManager()->updateAnimation(position);
-    CameraManager::getCameraManager()->setPointToLookAnimationCameras(new Point3D(position->getX() , position->getY(), position->getZ()));
+    if(_currentPoint == (numPoints - 600))
+        CameraManager::getCameraManager()->setActiveCamera("CarCamera");
+
     // Rotating the car towards the traject
 
 
@@ -190,6 +193,15 @@ void CarAutomatic::update(){
     setAngle(angle, _desfase);
     makeTransform();
 
+    CameraManager::getCameraManager()->updateAnimation(position);
+    CameraManager::getCameraManager()->setPointToLookAnimationCameras(new Point3D(position->getX() , position->getY(), position->getZ()), &splineVector);
+
     updateCurrentCameraPos();
     _currentPoint++;
+
+    if(_currentPoint >= numPoints)
+    {
+        resetRace();
+        startRace();
+    }
 }
